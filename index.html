@@ -29,8 +29,8 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li class="dropdown"> 
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Сегодня <span class="label label-default">4 занятия</span> с 8:30</a>
-						<ul class="dropdown-menu" id="timetable-ddown-btn">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="timetable-ddown-btn" role="button" aria-haspopup="true" aria-expanded="false">Сегодня <span class="label label-default">4 занятия</span> с 8:30</a>
+						<ul class="dropdown-menu" id="timetable-ddown-mnu">
 							<li><a href="#">Расписание на сегодня</a></li>
 							<li><a href="#">Полное расписание</a></li>
 						</ul>
@@ -38,8 +38,8 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Сергей Тихонов <span class="label label-default">П-303</span> </a>
-						<ul class="dropdown-menu" id="student-ddown-btn">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="student-ddown-btn" role="button" aria-haspopup="true" aria-expanded="false">Сергей Тихонов <span class="label label-default">П-303</span> </a>
+						<ul class="dropdown-menu" id="student-ddown-mnu">
 							<li><a href="#">Моя группа</a></li>
 							<li><a href="#">Мои преподаватели</a></li>
 							<li role="separator" class="divider"></li>
@@ -131,8 +131,11 @@
 	<script>
 		$(document).ready(function() {
 			if ($(window).width() >= 768) {
-				$("#timetable-ddown-btn").width(191);
-				$("#student-ddown-btn").width(179);
+				var btn_width = $("#timetable-ddown-btn").outerWidth(true);
+				$("#timetable-ddown-mnu").outerWidth(btn_width - 0.14);
+
+				var btn_width = $("#student-ddown-btn").outerWidth(true);
+				$("#student-ddown-mnu").outerWidth(btn_width);
 			}
 		});
 	</script>
