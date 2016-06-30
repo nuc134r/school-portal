@@ -27,8 +27,8 @@
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li class="dropdown"> 
+				<ul class="nav navbar-nav hidden-xs">
+					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="timetable-ddown-btn" role="button" aria-haspopup="true" aria-expanded="false">Сегодня <span class="label label-default">4 занятия</span> с 8:30</a>
 						<ul class="dropdown-menu" id="timetable-ddown-mnu">
 							<li><a href="#">Расписание на сегодня</a></li>
@@ -36,7 +36,15 @@
 						</ul>
 					</li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav visible-xs">
+					<li class="active"><a href="#"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Расписание</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Задания</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Сообщения <span class="badge">2</span></a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Преподаватели</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Студенты</a></li>
+					<li><a href="#">Выход</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right hidden-xs">
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="student-ddown-btn" role="button" aria-haspopup="true" aria-expanded="false">Сергей Тихонов <span class="label label-default">П-303</span> </a>
 						<ul class="dropdown-menu" id="student-ddown-mnu">
@@ -54,7 +62,7 @@
 	</nav>
 
 	<div class="container">
-		<div class="col-sm-4 col-md-3 col-lg-3">
+		<div class="col-sm-4 col-md-3 col-lg-3 hidden-xs">
 			<div class="list-group">
 				<a href="#" class="list-group-item active">
 					<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Расписание
