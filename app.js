@@ -26,6 +26,7 @@ app.use('/', require('./routes/main-route'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public/css')));
+app.use(express.static(path.join(__dirname, 'public/vendor')));
 
 /* 404 handling */
 app.use((req, res, next) => {

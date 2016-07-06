@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="portal-app">
 
 <head>
 	<meta charset="utf-8">
@@ -8,6 +8,14 @@
 	<title>Bootstrap 101 Template</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 		crossorigin="anonymous">
+
+	<script src="angular/angular.js"></script>
+	<script src="angular-animate/angular-animate.js"></script>
+	<script src="angular-resource/angular-resource.js"></script>
+	<script src="angular-route/angular-route.js"></script>
+
+	<script src="app.js"></script>
+	<script src="views/timetable/controller.js"></script>
 </head>
 
 <body>
@@ -29,15 +37,15 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav hidden-xs">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="timetable-ddown-btn" role="button" aria-haspopup="true" aria-expanded="false">Сегодня <span class="label label-default">4 занятия</span> с 8:30</a>
+						<a class="dropdown-toggle" data-toggle="dropdown" id="timetable-ddown-btn" role="button" aria-haspopup="true" aria-expanded="false">Сегодня <span class="label label-default">4 занятия</span> с 8:30</a>
 						<ul class="dropdown-menu" id="timetable-ddown-mnu">
-							<li><a href="#">Расписание на сегодня</a></li>
+							<li><a href="#/timetable">Расписание на сегодня</a></li>
 							<li><a href="#">Полное расписание</a></li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="nav navbar-nav visible-xs">
-					<li class="active"><a href="#"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Расписание</a></li>
+					<li><a href="#/timetable"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Расписание</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Задания</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Сообщения <span class="badge">2</span></a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Преподаватели</a></li>
@@ -64,7 +72,7 @@
 	<div class="container">
 		<div class="col-sm-4 col-md-3 col-lg-3 hidden-xs">
 			<div class="list-group">
-				<a href="#" class="list-group-item active">
+				<a href="#/timetable" class="list-group-item">
 					<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Расписание
 				</a>
 				<a href="#" class="list-group-item">
@@ -84,51 +92,8 @@
 				</a>
 			</div>
 		</div>
-		<div class="col-sm-8 col-md-9 col-lg-9">
-			<h4 class="pull-right"><small>нижняя</small></h4>
-			<h3 style="margin-top:0px;">Сегодня <small>среда</small></h3>
-			<div class="list-group">
-				<a href=# class="list-group-item">
-					<span class="badge">8:30 - 10:00</span>
-					<h4 class="list-group-item-heading">Разработка баз данных<br></h4>
-					<p class="list-group-item-text">Ларионова Е.А.</p>
-				</a>
-				<a href=# class="list-group-item">
-					<span class="badge">10:10 - 11:40</span>
-					<h4 class="list-group-item-heading">Физическая культура</h4>
-					<p class="list-group-item-text">Соловьёв Л.И.</p>
-				</a>
-				<a href=# class="list-group-item">
-					<span class="badge">11:50 - 13:40</span>
-					<h4 class="list-group-item-heading">Системное программирование</h4>
-					<p class="list-group-item-text">Бунькин В.И.</p>
-				</a>
-				<a href=# class="list-group-item">
-					<span class="badge">13:50 - 15:20</span>
-					<h4 class="list-group-item-heading">Прикладное программирование</h4>
-					<p class="list-group-item-text">Глускер А.И.</p>
-				</a>
-			</div>
-			<h4 class="pull-right"><small>нижняя</small></h4>
-			<h3>Завтра <small>четверг</small></h3>
-			<div class="list-group">
-				<a href=# class="list-group-item">
-					<span class="badge">10:10 - 11:40</span>
-					<h4 class="list-group-item-heading">Физическая культура</h4>
-					<p class="list-group-item-text">Соловьёв Л.И.</p>
-				</a>
-				<a href=# class="list-group-item">
-					<span class="badge">11:50 - 13:40</span>
-					<h4 class="list-group-item-heading">Системное программирование</h4>
-					<p class="list-group-item-text">Бунькин В.И.</p>
-				</a>
-				<a href=# class="list-group-item">
-					<span class="badge">13:50 - 15:20</span>
-					<h4 class="list-group-item-heading">Прикладное программирование</h4>
-					<p class="list-group-item-text">Глускер А.И.</p>
-				</a>
-			</div>
-			<button class="btn btn-default btn-block" style="margin-bottom: 20px">Перейти к полному расписанию</button>
+		<div class="col-sm-8 col-md-9 col-lg-9" >
+			<div ng-view></div>
 		</div>
 	</div>
 
