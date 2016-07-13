@@ -1,0 +1,12 @@
+.list-group-item.active .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #588dbb;
+    border-color: #588dbb;
+}
+
+.media-heading {
+    color: #000000;
+}
+
+a.media-body {
+    color: #000000;
+}
