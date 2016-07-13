@@ -1,37 +1,34 @@
-extends layout
+.container
+  .row
+    .col-sm-12.col-md-6.col-lg-6
+      h4.pull-right
+        small #{todayWeek}
+      h3(style='margin-top:0px;')
+        | #{'Сегодня' + ' '}
+        small #{todayDay}
+      .list-group
+        each lesson in lessonsToday
+          a.list-group-item(href='', class=lesson.now ? 'active' : '')
+            span.badge #{lesson.starts} - #{lesson.ends}
+            h4.list-group-item-heading
+              | #{lesson.name}
+              br
+            p.list-group-item-text.pull-right #{lesson.classroom}
+            p.list-group-item-text #{lesson.teacher}
 
-block content
-  .container
-    .row
-      .col-sm-12.col-md-6.col-lg-6
-        h4.pull-right
-          small #{todayWeek}
-        h3(style='margin-top:0px;')
-          | #{'Сегодня' + ' '}
-          small #{todayDay}
-        .list-group
-          each lesson in lessonsToday
-            a.list-group-item(href='', class=lesson.now ? 'active' : '')
-              span.badge #{lesson.starts} - #{lesson.ends}
-              h4.list-group-item-heading
-                | #{lesson.name}
-                br
-              p.list-group-item-text.pull-right #{lesson.classroom}
-              p.list-group-item-text #{lesson.teacher}
+      button.btn.btn-default.btn-block(style='margin-bottom: 20px') Перейти к полному расписанию
 
-        button.btn.btn-default.btn-block(style='margin-bottom: 20px') Перейти к полному расписанию
-
-      .col-sm-12.col-md-6.col-lg-6
-        h3(style='margin-top:0px;')
-          | Новости
-        each article in articles
-          .media
-            .media-left
-              a(href='')
-                img.media-object(src='http://lorempixel.com/64/64/cats', alt='...')
-            .media-body
-              a(href='')
-                h4.media-heading #{article.title}
-              h4.media-heading
-                small #{article.time}
-              a.media-body(href='/') #{article.text}
+    .col-sm-12.col-md-6.col-lg-6
+      h3(style='margin-top:0px;')
+        | Новости
+      each article in articles
+        .media
+          .media-left
+            a(href='')
+              img.media-object(src='http://lorempixel.com/64/64/cats', alt='...')
+          .media-body
+            a(href='')
+              h4.media-heading #{article.title}
+            h4.media-heading
+              small #{article.time}
+            a.media-body(href='/') #{article.text}

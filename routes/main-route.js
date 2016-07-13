@@ -75,7 +75,9 @@ router.get('/', function(req, res) {
         }
     ];
 
-    res.render('dashboard', arguments);
+    var full = req.xhr ? '' : '_full';
+
+    res.render('dashboard' + full, arguments);
     res.end();
 });
 
@@ -151,7 +153,9 @@ router.get('/timetable', function(req, res) {
         }
     ];
 
-    res.render('timetable', arguments);
+    var full = req.xhr ? '' : '_full';
+
+    res.render('timetable' + full, arguments);
     res.end();
 });
 
