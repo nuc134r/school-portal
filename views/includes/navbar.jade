@@ -10,10 +10,6 @@ nav.navbar.navbar-default
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-left
         li
-          a(href='/')
-            //span.glyphicon.glyphicon-calendar(aria-hidden='true')
-            |  Главная
-        li
           a(href='/timetable')
             //span.glyphicon.glyphicon-calendar(aria-hidden='true')
             |  Расписание
@@ -30,8 +26,8 @@ nav.navbar.navbar-default
       ul.nav.navbar-nav.navbar-right
         li.dropdown
           a#student-ddown-btn.dropdown-toggle(href='/', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-            img.avatar-thumbnail(src='http://lorempixel.com/32/32/people/')
             | #{' ' + 'Сергей' + ' '}
+            img.avatar-thumbnail(src='http://lorempixel.com/32/32/people/')
 
           ul#student-ddown-mnu.dropdown-menu
             li

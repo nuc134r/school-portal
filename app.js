@@ -1,6 +1,7 @@
 /* Express stuff */
 var express = require('express');
 var path = require('path');
+//var ddos = new require('ddos');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -18,6 +19,7 @@ app.set('view engine', 'jade');
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
+//app.use(ddos.express());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
