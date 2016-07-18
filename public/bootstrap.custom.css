@@ -10,3 +10,43 @@
 a.media-body {
     color: #000000;
 }
+
+body {
+    font-family: "Source Sans Pro","PT Sans","PTSansRegular",Helvetica,Arial,sans-serif;
+}
+
+.avatar-thumbnail {
+    border-radius: 50%;
+    margin-right: 3px;
+}
+
+
+@media (min-width: 768px) {
+    .navbar-nav>li>a {
+        line-height: 37px;
+    }
+
+    .navbar-brand{
+        line-height: 34px;
+    }
+}
+
+.badge {
+    min-width: 22px;
+    padding: 3px 8px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+.label {
+    padding-bottom: 1px;
+}
+
+.navbar-toggle {
+    margin-left: 15px;
+    margin-right: 0px;
+}

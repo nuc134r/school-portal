@@ -108,8 +108,7 @@ router.get('/timetable', function(req, res) {
             name: 'Физическая культура',
             starts: '10:10',
             ends: '11:40',
-            classroom : 'Спортзал',
-            now: true
+            classroom : 'Спортзал'
         },
         {
             teacher: 'Бунькин В.И.',

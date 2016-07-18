@@ -1,8 +1,7 @@
 nav.navbar.navbar-default
   .container
-    // Brand and toggle get grouped for better mobile display
     .navbar-header
-      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+      button.navbar-toggle.collapsed.pull-left(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
         span.sr-only Toggle navigation
         span.icon-bar
         span.icon-bar
@@ -10,6 +9,10 @@ nav.navbar.navbar-default
       a.navbar-brand(href='/') Студенческий портал
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-left
+        li
+          a(href='/')
+            //span.glyphicon.glyphicon-calendar(aria-hidden='true')
+            |  Главная
         li
           a(href='/timetable')
             //span.glyphicon.glyphicon-calendar(aria-hidden='true')
@@ -27,7 +30,8 @@ nav.navbar.navbar-default
       ul.nav.navbar-nav.navbar-right
         li.dropdown
           a#student-ddown-btn.dropdown-toggle(href='/', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-            | #{'Сергей Тихонов' + ' '}
+            img.avatar-thumbnail(src='http://lorempixel.com/32/32/people/')
+            | #{' ' + 'Сергей' + ' '}
 
           ul#student-ddown-mnu.dropdown-menu
             li
