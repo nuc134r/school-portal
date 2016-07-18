@@ -1,5 +1,22 @@
-extends layout
+.container
+  .row
+    .col-sm-12.col-md-6.col-lg-6
+      h4.pull-right
+        small #{todayWeek}
+      h3(style='margin-top:0px;')
+        | #{'Сегодня' + ' '}
+        small #{todayDay}
+      .list-group
+        each lesson in lessonsToday
+          a.list-group-item(href='', class=lesson.now ? 'active' : '')
+            span.badge #{lesson.starts} - #{lesson.ends}
+            h4.list-group-item-heading
+              | #{lesson.name}
+              br
+            p.list-group-item-text.pull-right #{lesson.classroom}
+            p.list-group-item-text #{lesson.teacher}
 
+<<<<<<< HEAD
 block content
   .container
     .row
@@ -69,3 +86,23 @@ block content
                   br
                 p.list-group-item-text.pull-right #{lesson.classroom}
                 p.list-group-item-text #{lesson.teacher}
+=======
+    .col-sm-12.col-md-6.col-lg-6
+      h4.pull-right
+        small #{tomorrowWeek}
+      h3(style='margin-top:0px;')
+        | #{'Завтра' + ' '}
+        small #{tomorrowDay}
+      .list-group
+        each lesson in lessonsTomorrow
+          a.list-group-item(href='')
+            span.badge #{lesson.starts} - #{lesson.ends}
+            h4.list-group-item-heading
+              | #{lesson.name}
+              br
+            p.list-group-item-text.pull-right #{lesson.classroom}
+            p.list-group-item-text #{lesson.teacher}
+
+  div
+    button.btn.btn-default.btn-block(style='margin-bottom: 20px') Перейти к полному расписанию
+>>>>>>> 873e615df9d1f39408959af2a29363ea49d34156
