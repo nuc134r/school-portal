@@ -12,7 +12,7 @@ a.media-body {
 }
 
 body {
-    font-family: "Source Sans Pro","PT Sans","PTSansRegular",Helvetica,Arial,sans-serif;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
 }
 
 .avatar-thumbnail {
@@ -53,4 +53,12 @@ h3 {
 
 .media-object {
     border-radius: 50%
+}
+
+.h5, h5 {
+    font-size: 15px;
+}
+
+h3.active {
+    color: royalblue;
 }

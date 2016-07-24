@@ -20,12 +20,12 @@ block content
             small #{todayWeek}
           h3
             | #{day + ' '}
-            small #{todayDay}
+            small 
           .list-group
             each lesson in lessonsToday
               a.list-group-item(href='', class=lesson.now ? 'active' : '')
                 span.badge #{lesson.starts} - #{lesson.ends}
-                h4.list-group-item-heading
+                h5.list-group-item-heading
                   | #{lesson.name}
                   br
                 p.list-group-item-text.pull-right #{lesson.classroom}
@@ -36,14 +36,14 @@ block content
         .col-sm-12.col-md-6.col-lg-6
           h4.pull-right
             small #{todayWeek}
-          h3
+          h3(class= day=='Среда' ? 'active': '')
             | #{day + ' '}
-            small #{todayDay}
+            small #{day=='Среда' ? 'сегодня': ''}
           .list-group
             each lesson in lessonsToday
               a.list-group-item(href='', class=lesson.now ? 'active' : '')
                 span.badge #{lesson.starts} - #{lesson.ends}
-                h4.list-group-item-heading
+                h5.list-group-item-heading
                   | #{lesson.name}
                   br
                 p.list-group-item-text.pull-right #{lesson.classroom}
@@ -57,12 +57,12 @@ block content
             small #{todayWeek}
           h3
             | #{day + ' '}
-            small #{todayDay}
+            small 
           .list-group
             each lesson in lessonsToday
               a.list-group-item(href='', class=lesson.now ? 'active' : '')
                 span.badge #{lesson.starts} - #{lesson.ends}
-                h4.list-group-item-heading
+                h5.list-group-item-heading
                   | #{lesson.name}
                   br
                 p.list-group-item-text.pull-right #{lesson.classroom}
