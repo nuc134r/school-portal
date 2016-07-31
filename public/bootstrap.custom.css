@@ -18,17 +18,29 @@ body {
 .avatar-thumbnail {
     border-radius: 50%;
     margin-left: 3px;
+    height: 32px;
+    width: 32px;
 }
-
 
 @media (min-width: 768px) {
     .navbar-nav>li>a {
-        line-height: 37px;
+        padding-top: 17px;
+        padding-bottom: 13px;
     }
 
-    .navbar-brand{
-        line-height: 34px;
+    .navbar-nav>li>a.dropdown-toggle {
+        padding-top: 10px;
+        padding-bottom: 8px;
     }
+}
+
+.navbar {
+    border-radius: 4px;
+    border-color: transparent;
+}
+
+#student-ddown-btn {
+    line-height: 20px;
 }
 
 .badge {
@@ -36,6 +48,7 @@ body {
     padding: 3px 8px;
     margin-bottom: 2px;
     margin-left: 2px;
+    background-color: #949494;
 }
 
 h3 {
@@ -60,5 +73,36 @@ h3 {
 }
 
 h3.active {
-    color: royalblue;
+    color: #337ab7;
+}
+
+.btn.btn-default.active {
+    border-color: rgb(221, 221, 221);
+    background-color: #337ab7;
+    box-shadow: none;
+    border-color: transparent;
+    color: white;
+}
+
+.btn.btn-default:focus {
+    border-color: rgb(221, 221, 221);
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.btn.btn-default:hover {
+    background-color: #f8f8f8;
+    border-color: rgb(221, 221, 221);
+    box-shadow: none;
+}
+
+.btn.btn-default.active:hover {
+    background-color: rgb(88, 141, 187);
+    border-color: rgb(221, 221, 221);
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.btn-default {
+    border-color: rgb(221, 221, 221);
 }
