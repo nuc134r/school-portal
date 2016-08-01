@@ -94,8 +94,10 @@ router.get('/timetable', function(req, res) {
     arguments.todayDay = "среда";
     arguments.tomorrowDay = "четверг";
 
-    arguments.todayWeek = "нижняя";
-    arguments.tomorrowWeek = "нижняя";
+    arguments.weekType = 2;
+
+    arguments.todayWeek = arguments.weekType === 1 ? "верхняя" : "нижняя";
+    arguments.tomorrowWeek = arguments.weekType === 1 ? "верхняя" : "нижняя";
 
     arguments.lessonsToday = [
         {
