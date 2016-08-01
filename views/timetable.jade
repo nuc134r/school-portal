@@ -2,17 +2,16 @@ block content
   .container
     .row
       .col-sm-8.col-md-8.col-lg-6.col-sm-offset-2.col-md-offset-2.col-lg-offset-3
-        img(src='flag.png', title="Сейчас неделя 42, " + todayWeek, class={"flag-upper" : weekType === 1, "flag-lower" : weekType === 2})
-
+        img(src="flag.svg", title="Сейчас неделя 42, " + todayWeek, class={"flag-upper" : weekType === 1, "flag-lower" : weekType === 2})
 
     .row
       .col-sm-8.col-md-8.col-lg-6.col-sm-offset-2.col-md-offset-2.col-lg-offset-3
         .btn-group.btn-group-justified(data-toggle='buttons')
-          a.btn.btn-default.active
-            input#option1(type='radio', name='options', autocomplete='off', checked='')
+          a.btn.btn-default(class=(weekType === 1 ? 'active' : ''))
+            input(type='radio', name='options', autocomplete='off')
             span Верхняя
-          a.btn.btn-default
-            input#option2(type='radio', name='options', autocomplete='off')
+          a.btn.btn-default(class=(weekType === 2 ? 'active' : ''))
+            input(type='radio', name='options', autocomplete='off')
             span Нижняя
     
     .row
