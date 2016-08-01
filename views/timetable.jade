@@ -1,69 +1,67 @@
 block content
   .container
     .row
-      .col-sm-12.col-md-8.col-lg-6.text-center.col-md-offset-2.col-lg-offset-3
+      .col-sm-8.col-md-8.col-lg-6.col-sm-offset-2.col-md-offset-3.col-lg-offset-3
         .btn-group.btn-group-justified(data-toggle='buttons')
           a.btn.btn-default.active
             input#option1(type='radio', name='options', autocomplete='off', checked='')
-            |  Нижняя
+            span Нижняя
           a.btn.btn-default
             input#option2(type='radio', name='options', autocomplete='off')
-            |  Верхняя
+            span Верхняя
     
     .row
       br
 
     .row
-      each day in ['Понедельник', 'Вторник']
-        .col-sm-12.col-md-6.col-lg-6
-          h4.pull-right
-            small #{todayWeek}
-          h3
-            | #{day + ' '}
-            small 
-          .list-group
-            each lesson in lessonsToday
-              a.list-group-item(href='', class=lesson.now ? 'active' : '')
-                span.badge #{lesson.starts} - #{lesson.ends}
-                h5.list-group-item-heading
-                  | #{lesson.name}
-                  br
-                p.list-group-item-text.pull-right #{lesson.classroom}
-                p.list-group-item-text #{lesson.teacher}
-
-    .row
-      each day in ['Среда', 'Четверг']
-        .col-sm-12.col-md-6.col-lg-6
-          h4.pull-right
-            small #{todayWeek}
-          h3(class= day=='Среда' ? 'active': '')
+      each day in ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
+        .col-sm-6.col-md-4.col-lg-4
+          h3(class={active: day === 'Среда'})
             | #{day + ' '}
             small #{day=='Среда' ? 'сегодня': ''}
           .list-group
             each lesson in lessonsToday
-              a.list-group-item(href='', class=lesson.now ? 'active' : '')
+              a.list-group-item(href='', class={active: lesson.now})
                 span.badge #{lesson.starts} - #{lesson.ends}
                 h5.list-group-item-heading
                   | #{lesson.name}
                   br
                 p.list-group-item-text.pull-right #{lesson.classroom}
                 p.list-group-item-text #{lesson.teacher}
+
+    //- .row
+    //-   each day in ['Среда', 'Четверг']
+    //-     .col-sm-12.col-md-6.col-lg-6
+    //-       h4.pull-right
+    //-         small #{todayWeek}
+    //-       h3(class= day=='Среда' ? 'active': '')
+    //-         | #{day + ' '}
+    //-         small #{day=='Среда' ? 'сегодня': ''}
+    //-       .list-group
+    //-         each lesson in lessonsToday
+    //-           a.list-group-item(href='', class=lesson.now ? 'active' : '')
+    //-             span.badge #{lesson.starts} - #{lesson.ends}
+    //-             h5.list-group-item-heading
+    //-               | #{lesson.name}
+    //-               br
+    //-             p.list-group-item-text.pull-right #{lesson.classroom}
+    //-             p.list-group-item-text #{lesson.teacher}
         
 
-    .row
-      each day in ['Пятница', 'Суббота']
-        .col-sm-12.col-md-6.col-lg-6
-          h4.pull-right
-            small #{todayWeek}
-          h3
-            | #{day + ' '}
-            small 
-          .list-group
-            each lesson in lessonsToday
-              a.list-group-item(href='', class=lesson.now ? 'active' : '')
-                span.badge #{lesson.starts} - #{lesson.ends}
-                h5.list-group-item-heading
-                  | #{lesson.name}
-                  br
-                p.list-group-item-text.pull-right #{lesson.classroom}
-                p.list-group-item-text #{lesson.teacher}
+    //- .row
+    //-   each day in ['Пятница', 'Суббота']
+    //-     .col-sm-12.col-md-6.col-lg-6
+    //-       h4.pull-right
+    //-         small #{todayWeek}
+    //-       h3
+    //-         | #{day + ' '}
+    //-         small 
+    //-       .list-group
+    //-         each lesson in lessonsToday
+    //-           a.list-group-item(href='', class=lesson.now ? 'active' : '')
+    //-             span.badge #{lesson.starts} - #{lesson.ends}
+    //-             h5.list-group-item-heading
+    //-               | #{lesson.name}
+    //-               br
+    //-             p.list-group-item-text.pull-right #{lesson.classroom}
+    //-             p.list-group-item-text #{lesson.teacher}

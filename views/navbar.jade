@@ -1,12 +1,12 @@
 nav.navbar.navbar-default
   .container
     .navbar-header
-      button.navbar-toggle.collapsed.pull-left(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+      a.navbar-brand(href='/') Студенческий портал
+      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
         span.sr-only Toggle navigation
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(href='/') Студенческий портал
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-left
         li
@@ -27,7 +27,7 @@ nav.navbar.navbar-default
         li.dropdown
           a#student-ddown-btn.dropdown-toggle(href='/', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
             | #{' ' + 'Сергей' + ' '}
-            img.avatar-thumbnail(src='http://lorempixel.com/32/32/people/')
+            img.hidden-xs.avatar-thumbnail(src='http://lorempixel.com/32/32/people/')
 
           ul#student-ddown-mnu.dropdown-menu
             li
