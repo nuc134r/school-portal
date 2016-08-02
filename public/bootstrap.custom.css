@@ -107,10 +107,10 @@ h3.active {
     border-color: rgb(221, 221, 221);
 }
 
-.flag-lower {
-    margin-left : 90%
+.flag-upper {
+    margin-left : 29%
 }
 
-.flag-upper {
-    margin-left : 40%
+.flag-lower {
+    margin-left : 55%
 }

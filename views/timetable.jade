@@ -2,17 +2,20 @@ block content
   .container
     .row
       .col-sm-8.col-md-8.col-lg-6.col-sm-offset-2.col-md-offset-2.col-lg-offset-3
-        img(src="flag.svg", title="Сейчас неделя 42, " + todayWeek, class={"flag-upper" : weekType === 1, "flag-lower" : weekType === 2})
+        img(src="flag.svg", title="Сейчас неделя 42, " + todayWeek,
+            class={"flag-upper" : weekType === 1, "flag-lower" : weekType === 2},
+            data-toggle="tooltip", data-placement="top")
 
     .row
       .col-sm-8.col-md-8.col-lg-6.col-sm-offset-2.col-md-offset-2.col-lg-offset-3
-        .btn-group.btn-group-justified(data-toggle='buttons')
-          a.btn.btn-default(class=(weekType === 1 ? 'active' : ''))
-            input(type='radio', name='options', autocomplete='off')
-            span Верхняя
-          a.btn.btn-default(class=(weekType === 2 ? 'active' : ''))
-            input(type='radio', name='options', autocomplete='off')
-            span Нижняя
+        .btn-group.btn-group-justified
+          .btn-group
+            button.btn.btn-default Верхняя
+          .btn-group
+            button.btn.btn-default Нижняя
+          .btn-group
+            button.btn.btn-default.active
+              | Текущая
     
     .row
       br
