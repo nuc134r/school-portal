@@ -16,8 +16,13 @@ block content
                 br
               p.list-group-item-text.pull-right #{lesson.classroom}
               p.list-group-item-text #{lesson.teacher}
+        
+        a.btn.btn-default.btn-block(href='/timetable') Перейти к полному расписанию
 
-        a.btn.btn-default.btn-block(href='/timetable' style='margin-bottom: 20px') Перейти к полному расписанию
+        br
+
+        h3 #{ 'Задания' + ' '}
+          span.badge 6
 
       .col-sm-12.col-md-6.col-lg-6
         h3
