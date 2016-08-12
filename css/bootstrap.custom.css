@@ -1,4 +1,7 @@
-body { padding-top: 70px; }
+body { 
+    padding-top: 70px;
+    padding-bottom: 50px;  
+}
 
 .list-group-item.active .list-group-item.active:focus, .list-group-item.active:hover {
     background-color: #588dbb;
