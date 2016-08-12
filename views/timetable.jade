@@ -29,7 +29,7 @@ block content
           .list-group
             each lesson in lessonsToday
               a.list-group-item(href='', class={active: lesson.now})
-                span.badge #{lesson.starts} - #{lesson.ends}
+                span.badge #{lesson.starts} — #{lesson.ends}
                 h5.list-group-item-heading
                   | #{lesson.name}
                   br

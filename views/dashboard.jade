@@ -4,13 +4,12 @@ block content
       .col-sm-6.col-md-5.col-lg-5
         h4.pull-right
           small нижняя, с изменениями
-        h3
-          a.media-heading(href='/timetable') #{' Сегодня'}
+        h3 #{' Сегодня'}
           small #{' ' + todayDay}
         .list-group
           each lesson in lessonsToday
             a.list-group-item(href='', class=lesson.now ? 'active' : '')
-              span.badge #{lesson.starts} - #{lesson.ends}
+              p.list-group-item-text.pull-right #{lesson.starts} — #{lesson.ends}
               h5.list-group-item-heading
                 | #{lesson.name}
                 br
@@ -22,9 +21,26 @@ block content
         br
 
       .col-sm-6.col-md-7.col-lg-7
-        h3
-          | #{' Задания '}
-          small: p.badge 1 новое
+        h3 #{' Задания '}
+          small
+
+        .list-group
+          a.list-group-item(href='')
+            p.list-group-item-text.pull-right 2 из 5
+            h5.list-group-item-heading Курсовой проект
+            p.list-group-item-text #{ ' Разработка баз данных' }
+          a.list-group-item(href='')
+            span.badge
+            p.list-group-item-text.pull-right
+            h5.list-group-item-heading Практическая работа №2
+            p.list-group-item-text #{ ' Прикладное программирование' }
+          a.list-group-item(href='')
+            span.badge новое
+            p.list-group-item-text.pull-right
+            h5.list-group-item-heading Самостоятельная работа №3
+            p.list-group-item-text #{ ' Прикладное программирование' }
+
+        a.btn.btn-default.btn-block(href='') Перейти ко всем заданиям
 
         br
         
@@ -37,7 +53,7 @@ block content
         .media
           .media-left
             a(href='')
-              img.media-object(src='https://new.vk.com/images/camera_100.png', height='50', width='50')
+              img.media-object(src='https://new.vk.com/images/camera_100.png', height='57', width='57')
           .media-body
             h5.media-heading
               a.media-heading(href='') Александр Иванов
@@ -48,7 +64,7 @@ block content
         .media
           .media-left
             a(href='')
-              img.media-object(src='https://pp.vk.me/c633819/v633819348/25564/hFo-UqGEoXk.jpg', height='50', width='50')
+              img.media-object(src='https://pp.vk.me/c633819/v633819348/25564/hFo-UqGEoXk.jpg', height='57', width='57')
           .media-body
             h5.media-heading
               a.media-heading(href='') Анастасия Батанина
@@ -59,7 +75,7 @@ block content
         .media
           .media-left
             a(href='')
-              img.media-object(src='https://pp.vk.me/c631524/v631524005/3c951/DNq7UTs1D1A.jpg', height='50', width='50')
+              img.media-object(src='https://pp.vk.me/c631524/v631524005/3c951/DNq7UTs1D1A.jpg', height='57', width='57')
           .media-body
             h5.media-heading
               a.media-heading(href='') Денис Жаров
@@ -68,18 +84,26 @@ block content
               a.btn.btn-default(href='', style='margin-top: 2px') Написать сообщение
 
         br
+
+        a.btn.btn-default.btn-block(href='') Перейти ко всей группе
+
+        br
         
       .col-sm-6.col-md-7.col-lg-7
         h3
             | #{' Новости '}
         each article in articles
           .media
-            .media-left
-              a(href='')
-                img.media-object(src='http://lorempixel.com/64/64/cats', alt='...')
             .media-body
               a(href='')
                 h4.media-heading #{article.title}
               h4.media-heading
                 small #{article.time}
               a.media-body(href='/') #{article.text}
+            .media-right
+              a(href='')
+                img.media-object(src='http://lorempixel.com/64/64/cats', alt='...')
+
+        br
+
+        a.btn.btn-default.btn-block(href='') Перейти ко всем новостям
