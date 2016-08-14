@@ -1,13 +1,26 @@
-nav.navbar.navbar-default.navbar-fixed-top
+.hamburger-overlay.container
+  br
+  .list-group
+    a.list-group-item(href='/timetable')
+      span.badge
+      | Расписание
+    a.list-group-item(href='')
+      span.badge 1
+      | Задания
+    a.list-group-item(href='')
+      span.badge 2
+      | Сообщения
+
+nav.navbar.navbar-default.navbar-fixed-top.navbar-toggled
   .container
     .navbar-header
       a.navbar-brand(href='/') Студенческий портал
-      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
-        span.sr-only Toggle navigation
+      button.hamburger.navbar-toggle
         span.icon-bar
         span.icon-bar
         span.icon-bar
-    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+    
+    .collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-left
         li
           a(href='/timetable')
@@ -39,16 +52,3 @@ nav.navbar.navbar-default.navbar-fixed-top
             li.divider(role='separator')
             li
               a(href='/') Выход
-
-script.
-      // Big screen appearance fix
-      $(document).ready(function () {
-        if ($(window).width() >= 768 && false) {
-          var menu_width;
-
-          menu_width = $("#student-ddown-mnu").outerWidth(true);
-          $("#student-ddown-btn").outerWidth(menu_width);
-
-          $("#student-ddown-btn").css('text-align', 'center');
-        }
-      });

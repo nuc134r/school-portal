@@ -3,7 +3,7 @@ block content
     .row
       .col-sm-6.col-md-6.col-lg-5.col-lg-offset-1
         h4.pull-right
-          small нижняя, с изменениями
+          small изменения
         h3 #{' Сегодня'}
           small #{' ' + todayDay}
         .list-group
@@ -91,7 +91,7 @@ block content
         
       .col-sm-6.col-md-6.col-lg-5
         h3
-            | #{' Новости '}
+          | #{' Новости '}
         each article in articles
           .media
             .media-body
@@ -107,3 +107,5 @@ block content
         br
 
         a.btn.btn-default.btn-block(href='') Перейти ко всем новостям
+        
+        br

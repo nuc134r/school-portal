@@ -1,7 +1,4 @@
-body { 
-    padding-top: 70px;
-    padding-bottom: 50px;  
-}
+body { padding-top: 70px; }
 
 .list-group-item.active .list-group-item.active:focus, .list-group-item.active:hover {
     background-color: #588dbb;
@@ -27,6 +24,13 @@ body {
     width: 32px;
 }
 
+@media (max-width: 768px)
+{
+    .navbar-toggled {
+        background-color: white !important;
+    }
+}
+
 @media (min-width: 768px) {
     .navbar-nav>li>a {
         padding-top: 17px;
@@ -40,8 +44,9 @@ body {
 }
 
 .navbar {
-    border-radius: 4px;
+    border-radius: 0px;
     border-color: transparent;
+    border-width: 0px;
 }
 
 #student-ddown-btn {
@@ -68,6 +73,7 @@ h3 {
 .navbar-toggle {
     margin-left: 0px;
     margin-right: 15px;
+    background-color: #f8f8f8 !important;
 }
 
 .media-object {

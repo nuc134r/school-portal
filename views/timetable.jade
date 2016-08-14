@@ -2,7 +2,7 @@ block content
   .container
     .row
       .col-sm-8.col-md-8.col-lg-6.col-sm-offset-2.col-md-offset-2.col-lg-offset-3
-        img(src="flag.svg", title="Сейчас неделя 42, " + todayWeek,
+        img.swing(src="flag.svg", title="Сейчас неделя 42, " + todayWeek,
             class={"flag-upper" : weekType === 1, "flag-lower" : weekType === 2},
             data-toggle="tooltip", data-placement="top")
 
@@ -28,8 +28,8 @@ block content
             small #{day=='Среда' ? 'сегодня': ''}
           .list-group
             each lesson in lessonsToday
-              a.list-group-item(href='', class={active: lesson.now})
-                span.badge #{lesson.starts} — #{lesson.ends}
+              a.list-group-item(href='', class=lesson.now ? 'active' : '')
+                p.list-group-item-text.pull-right #{lesson.starts} — #{lesson.ends}
                 h5.list-group-item-heading
                   | #{lesson.name}
                   br

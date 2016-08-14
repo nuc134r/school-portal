@@ -23,6 +23,7 @@ app.use(cookieParser());
 
 /* Static resources */
 app.use(express.static(path.join(__dirname, 'css')));
+app.use(express.static(path.join(__dirname, 'js')));
 app.use(express.static(path.join(__dirname, 'images')));
 
 /* Routes */
