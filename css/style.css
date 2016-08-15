@@ -26,9 +26,9 @@ body {
     z-index: 2000;
     top: 50px;
     left: 100%;
-    transition: 0.2s ease-in;
     white-space: nowrap;
     overflow-y: scroll;
+    transition: 0.2s ease-out;
 }
 
 .pull-down {
@@ -39,6 +39,7 @@ body {
 
 .overlay-opened {
     left: 0%;
+    transition: 0.15s ease-in;
 }
 
 .noscroll {

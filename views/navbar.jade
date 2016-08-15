@@ -16,14 +16,17 @@
     .list-group
       a.list-group-item(href='/timetable')
         span.badge
-        p.list-group-item-text.pull-right 
-        | Расписание
+        p.list-group-item-text.pull-right
+        span.glyphicon.glyphicon-calendar(aria-hidden='true')
+        | #{ ' Расписание' }
       a.list-group-item(href='')
         span.badge 1
-        | Задания
+        span.glyphicon.glyphicon-ok(aria-hidden='true')
+        | #{ ' Задания' }
       a.list-group-item(href='')
         span.badge 2
-        | Сообщения
+        span.glyphicon.glyphicon-envelope(aria-hidden='true')
+        | #{ ' Сообщения' }
   
     .list-group
       a.list-group-item(href='')
