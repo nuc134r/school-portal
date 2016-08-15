@@ -1,15 +1,54 @@
-.hamburger-overlay.container
-  br
-  .list-group
-    a.list-group-item(href='/timetable')
-      span.badge
-      | Расписание
-    a.list-group-item(href='')
-      span.badge 1
-      | Задания
-    a.list-group-item(href='')
-      span.badge 2
-      | Сообщения
+.hamburger-overlay
+  .container(style='padding-top: 15px;')
+    .media
+      .media-left
+        a(href='')
+          img.media-object(src='https://pp.vk.me/c622225/v622225892/9a07/kDjI14gqGx4.jpg', height='57', width='57')
+      .media-body
+        h5.media-heading
+          a.media-heading(href='') #{ 'Сергей Тихонов ' }
+          small #{ 'П-303' }
+        .media-body(style='padding-top: 1px;')
+          small.label.label-info #{ 'хорошист' }
+    
+    br
+
+    .list-group
+      a.list-group-item(href='/timetable')
+        span.badge
+        p.list-group-item-text.pull-right 
+        | Расписание
+      a.list-group-item(href='')
+        span.badge 1
+        | Задания
+      a.list-group-item(href='')
+        span.badge 2
+        | Сообщения
+  
+    .list-group
+      a.list-group-item(href='')
+        span.badge
+        p.list-group-item-text.pull-right 26
+        | #{ 'Моя группа ' }
+      a.list-group-item(href='')
+        span.badge
+        p.list-group-item-text.pull-right 8
+        | Мои преподаватели
+      a.list-group-item(href='')
+        span.badge
+        | Зачётка
+
+    br
+    br
+
+    a.btn.btn-danger.btn-block
+        | Выход
+
+    br
+    br
+    br
+    br
+
 
 nav.navbar.navbar-default.navbar-fixed-top.navbar-toggled
   .container
@@ -41,7 +80,7 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-toggled
         li.dropdown
           a#student-ddown-btn.dropdown-toggle(href='/', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
             | #{' ' + 'Сергей' + ' '}
-            img.hidden-xs.avatar-thumbnail(src='http://lorempixel.com/32/32/people/')
+            img.avatar-thumbnail(src='https://pp.vk.me/c622225/v622225892/9a07/kDjI14gqGx4.jpg')
 
           ul#student-ddown-mnu.dropdown-menu
             li

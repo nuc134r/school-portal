@@ -9,7 +9,7 @@ body {
     height: 50px;
     float: right;
     margin-bottom: 0px;
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0);
     margin: 0px;
     padding: 9px 14px;
 }
@@ -22,19 +22,27 @@ body {
     height: 100%;
     width: 100%;
     background-color: white;
-    position: absolute;
+    position: fixed;
     z-index: 2000;
     top: 50px;
-    right: 0px;
-    display: none;
+    left: 100%;
+    transition: 0.2s ease-in;
+    white-space: nowrap;
+    overflow-y: scroll;
+}
+
+.pull-down {
+    position: fixed;
+    bottom: 15px;
+    width: 100%;
 }
 
 .overlay-opened {
-    display: block;
+    left: 0%;
 }
 
 .noscroll {
-    position: fixed;
+    overflow: hidden;
 }
 
 
