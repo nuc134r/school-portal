@@ -31,15 +31,15 @@
     .list-group
       a.list-group-item(href='')
         span.badge
-        p.list-group-item-text.pull-right 26
+        p.list-group-item-text.pull-right
         | #{ 'Моя группа ' }
       a.list-group-item(href='')
         span.badge
-        p.list-group-item-text.pull-right 8
+        p.list-group-item-text.pull-right
         | Мои преподаватели
       a.list-group-item(href='')
         span.badge
-        | Зачётка
+        | Моя зачётка
 
     br
     br
@@ -57,6 +57,7 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-toggled
   .container
     .navbar-header
       a.navbar-brand(href='/') Студенческий портал
+      span.hamburger-counter.badge 3
       button.hamburger.navbar-toggle
         span.icon-bar
         span.icon-bar
@@ -91,6 +92,8 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-toggled
                 span.label.label-default П-303
             li
               a(href='/') Мои преподаватели
+            li
+              a(href='/') Моя зачётка
             li.divider(role='separator')
             li
               a(href='/') Выход

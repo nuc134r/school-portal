@@ -31,6 +31,13 @@ body {
     transition: 0.2s ease-out;
 }
 
+.hamburger-counter {
+    position: fixed;
+    right: 4px;
+    top: 9px;
+    z-index: 10;
+}
+
 .pull-down {
     position: fixed;
     bottom: 15px;
@@ -44,74 +51,4 @@ body {
 
 .noscroll {
     overflow: hidden;
-}
-
-
-
-
-
-
-@-webkit-keyframes swing
-{
-    20%
-    {
-        -webkit-transform: translateX(4px);
-        transform: translateX(4px);
-    }
-    40%
-    {
-        -webkit-transform: translateX(-3px);
-        transform: translateX(-3px);
-    }
-    60%
-    {
-        -webkit-transform: translateX(2px);
-        transform: translateX(2px);
-    }
-    70%
-    {
-        -webkit-transform: translateX(-1px);
-        transform: translateX(-1px);
-    }
-    100%
-    {
-        -webkit-transform: translateX(0px);
-        transform: translateX(0px);
-    }
-}
-@keyframes swing
-{
-    20%
-    {
-        -webkit-transform: translateX(4px);
-        transform: translateX(4px);
-    }
-    40%
-    {
-        -webkit-transform: translateX(-3px);
-        transform: translateX(-3px);
-    }
-    60%
-    {
-        -webkit-transform: translateX(2px);
-        transform: translateX(2px);
-    }
-    70%
-    {
-        -webkit-transform: translateX(-1px);
-        transform: translateX(-1px);
-    }
-    100%
-    {
-        -webkit-transform: translateX(0px);
-        transform: translateX(0px);
-    }
-}
-
-.swing:hover
-{
-        -webkit-animation: swing 1s ease;
-        animation: swing 1s ease;
-        -webkit-animation-iteration-count: 1;
-        animation-iteration-count: 1;
 }
