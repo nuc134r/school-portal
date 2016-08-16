@@ -23,5 +23,36 @@ $(document).ready(function () {
             toggleOverlay();
         }
     });
-});
 
+    function EnableAjaxNavigation() {
+        var $a = $('a');
+        $a.unbind('click');
+        $a.click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+
+            if ($this.hasClass('overlay-link')) {
+                toggleOverlay();
+            }
+
+            var href = $this.attr('href');
+            if (href) {
+                var url = window.location.origin + href;
+                console.log('Went to ' + url);
+
+                $.ajax(url)
+                    .done(function (data) {
+                        $('#content-block').html(data);
+                        EnableAjaxNavigation();
+                        history.pushState({}, 'Keker', href);
+                        $("html, body").animate({ scrollTop: 0 }, 'fast');
+                    })
+                    .fail(function (err) {
+                        window.location.replace(href);
+                    });
+            }
+        });
+    }
+
+    EnableAjaxNavigation();
+});

@@ -14,37 +14,37 @@
     br
 
     .list-group
-      a.list-group-item(href='/timetable')
+      a.list-group-item.overlay-link(href='/timetable')
         span.badge
         p.list-group-item-text.pull-right
         span.glyphicon.glyphicon-calendar(aria-hidden='true')
         | #{ ' Расписание' }
-      a.list-group-item(href='')
+      a.list-group-item.overlay-link(href='')
         span.badge 1
         span.glyphicon.glyphicon-ok(aria-hidden='true')
         | #{ ' Задания' }
-      a.list-group-item(href='')
+      a.list-group-item.overlay-link(href='')
         span.badge 2
         span.glyphicon.glyphicon-envelope(aria-hidden='true')
         | #{ ' Сообщения' }
   
     .list-group
-      a.list-group-item(href='')
+      a.list-group-item.overlay-link(href='')
         span.badge
         p.list-group-item-text.pull-right
         | #{ 'Моя группа ' }
-      a.list-group-item(href='')
+      a.list-group-item.overlay-link(href='')
         span.badge
         p.list-group-item-text.pull-right
         | Мои преподаватели
-      a.list-group-item(href='')
+      a.list-group-item.overlay-link(href='')
         span.badge
         | Моя зачётка
 
     br
     br
 
-    a.btn.btn-danger.btn-block
+    a.btn.btn-danger.btn-block(href='http://google.com')
         | Выход
 
     br
@@ -57,11 +57,12 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-toggled
   .container
     .navbar-header
       a.navbar-brand(href='/') Студенческий портал
-      span.hamburger-counter.badge 3
-      button.hamburger.navbar-toggle
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
+      .visible-xs-block
+        span.hamburger-counter.badge.unselectable 3
+        button.hamburger.navbar-toggle
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
     
     .collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-left
@@ -96,4 +97,4 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-toggled
               a(href='/') Моя зачётка
             li.divider(role='separator')
             li
-              a(href='/') Выход
+              a(href='http://google.com') Выход
