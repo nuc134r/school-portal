@@ -36,6 +36,7 @@ body {
     right: 4px;
     top: 9px;
     z-index: 10;
+    cursor: pointer;
 }
 
 .pull-down {

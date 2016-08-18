@@ -24,6 +24,10 @@ $(document).ready(function () {
         }
     });
 
+    function isBreakpoint( alias ) {
+        return $('.device-' + alias).is(':visible');
+    }
+
     function EnableAjaxNavigation() {
         var $a = $('a');
         $a.unbind('click');
@@ -45,7 +49,11 @@ $(document).ready(function () {
                         $('#content-block').html(data);
                         EnableAjaxNavigation();
                         history.pushState({}, 'Keker', href);
-                        $("html, body").animate({ scrollTop: 0 }, 'fast');
+                        if(isBreakpoint('xs')) {
+                            window.scrollTo(0, 0);
+                        } else {
+                            $("html, body").animate({scrollTop: 0}, 'fast');
+                        }
                     })
                     .fail(function (err) {
                         window.location.replace(href);

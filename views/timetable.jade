@@ -3,10 +3,13 @@ script $(function () {$('[data-toggle="tooltip"]').tooltip();})
 block content
   .container
     .row
-      .col-sm-8.col-md-8.col-lg-6.col-sm-offset-2.col-md-offset-2.col-lg-offset-3
-        img.wave(src="flag.svg", title="Сейчас неделя 42, " + todayWeek,
-            class={"flag-upper" : weekType === 1, "flag-lower" : weekType === 2},
-            data-toggle="tooltip", data-placement="top")
+      #flag-wrapper.col-sm-8.col-md-8.col-lg-6.col-sm-offset-2.col-md-offset-2.col-lg-offset-3
+        img#flag(src="flag.svg",
+            onload="$(this).addClass('wave')"
+            title="Сейчас неделя 42, " + todayWeek,
+            class=(weekType === 1 ? "flag-upper" : "flag-lower"),
+            data-toggle="tooltip",
+            data-placement="top")
 
     .row
       .col-sm-8.col-md-8.col-lg-6.col-sm-offset-2.col-md-offset-2.col-lg-offset-3
@@ -18,7 +21,7 @@ block content
           .btn-group
             button.btn.btn-default.active
               | Текущая
-    
+
     .row
       br
 
