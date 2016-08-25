@@ -87,6 +87,12 @@ router.get('/index.html', function(req, res) {
     res.end();
 });
 
+// GET /material
+router.get('/material', function(req, res) {
+    res.render('material', arguments);
+    res.end();
+});
+
 // GET /timetable
 router.get('/timetable', function(req, res) {
     var arguments = { title: 'Расписание' };

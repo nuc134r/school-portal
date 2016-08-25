@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='x-ua-compatible', content='ie=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no')
+    title #{title}
+    link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.teal-blue.min.css")
+    link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css")
+    script(defer src="https://code.getmdl.io/1.2.0/material.min.js")
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='common.js')
+    block head
+
+  body
+    #content.mdl-layout.mdl-js-layout.mdl-layout--fixed-header
+
+      header.mdl-layout__header
+        .mdl-layout-icon
+        .mdl-layout__header-row
+          span.mdl-layout__title Студенческий портал
+          .mdl-layout-spacer
+          .mdl-navigation
+            a.mdl-navigation__link(href='#') Kek
+
+      .mdl-layout__drawer
+        span.mdl-layout__title Сергей Тихонов
+        .mdl-navigation
+          a.mdl-navigation__link(href='#') Расписание
+          a.mdl-navigation__link(href='#') Задания
+          a.mdl-navigation__link(href='#') Сообщения
+          a.mdl-navigation__link(href='#')
+
+      main.mdl-layout__content
+        p Content
+        p Goes
+        p Here
