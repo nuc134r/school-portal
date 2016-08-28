@@ -112,13 +112,6 @@ router.get('/material', function(req, res) {
             room: '405'
         },
         {
-            subject: 'Физическая культура',
-            tutor: 'Соловьёв Л.И.',
-            starts: '10:10',
-            ends: '11:40',
-            room: 'Спортзал'
-        },
-        {
             subject: 'Системное программирование',
             tutor: 'Бунькин В.И.',
             starts: '11:50',
@@ -135,11 +128,6 @@ router.get('/material', function(req, res) {
         },
         {
             title: 'Практическая работа №2',
-            subject: 'Прикладное программирование',
-            details: ''
-        },
-        {
-            title: 'Самостоятельная работа №3',
             subject: 'Прикладное программирование',
             details: ''
         },

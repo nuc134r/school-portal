@@ -7,6 +7,7 @@
 
 .mdl-card__supporting-text {
     padding-top: 0px;
+    height: calc(100% - 123px);
 }
 
 .mdl-card__actions {
@@ -21,6 +22,11 @@
     padding: 2px;
     width: 100%;
     padding-bottom: 7px;
+}
+
+.mdl-card-icon {
+    margin-right: 5px;
+    margin-top: 2px;
 }
 
 /* mdl-button */
