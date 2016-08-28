@@ -39,12 +39,22 @@ html
 
       main.mdl-layout__content
         .mdl-grid
-          .mdl-card.mdl-shadow--4dp.mdl-cell--6-col.mdl-grid
+
+          +Card({all: 4, background: 'teal-400'})
             .mdl-card__title
-              h2.mdl-card__title-text Среда
-              h2.mdl-card__title-text.mdl-card__title-subtext
-                small нижняя неделя 
+              h2.mdl-card__title-text.mdl-color-text--blue-grey-50 Расписание
+              h2.mdl-card__title-text.mdl-card__title-subtext.mdl-color-text--blue-grey-50
+                small среда, нижняя
             .mdl-card__supporting-text
-              +LessonList(lessons)
+              +LessonList(lessons, 'blue-grey-50')
             .mdl-card__actions.mdl-card--border
-              a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') расписание
+              a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-color-text--blue-grey-50(href='#') расписание
+          
+
+          +Card({all: 4})
+            .mdl-card__title
+              h2.mdl-card__title-text Задания
+            .mdl-card__supporting-text
+              +TaskList(tasks)
+            .mdl-card__actions.mdl-card--border
+              a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') задания
