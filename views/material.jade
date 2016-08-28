@@ -1,3 +1,5 @@
+include mixins
+
 doctype html
 html
   head
@@ -5,34 +7,44 @@ html
     meta(http-equiv='x-ua-compatible', content='ie=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no')
     title #{title}
+
     link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
-    link(rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.teal-blue.min.css")
+    link(rel="stylesheet" href="vendor/material.min.css")
+    link(rel="stylesheet" href="mdl.custom.css")
     link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css")
-    script(defer src="https://code.getmdl.io/1.2.0/material.min.js")
+
+    script(defer src="vendor/material.min.js")
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='common.js')
+    
     block head
 
   body
-    #content.mdl-layout.mdl-js-layout.mdl-layout--fixed-header
+    #content.mdl-layout.mdl-js-layout.mdl-layout--fixed-header.mdl-layout--fixed-drawer
 
       header.mdl-layout__header
         .mdl-layout-icon
         .mdl-layout__header-row
-          span.mdl-layout__title Студенческий портал
+          span.mdl-layout__title Сегодня
           .mdl-layout-spacer
-          .mdl-navigation
-            a.mdl-navigation__link(href='#') Kek
+
 
       .mdl-layout__drawer
-        span.mdl-layout__title Сергей Тихонов
+        span.mdl-layout__title #{' '}
         .mdl-navigation
+          a.mdl-navigation__link(href='#') Сегодня
           a.mdl-navigation__link(href='#') Расписание
           a.mdl-navigation__link(href='#') Задания
           a.mdl-navigation__link(href='#') Сообщения
-          a.mdl-navigation__link(href='#')
 
       main.mdl-layout__content
-        p Content
-        p Goes
-        p Here
+        .mdl-grid
+          .mdl-card.mdl-shadow--4dp.mdl-cell--6-col.mdl-grid
+            .mdl-card__title
+              h2.mdl-card__title-text Среда
+              h2.mdl-card__title-text.mdl-card__title-subtext
+                small нижняя неделя 
+            .mdl-card__supporting-text
+              +LessonList(lessons)
+            .mdl-card__actions.mdl-card--border
+              a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') полное расписание

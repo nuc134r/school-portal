@@ -75,9 +75,7 @@ router.get('/', function(req, res) {
         }
     ];
 
-    var full = req.xhr ? '' : '_full';
-
-    res.render('dashboard' + full, arguments);
+    res.render('dashboard', arguments);
     res.end();
 });
 
@@ -89,6 +87,32 @@ router.get('/index.html', function(req, res) {
 
 // GET /material
 router.get('/material', function(req, res) {
+    var arguments = { title: 'Студенческий портал' };
+    
+    arguments.lessons = [
+        {
+            title: 'Разработка баз данных',
+            tutor: 'Ларионова Е.А.',
+            starts: '8:30',
+            ends: '10:00',
+            room: '405'
+        },
+        {
+            title: 'Физическая культура',
+            tutor: 'Соловьёв Л.И.',
+            starts: '10:10',
+            ends: '11:40',
+            room: 'Спортзал'
+        },
+        {
+            title: 'Системное программирование',
+            tutor: 'Бунькин В.И.',
+            starts: '11:50',
+            ends: '13:40',
+            room: '105a'
+        }
+    ]
+
     res.render('material', arguments);
     res.end();
 });

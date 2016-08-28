@@ -14,6 +14,12 @@
     br
 
     .list-group
+      a.list-group-item.overlay-link(href='/')
+        span.badge
+        p.list-group-item-text.pull-right
+        span.glyphicon.glyphicon-calendar(aria-hidden='true')
+        | #{ ' Сегодня' }
+    .list-group
       a.list-group-item.overlay-link(href='/timetable')
         span.badge
         p.list-group-item-text.pull-right
@@ -56,7 +62,7 @@
 nav.navbar.navbar-default.navbar-fixed-top.navbar-toggled
   .container
     .navbar-header
-      a.navbar-brand(href='/') Студенческий портал
+      a.navbar-brand Студенческий портал
       .visible-xs-block
         span.hamburger-counter.badge.unselectable 3
         button.hamburger.navbar-toggle
@@ -67,17 +73,19 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-toggled
     .collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-left
         li
+          a(href='/')
+            |  Сегодня
+        li
+      ul.nav.navbar-nav
+        li
           a(href='/timetable')
-            //span.glyphicon.glyphicon-calendar(aria-hidden='true')
             |  Расписание
         li
           a(href='/')
-            //span.glyphicon.glyphicon-ok(aria-hidden='true')
             |  #{'Задания' + ' '}
             span.badge 1
         li
           a(href='/')
-            //span.glyphicon.glyphicon-envelope(aria-hidden='true')
             |  #{'Сообщения' + ' '}
             span.badge 2
 

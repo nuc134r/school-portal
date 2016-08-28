@@ -1,9 +1,11 @@
+extends layout
+
 block content
   .container
     .row
       .col-sm-6.col-md-6.col-lg-5.col-lg-offset-1
         h4.pull-right
-          small изменения
+          small учтены изменения
         h3 #{' Сегодня'}
           small #{' ' + todayDay}
         .list-group
@@ -56,7 +58,7 @@ block content
               img.media-object(src='https://new.vk.com/images/camera_100.png', height='57', width='57')
           .media-body
             h5.media-heading
-              a.media-heading(href='') Александр Иванов
+              a.media-heading(href='') Извините, пожалуйста
               small #{ ' куратор' }
             .media-body
               a.btn.btn-default(href='', style='margin-top: 2px') Написать сообщение

@@ -1,0 +1,7 @@
+mixin LessonList(lessons)
+  each lesson in lessons
+    button.mdl-button.mdl-button-custom.mdl-js-button 
+      p.mdl-button-custom--right #{lesson.room}
+      p.mdl-button-custom--header #{lesson.title}
+      p.mdl-button-custom--right #{lesson.starts + ' - ' + lesson.ends}
+      p.mdl-button-custom--text #{lesson.tutor}

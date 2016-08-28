@@ -62,5 +62,5 @@ $(document).ready(function () {
         });
     }
 
-    EnableAjaxNavigation();
+    //EnableAjaxNavigation();
 });
