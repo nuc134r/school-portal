@@ -116,7 +116,8 @@ router.get('/material', function(req, res) {
             tutor: 'Бунькин В.И.',
             starts: '11:50',
             ends: '13:40',
-            room: '105a'
+            room: '105a',
+            now: true
         }
     ];
 

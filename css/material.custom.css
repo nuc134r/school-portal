@@ -7,6 +7,9 @@
 
 .mdl-card__supporting-text {
     padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    width: 100%;
     height: calc(100% - 123px);
 }
 
@@ -15,21 +18,21 @@
     padding-top: 8px;
 }
 
-.mdl-button-custom {
-    height: auto;
-    text-transform: none;
-    text-align: left;
-    padding: 2px;
-    width: 100%;
-    padding-bottom: 7px;
-}
-
 .mdl-card-icon {
     margin-right: 5px;
     margin-top: 2px;
 }
 
 /* mdl-button */
+
+.mdl-button-custom {
+    height: auto;
+    text-transform: none;
+    text-align: left;
+    width: 100%;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
 
 .mdl-button-custom--header {
     font-size: 16px;

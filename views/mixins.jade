@@ -1,18 +1,14 @@
-mixin LessonList(lessons, color)
+mixin LessonList(lessons)
   each lesson in lessons
-    button.mdl-button.mdl-button-custom.mdl-js-button 
-      p(class={
-        'mdl-color-text--blue-grey-50' : color === 'blue-grey-50'
-        }).mdl-button-custom--right #{lesson.room}
-      p(class={
-        'mdl-color-text--blue-grey-50' : color === 'blue-grey-50'
-        }).mdl-button-custom--header #{lesson.subject}
-      p(class={
-        'mdl-color-text--blue-grey-50' : color === 'blue-grey-50'
-        }).mdl-button-custom--right #{lesson.starts + ' - ' + lesson.ends}
-      p(class={
-        'mdl-color-text--blue-grey-50' : color === 'blue-grey-50'
-        }).mdl-button-custom--text #{lesson.tutor}
+    button.mdl-button.mdl-button-custom.mdl-js-button(class={
+      'mdl-button--accent': lesson.now,
+      'mdl-button--raised': lesson.now,
+      'mdl-js-ripple-effect': lesson.now
+      }) 
+      p.mdl-button-custom--right #{lesson.room}
+      p.mdl-button-custom--header #{lesson.subject}
+      p.mdl-button-custom--right #{lesson.starts + ' - ' + lesson.ends}
+      p.mdl-button-custom--text #{lesson.tutor}
 
 mixin TaskList(tasks)
   each task in tasks
