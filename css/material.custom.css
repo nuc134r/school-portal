@@ -37,12 +37,12 @@
 }
 
 .mdl-button-custom--text {
-    opacity: .7;
+    opacity: .6;
     margin-bottom: 0px;
 }
 
 .mdl-button-custom--right {
-    opacity: .7;
+    opacity: .6;
     margin-bottom: 0px;
     float: right;
     font-size: 13px;
