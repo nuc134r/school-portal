@@ -18,7 +18,7 @@ block content
               p.list-group-item-text.pull-right #{lesson.classroom}
               p.list-group-item-text #{lesson.teacher}
 
-        a.btn.btn-default.btn-block(href='/timetable') Перейти к полному расписанию
+        a.btn.btn-default.btn-block(href='') Перейти к полному расписанию
 
         br
 
@@ -46,65 +46,65 @@ block content
 
         br
         
-    .row
-      .col-sm-6.col-md-6.col-lg-5.col-lg-offset-1
-        h3
-          | #{' Группа '}
-          small П-303
-
-        .media
-          .media-left
-            a(href='')
-              img.media-object(src='https://new.vk.com/images/camera_100.png', height='57', width='57')
-          .media-body
-            h5.media-heading
-              a.media-heading(href='') Извините, пожалуйста
-              small #{ ' куратор' }
-            .media-body
-              a.btn.btn-default(href='', style='margin-top: 2px') Написать сообщение
-
-        .media
-          .media-left
-            a(href='')
-              img.media-object(src='https://pp.vk.me/c633819/v633819348/25564/hFo-UqGEoXk.jpg', height='57', width='57')
-          .media-body
-            h5.media-heading
-              a.media-heading(href='') Анастасия Батанина
-              small #{ ' староста' }
-            .media-body
-              a.btn.btn-default(href='', style='margin-top: 2px') Написать сообщение
-
-        .media
-          .media-left
-            a(href='')
-              img.media-object(src='https://pp.vk.me/c631524/v631524005/3c951/DNq7UTs1D1A.jpg', height='57', width='57')
-          .media-body
-            h5.media-heading
-              a.media-heading(href='') Денис Жаров
-              small #{ ' зам. старосты' }
-            .media-body
-              a.btn.btn-default(href='', style='margin-top: 2px') Написать сообщение
-
-        br
-
-        a.btn.btn-default.btn-block(href='') Перейти к группе
-
-        br
-        
-      .col-sm-6.col-md-6.col-lg-5
-        h3
-          | #{' Новости '}
-        each article in articles
-          .media
-            .media-body
-              a(href='')
-                h4.media-heading #{article.title}
-              h4.media-heading
-                small #{article.time}
-              a.media-body(href='/') #{article.text}
-
-        br
-
-        a.btn.btn-default.btn-block(href='') Перейти ко всем новостям
-        
-        br
+    //.row
+    //  .col-sm-6.col-md-6.col-lg-5.col-lg-offset-1
+    //    h3
+    //      | #{' Группа '}
+    //      small П-303
+//
+    //    .media
+    //      .media-left
+    //        a(href='')
+    //          img.media-object(src='https://new.vk.com/images/camera_100.png', height='57', width='57')
+    //      .media-body
+    //        h5.media-heading
+    //          a.media-heading(href='') Извините, пожалуйста
+    //          small #{ ' куратор' }
+    //        .media-body
+    //          a.btn.btn-default(href='', style='margin-top: 2px') Написать сообщение
+//
+    //    .media
+    //      .media-left
+    //        a(href='')
+    //          img.media-object(src='https://pp.vk.me/c633819/v633819348/25564/hFo-UqGEoXk.jpg', height='57', width='57')
+    //      .media-body
+    //        h5.media-heading
+    //          a.media-heading(href='') Анастасия Батанина
+    //          small #{ ' староста' }
+    //        .media-body
+    //          a.btn.btn-default(href='', style='margin-top: 2px') Написать сообщение
+//
+    //    .media
+    //      .media-left
+    //        a(href='')
+    //          img.media-object(src='https://pp.vk.me/c631524/v631524005/3c951/DNq7UTs1D1A.jpg', height='57', width='57')
+    //      .media-body
+    //        h5.media-heading
+    //          a.media-heading(href='') Денис Жаров
+    //          small #{ ' зам. старосты' }
+    //        .media-body
+    //          a.btn.btn-default(href='', style='margin-top: 2px') Написать сообщение
+//
+    //    br
+//
+    //    a.btn.btn-default.btn-block(href='') Перейти к группе
+//
+    //    br
+    //    
+    //  .col-sm-6.col-md-6.col-lg-5
+    //    h3
+    //      | #{' Новости '}
+    //    each article in articles
+    //      .media
+    //        .media-body
+    //          a(href='')
+    //            h4.media-heading #{article.title}
+    //          h4.media-heading
+    //            small #{article.time}
+    //          a.media-body(href='/') #{article.text}
+//
+    //    br
+//
+    //    a.btn.btn-default.btn-block(href='') Перейти ко всем новостям
+    //    
+    //    br
