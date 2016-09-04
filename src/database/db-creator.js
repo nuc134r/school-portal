@@ -39,8 +39,8 @@ async.waterfall([
             fs.readFile(script.path, "utf8", (err, data) => {
                 let scriptCode = data.toString();
                 
-                scriptCode = scriptCode.replace(/\$\{superuser\}/g, db_user.user);
-                scriptCode = scriptCode.replace(/\$\{user\}/g, db_superuser.user);
+                scriptCode = scriptCode.replace(/\$\{superuser\}/g, db_superuser.user);
+                scriptCode = scriptCode.replace(/\$\{user\}/g, db_user.user);
 
                 script.data = scriptCode;
                 callback(err);
