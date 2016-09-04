@@ -102,7 +102,8 @@ router.get('/material', function(req, res) {
             tutor: 'Соловьёв Л.И.',
             starts: '10:10',
             ends: '11:40',
-            room: 'Спортзал'
+            room: 'Спортзал',
+            now: true
         },
         {
             subject: 'Разработка баз данных',
@@ -116,8 +117,7 @@ router.get('/material', function(req, res) {
             tutor: 'Бунькин В.И.',
             starts: '11:50',
             ends: '13:40',
-            room: '105a',
-            now: true
+            room: '105a'
         }
     ];
 

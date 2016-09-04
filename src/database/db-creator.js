@@ -1,12 +1,19 @@
 'use strict';
 
-var pg = require('pg');
-var fs = require('fs');
-var path = require('path');
-var config = require('../../config').database;
-var async = require('async');
+let pg = require('pg');
+let fs = require('fs');
+let path = require('path');
+let async = require('async');
 
-let pool = new pg.Pool(config);
+let db_config = require('../../config').db;
+let db_user = require('../../config').db_user;
+let db_superuser = require('../../config').db_superuser;
+
+let superuser_config = db_config;
+superuser_config.user = db_superuser.user;
+superuser_config.password = db_superuser.password;
+
+let pool = new pg.Pool(superuser_config);
 
 async.waterfall([
     (callback) => {
@@ -14,7 +21,7 @@ async.waterfall([
         fs.readdir(path.join(__dirname, 'creation'), callback);
     },
     (files, callback) => {
-        var scripts = files.map((filename) => {
+        let scripts = files.map((filename) => {
             return {
                 filename: filename,
                 path: path.join(__dirname, 'creation', filename),
@@ -71,42 +78,5 @@ async.waterfall([
         }
 
         console.log('Database created!');
-    });
-
-
-/*
-pool.connect((err, client, done) => {
-    if (err) {
-        return console.error('error fetching client from pool', err);
     }
-
-
-
-
-    let schemaScript = fs.readFileSync(path.join(__dirname, 'creation')).toString();
-
-    client.query(
-        schemaScript,
-        //`insert into subject (name) values ('Технология разработки программных продуктов'); select * from subject`,
-        function (err, result) {
-            //call `done()` to release the client back to the pool
-            done();
-
-            if (err) {
-                return console.error('error running query', err);
-            }
-            console.log(result.rows[0].number);
-            //output: 1
-        });
-});
-
-pool.on('error', function (err, client) {
-    // if an error is encountered by a client while it sits idle in the pool
-    // the pool itself will emit an error event with both the error and
-    // the client which emitted the original error
-    // this is a rare occurrence but can happen if there is a network partition
-    // between your application and the database, the database restarts, etc.
-    // and so you might want to handle it and at least log it out
-    console.error('idle client error', err.message, err.stack)
-})
-*/
+);
