@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('./app');
+var app = require('./src/app');
 var http = require('http');
 
 /**
@@ -27,8 +27,6 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
-
 
 /**
  * Normalize a port into a number, string, or false.

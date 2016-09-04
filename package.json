@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./entry-point.js"
+    "start": "node ./entry-point.js",
+    "init-db": "node ./src/database/db-creator.js"
   },
   "dependencies": {
     "body-parser": "~1.12.4",
@@ -15,6 +16,8 @@
     "mongodb": "^1.4.4",
     "monk": "^1.0.1",
     "jade": "~1.9.2",
-    "ddos": "~0.1.11"
+    "ddos": "~0.1.11",
+    "pg": "6.1.0",
+    "async": "2.0.1"
   }
 }

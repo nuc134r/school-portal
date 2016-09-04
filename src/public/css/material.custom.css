@@ -51,3 +51,10 @@
     font-size: 13px;
     text-transform: lowercase;
 }
+
+.mdl-user-avatar {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    float: left;
+}

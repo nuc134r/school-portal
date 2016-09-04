@@ -1,6 +1,5 @@
 node_modules
 typings
-.vscode
 config.json
 npm-debug.log
 .idea
