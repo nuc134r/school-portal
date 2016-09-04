@@ -10,9 +10,7 @@ let db_config = require('../../config').db;
 let db_user = require('../../config').db_user;
 let db_superuser = require('../../config').db_superuser;
 
-let superuser_config = db_config;
-superuser_config.user = db_superuser.user;
-superuser_config.password = db_superuser.password;
+let superuser_config = Object.assign(db_superuser, db_config);
 
 let pool = new pg.Pool(superuser_config);
 
@@ -39,7 +37,12 @@ async.waterfall([
     (scripts, callback) => {
         async.eachOfSeries(scripts, (script, key, callback) => {
             fs.readFile(script.path, "utf8", (err, data) => {
-                script.data = data.toString();
+                let scriptCode = data.toString();
+                
+                scriptCode = scriptCode.replace(/\$\{superuser\}/g, db_user.user);
+                scriptCode = scriptCode.replace(/\$\{user\}/g, db_superuser.user);
+
+                script.data = scriptCode;
                 callback(err);
             });
         }, (err) => {
