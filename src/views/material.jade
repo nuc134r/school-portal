@@ -28,18 +28,31 @@ html
           span.mdl-layout__title Сегодня
           .mdl-layout-spacer
 
-      .mdl-layout__drawer
-        //span.mdl-layout__title
-        .user-box
-          .avatar
-            img.mdl-user-avatar(src='https://pp.vk.me/c622225/v622225892/9a07/kDjI14gqGx4.jpg')
-          .name 
-            | Сергей Тихонов
+      .mdl-layout__drawer.mdl-layout__drawer-custom
+        .mdl-user-box.mdl-color--teal-600
+          img.mdl-user-avatar(src='https://pp.vk.me/c622225/v622225892/9a07/kDjI14gqGx4.jpg')
+          h6.mdl-user-name Сергей Тихонов
+          h6.mdl-user-group П-403
         .mdl-navigation
-          a.mdl-navigation__link(href='#') Сегодня
-          a.mdl-navigation__link(href='#') Расписание
-          a.mdl-navigation__link(href='#') Задания
-          a.mdl-navigation__link(href='#') Сообщения
+          a.mdl-navigation__link(href='#')
+             i.material-icons.mdl-navigation-icon today
+             | Сегодня
+          a.mdl-navigation__link(href='#')
+            i.material-icons.mdl-navigation-icon date_range
+            | Расписание
+          a.mdl-navigation__link(href='#')
+            i.material-icons.mdl-navigation-icon done_all
+            | Задания
+          a.mdl-navigation__link(href='#')
+            i.material-icons.mdl-navigation-icon mail_outline
+            | Сообщения
+            span 3
+          a.mdl-navigation__link(href='#')
+            i.material-icons.mdl-navigation-icon people
+            | Уебки
+          a.mdl-navigation__link(href='#')
+            i.material-icons.mdl-navigation-icon tag_faces
+            | Клубы
 
       main.mdl-layout__content.mdl-color--grey-100
         
@@ -47,7 +60,7 @@ html
           +Card({all: 4})
             .mdl-card__title
               h2.mdl-card__title-text 
-                i.material-icons.mdl-card-icon today
+                i.material-icons.mdl-card-icon date_range
                 | Расписание
               h2.mdl-card__title-text.mdl-card__title-subtext
                 small понедельник
@@ -60,7 +73,7 @@ html
           +Card({all: 4})
             .mdl-card__title
               h2.mdl-card__title-text 
-                i.material-icons.mdl-card-icon done
+                i.material-icons.mdl-card-icon done_all
                 | Задания
             .mdl-card__supporting-text
               +TaskList(tasks)
