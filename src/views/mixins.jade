@@ -17,6 +17,12 @@ mixin TaskList(tasks)
       p.mdl-button-custom--header #{task.title}
       p.mdl-button-custom--text #{task.subject}
 
+mixin MenuItem(options)
+  a.mdl-navigation__link(href=options.link)
+    i.material-icons.mdl-navigation-icon #{ options.icon }
+    span.mdl-navigation__label #{ options.label }
+    span.mdl-navigation__counter #{ options.counter }
+
 mixin Card(options)
   .mdl-card.mdl-cell.mdl-grid(class={
     'mdl-shadow--2dp': !options.shadow || options.shadow && options.shadow == 2,
