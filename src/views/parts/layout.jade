@@ -6,7 +6,6 @@ html
     meta(charset='utf-8')
     meta(http-equiv='x-ua-compatible', content='ie=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no')
-    title #{title}
 
     link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
     link(rel="stylesheet" href="vendor/material.min.css")
@@ -39,30 +38,8 @@ html
           +MenuItem({label: 'Задания',    link: '#', icon: 'done_all',     counter: null})
           +MenuItem({label: 'Сообщения',  link: '#', icon: 'mail_outline', counter: 3})
           +MenuItem({label: 'Группа',     link: '#', icon: 'people',       counter: null})
+          +MenuItem({label: 'Материалы',  link: '#', icon: 'class',        counter: null})
           +MenuItem({label: 'Клубы',      link: '#', icon: 'tag_faces',    counter: null})
 
       main.mdl-layout__content.mdl-color--grey-100
-        
-        .mdl-grid
-          +Card({all: 4})
-            .mdl-card__title
-              h2.mdl-card__title-text 
-                i.material-icons.mdl-card-icon date_range
-                | Понедельник
-              h2.mdl-card__title-text.mdl-card__title-subtext
-                small завтра
-            .mdl-card__supporting-text
-              +LessonList(lessons)
-            .mdl-card__actions.mdl-card--border
-              a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') расписание
-          
-
-          +Card({all: 4})
-            .mdl-card__title
-              h2.mdl-card__title-text 
-                i.material-icons.mdl-card-icon done_all
-                | Задания
-            .mdl-card__supporting-text
-              +TaskList(tasks)
-            .mdl-card__actions.mdl-card--border
-              a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') задания
+        block content

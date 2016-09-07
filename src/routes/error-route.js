@@ -14,9 +14,8 @@ router.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.render('error', {
         title: 'Ошибка',
-        message: err.message,
         error: err,
-        authorized: req.authorized
+        stack: JSON.stringify(err.stack)
     });
 });
 

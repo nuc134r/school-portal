@@ -1,110 +1,29 @@
-extends layout
+extends parts/layout
+
+block head
+  title Студенческий портал
 
 block content
-  .container
-    .row
-      .col-sm-6.col-md-6.col-lg-5.col-lg-offset-1
-        h4.pull-right
-          small учтены изменения
-        h3 #{' Сегодня'}
-          small #{' ' + todayDay}
-        .list-group
-          each lesson in lessonsToday
-            a.list-group-item(href='', class=lesson.now ? 'active' : '')
-              p.list-group-item-text.pull-right #{lesson.starts} — #{lesson.ends}
-              h5.list-group-item-heading
-                | #{lesson.name}
-                br
-              p.list-group-item-text.pull-right #{lesson.classroom}
-              p.list-group-item-text #{lesson.teacher}
+  .mdl-grid
+    +Card({all: 4})
+      .mdl-card__title
+        h2.mdl-card__title-text 
+          i.material-icons.mdl-card-icon date_range
+          | Расписание
+        h2.mdl-card__title-text.mdl-card__title-subtext
+          small сегодня
+      .mdl-card__supporting-text.mdl-card__supporting-text-custom
+        +LessonList(lessons)
+      .mdl-card__actions.mdl-card--border
+        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') расписание
+    
 
-        a.btn.btn-default.btn-block(href='') Перейти к полному расписанию
-
-        br
-
-      .col-sm-6.col-md-6.col-lg-5
-        h3 #{' Задания '}
-          small
-
-        .list-group
-          a.list-group-item(href='')
-            p.list-group-item-text.pull-right 2 из 5
-            h5.list-group-item-heading Курсовой проект
-            p.list-group-item-text #{ ' Разработка баз данных' }
-          a.list-group-item(href='')
-            span.badge
-            p.list-group-item-text.pull-right
-            h5.list-group-item-heading Практическая работа №2
-            p.list-group-item-text #{ ' Прикладное программирование' }
-          a.list-group-item(href='')
-            span.badge новое
-            p.list-group-item-text.pull-right
-            h5.list-group-item-heading Самостоятельная работа №3
-            p.list-group-item-text #{ ' Прикладное программирование' }
-
-        a.btn.btn-default.btn-block(href='') Перейти ко всем заданиям
-
-        br
-        
-    //.row
-    //  .col-sm-6.col-md-6.col-lg-5.col-lg-offset-1
-    //    h3
-    //      | #{' Группа '}
-    //      small П-303
-//
-    //    .media
-    //      .media-left
-    //        a(href='')
-    //          img.media-object(src='https://new.vk.com/images/camera_100.png', height='57', width='57')
-    //      .media-body
-    //        h5.media-heading
-    //          a.media-heading(href='') Извините, пожалуйста
-    //          small #{ ' куратор' }
-    //        .media-body
-    //          a.btn.btn-default(href='', style='margin-top: 2px') Написать сообщение
-//
-    //    .media
-    //      .media-left
-    //        a(href='')
-    //          img.media-object(src='https://pp.vk.me/c633819/v633819348/25564/hFo-UqGEoXk.jpg', height='57', width='57')
-    //      .media-body
-    //        h5.media-heading
-    //          a.media-heading(href='') Анастасия Батанина
-    //          small #{ ' староста' }
-    //        .media-body
-    //          a.btn.btn-default(href='', style='margin-top: 2px') Написать сообщение
-//
-    //    .media
-    //      .media-left
-    //        a(href='')
-    //          img.media-object(src='https://pp.vk.me/c631524/v631524005/3c951/DNq7UTs1D1A.jpg', height='57', width='57')
-    //      .media-body
-    //        h5.media-heading
-    //          a.media-heading(href='') Денис Жаров
-    //          small #{ ' зам. старосты' }
-    //        .media-body
-    //          a.btn.btn-default(href='', style='margin-top: 2px') Написать сообщение
-//
-    //    br
-//
-    //    a.btn.btn-default.btn-block(href='') Перейти к группе
-//
-    //    br
-    //    
-    //  .col-sm-6.col-md-6.col-lg-5
-    //    h3
-    //      | #{' Новости '}
-    //    each article in articles
-    //      .media
-    //        .media-body
-    //          a(href='')
-    //            h4.media-heading #{article.title}
-    //          h4.media-heading
-    //            small #{article.time}
-    //          a.media-body(href='/') #{article.text}
-//
-    //    br
-//
-    //    a.btn.btn-default.btn-block(href='') Перейти ко всем новостям
-    //    
-    //    br
+    +Card({all: 4})
+      .mdl-card__title
+        h2.mdl-card__title-text 
+          i.material-icons.mdl-card-icon done_all
+          | Задания
+      .mdl-card__supporting-text.mdl-card__supporting-text-custom
+        +TaskList(tasks)
+      .mdl-card__actions.mdl-card--border
+        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') задания
