@@ -34,25 +34,12 @@ html
           h6.mdl-user-name Сергей Тихонов
           h6.mdl-user-group П-403
         .mdl-navigation
-          a.mdl-navigation__link(href='#')
-             i.material-icons.mdl-navigation-icon today
-             | Сегодня
-          a.mdl-navigation__link(href='#')
-            i.material-icons.mdl-navigation-icon date_range
-            | Расписание
-          a.mdl-navigation__link(href='#')
-            i.material-icons.mdl-navigation-icon done_all
-            | Задания
-          a.mdl-navigation__link(href='#')
-            i.material-icons.mdl-navigation-icon mail_outline
-            | Сообщения
-            span 3
-          a.mdl-navigation__link(href='#')
-            i.material-icons.mdl-navigation-icon people
-            | Уебки
-          a.mdl-navigation__link(href='#')
-            i.material-icons.mdl-navigation-icon tag_faces
-            | Клубы
+          +MenuItem({label: 'Сегодня',    link: '#', icon: 'today',        counter: null})
+          +MenuItem({label: 'Расписание', link: '#', icon: 'date_range',   counter: null})
+          +MenuItem({label: 'Задания',    link: '#', icon: 'done_all',     counter: null})
+          +MenuItem({label: 'Сообщения',  link: '#', icon: 'mail_outline', counter: 3})
+          +MenuItem({label: 'Группа',     link: '#', icon: 'people',       counter: null})
+          +MenuItem({label: 'Клубы',      link: '#', icon: 'tag_faces',    counter: null})
 
       main.mdl-layout__content.mdl-color--grey-100
         
@@ -61,9 +48,9 @@ html
             .mdl-card__title
               h2.mdl-card__title-text 
                 i.material-icons.mdl-card-icon date_range
-                | Расписание
+                | Понедельник
               h2.mdl-card__title-text.mdl-card__title-subtext
-                small понедельник
+                small завтра
             .mdl-card__supporting-text
               +LessonList(lessons)
             .mdl-card__actions.mdl-card--border

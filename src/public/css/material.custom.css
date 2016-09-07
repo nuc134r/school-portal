@@ -1,3 +1,6 @@
+/*div {
+    position: relative;
+}*/
 
 /* mdl-card */
 
@@ -53,6 +56,10 @@
     text-transform: lowercase;
 }
 
+.mdl-card__actions > .mdl-button {
+    float: right;
+}
+
 /* drawer */
 
 .mdl-user-avatar {
@@ -90,12 +97,19 @@
     padding: 16px !important;
 }
 
-.icon {
+.mdl-navigation__counter {
     float: right;
     background: #808080;
     color: white;
-    width: 20px;
     border-radius: 3px;
     text-align: center;
     opacity: .8;
+    min-width: 10px;
+    padding: 0px 5px;
+    width: auto;
+}
+
+.mdl-navigation__label {
+    position: relative;
+    top: 1px;
 }
