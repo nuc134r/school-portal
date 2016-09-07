@@ -1,4 +1,4 @@
-extends layout
+extends parts/layout
 
 block head
   title Студенческий портал
@@ -12,7 +12,7 @@ block content
           | Расписание
         h2.mdl-card__title-text.mdl-card__title-subtext
           small сегодня
-      .mdl-card__supporting-text
+      .mdl-card__supporting-text.mdl-card__supporting-text-custom
         +LessonList(lessons)
       .mdl-card__actions.mdl-card--border
         a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') расписание
@@ -23,7 +23,7 @@ block content
         h2.mdl-card__title-text 
           i.material-icons.mdl-card-icon done_all
           | Задания
-      .mdl-card__supporting-text
+      .mdl-card__supporting-text.mdl-card__supporting-text-custom
         +TaskList(tasks)
       .mdl-card__actions.mdl-card--border
         a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') задания

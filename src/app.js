@@ -1,8 +1,9 @@
 'use strict';
 
+let path = require('path');
+
 /* express */
 let express = require('express');
-let path = require('path');
 let favicon = require('serve-favicon');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
@@ -24,13 +25,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-/* auth */
-//app.use(authenticator);
-
 /* static resources */
 app.use(express.static(path.join(__dirname, 'public/css')));
 app.use(express.static(path.join(__dirname, 'public/scripts')));
 app.use(express.static(path.join(__dirname, 'public/assets')));
+
+/* auth */
+//let Authenticator = 
+//app.use(authenticator);
 
 /* repositories */
 let Repository = require('./repository/repository');

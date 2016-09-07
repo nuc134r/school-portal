@@ -8,7 +8,7 @@ router.get('/', function (req, res) {
     arguments.lessons = req.repository.lessons.getTodayLessons(null);
     arguments.tasks = req.repository.tasks.getTasksShort(null);
 
-    res.render('material', arguments);
+    res.render('dashboard', arguments);
     res.end();
 });
 
