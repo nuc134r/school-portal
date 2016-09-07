@@ -1,68 +1,29 @@
-include mixins
+extends layout
 
-doctype html
-html
-  head
-    meta(charset='utf-8')
-    meta(http-equiv='x-ua-compatible', content='ie=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no')
-    title #{title}
+block head
+  title Студенческий портал
 
-    link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
-    link(rel="stylesheet" href="vendor/material.min.css")
-    link(rel="stylesheet" href="material.custom.css")
-    link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css")
-
-    script(defer src="vendor/material.min.js")
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
-    script(src='common.js')
+block content
+  .mdl-grid
+    +Card({all: 4})
+      .mdl-card__title
+        h2.mdl-card__title-text 
+          i.material-icons.mdl-card-icon date_range
+          | Расписание
+        h2.mdl-card__title-text.mdl-card__title-subtext
+          small сегодня
+      .mdl-card__supporting-text
+        +LessonList(lessons)
+      .mdl-card__actions.mdl-card--border
+        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') расписание
     
-    block head
 
-  body
-    .mdl-layout.mdl-js-layout.mdl-layout--fixed-header.mdl-layout--fixed-drawer
-
-      header.mdl-layout__header
-        .mdl-layout-icon
-        .mdl-layout__header-row
-          span.mdl-layout__title Сегодня
-          .mdl-layout-spacer
-
-      .mdl-layout__drawer.mdl-layout__drawer-custom
-        .mdl-user-box.mdl-color--teal-600
-          img.mdl-user-avatar(src='https://pp.vk.me/c622225/v622225892/9a07/kDjI14gqGx4.jpg')
-          h6.mdl-user-name Сергей Тихонов
-          h6.mdl-user-group П-403
-        .mdl-navigation
-          +MenuItem({label: 'Сегодня',    link: '#', icon: 'today',        counter: null})
-          +MenuItem({label: 'Расписание', link: '#', icon: 'date_range',   counter: null})
-          +MenuItem({label: 'Задания',    link: '#', icon: 'done_all',     counter: null})
-          +MenuItem({label: 'Сообщения',  link: '#', icon: 'mail_outline', counter: 3})
-          +MenuItem({label: 'Группа',     link: '#', icon: 'people',       counter: null})
-          +MenuItem({label: 'Клубы',      link: '#', icon: 'tag_faces',    counter: null})
-
-      main.mdl-layout__content.mdl-color--grey-100
-        
-        .mdl-grid
-          +Card({all: 4})
-            .mdl-card__title
-              h2.mdl-card__title-text 
-                i.material-icons.mdl-card-icon date_range
-                | Понедельник
-              h2.mdl-card__title-text.mdl-card__title-subtext
-                small завтра
-            .mdl-card__supporting-text
-              +LessonList(lessons)
-            .mdl-card__actions.mdl-card--border
-              a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') расписание
-          
-
-          +Card({all: 4})
-            .mdl-card__title
-              h2.mdl-card__title-text 
-                i.material-icons.mdl-card-icon done_all
-                | Задания
-            .mdl-card__supporting-text
-              +TaskList(tasks)
-            .mdl-card__actions.mdl-card--border
-              a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') задания
+    +Card({all: 4})
+      .mdl-card__title
+        h2.mdl-card__title-text 
+          i.material-icons.mdl-card-icon done_all
+          | Задания
+      .mdl-card__supporting-text
+        +TaskList(tasks)
+      .mdl-card__actions.mdl-card--border
+        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') задания
