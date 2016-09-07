@@ -21,6 +21,7 @@
 .mdl-card-icon {
     margin-right: 5px;
     margin-top: 2px;
+    color: rgb(84, 84, 84);
 }
 
 /* mdl-button */
@@ -52,9 +53,49 @@
     text-transform: lowercase;
 }
 
+/* drawer */
+
 .mdl-user-avatar {
-    height: 36px;
-    width: 36px;
+    height: 56px;
+    width: 56px;
     border-radius: 50%;
     float: left;
+}
+
+.mdl-user-box {
+    padding: 16px;
+    background: rgb(68, 138, 255);
+    color: white;
+}
+
+.mdl-user-name {
+    margin-top: 70px;
+    margin-bottom: 0px;
+}
+
+.mdl-user-group {
+    margin: 0px;
+    opacity: .7;
+}
+
+.mdl-navigation-icon {
+    padding-right: 12px;
+}
+
+.mdl-layout__drawer-custom {
+    border-width: 0px;
+}
+
+.mdl-navigation__link {
+    padding: 16px !important;
+}
+
+.icon {
+    float: right;
+    background: #808080;
+    color: white;
+    width: 20px;
+    border-radius: 3px;
+    text-align: center;
+    opacity: .8;
 }
