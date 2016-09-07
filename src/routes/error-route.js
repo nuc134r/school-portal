@@ -3,8 +3,9 @@
 var express = require('express');
 var router = express.Router();
 
+//TODO Cleanup
 router.use((req, res, next) => {
-    var err = new Error('Not Found');
+    var err = new Error('Страница не найдена');
     err.status = 404;
     next(err);
 });
