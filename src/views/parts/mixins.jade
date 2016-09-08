@@ -1,14 +1,17 @@
 mixin LessonList(lessons)
-  each lesson in lessons
-    button.mdl-button.mdl-button-custom.mdl-js-button(class={
-      'mdl-button--accent': lesson.now,
-      'mdl-button--raised': lesson.now,
-      'mdl-js-ripple-effect': lesson.now
-      }) 
-      p.mdl-button-custom--right #{lesson.room}
-      p.mdl-button-custom--header #{lesson.subject}
-      p.mdl-button-custom--right #{lesson.starts + ' - ' + lesson.ends}
-      p.mdl-button-custom--text #{lesson.tutor}
+  if lessons.length
+    each lesson in lessons
+      button.mdl-button.mdl-button-custom.mdl-js-button(class={
+        'mdl-button--accent': lesson.now,
+        'mdl-button--raised': lesson.now,
+        'mdl-js-ripple-effect': lesson.now
+        }) 
+        p.mdl-button-custom--right #{lesson.room}
+        p.mdl-button-custom--header #{lesson.subject}
+        p.mdl-button-custom--right #{lesson.starts + ' - ' + lesson.ends}
+        p.mdl-button-custom--text #{lesson.tutor}
+  else
+    span.mdl-card__supporting-text-plaintext Занятий нет
 
 mixin TaskList(tasks)
   each task in tasks

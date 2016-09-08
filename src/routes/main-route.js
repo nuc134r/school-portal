@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
 router.get('/lessons', function (req, res) {
     var arguments = { title: 'Расписание' };
 
-    arguments.lessons = req.repository.lessons.getTodayLessons(null);
+    arguments.lessons = req.repository.lessons.getWeekLessons(null);
 
     res.render('lessons', arguments);
     res.end();
