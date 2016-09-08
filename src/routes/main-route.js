@@ -12,6 +12,16 @@ router.get('/', function (req, res) {
     res.end();
 });
 
+// GET /lessons
+router.get('/lessons', function (req, res) {
+    var arguments = { title: 'Расписание' };
+
+    arguments.lessons = req.repository.lessons.getTodayLessons(null);
+
+    res.render('lessons', arguments);
+    res.end();
+});
+
 // GET /index.html
 router.get('/index.html', function (req, res) {
     res.redirect(301, '/');

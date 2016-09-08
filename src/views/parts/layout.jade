@@ -24,7 +24,8 @@ html
       header.mdl-layout__header
         .mdl-layout-icon
         .mdl-layout__header-row
-          span.mdl-layout__title Сегодня
+          span.mdl-layout__title
+            block header
           .mdl-layout-spacer
 
       .mdl-layout__drawer.mdl-layout__drawer-custom
@@ -33,13 +34,13 @@ html
           h6.mdl-user-name Сергей Тихонов
           h6.mdl-user-group П-403
         .mdl-navigation
-          +MenuItem({label: 'Сегодня',    link: '#', icon: 'today',        counter: null})
-          +MenuItem({label: 'Расписание', link: '#', icon: 'date_range',   counter: null})
-          +MenuItem({label: 'Задания',    link: '#', icon: 'done_all',     counter: null})
-          +MenuItem({label: 'Сообщения',  link: '#', icon: 'mail_outline', counter: 3})
-          +MenuItem({label: 'Группа',     link: '#', icon: 'people',       counter: null})
-          +MenuItem({label: 'Материалы',  link: '#', icon: 'class',        counter: null})
-          +MenuItem({label: 'Клубы',      link: '#', icon: 'tag_faces',    counter: null})
+          +MenuItem({label: 'Сегодня',    link: '/',          icon: 'today',        counter: null})
+          +MenuItem({label: 'Расписание', link: '/lessons',   icon: 'date_range',   counter: null})
+          +MenuItem({label: 'Задания',    link: '/tasks',     icon: 'done_all',     counter: null})
+          +MenuItem({label: 'Сообщения',  link: '/messages',  icon: 'mail_outline', counter: 3})
+          +MenuItem({label: 'Группа',     link: '/students',  icon: 'people',       counter: null})
+          +MenuItem({label: 'Материалы',  link: '/materials', icon: 'class',        counter: null})
+          +MenuItem({label: 'Клубы',      link: '/clubs',     icon: 'tag_faces',    counter: null})
 
       main.mdl-layout__content.mdl-color--grey-100
         block content

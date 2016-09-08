@@ -3,20 +3,15 @@
 var express = require('express');
 var router = express.Router();
 
-//TODO Cleanup
 router.use((req, res, next) => {
-    var err = new Error('Страница не найдена');
-    err.status = 404;
-    next(err);
-});
+    let error = new Error('Страница не найдена');
+    error.status = 404;
+    error.url = req.originalUrl;
 
-// production error handler
-router.use((err, req, res, next) => {
-    res.status(err.status || 500);
+    res.status(error.status || 500);
     res.render('error', {
-        title: 'Ошибка',
-        error: err,
-        stack: JSON.stringify(err.stack)
+        error: error,
+        stack: JSON.stringify(error.stack)
     });
 });
 

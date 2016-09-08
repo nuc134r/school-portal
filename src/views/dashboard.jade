@@ -3,8 +3,12 @@ extends parts/layout
 block head
   title Студенческий портал
 
+block header
+  | Сегодня
+
 block content
   .mdl-grid
+
     +Card({all: 4})
       .mdl-card__title
         h2.mdl-card__title-text 
@@ -15,7 +19,7 @@ block content
       .mdl-card__supporting-text.mdl-card__supporting-text-custom
         +LessonList(lessons)
       .mdl-card__actions.mdl-card--border
-        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') расписание
+        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/lessons') полное расписание
     
 
     +Card({all: 4})
@@ -26,4 +30,4 @@ block content
       .mdl-card__supporting-text.mdl-card__supporting-text-custom
         +TaskList(tasks)
       .mdl-card__actions.mdl-card--border
-        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') задания
+        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') все задания
