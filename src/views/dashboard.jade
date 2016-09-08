@@ -16,7 +16,7 @@ block content
           | Расписание
         h2.mdl-card__title-text.mdl-card__title-subtext
           small сегодня
-      .mdl-card__supporting-text.mdl-card__supporting-text-custom
+      .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
         +LessonList(lessons)
       .mdl-card__actions.mdl-card--border
         a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/lessons') полное расписание
@@ -27,7 +27,7 @@ block content
         h2.mdl-card__title-text 
           i.material-icons.mdl-card-icon done_all
           | Задания
-      .mdl-card__supporting-text.mdl-card__supporting-text-custom
+      .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
         +TaskList(tasks)
       .mdl-card__actions.mdl-card--border
         a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') все задания

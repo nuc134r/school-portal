@@ -4,16 +4,27 @@
 
 /* mdl-card */
 
+.mdl-card {
+    min-height: 0px;
+}
+
 .mdl-card__title-subtext {
     padding-left: 5px;
 }
 
-.mdl-card__supporting-text-custom {
+.mdl-card__supporting-text-heightfix {
+    height: calc(100% - 123px);
+}
+
+.mdl-card__supporting-text {
     padding-top: 0px;
     padding-right: 0px;
     padding-left: 0px;
     width: 100%;
-    height: calc(100% - 123px);
+}
+
+.mdl-card__supporting-text-plaintext {
+    padding-left: 17px;
 }
 
 .mdl-card__actions {
