@@ -1,0 +1,23 @@
+extends parts/layout
+
+block head
+  title Расписание | Студенческий портал
+
+block header
+  | Расписание
+
+block content
+  .mdl-grid
+
+    +Card({all: 4})
+      .mdl-card__title
+        h2.mdl-card__title-text 
+          | Понедельник
+        h2.mdl-card__title-text.mdl-card__title-subtext
+          small верхняя
+      .mdl-card__supporting-text.mdl-card__supporting-text-custom
+        +LessonList(lessons)
+      //.mdl-card__actions.mdl-card--border
+      //  a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') полное расписание
+    
+
