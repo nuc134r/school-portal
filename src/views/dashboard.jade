@@ -7,27 +7,28 @@ block header
   | Сегодня
 
 block content
-  .mdl-grid
+  main.mdl-layout__content.mdl-color--grey-100
+    .mdl-grid
 
-    +Card({all: 4})
-      .mdl-card__title
-        h2.mdl-card__title-text 
-          i.material-icons.mdl-card-icon &#xE916;
-          | Расписание
-        h2.mdl-card__title-text.mdl-card__title-subtext
-          small сегодня
-      .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
-        +LessonList(lessons)
-      .mdl-card__actions.mdl-card--border
-        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/lessons') полное расписание
-    
+      +Card({all: 4})
+        .mdl-card__title
+          h2.mdl-card__title-text
+            i.material-icons.mdl-card-icon &#xE916;
+            | Расписание
+          h2.mdl-card__title-text.mdl-card__title-subtext
+            small сегодня
+        .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
+          +LessonList(lessons)
+        .mdl-card__actions.mdl-card--border
+          a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/lessons') полное расписание
 
-    +Card({all: 4})
-      .mdl-card__title
-        h2.mdl-card__title-text 
-          i.material-icons.mdl-card-icon &#xE877;
-          | Задания
-      .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
-        +TaskList(tasks)
-      .mdl-card__actions.mdl-card--border
-        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') все задания
+
+      +Card({all: 4})
+        .mdl-card__title
+          h2.mdl-card__title-text
+            i.material-icons.mdl-card-icon &#xE877;
+            | Задания
+        .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
+          +TaskList(tasks)
+        .mdl-card__actions.mdl-card--border
+          a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') все задания
