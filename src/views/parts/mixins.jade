@@ -22,7 +22,7 @@ mixin TaskList(tasks)
 
 mixin MenuItem(options)
   a.mdl-navigation__link(href=options.link)
-    i.material-icons.mdl-navigation-icon #{ options.icon }
+    i.material-icons.mdl-navigation-icon !{options.icon}
     span.mdl-navigation__label #{ options.label }
     span.mdl-navigation__counter #{ options.counter }
 
