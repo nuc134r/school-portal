@@ -5,6 +5,7 @@ let TasksRepository = require('./tasks-repository');
 
 function CreateRepository(db) {
     function MiddleWareFunction(req, res, next) {
+        
         let repository = {
             lessons: new LessonsRepository(db, req.user),
             tasks: new TasksRepository(db, req.user)
