@@ -10,13 +10,26 @@ block content
   main.mdl-layout__content.mdl-color--grey-100
     .mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
       .mdl-tabs__tab-bar.mdl-color--white
-        a.mdl-tabs__tab.is-active(href='#starks-panel') Текущая
-        a.mdl-tabs__tab(href='#lannisters-panel') Верхняя
-        a.mdl-tabs__tab(href='#targaryens-panel') Нижняя
+        a.mdl-tabs__tab.is-active(href='#current') Текущая
+        a.mdl-tabs__tab(href='#upper') Верхняя
+        a.mdl-tabs__tab(href='#lower') Нижняя
 
       - var days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 
-      .mdl-tabs__panel.is-active(id='starks-panel')
+      .mdl-tabs__panel.is-active(id='current')
+        .mdl-grid
+
+          each day in days
+            +Card({all: 4, shadow: (days.indexOf(day) === today.day ? 16 : 2)})
+              .mdl-card__title
+                  h2.mdl-card__title-text
+                    | #{day}
+                  h2.mdl-card__title-text.mdl-card__title-subtext
+                    small= today.week
+              .mdl-card__supporting-text(style='height: 100%;')
+                  +LessonList(lessons[days.indexOf(day)])
+
+      .mdl-tabs__panel(id='upper')
         .mdl-grid
 
           each day in days
@@ -25,32 +38,17 @@ block content
                   h2.mdl-card__title-text
                     | #{day}
                   h2.mdl-card__title-text.mdl-card__title-subtext
-                    small
               .mdl-card__supporting-text(style='height: 100%;')
                   +LessonList(lessons[days.indexOf(day)])
 
-      .mdl-tabs__panel(id='lannisters-panel')
+      .mdl-tabs__panel(id='lower')
         .mdl-grid
-
+        
           each day in days
-            +Card({all: 4})
+            +Card({all: 4 })
               .mdl-card__title
                   h2.mdl-card__title-text
                     | #{day}
                   h2.mdl-card__title-text.mdl-card__title-subtext
-                    small верхняя
               .mdl-card__supporting-text(style='height: 100%;')
                   +LessonList(lessons[days.indexOf(day)])
-
-      .mdl-tabs__panel(id='targaryens-panel')
-        .mdl-grid
-
-          each day in days
-            +Card({all: 4})
-                .mdl-card__title
-                    h2.mdl-card__title-text
-                      | #{day}
-                    h2.mdl-card__title-text.mdl-card__title-subtext
-                      small нижняя
-                .mdl-card__supporting-text(style='height: 100%;')
-                    +LessonList(lessons[days.indexOf(day)])
