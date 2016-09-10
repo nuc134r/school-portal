@@ -17,6 +17,10 @@ router.get('/lessons', function (req, res) {
     var arguments = { title: 'Расписание' };
 
     arguments.lessons = req.repository.lessons.getWeekLessons(null);
+    arguments.today = {
+        day: req.repository.time.getWeekDay(),
+        week: req.repository.time.getWeek(true)
+    };
 
     res.render('lessons', arguments);
     res.end();
