@@ -14,6 +14,7 @@ WEB:
 * [x] Адаптивная вёрстка
 * [x] CSS animations
 * [x] SVG
+* [x] AJAX
 * [x] Bootstrap
 * [x] Material Design
 * [x] MDL
@@ -23,7 +24,6 @@ NodeJS:
 * [x] NodeJS
 * [x] npm
 * [x] Express.js
-* [x] AJAX
 * [x] Jade (Pug)
 * [x] AsyncJS
 
