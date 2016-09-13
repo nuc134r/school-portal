@@ -39,15 +39,6 @@ block content
             i.material-icons.mdl-card-icon &#xE7FB;
             | Группа
         .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
-          .mdl-list
-            .mdl-list__item.mdl-list__item--two-line(style='position:relative;')
-              .mdl-list__item-primary-content
-                a(href='#batanena')
-                  span.link-wrapper(style='position:absolute; width:100%; height:100%; top:0; left: 0;')
-                img.mdl-list__item-avatar(src='https://pp.vk.me/c633819/v633819348/25565/tbTnJqL1qjI.jpg') 
-                span Анастасия Батанина
-                span.mdl-list__item-sub-title староста 
-              a(href='#message-batanena').mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--colored.mdl-js-ripple-effect
-                i.material-icons &#xE158;
+          +GroupCompactList(group)
         .mdl-card__actions.mdl-card--border
           a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') моя группа

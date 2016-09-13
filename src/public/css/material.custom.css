@@ -71,6 +71,18 @@
     float: right;
 }
 
+/* list */ 
+.mdl-list-custom {
+    padding: 0px;
+}
+
+.mdl-list__item--two-line-custom {
+    position: relative;
+    padding: 0px 16px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
 /* drawer */
 
 .mdl-user-avatar {

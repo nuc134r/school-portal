@@ -5,8 +5,9 @@ var router = express.Router();
 router.get('/', function (req, res) {
     var arguments = { title: 'Студенческий портал' };
 
-    arguments.lessons = req.repository.lessons.getTodayLessons(null);
-    arguments.tasks = req.repository.tasks.getTasksShort(null);
+    arguments.lessons = req.repository.lessons.getTodayLessons();
+    arguments.tasks = req.repository.tasks.getTasksShort();
+    arguments.group = req.repository.students.getMyGroupCompact();
 
     res.render('dashboard', arguments);
     res.end();

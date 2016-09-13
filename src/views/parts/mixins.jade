@@ -26,6 +26,19 @@ mixin MenuItem(options)
     span.mdl-navigation__label #{ options.label }
     span.mdl-navigation__counter #{ options.counter }
 
+mixin GroupCompactList(people)
+  .mdl-list.mdl-list-custom
+    each hooman in people
+      .mdl-list__item.mdl-list__item--two-line.mdl-list__item--two-line-custom
+        .mdl-list__item-primary-content
+          a(href=hooman.userlink)
+            span.link-wrapper(style='position:absolute; width:100%; height:100%; top:0; left: 0;')
+          img.mdl-list__item-avatar(src=hooman.avatar) 
+          span= hooman.name
+          span.mdl-list__item-sub-title= hooman.position 
+        a(href=hooman.messagelink).mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--colored.mdl-js-ripple-effect
+          i.material-icons &#xE158;
+
 mixin Card(options)
   .mdl-card.mdl-cell.mdl-grid(class={
     'mdl-shadow--2dp': !options.shadow || options.shadow && options.shadow == 2,
