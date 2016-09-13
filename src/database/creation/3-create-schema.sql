@@ -3,27 +3,22 @@ create table subject
     id              serial          primary key,
     name            tname           not null,
     teacher_id      integer,
-    descripton      tdescription
+    descripton      tdescription,
+    classroom_id        integer
 );
 
-create table teacher
+create table _user
 (
     id              serial          primary key,
     name            tname           not null,
     lastname        tname           not null,
     middlename      tname           not null,
     image_id        integer,
-    descripton      tdescription
-);
+    group_id        integer,
+    type            varchar(1)      not null,
+    descripton      tdescription,
 
-create table student
-(
-    id              serial          primary key,
-    name            tname           not null,
-    lastname        tname           not null,
-    middlename      tname           not null,
-    image_id        integer,
-    group_id        integer         not null
+    check (type = 's' or type = 't')
 );
 
 create table image
@@ -33,7 +28,7 @@ create table image
     data            bytea           not null
 );
 
-create table student_group
+create table study_group
 (
     id              serial          primary key,
     name            tname           not null,
@@ -45,7 +40,7 @@ create table lesson
     id              serial          primary key,
     group_id        integer         not null,
     subject_id      integer         not null,
-    teacher_id      integer         not null
+    classroom_id        integer
 );
 
 create table classroom
