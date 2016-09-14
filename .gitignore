@@ -2,5 +2,3 @@ node_modules
 typings
 config.json
 npm-debug.log
-.idea
-public/vendor
