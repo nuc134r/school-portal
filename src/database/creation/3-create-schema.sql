@@ -4,7 +4,7 @@ create table subject
     name            tname           not null,
     teacher_id      integer,
     descripton      tdescription,
-    classroom_id        integer
+	classroom_id    integer
 );
 
 create table _user
@@ -40,7 +40,15 @@ create table lesson
     id              serial          primary key,
     group_id        integer         not null,
     subject_id      integer         not null,
-    classroom_id        integer
+    classroom_id    integer,
+	timing_id		integer			not null
+);
+
+create table timing
+(
+    id              serial          primary key,
+	start			integer			not null,
+	end_			integer			not null
 );
 
 create table classroom
