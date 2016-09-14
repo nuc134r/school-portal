@@ -3,6 +3,18 @@ var router = express.Router();
 
 // GET /
 router.get('/', function (req, res) {
+    res.redirect(301, '/dashboard');
+    res.end();
+});
+
+// GET /index.html
+router.get('/index.html', function (req, res) {
+    res.redirect(301, '/dashboard');
+    res.end();
+});
+
+// GET /dashboard
+router.get('/dashboard', function (req, res) {
     var arguments = { title: 'Студенческий портал' };
 
     arguments.lessons = req.repository.lessons.getTodayLessons();
@@ -24,12 +36,6 @@ router.get('/lessons', function (req, res) {
     };
 
     res.render('lessons', arguments);
-    res.end();
-});
-
-// GET /index.html
-router.get('/index.html', function (req, res) {
-    res.redirect(301, '/');
     res.end();
 });
 

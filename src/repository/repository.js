@@ -1,9 +1,9 @@
 'use strict';
 
-let LessonsRepository = require('./lessons-repository');
-let TasksRepository = require('./tasks-repository');
-let TimeRepository = require('./time-repository');
-let StudentsRepository = require('./students-repository');
+let LessonsRepository = require('./lessons');
+let TasksRepository = require('./tasks');
+let TimeRepository = require('./time');
+let StudentsRepository = require('./students');
 
 function CreateRepository(db) {
     function MiddleWareFunction(req, res, next) {

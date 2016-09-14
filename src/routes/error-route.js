@@ -8,7 +8,7 @@ router.use((req, res, next) => {
     error.status = 404;
     error.url = req.originalUrl;
 
-    res.status(error.status || 500);
+    res.status(404);
     res.render('error', {
         error: error,
         stack: JSON.stringify(error.stack)
