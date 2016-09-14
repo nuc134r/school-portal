@@ -8,5 +8,6 @@ alter table study_group add foreign key(image_id) references image(id);
 alter table lesson add foreign key(group_id) references study_group(id);
 alter table lesson add foreign key(subject_id) references subject(id);
 alter table lesson add foreign key(classroom_id) references classroom(id);
+alter table lesson add foreign key(timing_id) references timing(id);
 
 alter table classroom add foreign key(floor_id) references floor(id);

@@ -41,7 +41,8 @@ let repository = new Repository(/* db */);
 app.use(repository);
 
 /* routes */
-app.use('/', require('./routes/main-route'));
+app.use('/', require('./routes/login-route'));
+app.use('/', require('./routes/student-route'));
 app.use(require('./routes/error-route'));
 
 module.exports = app;
