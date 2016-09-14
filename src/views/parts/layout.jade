@@ -33,6 +33,11 @@ html
           img.mdl-user-avatar(src='https://pp.vk.me/c622225/v622225892/9a07/kDjI14gqGx4.jpg')
           h6.mdl-user-name Сергей Тихонов
           h6.mdl-user-group П-403
+          button#hdrbtn.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(style='position: absolute; top: 96px; right: 5px;')
+            i.material-icons more_vert
+          ul.mdl-menu.mdl-js-menu.mdl-js-ripple-effect.mdl-menu--bottom-right(for='hdrbtn')
+            li.mdl-menu__item(onclick='') Настройки
+            li.mdl-menu__item(onclick='window.location.href = "/login"') Выход
         .mdl-navigation
           +MenuItem({label: 'Сегодня',    link: '/',          icon: '&#xE8DF;',  counter: null})
           +MenuItem({label: 'Расписание', link: '/lessons',   icon: '&#xE916;',  counter: null})

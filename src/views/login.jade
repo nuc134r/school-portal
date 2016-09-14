@@ -10,14 +10,14 @@ block content
   +Card({all: 4, desktop: 4, shadow: 4})
     .mdl-card__supporting-text
       h4(style='font-weight: 100; text-align: center;') Авторизация
-      form(action='#', style='padding: 0px 8px;')
+      form(action='/auth', style='padding: 0px 8px;')
         .mdl-textfield.mdl-js-textfield(style='left: 50%; transform: translateX(-50%);')
           input#loginfield.mdl-textfield__input(type='text' autofocus)
           label.mdl-textfield__label(for='loginfield') Логин
         .mdl-textfield.mdl-js-textfield(style='left: 50%; transform: translateX(-50%); margin-bottom: 8px;')
           input#passwordfield.mdl-textfield__input(type='password')
           label.mdl-textfield__label(for='passwordfield') Пароль
-        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#', style='width: calc(50% - 32px)') вход
+        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/', style='width: calc(50% - 32px)') вход
         a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#', style='width: calc(50% - 32px)') забыл пароль
 
 
