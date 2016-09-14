@@ -27,7 +27,7 @@ block content
                   h2.mdl-card__title-text.mdl-card__title-subtext
                     small= today.week
               .mdl-card__supporting-text(style='height: 100%;')
-                  +LessonList(lessons[days.indexOf(day)])
+                  +LessonList(lessons.current[days.indexOf(day)])
 
       .mdl-tabs__panel(id='upper')
         .mdl-grid
@@ -39,7 +39,7 @@ block content
                     | #{day}
                   h2.mdl-card__title-text.mdl-card__title-subtext
               .mdl-card__supporting-text(style='height: 100%;')
-                  +LessonList(lessons[days.indexOf(day)])
+                  +LessonList(lessons.upper[days.indexOf(day)])
 
       .mdl-tabs__panel(id='lower')
         .mdl-grid
@@ -51,4 +51,4 @@ block content
                     | #{day}
                   h2.mdl-card__title-text.mdl-card__title-subtext
               .mdl-card__supporting-text(style='height: 100%;')
-                  +LessonList(lessons[days.indexOf(day)])
+                  +LessonList(lessons.lower[days.indexOf(day)])
