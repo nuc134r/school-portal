@@ -6,7 +6,7 @@ let TimeRepository = require('./time');
 let StudentsRepository = require('./students');
 
 function CreateRepository(db) {
-    function MiddleWareFunction(req, res, next) {
+    function MiddlewareFunction(req, res, next) {
         
         let repository = {
             lessons: new LessonsRepository(db, req.user),
@@ -19,7 +19,7 @@ function CreateRepository(db) {
         next();
     }
 
-    return MiddleWareFunction;
+    return MiddlewareFunction;
 }
 
 module.exports = CreateRepository;

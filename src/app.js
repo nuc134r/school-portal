@@ -1,6 +1,7 @@
 'use strict';
 
 let path = require('path');
+let config = require('../config');
 
 /* express */
 let express      = require('express');
@@ -32,17 +33,20 @@ app.use(express.static(path.join(__dirname, 'public/css')));
 app.use(express.static(path.join(__dirname, 'public/scripts')));
 app.use(express.static(path.join(__dirname, 'public/assets')));
 
-/* auth */
-//let Authenticator = 
-//app.use(authenticator);
-
 /* repositories */
-let RepoMiddleware = require('./repository/repository');
+let RepoMiddleware = require('./repository/middleware');
 let repoMiddleware = new RepoMiddleware(/* db */);
 app.use(repoMiddleware);
 
-/* routes */
+/* login route */
 app.use('/', require('./routes/login-route'));
+
+/* authorization */
+let AuthMiddleware = require('./database/auth-middleware');
+let authMiddleware = new AuthMiddleware(config);
+app.use(authMiddleware);
+
+/* routes */
 app.use('/', require('./routes/student-route'));
 app.use(require('./routes/error-route'));
 
