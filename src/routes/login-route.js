@@ -8,7 +8,8 @@ let autorizator = require('../authorizator');
 // GET /login
 router.get('/login', function (req, res) {
     let params = {
-        error_code: req.query.reason
+        error_code: req.query.reason,
+        login: req.query.login
     };
 
     res.render('login', params);
@@ -20,9 +21,12 @@ router.post('/authorize', function (req, res) {
 
     let week = 604800;
 
+    let login = req.body.login;
+    let password = req.body.pass;
+
     let result = autorizator.authorize(
-        req.body.login,
-        req.body.pass,
+        login,
+        password,
         (token) => {
             try {
                 if (token) {
@@ -30,7 +34,13 @@ router.post('/authorize', function (req, res) {
                     res.redirect('/dashboard');
                     res.end();
                 } else {
-                    res.redirect('/login?reason=invalid_credentials');
+                    var redirect_url = '/login?reason=invalid_credentials';
+
+                    if (login) {
+                        redirect_url += `&login=${login}`;
+                    }
+
+                    res.redirect(redirect_url);
                     res.end();
                 }
             } catch (ex) { }
