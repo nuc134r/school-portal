@@ -41,7 +41,7 @@ let pg = require('pg');
 let pool = new pg.Pool(Object.assign(config.db_user, config.db));
 
 /* public routes */
-app.use('/', require('./routes/login-route'));
+app.use('/', require('./routes/login'));
 
 /* session */
 app.use(require('./session/middleware')());
@@ -50,7 +50,7 @@ app.use(require('./session/middleware')());
 app.use(require('./repository/middleware')(/* db */));
 
 /* authorized routes */
-app.use('/', require('./routes/student-route'));
-app.use(require('./routes/error-route'));
+app.use('/', require('./routes/student'));
+app.use(require('./routes/error'));
 
 module.exports = app;
