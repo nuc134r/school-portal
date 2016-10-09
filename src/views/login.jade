@@ -6,10 +6,14 @@ block head
 
 block content
   .mdl-layout-spacer
-
   +Card({all: 4, desktop: 4, shadow: 4})
     .mdl-card__supporting-text
-      h4(style='font-weight: 100; text-align: center;') Авторизация
+      
+      if error_code == 'invalid_credentials'
+        h4(style='font-weight: 100; text-align: center; color: red;') Ошибка входа
+      else
+        h4(style='font-weight: 100; text-align: center;') Авторизация
+
       form(action='/authorize', method='POST', style='padding: 0px 8px;', id='loginform')
         .mdl-textfield.mdl-js-textfield(style='left: 50%; transform: translateX(-50%);')
           input#loginfield.mdl-textfield__input(type='text', autofocus, name='login')
@@ -17,7 +21,8 @@ block content
         .mdl-textfield.mdl-js-textfield(style='left: 50%; transform: translateX(-50%); margin-bottom: 8px;')
           input#passwordfield.mdl-textfield__input(type='password', name='pass')
           label.mdl-textfield__label(for='passwordfield') Пароль
+               
         a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('loginform').submit()", style='width: calc(50% - 32px)') вход
-        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#', style='width: calc(50% - 32px)') забыл пароль
+        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#', style='width: calc(50% - 32px);') забыл пароль
 
   .mdl-layout-spacer

@@ -1,21 +1,40 @@
-var express = require('express');
-var router = express.Router();
+'use strict';
+
+let express = require('express');
+let router = express.Router();
+
+let autorizator = require('../authorizator');
 
 // GET /login
 router.get('/login', function (req, res) {
-    res.render('login', arguments);
+    let params = {
+        error_code: req.query.reason
+    };
+
+    res.render('login', params);
     res.end();
 });
 
 // POST /authorize
 router.post('/authorize', function (req, res) {
-    var a = 5;
 
-    if (body.login && body.pass) {
-        if (body.login == 'admin' && body.pass == '12345') {
-            res.
-        }
-    }
+    let week = 604800;
+
+    let result = autorizator.authorize(
+        req.body.login,
+        req.body.pass,
+        (token) => {
+            try {
+                if (token) {
+                    res.cookie('token', token, { maxAge: week, httpOnly: true });
+                    res.redirect('/dashboard');
+                    res.end();
+                } else {
+                    res.redirect('/login?reason=invalid_credentials');
+                    res.end();
+                }
+            } catch (ex) { }
+        });
 });
 
 module.exports = router;

@@ -15,7 +15,7 @@ function CreateRepository(db) {
             students: new StudentsRepository()
         };
 
-        req.repository = repository;
+        req.school_context.repository = repository;
         next();
     }
 

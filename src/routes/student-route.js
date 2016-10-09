@@ -1,5 +1,7 @@
-var express = require('express');
-var router = express.Router();
+'use strict';
+
+let express = require('express');
+let router = express.Router();
 
 // GET /
 router.get('/', function (req, res) {
@@ -15,27 +17,31 @@ router.get('/index.html', function (req, res) {
 
 // GET /dashboard
 router.get('/dashboard', function (req, res) {
-    var arguments = { title: 'Студенческий портал' };
+    let params = { title: 'Студенческий портал', user: req.school_context.user };
 
-    arguments.lessons = req.repository.lessons.getTodayLessons();
-    arguments.tasks = req.repository.tasks.getTasksShort();
-    arguments.group = req.repository.students.getMyGroupCompact();
+    let repository = req.school_context.repository;
 
-    res.render('dashboard', arguments);
+    params.lessons = repository.lessons.getTodayLessons();
+    params.tasks = repository.tasks.getTasksShort();
+    params.group = repository.students.getMyGroupCompact();
+
+    res.render('dashboard', params);
     res.end();
 });
 
 // GET /lessons
 router.get('/lessons', function (req, res) {
-    var arguments = { title: 'Расписание' };
+    let params = { title: 'Расписание' };
 
-    arguments.lessons = req.repository.lessons.getWeekLessons(null);
-    arguments.today = {
-        day: req.repository.time.getWeekDay(),
-        week: req.repository.time.getWeek(true)
+    let repository = req.school_context.repository;
+
+    params.lessons = repository.lessons.getWeekLessons(null);
+    params.today = {
+        day: repository.time.getWeekDay(),
+        week: repository.time.getWeek(true)
     };
 
-    res.render('lessons', arguments);
+    res.render('lessons', params);
     res.end();
 });
 

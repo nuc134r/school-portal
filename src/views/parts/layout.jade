@@ -31,8 +31,8 @@ html
       .mdl-layout__drawer.mdl-layout__drawer-custom
         .mdl-user-box.mdl-color--teal-600
           img.mdl-user-avatar(src='https://pp.vk.me/c622225/v622225892/9a07/kDjI14gqGx4.jpg')
-          h6.mdl-user-name Сергей Тихонов
-          h6.mdl-user-group П-403
+          h6.mdl-user-name #{user.name.first} #{user.name.last}
+          h6.mdl-user-group #{user.student.group}
           button#hdrbtn.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(style='position: absolute; top: 96px; right: 5px;')
             i.material-icons more_vert
           ul.mdl-menu.mdl-js-menu.mdl-js-ripple-effect.mdl-menu--bottom-right(for='hdrbtn')

@@ -4,16 +4,11 @@ let path = require('path');
 let config = require('../config');
 
 /* express */
-let express      = require('express');
-let favicon	     = require('serve-favicon');
-let logger       = require('morgan');
+let express = require('express');
+let favicon = require('serve-favicon');
+let logger = require('morgan');
 let cookieParser = require('cookie-parser');
-let bodyParser   = require('body-parser');
-
-/* mongo */
-//let mongo = require('mongodb');
-//let monk = require('monk');
-//let db = monk('localhost:27017/schoolportal');
+let bodyParser = require('body-parser');
 
 let app = express();
 
@@ -33,20 +28,28 @@ app.use(express.static(path.join(__dirname, 'public/css')));
 app.use(express.static(path.join(__dirname, 'public/scripts')));
 app.use(express.static(path.join(__dirname, 'public/assets')));
 
-/* repositories */
-let RepoMiddleware = require('./repository/middleware');
-let repoMiddleware = new RepoMiddleware(/* db */);
-app.use(repoMiddleware);
+// creating app context object 'school_context' in 'req' object
+app.use((req, res, next) => { req.school_context = {}; next(); })
 
-/* login route */
+/* mongo */
+//let mongo = require('mongodb');
+//let monk = require('monk');
+//let db = monk('localhost:27017/schoolportal');
+
+/* postgre sql */
+let pg = require('pg');
+let pool = new pg.Pool(Object.assign(config.db_user, config.db));
+
+/* public routes */
 app.use('/', require('./routes/login-route'));
 
-/* authorization */
-let AuthMiddleware = require('./database/auth-middleware');
-let authMiddleware = new AuthMiddleware(config);
-app.use(authMiddleware);
+/* session */
+app.use(require('./session/middleware')());
 
-/* routes */
+/* repositories */
+app.use(require('./repository/middleware')(/* db */));
+
+/* authorized routes */
 app.use('/', require('./routes/student-route'));
 app.use(require('./routes/error-route'));
 
