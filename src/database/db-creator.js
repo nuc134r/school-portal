@@ -70,7 +70,7 @@ async.waterfall([
         }, (err) => {
             releaseClient();
             callback(err);
-        })
+        });
     }
 ],
     (err, result) => {
