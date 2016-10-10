@@ -1,7 +1,6 @@
 'use strict';
 
 let path = require('path');
-let config = require('../config');
 
 /* express */
 let express = require('express');
@@ -35,10 +34,6 @@ app.use((req, res, next) => { req.school_context = {}; next(); })
 //let mongo = require('mongodb');
 //let monk = require('monk');
 //let db = monk('localhost:27017/schoolportal');
-
-/* postgre sql */
-let pg = require('pg');
-let pool = new pg.Pool(Object.assign(config.db_user, config.db));
 
 /* public routes */
 app.use('/', require('./routes/login'));

@@ -19,14 +19,13 @@ router.get('/login', function (req, res) {
 // POST /authorize
 router.post('/authorize', function (req, res) {
 
-    let week = 604800;
+    let week = 24 * 7 * 60 * 60 * 1000;
 
     let login = req.body.login;
     let password = req.body.pass;
 
-    let result = autorizator.authorize(
-        login,
-        password,
+    // TODO refactor using promises
+    let result = autorizator.authorize(login, password,
         (token) => {
             try {
                 if (token) {

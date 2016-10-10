@@ -1,8 +1,8 @@
 'use strict';
 
-let async = require('async');
-
 let sessions = require('./session/sessions');
+
+let db = require('./database/postgre-pool');
 
 function authorize(login, password, callback) {
 
@@ -36,43 +36,6 @@ function authorize(login, password, callback) {
     }
 
     callback(null);
-
-    /*async.waterfall([
-        (callback) => {
-            pool.connect((err, client, done) => {
-                if (err) {
-                    console.log('error fetching client from pool');
-                }
-
-                callback(err, client, done);
-            });
-        },
-        (client, done, callback) => {
-            client.query(script.data, (err, result) => {
-                if (err) {
-                    
-                } else {
-                    sessions.push({ ... });
-                }
-                callback(err);
-            });
-
-            if (!err) {
-                next();
-            } else {
-                res.redirect('/login');
-                res.end();
-            }
-
-            callback(null, done);
-        }
-    ],
-        (err, done) => {
-            done();
-
-
-        }
-    );*/
 }
 
 module.exports.authorize = authorize;

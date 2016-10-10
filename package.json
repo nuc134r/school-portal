@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./entry-point.js",
+    "start": "node --use-strict ./entry-point.js",
     "initdb": "node ./src/database/db-creator.js"
   },
   "dependencies": {
