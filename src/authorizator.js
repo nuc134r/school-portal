@@ -15,7 +15,7 @@ function authorize(login, password, callback) {
             id: 42,
             profile: 'igor-sychov',
             name: {
-                first: 'Игорь',
+                first: 'Слава',
                 last: 'Сычёв',
                 middle: 'Захарович'
             },
