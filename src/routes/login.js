@@ -31,12 +31,7 @@ router.post('/authorize', function (req, res) {
             res.redirect('/dashboard');
         },
         () => {
-            var redirect_url = '/login?reason=invalid_credentials';
-
-            if (login) {
-                redirect_url += `&login=${login}`;
-            }
-
+            var redirect_url = '/login?reason=invalid_credentials' + (login ? `&login=${login}` : '')
             res.redirect(redirect_url);
         });
 });

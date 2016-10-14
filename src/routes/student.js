@@ -7,7 +7,7 @@ let renderer = require('../renderer');
 
 // GET /
 router.get('/', function (req, res) {
-    res.redirect(301, '/dashboard');
+    res.redirect(301, 'dashboard');
     res.end();
 });
 
@@ -29,9 +29,7 @@ router.get('/dashboard', function (req, res) {
 
     renderer.render(req, res, params,
         {
-            view: 'dashboard',
-            title: 'Студенческий портал',
-            theme: 'teacher'
+            view: 'student/dashboard'
         });
 });
 
@@ -49,8 +47,7 @@ router.get('/lessons', function (req, res) {
 
     renderer.render(req, res, params,
         {
-            view: 'lessons',
-            title: 'Расписание'
+            view: 'student/lessons'
         });
 });
 
