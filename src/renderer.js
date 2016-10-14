@@ -1,22 +1,29 @@
 'use strict';
 
-const STUDENT_THEME = { primary: 'teal', secondary: 'blue'};
-const TEACHER_THEME = { primary: 'purple', secondary: 'indigo'};
+const STUDENT_THEME = { primary: 'teal', secondary: 'blue' };
+const TEACHER_THEME = { primary: 'purple', secondary: 'indigo' };
 
-function render(req, res, params, options) {
+function create(layout_mode) {
+    return function (req, res, params, options) {
 
-    let mandatory_params = {
-        title: options.title,
-        user: req.school_context.user,
-        theme: STUDENT_THEME
-    };
+        let mandatory_params = {
+            title: options.title,
+            user: req.school_context.user,
+            layout: layout_mode
+        };
 
-    if (options.theme == 'teacher') {
-        mandatory_params.theme = TEACHER_THEME;
+        switch (layout_mode) {
+            case 'teacher':
+                mandatory_params.theme = TEACHER_THEME;
+                break;
+            case 'student':
+                mandatory_params.theme = STUDENT_THEME;
+                break;
+        }
+
+        res.render(options.view, Object.assign(mandatory_params, params));
+        res.end();
     }
-
-    res.render(options.view, Object.assign(mandatory_params, params));
-    res.end();
 }
 
-module.exports.render = render;
+module.exports = create;

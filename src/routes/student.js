@@ -3,21 +3,22 @@
 let express = require('express');
 let router = express.Router();
 
-let renderer = require('../renderer');
+let renderer = require('../renderer')('student');
+
+router.use((req, res, next) => {
+    if (req.school_context.user.type != 'student') {
+        res.redirect('..');
+    } else {
+        next();
+    }
+});
 
 // GET /
 router.get('/', function (req, res) {
-    res.redirect(301, 'dashboard');
-    res.end();
+    res.redirect('/student/dashboard');
 });
 
-// GET /index.html
-router.get('/index.html', function (req, res) {
-    res.redirect(301, '/dashboard');
-    res.end();
-});
-
-// GET /dashboard
+// GET /student/dashboard
 router.get('/dashboard', function (req, res) {
     let repository = req.school_context.repository;
 
@@ -27,13 +28,13 @@ router.get('/dashboard', function (req, res) {
         group: repository.students.getMyGroupCompact()
     };
 
-    renderer.render(req, res, params,
+    renderer(req, res, params,
         {
             view: 'student/dashboard'
         });
 });
 
-// GET /lessons
+// GET /student/lessons
 router.get('/lessons', function (req, res) {
     let repository = req.school_context.repository;
 
@@ -45,7 +46,7 @@ router.get('/lessons', function (req, res) {
         }
     }
 
-    renderer.render(req, res, params,
+    renderer(req, res, params,
         {
             view: 'student/lessons'
         });

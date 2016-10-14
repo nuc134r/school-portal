@@ -9,14 +9,14 @@ html
 
     link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
 
-    link(rel="stylesheet" href=('vendor/material.' + theme.primary + '-' + theme.secondary + '.min.css'))
+    link(rel="stylesheet" href=('/vendor/material.' + theme.primary + '-' + theme.secondary + '.min.css'))
 
-    link(rel="stylesheet" href="material.custom.css")
+    link(rel="stylesheet" href="/material.custom.css")
     link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css")
 
-    script(defer src="vendor/material.min.js")
-    //script(src='vendor/jquery.min.js')
-    script(src='common.js')
+    script(defer src="/vendor/material.min.js")
+    //script(src='/vendor/jquery.min.js')
+    script(src='/common.js')
     
     block head
 
@@ -34,19 +34,29 @@ html
         .mdl-user-box(class=[('mdl-color--' + theme.primary + '-600')])
           img.mdl-user-avatar(src='https://pp.vk.me/c622225/v622225892/9a07/kDjI14gqGx4.jpg')
           h6.mdl-user-name #{user.name.first} #{user.name.last}
-          h6.mdl-user-group #{user.student.group}
+          if layout == 'student'
+            h6.mdl-user-group #{user.student.group}
+          if layout == 'teacher'
+            h6.mdl-user-group преподаватель
           button#hdrbtn.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(style='position: absolute; top: 96px; right: 5px;')
             i.material-icons more_vert
           ul.mdl-menu.mdl-js-menu.mdl-js-ripple-effect.mdl-menu--bottom-right(for='hdrbtn')
             li.mdl-menu__item(onclick='') Настройки
-            li.mdl-menu__item(onclick='window.location.href = "/login"') Выход
-        .mdl-navigation
-          +MenuItem({label: 'Сегодня',    link: '/',          icon: '&#xE8DF;',  counter: null})
-          +MenuItem({label: 'Расписание', link: '/lessons',   icon: '&#xE916;',  counter: null})
-          +MenuItem({label: 'Задания',    link: '/tasks',     icon: '&#xE877;',  counter: null})
-          +MenuItem({label: 'Сообщения',  link: '/messages',  icon: '&#xE0C9;',  counter: 3})
-          +MenuItem({label: 'Группа',     link: '/students',  icon: '&#xE7FB;',  counter: null})
-          +MenuItem({label: 'Материалы',  link: '/materials', icon: '&#xE86E;',  counter: null})
-          +MenuItem({label: 'Клубы',      link: '/clubs',     icon: '&#xE420;',  counter: null})
+            li.mdl-menu__item(onclick='window.location.href = "/logout"') Выход
+        
+        if layout == 'student'
+          .mdl-navigation
+            +MenuItem({label: 'Сегодня',    link: '/',          icon: '&#xE8DF;',  counter: null})
+            +MenuItem({label: 'Расписание', link: 'lessons',   icon: '&#xE916;',  counter: null})
+            +MenuItem({label: 'Задания',    link: 'tasks',     icon: '&#xE877;',  counter: null})
+            +MenuItem({label: 'Сообщения',  link: 'messages',  icon: '&#xE0C9;',  counter: 3})
+            +MenuItem({label: 'Группа',     link: 'students',  icon: '&#xE7FB;',  counter: null})
+            +MenuItem({label: 'Материалы',  link: 'materials', icon: '&#xE86E;',  counter: null})
+            +MenuItem({label: 'Клубы',      link: 'clubs',     icon: '&#xE420;',  counter: null})
+        
+        if layout == 'teacher'
+          .mdl-navigation
+            +MenuItem({label: 'Сегодня',    link: '/',          icon: '&#xE8DF;',  counter: null})
+            +MenuItem({label: 'Расписание', link: 'lessons',   icon: '&#xE916;',  counter: null})
 
       block content

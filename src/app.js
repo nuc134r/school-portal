@@ -45,7 +45,9 @@ app.use(require('./session/middleware')());
 app.use(require('./repository/middleware')(/* db */));
 
 /* authorized routes */
-app.use('/', require('./routes/student'));
+app.use('/', require('./routes/main'));
+app.use('/student', require('./routes/student'));
+app.use('/teacher', require('./routes/teacher'));
 app.use(require('./routes/error'));
 
 module.exports = app;

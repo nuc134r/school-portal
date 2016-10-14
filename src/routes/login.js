@@ -16,6 +16,14 @@ router.get('/login', function (req, res) {
     res.end();
 });
 
+// GET /logout
+router.get('/logout', function (req, res) {
+    res.clearCookie('token');
+
+    res.redirect('/login');
+    res.end();
+});
+
 // POST /authorize
 router.post('/authorize', function (req, res) {
 
@@ -28,7 +36,7 @@ router.post('/authorize', function (req, res) {
         .authorize(login, password)
         .then(token => {
             res.cookie('token', token, { maxAge: week, httpOnly: true });
-            res.redirect('/dashboard');
+            res.redirect('/');
         },
         () => {
             var redirect_url = '/login?reason=invalid_credentials' + (login ? `&login=${login}` : '')
