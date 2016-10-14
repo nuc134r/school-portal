@@ -1,66 +1,23 @@
-$(document).ready(function () {
-    var hamburgerBtn = $('.hamburger'),
-        hamburgerCounter = $('.hamburger-counter'),
-        $body = $('body'),
-        nav = $('nav'),
-        overlay = $('.hamburger-overlay'),
-        logo = $('.navbar-brand');
+/*function post(path, params, method) {
+    method = method || "post"; // Set method to post by default if not specified.
 
-    function toggleOverlay() {
-        hamburgerBtn.toggleClass('hamburger-toggled');
-        nav.toggleClass('navbar-toggled');
-        
-        overlay.toggleClass('overlay-opened');
-        $body.toggleClass('noscroll');
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+         }
     }
 
-    hamburgerBtn.click(toggleOverlay);
-    hamburgerCounter.click(toggleOverlay);
-
-    logo.click(function (e) {
-        if (overlay.hasClass('overlay-opened')) {
-            e.preventDefault();
-            toggleOverlay();
-        }
-    });
-
-    function isBreakpoint( alias ) {
-        return $('.device-' + alias).is(':visible');
-    }
-
-    function EnableAjaxNavigation() {
-        var $a = $('a');
-        $a.unbind('click');
-        $a.click(function (e) {
-            e.preventDefault();
-            var $this = $(this);
-
-            if ($this.hasClass('overlay-link')) {
-                toggleOverlay();
-            }
-
-            var href = $this.attr('href');
-            if (href) {
-                var url = window.location.origin + href;
-                console.log('Went to ' + url);
-
-                $.ajax(url)
-                    .done(function (data) {
-                        $('#content-block').html(data);
-                        EnableAjaxNavigation();
-                        history.pushState({}, 'Keker', href);
-                        if(isBreakpoint('xs')) {
-                            window.scrollTo(0, 0);
-                        } else {
-                            $("html, body").animate({scrollTop: 0}, 'fast');
-                        }
-                    })
-                    .fail(function (err) {
-                        window.location.replace(href);
-                    });
-            }
-        });
-    }
-
-    //EnableAjaxNavigation();
-});
+    document.body.appendChild(form);
+    form.submit();
+}*/

@@ -1,4 +1,4 @@
-extends parts/layout
+extends ../parts/layout
 
 block head
   title Студенческий портал
@@ -32,3 +32,13 @@ block content
           +TaskList(tasks)
         .mdl-card__actions.mdl-card--border
           a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') все задания
+
+      +Card({all: 4})
+        .mdl-card__title
+          h2.mdl-card__title-text
+            i.material-icons.mdl-card-icon &#xE7FB;
+            | Группа
+        .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
+          +GroupCompactList(group)
+        .mdl-card__actions.mdl-card--border
+          a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#') моя группа

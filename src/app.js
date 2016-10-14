@@ -9,39 +9,45 @@ let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 
-/* database */
-//let mongo = require('mongodb');
-//let monk = require('monk');
-//let db = monk('localhost:27017/schoolportal');
-
-/* app */
 let app = express();
 
+/* jade */
 app.set('view engine', 'jade');
 app.set('views', 'src/views');
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+
+/* util */
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 /* static resources */
+//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(path.join(__dirname, 'public/css')));
 app.use(express.static(path.join(__dirname, 'public/scripts')));
 app.use(express.static(path.join(__dirname, 'public/assets')));
-app.use(express.static(path.join(__dirname, 'public/fonts')));
 
-/* auth */
-//let Authenticator = 
-//app.use(authenticator);
+// creating app context object 'school_context' in 'req' object
+app.use((req, res, next) => { req.school_context = {}; next(); })
+
+/* mongo */
+//let mongo = require('mongodb');
+//let monk = require('monk');
+//let db = monk('localhost:27017/schoolportal');
+
+/* public routes */
+app.use('/', require('./routes/login'));
+
+/* session */
+app.use(require('./session/middleware')());
 
 /* repositories */
-let Repository = require('./repository/repository');
-let repository = new Repository(/* db */);
-app.use(repository);
+app.use(require('./repository/middleware')(/* db */));
 
-/* routes */
-app.use('/', require('./routes/main-route'));
-app.use(require('./routes/error-route'));
+/* authorized routes */
+app.use('/', require('./routes/main'));
+app.use('/student', require('./routes/student'));
+app.use('/teacher', require('./routes/teacher'));
+app.use(require('./routes/error'));
 
 module.exports = app;

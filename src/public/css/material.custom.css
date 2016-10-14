@@ -71,23 +71,34 @@
     float: right;
 }
 
+/* list */ 
+.mdl-list-custom {
+    padding: 0px;
+}
+
+.mdl-list__item--two-line-custom {
+    position: relative;
+    padding: 0px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
 /* drawer */
 
 .mdl-user-avatar {
-    height: 56px;
-    width: 56px;
+    height: 48px;
+    width: 48px;
     border-radius: 50%;
     float: left;
 }
 
 .mdl-user-box {
     padding: 16px;
-    background: rgb(68, 138, 255);
     color: white;
 }
 
 .mdl-user-name {
-    margin-top: 70px;
+    margin-top: 60px;
     margin-bottom: 0px;
 }
 

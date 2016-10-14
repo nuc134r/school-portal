@@ -70,16 +70,17 @@ async.waterfall([
         }, (err) => {
             releaseClient();
             callback(err);
-        })
+        });
     }
 ],
     (err, result) => {
         console.timeEnd('creation time');
 
         if (err) {
-            return console.error("Error during database creation", err);
+            console.error("Error during database creation", err);
+        } else {
+            console.log('Database created!');
         }
-
-        console.log('Database created!');
+        process.exit();
     }
 );

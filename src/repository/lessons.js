@@ -8,7 +8,11 @@ function CreateRepository(db, user) {
 
     this.getWeekLessons = () => {
 
-        let result = [];
+        let result = {
+            current: [],
+            upper: [],
+            lower: []
+        };
 
         for (let i = 0; i < 6; i++) {
             let num = getRandomInt(0, 5);
@@ -16,10 +20,34 @@ function CreateRepository(db, user) {
             let day = [];
 
             for (let i = 0; i < num; i++) {
-                day.push(lessonsMock[i]);
+                day.push(lessonsMock[getRandomInt(0, lessonsMock.length - 1)]);
             }
 
-            result.push(day);
+            result.current.push(day);
+        }
+
+        for (let i = 0; i < 6; i++) {
+            let num = getRandomInt(0, 5);
+
+            let day = [];
+
+            for (let i = 0; i < num; i++) {
+                day.push(lessonsMock[getRandomInt(0, lessonsMock.length - 1)]);
+            }
+
+            result.upper.push(day);
+        }
+
+        for (let i = 0; i < 6; i++) {
+            let num = getRandomInt(0, 5);
+
+            let day = [];
+
+            for (let i = 0; i < num; i++) {
+                day.push(lessonsMock[getRandomInt(0, lessonsMock.length - 1)]);
+            }
+
+            result.lower.push(day);
         }
 
         return result;
@@ -49,24 +77,10 @@ let lessonsMock = [
         room: 'Спортзал'
     },
     {
-        subject: 'Разработка баз данных',
-        tutor: 'Ларионова Е.А.',
-        starts: '8:30',
-        ends: '10:00',
-        room: '405'
-    },
-    {
         subject: 'Системное программирование',
         tutor: 'Бунькин В.И.',
         starts: '11:50',
         ends: '13:40',
         room: '105a'
-    },
-    {
-        subject: 'Разработка баз данных',
-        tutor: 'Ларионова Е.А.',
-        starts: '8:30',
-        ends: '10:00',
-        room: '405'
     }
 ];
