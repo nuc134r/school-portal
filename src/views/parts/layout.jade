@@ -8,7 +8,9 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no')
 
     link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
-    link(rel="stylesheet" href="vendor/material.min.css")
+
+    link(rel="stylesheet" href=('vendor/material.' + theme.primary + '-' + theme.secondary + '.min.css'))
+
     link(rel="stylesheet" href="material.custom.css")
     link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css")
 
@@ -29,7 +31,7 @@ html
           .mdl-layout-spacer
 
       .mdl-layout__drawer.mdl-layout__drawer-custom
-        .mdl-user-box.mdl-color--teal-600
+        .mdl-user-box(class=[('mdl-color--' + theme.primary + '-600')])
           img.mdl-user-avatar(src='https://pp.vk.me/c622225/v622225892/9a07/kDjI14gqGx4.jpg')
           h6.mdl-user-name #{user.name.first} #{user.name.last}
           h6.mdl-user-group #{user.student.group}

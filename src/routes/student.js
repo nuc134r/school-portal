@@ -27,7 +27,12 @@ router.get('/dashboard', function (req, res) {
         group: repository.students.getMyGroupCompact()
     };
 
-    renderer.render(req, res, 'dashboard', 'Студенческий портал', params);
+    renderer.render(req, res, params,
+        {
+            view: 'dashboard',
+            title: 'Студенческий портал',
+            theme: 'teacher'
+        });
 });
 
 // GET /lessons
@@ -42,7 +47,11 @@ router.get('/lessons', function (req, res) {
         }
     }
 
-    renderer.render(req, res, 'lessons', 'Расписание', params);
+    renderer.render(req, res, params,
+        {
+            view: 'lessons',
+            title: 'Расписание'
+        });
 });
 
 module.exports = router;

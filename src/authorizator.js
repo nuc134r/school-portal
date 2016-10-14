@@ -4,38 +4,39 @@ let sessions = require('./session/sessions');
 
 let db = require('./database/postgre-pool');
 
-function authorize(login, password, callback) {
-
-    if (!login || !password) {
-        callback(null);
-    }
-
-    if (login == 'admin' && password == 'admin') {
-        var user = {
-            id: 42,
-            profile: 'igor-sychov',
-            name: {
-                first: 'Слава',
-                last: 'Сычёв',
-                middle: 'Захарович'
-            },
-            badges: [],
-            image_id: null,
-            type: 'student',
-            student: {
-                group: 'P-307'
-            }
+function authorize(login, password) {
+    return new Promise((resolve, reject) => {
+        if (!login || !password) {
+            reject();
         }
 
-        let token_data = JSON.stringify({ utc : +(new Date()) , user: user.id, payload: "Vlad is glad." }); 
-        var token = new Buffer(token_data).toString('base64');
+        if (login == 'admin' && password == 'admin') {
+            var user = {
+                id: 42,
+                profile: 'igor-sychov',
+                name: {
+                    first: 'Слава',
+                    last: 'Сычёв',
+                    middle: 'Захарович'
+                },
+                badges: [],
+                image_id: null,
+                type: 'student',
+                student: {
+                    group: 'P-307'
+                }
+            }
 
-        sessions.push(token, user);
+            let token_data = JSON.stringify({ utc: +(new Date()), user: user.id, payload: "Vlad is glad." });
+            var token = new Buffer(token_data).toString('base64');
 
-        callback(token);
-    }
+            sessions.push(token, user);
 
-    callback(null);
+            resolve(token);
+        } else {
+            reject();
+        }
+    });
 }
 
 module.exports.authorize = authorize;

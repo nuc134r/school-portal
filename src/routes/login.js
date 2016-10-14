@@ -24,25 +24,20 @@ router.post('/authorize', function (req, res) {
     let login = req.body.login;
     let password = req.body.pass;
 
-    // TODO refactor using promises
-    let result = autorizator.authorize(login, password,
-        (token) => {
-            try {
-                if (token) {
-                    res.cookie('token', token, { maxAge: week, httpOnly: true });
-                    res.redirect('/dashboard');
-                    res.end();
-                } else {
-                    var redirect_url = '/login?reason=invalid_credentials';
+    autorizator
+        .authorize(login, password)
+        .then(token => {
+            res.cookie('token', token, { maxAge: week, httpOnly: true });
+            res.redirect('/dashboard');
+        },
+        () => {
+            var redirect_url = '/login?reason=invalid_credentials';
 
-                    if (login) {
-                        redirect_url += `&login=${login}`;
-                    }
+            if (login) {
+                redirect_url += `&login=${login}`;
+            }
 
-                    res.redirect(redirect_url);
-                    res.end();
-                }
-            } catch (ex) { }
+            res.redirect(redirect_url);
         });
 });
 
