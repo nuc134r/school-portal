@@ -31,14 +31,12 @@ html
           .mdl-layout-spacer
 
       .mdl-layout__drawer.mdl-layout__drawer-custom
-        .mdl-user-box(class=[('mdl-color--' + theme.primary + '-600')])
+        .mdl-user-box(class=[('mdl-color--' + theme.primary + '-600')], style='position: relative;')
           img.mdl-user-avatar(src='https://pp.vk.me/c622225/v622225892/9a07/kDjI14gqGx4.jpg')
           h6.mdl-user-name #{user.name.first} #{user.name.last}
           if layout == 'student'
             h6.mdl-user-group #{user.student.group}
-          if layout == 'teacher'
-            h6.mdl-user-group преподаватель
-          button#hdrbtn.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(style='position: absolute; top: 96px; right: 5px;')
+          button#hdrbtn.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(style='position: absolute; bottom: 10px; right: 5px;')
             i.material-icons more_vert
           ul.mdl-menu.mdl-js-menu.mdl-js-ripple-effect.mdl-menu--bottom-right(for='hdrbtn')
             li.mdl-menu__item(onclick='') Настройки
