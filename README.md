@@ -1,8 +1,22 @@
-# school-portal
+# Портал для студенов. 
 
-[nuc134r.myihor.ru](http://nuc134r.myihor.ru)
+Дипломный проект. В разработке.
+Тестовое окружение: [nuc134r.myihor.ru](http://nuc134r.myihor.ru), uptime не гарантирован. 
 
-Вещи, которые я изучил
+Данные для входа:
+
+```
+Преподаватель
+login: teacher
+pass:  teacher
+
+Студент
+login: student
+pass:  student
+```
+
+
+#Вещи, которые я изучил
 
 Общие:
 * [x] Linux
@@ -30,6 +44,3 @@ NodeJS:
 Базы данных:
 * [ ] MongoDB (Redis?)
 * [ ] PostgreSQL
-
-
-
