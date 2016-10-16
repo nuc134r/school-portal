@@ -5,25 +5,39 @@ const moment = require('moment');
 
 let sessions = {};
 
-function create(user) {
-    let session_expires = moment().add(config.session_timeout_in_hours, 'hours');
+function generate_token(user) {
+    let random = "" + Math.floor(Math.random() * 1000000);
 
-    let token_data = JSON.stringify({ utc: moment().toISOString(), user: user.id, payload: "Vlad is glad" });
-    let token = new Buffer(token_data).toString('base64');
+    let payload = {
+        ts: moment().toISOString(),
+        u: user.id
+    }
+
+    return new Buffer(random +  JSON.stringify(payload)).toString('base64');
+}
+
+function create(user) {
+    let token = generate_token(user);
+
+    let session_expires = moment().add(config.session_timeout_in_hours, 'hours').unix();
 
     sessions[token] = user;
-    sessions[token].expires = session_expires.toObject();
+    sessions[token].expires = session_expires;
 
     return token;
 }
 
 function get(token) {
     let session = sessions[token];
-    let expires = moment(session.expires);
+    if (!session) return null;
 
-    let has_expired = moment().unix() > expires.unix();
+    let has_expired = moment().unix() > session.expires
 
     return has_expired ? null : session;
+}
+
+function remove(token) {
+    sessions[token] = null;
 }
 
 function load(saved_sessions) {
@@ -46,4 +60,5 @@ function getAll() {
 module.exports.create = create;
 module.exports.get = get;
 module.exports.load = load;
+module.exports.remove = remove;
 module.exports.getAll = getAll;

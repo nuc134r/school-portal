@@ -4,6 +4,7 @@ let express = require('express');
 let router = express.Router();
 
 let autorizator = require('../authorizator');
+const sessions = require('../session/sessions');
 
 const config = require('../../config.json');
 const moment = require('moment');
@@ -21,6 +22,7 @@ router.get('/login', function (req, res) {
 
 // GET /logout
 router.get('/logout', function (req, res) {
+    sessions.remove(req.cookies["token"]);
     res.clearCookie('token');
 
     res.redirect('/login');

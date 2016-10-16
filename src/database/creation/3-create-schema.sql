@@ -1,12 +1,3 @@
-create table subject
-(
-    id              serial          primary key,
-    name            tname           not null,
-    teacher_id      integer,
-    descripton      tdescription,
-	classroom_id    integer
-);
-
 create table _user
 (
     id              serial          primary key,
@@ -26,6 +17,15 @@ create table image
     id              serial          primary key,
     name            tname           not null,
     data            bytea           not null
+);
+
+create table subject
+(
+    id              serial          primary key,
+    name            tname           not null,
+    teacher_id      integer,
+    descripton      tdescription,
+	classroom_id    integer
 );
 
 create table study_group

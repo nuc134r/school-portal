@@ -3,15 +3,37 @@ extends ../parts/layout
 block content
   main.mdl-layout__content.mdl-color--grey-100
     .mdl-grid
+      .section--center.mdl-grid.mdl-grid--no-spacing
 
-      +Card({all: 12})
-        .mdl-card__title
-          h2.mdl-card__title-text
-            i.material-icons.mdl-card-icon &#xE916;
-            | Расписание
-          h2.mdl-card__title-text.mdl-card__title-subtext
-            small сегодня
-        .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
-          | Keker
-        .mdl-card__actions.mdl-card--border
-          a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/lessons') полное расписание
+        table.mdl-data-table.mdl-js-data-table.mdl-shadow--2dp.mdl-cell.mdl-cell--12-col
+          thead
+            tr
+              th.mdl-data-table__cell--non-numeric Имя 
+              th Quantity
+              th Unit price
+              th.mdl-data-table__cell--non-numeric Активен
+          tbody
+            tr
+              td.mdl-data-table__cell--non-numeric Acrylic (Transparent)
+              td 25
+              td $2.90
+              td
+                label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for='switch-1')
+                  input#switch-1.mdl-switch__input(type='checkbox', checked='')
+                  span.mdl-switch__label
+            tr
+              td.mdl-data-table__cell--non-numeric Plywood (Birch)
+              td 50
+              td $1.25
+              td
+                label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for='switch-2')
+                  input#switch-2.mdl-switch__input(type='checkbox', checked='')
+                  span.mdl-switch__label
+            tr
+              td.mdl-data-table__cell--non-numeric Laminate (Gold on Blue)
+              td 10
+              td $2.35
+              td
+                label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for='switch-3')
+                  input#switch-3.mdl-switch__input(type='checkbox', checked='')
+                  span.mdl-switch__label

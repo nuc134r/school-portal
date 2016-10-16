@@ -16,7 +16,7 @@ app.set('view engine', 'jade');
 app.set('views', 'src/views');
 
 /* util */
-app.use(logger('dev'));
+app.use(logger('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
