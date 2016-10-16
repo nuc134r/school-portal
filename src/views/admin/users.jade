@@ -1,5 +1,9 @@
 extends ../parts/layout
 
+block body
+  button.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored.floating-button
+    i.material-icons add
+
 block content
   main.mdl-layout__content.mdl-color--grey-100
     .mdl-grid
@@ -20,7 +24,7 @@ block content
                 td.mdl-data-table__cell--non-numeric #{user.firstname}
                 td.mdl-data-table__cell--non-numeric #{user.lastname}
                 td.mdl-data-table__cell--non-numeric #{user.middlename}
-                td.mdl-data-table__cell--non-numeric #{ { 's' : 'студент', 't': 'преподаватель', 'a': 'администатор' }[user.type] }
+                td.mdl-data-table__cell--non-numeric #{ { 's' : 'Студент', 't': 'Преподаватель', 'a': 'Администатор' }[user.type] }
                 td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
                   button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
                     i.material-icons delete
