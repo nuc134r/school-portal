@@ -16,16 +16,14 @@ function authorize(login, password) {
             var user = student_mock;
         } else if (login == 'teacher' && password == 'teacher') {
             var user = teacher_mock;
+        } else if (login == 'admin' && password == 'admin') {
+            var user = admin_mock;
         } else {
             reject();
             return;
         }
 
-        let token_data = JSON.stringify({ utc: +(new Date()), user: user.id, payload: "Vlad is glad." });
-        var token = new Buffer(token_data).toString('base64');
-
-        sessions.push(token, user);
-
+        var token = sessions.create(user);
         resolve(token);
     });
 }
@@ -43,6 +41,8 @@ let student_mock = {
     badges: [],
     image_id: null,
     type: 'student',
+    teacher: {},
+    admin: {},
     student: {
         group: 'P-307'
     }
@@ -59,5 +59,23 @@ let teacher_mock = {
     badges: [],
     image_id: null,
     type: 'teacher',
-    teacher: {}
+    teacher: {},
+    admin: {},
+    student: {}
+};
+
+let admin_mock = {
+    id: 3,
+    profile: null,
+    name: {
+        first: 'Татьяна',
+        last: 'Доррер',
+        middle: 'Васильевна'
+    },
+    badges: [],
+    image_id: null,
+    type: 'admin',
+    teacher: {},
+    admin: {},
+    student: {}
 };

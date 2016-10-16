@@ -135,3 +135,21 @@
     position: relative;
     top: 1px;
 }
+
+.floating-button {
+    position: fixed;
+    display: block;
+    right: 0;
+    bottom: 0;
+    margin-right: calc(5 * 1%);
+    margin-bottom: calc(5 * 1%);
+    z-index: 900;
+}
+
+@media only screen and (min-width: 768px) {
+    .floating-button {
+        margin-right: calc(3 * 1%);
+        margin-bottom: calc(3 * 1%);
+    }
+}
+

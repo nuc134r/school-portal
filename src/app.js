@@ -16,7 +16,7 @@ app.set('view engine', 'jade');
 app.set('views', 'src/views');
 
 /* util */
-app.use(logger('dev'));
+app.use(logger('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -46,8 +46,9 @@ app.use(require('./repository/middleware')(/* db */));
 
 /* authorized routes */
 app.use('/', require('./routes/main'));
-app.use('/student', require('./routes/student'));
-app.use('/teacher', require('./routes/teacher'));
+app.use('/s', require('./routes/student'));
+app.use('/t', require('./routes/teacher'));
+app.use('/a', require('./routes/admin'));
 app.use(require('./routes/error'));
 
 module.exports = app;

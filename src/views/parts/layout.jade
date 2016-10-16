@@ -18,16 +18,21 @@ html
     //script(src='/vendor/jquery.min.js')
     script(src='/common.js')
     
+    title #{title} | Студенческий портал
+
     block head
 
   body
+    
+    block body
+
     .mdl-layout.mdl-js-layout.mdl-layout--fixed-header.mdl-layout--fixed-drawer
 
       header.mdl-layout__header
         .mdl-layout-icon
         .mdl-layout__header-row
           span.mdl-layout__title
-            block header
+            | #{title}
           .mdl-layout-spacer
 
       .mdl-layout__drawer.mdl-layout__drawer-custom
@@ -44,7 +49,7 @@ html
         
         if layout == 'student'
           .mdl-navigation
-            +MenuItem({label: 'Сегодня',    link: '/',          icon: '&#xE8DF;',  counter: null})
+            +MenuItem({label: 'Сегодня',    link: '/',         icon: '&#xE8DF;',  counter: null})
             +MenuItem({label: 'Расписание', link: 'lessons',   icon: '&#xE916;',  counter: null})
             +MenuItem({label: 'Задания',    link: 'tasks',     icon: '&#xE877;',  counter: null})
             +MenuItem({label: 'Сообщения',  link: 'messages',  icon: '&#xE0C9;',  counter: 3})
@@ -54,7 +59,11 @@ html
         
         if layout == 'teacher'
           .mdl-navigation
-            +MenuItem({label: 'Сегодня',    link: '/',          icon: '&#xE8DF;',  counter: null})
+            +MenuItem({label: 'Сегодня',    link: '/',         icon: '&#xE8DF;',  counter: null})
             +MenuItem({label: 'Расписание', link: 'lessons',   icon: '&#xE916;',  counter: null})
+
+        if layout == 'admin'
+          .mdl-navigation
+            +MenuItem({label: 'Пользователи', link: 'users',   icon: '&#xE7FB;',  counter: null})
 
       block content

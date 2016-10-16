@@ -2,6 +2,7 @@
 
 const STUDENT_THEME = { primary: 'teal', secondary: 'blue' };
 const TEACHER_THEME = { primary: 'purple', secondary: 'indigo' };
+const ADMIN_THEME = { primary: 'deep-orange', secondary: 'blue' };
 
 function create(layout_mode) {
     return function (req, res, params, options) {
@@ -18,6 +19,9 @@ function create(layout_mode) {
                 break;
             case 'student':
                 mandatory_params.theme = STUDENT_THEME;
+                break;
+            case 'admin':
+                mandatory_params.theme = ADMIN_THEME;
                 break;
         }
 
