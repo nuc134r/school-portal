@@ -5,6 +5,8 @@ let router = express.Router();
 
 let renderer = require('../renderer')('admin');
 
+let async = require('async');
+
 router.use((req, res, next) => {
     if (req.school_context.user.type != 'admin') {
         res.redirect('..');
@@ -20,13 +22,25 @@ router.get('/', function (req, res) {
 
 // GET /a/dashboard
 router.get('/users', function (req, res) {
-    let params = {};
-    
-    renderer(req, res, params,
-        {
-            view: 'admin/users',
-            title: 'Пользователи'
-        });
+
+    async.waterfall([
+        (callback) => {
+            req.school_context.repository.users.getUserList()
+                .then(result => callback(null, result))
+                .catch(error => callback(error));
+        }
+    ],
+        (error, users) => {
+            let params = { users, error };
+
+            renderer(req, res, params,
+                {
+                    view: 'admin/users',
+                    title: 'Пользователи'
+                });
+        }
+    );
+
 });
 
 module.exports = router;

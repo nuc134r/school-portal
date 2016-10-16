@@ -13,6 +13,10 @@ pass:  teacher
 Студент
 login: student
 pass:  student
+
+Админ
+login: admin
+pass:  admin
 ```
 
 
