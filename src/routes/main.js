@@ -8,10 +8,13 @@ router.get('/', function (req, res) {
     
     switch (req.school_context.user.type) {
         case 'student':
-            res.redirect('/student');
+            res.redirect('/s');
             return;
         case 'teacher':
-            res.redirect('/teacher');
+            res.redirect('/t');
+            return;
+        case 'admin':
+            res.redirect('/a');
             return;
     }
 

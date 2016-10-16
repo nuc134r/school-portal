@@ -5,6 +5,9 @@ let router = express.Router();
 
 let autorizator = require('../authorizator');
 
+const config = require('../../config.json');
+const moment = require('moment');
+
 // GET /login
 router.get('/login', function (req, res) {
     let params = {
@@ -26,16 +29,15 @@ router.get('/logout', function (req, res) {
 
 // POST /authorize
 router.post('/authorize', function (req, res) {
-
-    let week = 24 * 7 * 60 * 60 * 1000;
-
     let login = req.body.login;
     let password = req.body.pass;
 
     autorizator
         .authorize(login, password)
         .then(token => {
-            res.cookie('token', token, { maxAge: week, httpOnly: true });
+            let session_expires = moment().add(config.session_timeout_in_hours, 'hours');
+
+            res.cookie('token', token, { expires: session_expires.toDate(), httpOnly: true });
             res.redirect('/');
         },
         () => {

@@ -15,10 +15,10 @@ router.use((req, res, next) => {
 
 // GET /
 router.get('/', function (req, res) {
-    res.redirect('/teacher/dashboard');
+    res.redirect('/t/dashboard');
 });
 
-// GET /teacher/dashboard
+// GET /t/dashboard
 router.get('/dashboard', function (req, res) {
     let repository = req.school_context.repository;
 
@@ -30,7 +30,8 @@ router.get('/dashboard', function (req, res) {
 
     renderer(req, res, params,
         {
-            view: 'teacher/dashboard'
+            view: 'teacher/dashboard',
+            title: 'Сегодня'
         });
 });
 
