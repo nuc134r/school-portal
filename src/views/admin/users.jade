@@ -1,7 +1,7 @@
 extends ../parts/layout
 
 block body
-  button.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored.floating-button
+  a.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored.floating-button(href='users/create')
     i.material-icons add
 
 block content
@@ -32,4 +32,4 @@ block content
                     button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
                       i.material-icons edit
         else
-          Пользователей нет
+          | Пользователей нет
