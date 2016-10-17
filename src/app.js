@@ -1,6 +1,7 @@
 'use strict';
 
 let path = require('path');
+let config = require('../config.json');
 
 /* express */
 let express = require('express');
@@ -16,7 +17,7 @@ app.set('view engine', 'jade');
 app.set('views', 'src/views');
 
 /* util */
-app.use(logger('common'));
+app.use(logger(config.logger_format));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

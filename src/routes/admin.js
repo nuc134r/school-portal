@@ -16,11 +16,9 @@ router.use((req, res, next) => {
 });
 
 // GET /
-router.get('/', function (req, res) {
-    res.redirect('/a/users');
-});
+router.get('/', (req, res) => res.redirect('/a/users'));
 
-// GET /a/dashboard
+// GET /a/users
 router.get('/users', function (req, res) {
 
     async.waterfall([
@@ -40,7 +38,15 @@ router.get('/users', function (req, res) {
                 });
         }
     );
+});
 
+// GET /a/users/create
+router.get('/users/create', function (req, res) {
+    renderer(req, res, {},
+        {
+            view: 'admin/users_create',
+            title: 'Новый пользователь'
+        });
 });
 
 module.exports = router;

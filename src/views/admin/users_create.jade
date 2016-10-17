@@ -1,0 +1,57 @@
+extends ../parts/layout
+
+block content
+  main.mdl-layout__content.mdl-color--grey-100
+    .mdl-grid
+      .section--center.mdl-grid.mdl-grid--no-spacing
+        +Card({all: 12})
+          .mdl-card__supporting-text
+            form#createuserform(action='/create', method='POST', style='padding: 5px 25px')
+              +InputField('Имя', 'firstname')
+              br
+              +InputField('Фамилия', 'lastname')
+              br
+              +InputField('Отчество', 'middlename') 
+              br
+              +InputField('Логин', 'login') 
+          .mdl-card__actions.mdl-card--border
+            a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('createuserform').submit()") сохранить
+
+
+  script.
+    var loginEdited = false;
+    var firstname = document.getElementById('firstnamefield');
+    var lastname  = document.getElementById('lastnamefield');
+    var login     = document.getElementById('loginfield');
+    var loginContainer = document.getElementById('loginfieldcontainer');
+    
+    firstname.oninput = generateLogin;
+    lastname.oninput = generateLogin;
+    login.oninput = function () { loginEdited = true; };
+
+    function generateLogin() {
+      if (!login.value) loginEdited = false;
+      if (!firstname.value || !lastname.value || loginEdited) return;
+
+      loginContainer.classList.add('is-dirty');
+      login.value = toTranslit(firstname.value + '-' + lastname.value);
+    }
+
+    function toTranslit (text) {
+      return text.replace(/([а-яё])|([\s_-])|([^a-z\d])/gi,
+        function (all, ch, space, words, i) {
+            if (space || words) {
+                return space ? '-' : '';
+            }
+            var code = ch.charCodeAt(0),
+                index = code == 1025 || code == 1105 ? 0 :
+                    code > 1071 ? code - 1071 : code - 1039,
+                t = ['yo', 'a', 'b', 'v', 'g', 'd', 'e', 'zh',
+                    'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p',
+                    'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh',
+                    'shch', '', 'y', '', 'e', 'yu', 'ya'
+                ];
+            return t[index];
+        });
+    };
+    

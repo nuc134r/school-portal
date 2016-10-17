@@ -14,9 +14,7 @@ router.use((req, res, next) => {
 });
 
 // GET /
-router.get('/', function (req, res) {
-    res.redirect('/t/dashboard');
-});
+router.get('/', (req, res) => res.redirect('/t/dashboard'));
 
 // GET /t/dashboard
 router.get('/dashboard', function (req, res) {
