@@ -3,22 +3,25 @@
 let express = require('express');
 let router = express.Router();
 
+const routes = {
+    'student': '/s',
+    'teacher': '/t',
+    'admin': '/a'
+}
+
 // GET /
 router.get('/', function (req, res) {
-    
-    switch (req.school_context.user.type) {
-        case 'student':
-            res.redirect('/s');
-            return;
-        case 'teacher':
-            res.redirect('/t');
-            return;
-        case 'admin':
-            res.redirect('/a');
-            return;
+
+    var route = routes[req.school_context.user.type];
+
+    if (route) {
+        res.redirect(route);
+    } else {
+        let error = new Error("Invalid user type");
+        console.error(error);
+        // TODO: error page
     }
 
-    res.redirect('404');
 });
 
 module.exports = router;

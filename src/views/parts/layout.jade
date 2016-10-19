@@ -37,7 +37,7 @@ html
       .mdl-layout__drawer.mdl-layout__drawer-custom
         .mdl-user-box(class=[('mdl-color--' + theme.primary + '-600')], style='position: relative;')
           img.mdl-user-avatar(src='/serg.jpg')
-          h6.mdl-user-name #{user.name.first} #{user.name.last}
+          h6.mdl-user-name #{user.firstname} #{user.lastname}
           if layout == 'student'
             h6.mdl-user-group #{user.student.group}
           button#hdrbtn.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(style='position: absolute; bottom: 10px; right: 5px;')

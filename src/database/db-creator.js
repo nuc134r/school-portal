@@ -5,9 +5,17 @@ let fs = require('fs');
 let path = require('path');
 let async = require('async');
 
-let db_config = require('../../config').db;
-let db_user = require('../../config').db_user;
-let db_superuser = require('../../config').db_superuser;
+let config = require('../../config');
+
+let db_config = config.db;
+let db_user = config.db_user;
+let db_superuser = config.db_superuser;
+
+let macros = {
+    "${superuser}" : db_superuser.user,
+    "${user}" : db_user.user,
+    "${defaultpassword}": config.default_admin_password
+}
 
 let superuser_config = Object.assign(db_superuser, db_config);
 
@@ -38,8 +46,10 @@ async.waterfall([
             fs.readFile(script.path, "utf8", (err, data) => {
                 let scriptCode = data.toString();
                 
-                scriptCode = scriptCode.replace(/\$\{superuser\}/g, db_superuser.user);
-                scriptCode = scriptCode.replace(/\$\{user\}/g, db_user.user);
+                for (var key in macros)
+                {
+                    scriptCode = scriptCode.split(key).join(macros[key]);
+                }
 
                 script.data = scriptCode;
                 callback(err);

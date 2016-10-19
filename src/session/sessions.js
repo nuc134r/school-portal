@@ -1,64 +1,49 @@
 'use strict';
 
 const config = require('../../config.json');
+const db = require('../database/postgre-pool');
 const moment = require('moment');
-
-let sessions = {};
-
-function generate_token(user) {
-    let random = "" + Math.floor(Math.random() * 1000000);
-
-    let payload = {
-        ts: moment().toISOString(),
-        u: user.id
-    }
-
-    return new Buffer(random +  JSON.stringify(payload)).toString('base64');
-}
+const UUID = require('node-uuid');
 
 function create(user) {
-    let token = generate_token(user);
+    let token = UUID().replace(/-/g, '');
 
-    let session_expires = moment().add(config.session_timeout_in_hours, 'hours').unix();
+    let expires
+        = moment()
+            .add(config.session_timeout_in_hours, 'hours')
+            .format('YYYY-MM-DD HH:mm:ss');
 
-    sessions[token] = user;
-    sessions[token].expires = session_expires;
+    let sql = `INSERT INTO session_(token, user_id) 
+               VALUES ('${token}', ${user.id});`;
 
-    return token;
+    return db.execute(sql).then(() => token);
 }
 
 function get(token) {
-    let session = sessions[token];
-    if (!session) return null;
+    let sql = `SELECT *
+               FROM user_
+               WHERE
+                   id = (SELECT user_id 
+                         FROM session_ 
+                         WHERE 
+                             token = '${token}' 
+                             AND 
+                             started > (CURRENT_TIMESTAMP - INTERVAL '7 days'))`;
 
-    let has_expired = moment().unix() > session.expires
-
-    return has_expired ? null : session;
+    return db.execute(sql).then(user => {
+        if (user[0]) {
+            user = user[0];
+            user.type = { 'a': 'admin', 't': 'teacher', 's': 'student' }[user.type];
+            return user; 
+        }
+        return null;
+    });
 }
 
 function remove(token) {
-    sessions[token] = null;
-}
-
-function load(saved_sessions) {
-
-}
-
-function getAll() {
-    let sessions_arr = [];
-
-    for (let token in sessions) {
-        sessions_arr.push({
-            token,
-            data: sessions[token]
-        });
-    }
-
-    return sessions_arr;
+    //sessions[token] = null;
 }
 
 module.exports.create = create;
 module.exports.get = get;
-module.exports.load = load;
 module.exports.remove = remove;
-module.exports.getAll = getAll;

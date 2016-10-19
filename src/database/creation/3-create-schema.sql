@@ -1,4 +1,4 @@
-create table _user
+create table user_
 (
     id              serial          primary key,
     
@@ -24,14 +24,23 @@ create table _user
     )
 );
 
-create table image
+insert into user_(login, password, firstname, middlename, lastname, type) values ('admin', '${defaultpassword}', 'Root', '', 'Admin', 'a');
+
+create table session_
+(
+    token           varchar(32)     primary key,
+    user_id         integer         not null,
+    started         timestamp       DEFAULT CURRENT_TIMESTAMP
+);
+
+create table image_
 (
     id              serial          primary key,
     name            tname           not null,
     data            bytea           not null
 );
 
-create table student
+create table student_
 (
     id              serial          primary key,
     group_id        integer         not null

@@ -42,8 +42,8 @@ router.post('/authorize', function (req, res) {
             res.cookie('token', token, { expires: session_expires.toDate(), httpOnly: true });
             res.redirect('/');
         },
-        () => {
-            var redirect_url = '/login?reason=invalid_credentials' + (login ? `&login=${login}` : '')
+        (error_code) => {
+            var redirect_url = `/login?reason=${error_code}` + (login ? `&login=${login}` : '')
             res.redirect(redirect_url);
         });
 });

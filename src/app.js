@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 /* static resources */
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public/css')));
 app.use(express.static(path.join(__dirname, 'public/scripts')));
 app.use(express.static(path.join(__dirname, 'public/assets')));
@@ -46,7 +46,7 @@ app.use(require('./session/middleware')());
 app.use(require('./repository/middleware')(/* db */));
 
 /* authorized routes */
-app.use('/', require('./routes/main'));
+app.use('/',  require('./routes/main'));
 app.use('/s', require('./routes/student'));
 app.use('/t', require('./routes/teacher'));
 app.use('/a', require('./routes/admin'));
