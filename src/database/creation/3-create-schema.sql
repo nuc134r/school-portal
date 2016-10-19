@@ -24,7 +24,7 @@ create table user_
     )
 );
 
-insert into user_(login, password, firstname, middlename, lastname, type) values ('admin', '${defaultpassword}', 'Root', '', 'Admin', 'a');
+insert into user_(login, password, firstname, middlename, lastname, type) values ('admin', '${defaultpassword}', 'root', '', 'admin', 'a');
 
 create table session_
 (
