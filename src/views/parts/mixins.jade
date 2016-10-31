@@ -1,7 +1,12 @@
-mixin InputField(placeholder, id)
-  .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: 100%;', id=(id + 'fieldcontainer'))
-    input.mdl-textfield__input(type='text', name=id, id=(id + 'field'))
-    label.mdl-textfield__label(for=(id + 'field')) #{ placeholder }
+mixin InputField(placeholder, id, autofocus)
+  if autofocus
+    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: 100%;', id=(id + 'fieldcontainer'), autofocus)
+      input.mdl-textfield__input(type='text', name=id, id=(id + 'field'))
+      label.mdl-textfield__label(for=(id + 'field')) #{ placeholder }
+  else
+    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: 100%;', id=(id + 'fieldcontainer'))
+      input.mdl-textfield__input(type='text', name=id, id=(id + 'field'))
+      label.mdl-textfield__label(for=(id + 'field')) #{ placeholder }
 
 mixin LessonList(lessons)
   if lessons.length

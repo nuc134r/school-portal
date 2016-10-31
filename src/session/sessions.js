@@ -8,11 +8,6 @@ const UUID = require('node-uuid');
 function create(user) {
     let token = UUID().replace(/-/g, '');
 
-    let expires
-        = moment()
-            .add(config.session_timeout_in_hours, 'hours')
-            .format('YYYY-MM-DD HH:mm:ss');
-
     let sql = `INSERT INTO session_(token, user_id) 
                VALUES ('${token}', ${user.id});`;
 

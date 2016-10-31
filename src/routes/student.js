@@ -3,7 +3,7 @@
 let express = require('express');
 let router = express.Router();
 
-let renderer = require('../renderer')('student');
+let renderer = null; //require('../renderer')('student');
 
 router.use((req, res, next) => {
     if (req.school_context.user.type != 'student') {

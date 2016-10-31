@@ -2,10 +2,13 @@
 
 const STUDENT_THEME = { primary: 'teal', secondary: 'blue' };
 const TEACHER_THEME = { primary: 'purple', secondary: 'indigo' };
-const ADMIN_THEME = { primary: 'deep-orange', secondary: 'blue' };
+const ADMIN_THEME   = { primary: 'deep-orange', secondary: 'blue' };
 
 function create(layout_mode) {
-    return function (req, res, params, options) {
+    
+    var helper = {};
+
+    helper.render = function (req, res, params, options) {
 
         let mandatory_params = {
             title: options.title,
@@ -28,6 +31,8 @@ function create(layout_mode) {
         res.render(options.view, Object.assign(mandatory_params, params));
         res.end();
     }
+
+    return helper;
 }
 
 module.exports = create;
