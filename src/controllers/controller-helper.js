@@ -13,7 +13,8 @@ function create(layout_mode) {
         let mandatory_params = {
             title: options.title,
             user: req.school_context.user,
-            layout: layout_mode
+            layout: layout_mode,
+            query_params: req.query
         };
 
         switch (layout_mode) {

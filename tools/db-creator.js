@@ -5,7 +5,7 @@ let fs = require('fs');
 let path = require('path');
 let async = require('async');
 
-let config = require('../../config');
+let config = require('../config');
 
 let db_config = config.db;
 let db_user = config.db_user;

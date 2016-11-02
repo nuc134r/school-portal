@@ -1,12 +1,15 @@
 mixin InputField(placeholder, id, autofocus)
-  if autofocus
-    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: 100%;', id=(id + 'fieldcontainer'), autofocus)
-      input.mdl-textfield__input(type='text', name=id, id=(id + 'field'))
-      label.mdl-textfield__label(for=(id + 'field')) #{ placeholder }
-  else
-    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: 100%;', id=(id + 'fieldcontainer'))
-      input.mdl-textfield__input(type='text', name=id, id=(id + 'field'))
-      label.mdl-textfield__label(for=(id + 'field')) #{ placeholder }
+
+  - var preset_value = query_params[id]; 
+
+  .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: 100%;', id=(id + 'field_container'))
+    input.mdl-textfield__input(type='text', name=id, id=(id + 'field'), value=preset_value, autofocus=autofocus)
+    label.mdl-textfield__label(for=(id + 'field')) #{ placeholder }
+
+mixin RadioButton(placeholder, name, id, checked)
+  label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=(id + '_radio'))
+    input.mdl-radio__button(id=(id + '_radio'), type='radio', name=name, value=id, checked=checked)
+    span.mdl-radio__label #{placeholder}
 
 mixin LessonList(lessons)
   if lessons.length
@@ -15,7 +18,7 @@ mixin LessonList(lessons)
         'mdl-button--accent': lesson.now,
         'mdl-button--raised': lesson.now,
         'mdl-js-ripple-effect': lesson.now
-        }) 
+        })
         p.mdl-button-custom--right #{lesson.room}
         p.mdl-button-custom--header #{lesson.subject}
         p.mdl-button-custom--right #{lesson.starts + ' - ' + lesson.ends}

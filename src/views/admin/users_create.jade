@@ -11,24 +11,33 @@ block content
               br
               +InputField('Фамилия', 'lastname')
               br
-              +InputField('Отчество', 'middlename') 
+              +InputField('Отчество', 'middlename')
               br
-              +InputField('Логин', 'login') 
-              
+              +InputField('Логин', 'login')
+              br
+              br
+              +RadioButton('Студент', 'user_type', 'student', true)
+              br
+              br
+              +RadioButton('Преподаватель', 'user_type', 'teacher')
+              br
+              br
+              +RadioButton('Администратор', 'user_type', 'admin')
+              br
           .mdl-card__actions.mdl-card--border
             a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('createuserform').submit()") сохранить
 
 
   script.
     var loginEdited = false;
-    var firstname = document.getElementById('firstnamefield');
-    var lastname  = document.getElementById('lastnamefield');
-    var login     = document.getElementById('loginfield');
-    var loginContainer = document.getElementById('loginfieldcontainer');
+    var firstname      = document.getElementById('firstnamefield');
+    var lastname       = document.getElementById('lastnamefield');
+    var login          = document.getElementById('loginfield');
+    var loginContainer = document.getElementById('loginfield_container');
     
     firstname.oninput = generateLogin;
-    lastname.oninput = generateLogin;
-    login.oninput = function () { loginEdited = true; };
+    lastname.oninput  = generateLogin;
+    login.oninput     = function () { loginEdited = true; };
 
     function generateLogin() {
       if (!login.value) loginEdited = false;

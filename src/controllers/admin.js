@@ -1,5 +1,7 @@
 'use strict';
 
+const url = require('url');
+
 const UsersRepository = require('../repository/users');
 
 const helper = require('./controller-helper')('admin');
@@ -19,19 +21,31 @@ function getUsersPage(req, res) {
 function getCreateUserPage(req, res) {
 
     helper.render(req, res, {}, {
-            view: 'admin/users_create',
-            title: 'Новый пользователь'
-        });
+        view: 'admin/users_create',
+        title: 'Новый пользователь'
+    });
 }
 
 function createUser(req, res) {
-    
+
     var options = req.body;
     // TODO Validate
 
     UsersRepository.createUser(options)
-        .then(() => res.redirect('/a/users?message=success'))
-        .catch(err => console.error(err));
+        .then(() => res.redirect('/a/users?message=created'))
+        .catch(err => {
+            
+            console.error(err);
+            
+            options.error = "Missing field";
+
+            var redirect_url = url.format({
+                query: options,
+                pathname: '/a/users/create'
+            });
+
+            res.redirect(redirect_url);
+        });
 }
 
 module.exports.getUsersPage = getUsersPage;

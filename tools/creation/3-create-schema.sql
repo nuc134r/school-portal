@@ -24,13 +24,18 @@ create table user_
     )
 );
 
-insert into user_(login, password, firstname, middlename, lastname, type) values ('admin', '${defaultpassword}', 'root', '', 'admin', 'a');
+insert into user_(login, password, firstname, middlename, lastname, type) values ('admin', '${defaultpassword}', 'admin', 'admin', 'admin', 'a');
 
-create table session_
+create table student_
 (
-    token           varchar(32)     primary key,
-    user_id         integer         not null,
-    started         timestamp       DEFAULT CURRENT_TIMESTAMP
+    id              serial          primary key,
+    group_id        integer         null -- TODO NOT NULL
+);
+
+create table teacher_
+(
+    id              serial          primary key,
+    discipline_id   integer         null -- TODO NOT NULL
 );
 
 create table image_
@@ -40,12 +45,12 @@ create table image_
     data            bytea           not null
 );
 
-create table student_
+create table session_
 (
-    id              serial          primary key,
-    group_id        integer         not null
+    token           varchar(32)     primary key,
+    user_id         integer         not null,
+    started         timestamp       DEFAULT CURRENT_TIMESTAMP
 );
-
 
 /*
 create table subject

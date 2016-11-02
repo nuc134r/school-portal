@@ -8,24 +8,24 @@ function getUserList() {
 }
 
 function createUser(options) {
-    return db.execute(SQL`INSERT INTO user_
-                          (
-                              login, 
-                              password, 
-                              firstname, 
-                              middlename, 
-                              lastname, 
-                              type
-                          )
-                          VALUES 
-                          (
-                              ${options.login},
-                              'school13',
-                              ${options.firstname},
-                              ${options.middlename},
-                              ${options.lastname},
-                              'a'
-                          )`);
+
+    switch (options.user_type) {
+        case 'student':
+
+
+
+            break;
+        case 'teacher':
+
+
+            break;
+        case 'admin':
+            return db.execute(SQL`
+                INSERT INTO user_
+                    (login, password, firstname, middlename, lastname, type)
+                VALUES 
+                    (${options.login}, 'school13', ${options.firstname}, ${options.middlename}, ${options.lastname}, 'a')`);
+    }
 }
 
 module.exports.createUser = createUser;

@@ -25,7 +25,7 @@
             "name": "create db",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/src/database/db-creator.js",
+            "program": "${workspaceRoot}/tools/db-creator.js",
             "stopOnEntry": false,
             "args": [],
             "cwd": "${workspaceRoot}",
