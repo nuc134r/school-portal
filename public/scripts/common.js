@@ -1,19 +1,13 @@
-var $content,
-    $drawer,
-    $drawer_obfuscator;
+var $content;
 
 $(document).ready(function () {
     $content = $('#content');
-    $drawer = $('.mdl-layout__drawer');
-    $drawer_obfuscator = $('.mdl-layout__obfuscator');
 });
 
 function ajax(link) {
 
-    var l = document.getElementById('my-link');
-
-    $drawer.removeClass('is-visible');
-    $drawer_obfuscator.removeClass('is-visible');
+    var layout = document.querySelector('.mdl-layout');
+    layout.MaterialLayout.toggleDrawer();
 
     $.ajax({ url: link.href, data: { 'ajax': 1 } })
         .done(function (data) {
