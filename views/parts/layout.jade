@@ -10,12 +10,11 @@ html
     link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
 
     link(rel="stylesheet" href=('/vendor/material.' + theme.primary + '-' + theme.secondary + '.min.css'))
-
-    link(rel="stylesheet" href="/material.custom.css")
     link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css")
 
+    link(rel="stylesheet" href="/material.custom.css")
     script(defer src="/vendor/material.min.js")
-    //script(src='/vendor/jquery.min.js')
+    script(src='/vendor/jquery.min.js')
     script(src='/common.js')
     
     title #{title} | Студенческий портал
@@ -64,5 +63,6 @@ html
         if layout == 'admin'
           .mdl-navigation
             +MenuItem({label: 'Пользователи', link: '/a/users',   icon: '&#xE7FB;',  counter: null})
-
-      block content
+      
+      main#content.mdl-layout__content.mdl-color--grey-100
+        block content

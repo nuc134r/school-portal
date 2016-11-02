@@ -17,6 +17,13 @@ function create(layout_mode) {
             query_params: req.query
         };
 
+        if (req.query['ajax']) {
+            let parts = options.view.split('/');
+            let view_name = '_' + parts[parts.length - 1];
+            parts[parts.length - 1] = view_name;
+            options.view = parts.join('/');
+        }
+
         switch (layout_mode) {
             case 'teacher':
                 mandatory_params.theme = TEACHER_THEME;

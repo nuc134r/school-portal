@@ -14,7 +14,7 @@ let app = express();
 
 /* jade */
 app.set('view engine', 'jade');
-app.set('views', 'src/views');
+app.set('views');
 
 /* util */
 app.use(logger(config.logger_format));
