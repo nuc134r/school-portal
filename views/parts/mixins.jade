@@ -34,7 +34,7 @@ mixin TaskList(tasks)
       p.mdl-button-custom--text #{task.subject}
 
 mixin MenuItem(options)
-  a.mdl-navigation__link(href=options.link, onclick='return ajax(this)')
+  a.mdl-navigation__link(href=options.link, onclick='return ajax(this, true)')
     i.material-icons.mdl-navigation-icon !{options.icon}
     span.mdl-navigation__label #{ options.label }
     span.mdl-navigation__counter #{ options.counter }
