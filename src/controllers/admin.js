@@ -13,7 +13,11 @@ function getUsersPage(req, res) {
     UsersRepository.getUserList()
         .then(users => helper.render(req, res, { users, message }, {
             view: 'admin/users',
-            title: 'Пользователи'
+            title: 'Пользователи',
+            fab: {
+                icon: 'add',
+                link: '/a/users/create'
+            }
         }))
         .catch(err => console.error(err));
 }
