@@ -16,9 +16,8 @@ function createUser(options) {
 
             break;
         case 'teacher':
+            return db.execute(SQL`kekek`);
 
-
-            break;
         case 'admin':
             return db.execute(SQL`
                 INSERT INTO user_

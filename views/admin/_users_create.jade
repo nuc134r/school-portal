@@ -1,7 +1,15 @@
 include ../parts/mixins
 
 .mdl-grid
-  .section--center.mdl-grid.mdl-grid--no-spacing
+  .section--center.mdl-grid
+    if query_params.error
+      +Card({all: 12})
+        .mdl-card__title
+          h2.mdl-card__title-text
+            i.material-icons.mdl-card-icon &#xE000;
+            | Ошибка при создании пользователя
+        .mdl-card__supporting-text(style='padding: 16px')
+          | #{query_params.error}
     +Card({all: 12})
       .mdl-card__supporting-text
         form#createuserform(action='/a/users/create', method='POST', style='padding: 5px 25px')

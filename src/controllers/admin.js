@@ -41,7 +41,7 @@ function createUser(req, res) {
             
             console.error(err);
             
-            options.error = "Missing field";
+            options.error = err.message;
 
             var redirect_url = url.format({
                 query: options,
