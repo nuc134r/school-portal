@@ -12,6 +12,9 @@ include ../parts/mixins
           | #{query_params.error}
     +Card({all: 12})
       .mdl-card__supporting-text
+
+        - var selected_type = query_params.user_type || 'student';
+
         form#createuserform(action='/a/users/create', method='POST', style='padding: 5px 25px')
           +InputField('Имя', 'firstname', true)
           br
@@ -22,13 +25,13 @@ include ../parts/mixins
           +InputField('Логин', 'login')
           br
           br
-          +RadioButton('Студент', 'user_type', 'student', true)
+          +RadioButton('Студент', 'user_type', 'student', (selected_type=='student'))
           br
           br
-          +RadioButton('Преподаватель', 'user_type', 'teacher')
+          +RadioButton('Преподаватель', 'user_type', 'teacher', (selected_type=='teacher'))
           br
           br
-          +RadioButton('Администратор', 'user_type', 'admin')
+          +RadioButton('Администратор', 'user_type', 'admin', (selected_type=='admin'))
           br
       .mdl-card__actions.mdl-card--border
         a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('createuserform').submit()") сохранить

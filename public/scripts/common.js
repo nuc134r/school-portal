@@ -28,6 +28,8 @@ function ajax(link, closeDrawer) {
     $.ajax({ url: link.href, data: { 'ajax': 1 } })
         .done(function (response) {
 
+            // TODO: Validate 'response'
+
             $content.html(response.html);
 
             $title.html(response.title);

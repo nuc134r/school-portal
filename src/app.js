@@ -22,6 +22,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+/* database */
+const database = require('./database/database');
+database.Init();
+
 /* static resources */
 const favincon_path = path.join(__dirname, '../public/favicon.ico'),
       css_path      = path.join(__dirname, '../public/css'),
@@ -54,6 +58,7 @@ app.use('/', require('./routes/routes'));
 app.use('/s', require('./routes/student'));
 app.use('/t', require('./routes/teacher'));
 //app.use('/a', require('./routes/admin'));
+
 app.use(require('./routes/error'));
 
 module.exports = app;

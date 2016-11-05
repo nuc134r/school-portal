@@ -3,28 +3,26 @@
 const SQL = require('sql-template-strings')
 const db = require('../database/postgre-pool');
 
+const database = require('../database/database');
+const connection = database.getConnection();
+
+
 function getUserList() {
-    return db.execute(SQL`SELECT firstname, middlename, lastname, type FROM user_;`);
+    return connection.models.user.findAll({
+        attributes: ['firstname', 'middlename', 'lastname', 'type']
+    });
 }
 
 function createUser(options) {
 
-    switch (options.user_type) {
-        case 'student':
-
-
-
-            break;
-        case 'teacher':
-            return db.execute(SQL`kekek`);
-
-        case 'admin':
-            return db.execute(SQL`
-                INSERT INTO user_
-                    (login, password, firstname, middlename, lastname, type)
-                VALUES 
-                    (${options.login}, 'school13', ${options.firstname}, ${options.middlename}, ${options.lastname}, 'a')`);
-    }
+    return connection.models.user.create({
+        firstname: options.firstname,
+        middlename: options.middlename,
+        lastname: options.lastname,
+        login: options.login,
+        password: options.password,
+        type: options.user_type
+    });
 }
 
 module.exports.createUser = createUser;

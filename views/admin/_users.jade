@@ -16,7 +16,7 @@
               td.mdl-data-table__cell--non-numeric #{user.lastname}
               td.mdl-data-table__cell--non-numeric #{user.firstname}
               td.mdl-data-table__cell--non-numeric #{user.middlename}
-              td.mdl-data-table__cell--non-numeric #{ { 's' : 'Студент', 't': 'Преподаватель', 'a': 'Администатор' }[user.type] }
+              td.mdl-data-table__cell--non-numeric #{ { 'student' : 'Студент', 'teacher': 'Преподаватель', 'admin': 'Администатор' }[user.type] }
               td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
                 button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
                   i.material-icons delete
