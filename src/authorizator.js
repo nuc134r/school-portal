@@ -1,5 +1,8 @@
 'use strict';
 
+const database = require('./database/database');
+const connection = database.getConnection();
+
 let sessions = require('./session/sessions');
 
 function authorize(login, password) {
@@ -10,23 +13,23 @@ function authorize(login, password) {
 
         var user = null;
 
-        if (login == 'student' && password == 'student') {
-            user = student_mock;
-        } else if (login == 'teacher' && password == 'teacher') {
-            user = teacher_mock;
-        } else if (login == 'admin' && password == 'admin') {
-            user = admin_mock;
-        } else {
-            reject('invalid_credentials');
-            return;
-        }
+        connection.models.user.findAll({ where: { login, password } })
+            .then(result => {
+                if (result[0]) {
+                    user = result[0].asViewModel();
 
-        sessions.create(user)
-            .then(token => resolve(token))
-            .catch(error => {
-                console.error(error);
-                reject(error.code);
-            });
+                    sessions.create(user)
+                        .then(token => resolve(token))
+                        .catch(error => {
+                            console.error(error);
+                            reject(error.message);
+                        });
+
+                } else {
+                    reject('invalid_credentials');
+                }
+            })
+            .catch(error => reject(error.message));
     });
 }
 
