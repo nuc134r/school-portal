@@ -5,58 +5,28 @@ include ../parts/mixins
   if query_params.error
     +MessageCard(cardSettings, 'Ошибка при создании пользователя', query_params.error)
   
-  +Card({ phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 6, o: 0 } })
-    .mdl-card__supporting-text
+  - var selected_type = query_params.user_type || 'student';
 
-      - var selected_type = query_params.user_type || 'student';
-
-      form#createuserform(action='/a/users/create', method='POST', style='padding: 5px 25px')
-        +InputField('Имя', 'firstname', true)
-        br
-        +InputField('Фамилия', 'lastname')
-        br
-        +InputField('Отчество', 'middlename')
-        br
-        +InputField('Логин', 'login')
-        br
-        br
-        +RadioButton('Студент', 'user_type', 'student', (selected_type=='student'))
-        br
-        br
-        +RadioButton('Преподаватель', 'user_type', 'teacher', (selected_type=='teacher'))
-        br
-        br
-        +RadioButton('Администратор', 'user_type', 'admin', (selected_type=='admin'))
-        br
-    .mdl-card__actions.mdl-card--border
-      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('createuserform').submit()") сохранить
-  
-  +Card({ phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 6, o: 0 } })
-    .mdl-card__title
-        h2.mdl-card__title-text
-          | Студент
-    .mdl-card__supporting-text.mdl-card__supporting-text-heightfix-no-actions
-      .div(style='padding: 5px 25px')
-        span Группа
-
-
-
-
-        // https://www.npmjs.com/package/mdl-selectfield
-
-
-
-        button.mdl-button.mdl-js-button.mdl-js-ripple-effect(id='group_selector_btn')
-          | П-403
-        ul.mdl-menu.mdl-js-menu.mdl-js-ripple-effect.mdl-menu--bottom-left(for='group_selector_btn')
-          li.mdl-menu__item(onclick='') 101
-          li.mdl-menu__item(onclick='') 102
-          li.mdl-menu__item(onclick='') 103к
-          li.mdl-menu__item(onclick='') 203
-          li.mdl-menu__item(onclick='') 403
-          li.mdl-menu__item(onclick='') 404
-
-
+  +Form(cardSettings, 'createuserform', '/a/users/create')
+    +InputField('Имя', 'firstname', true)
+    br
+    +InputField('Фамилия', 'lastname')
+    br
+    +InputField('Отчество', 'middlename')
+    br
+    +InputField('Логин', 'login')
+    br
+    br
+    +RadioButton('Студент', 'user_type', 'student', (selected_type=='student'))
+    br
+    br
+    +RadioButton('Преподаватель', 'user_type', 'teacher', (selected_type=='teacher'))
+    br
+    br
+    +RadioButton('Администратор', 'user_type', 'admin', (selected_type=='admin'))
+    br
+    br
+    +ComboBox('Группа', 'group', [{ text: '101' }, { text: '102' }, { text: 'П-403' }])
 
 script.
   var loginEdited = false;

@@ -1,11 +1,11 @@
-alter table user_    add foreign key(image_id)    references image_(id);
+/*alter table user_    add foreign key(image_id)    references image_(id);
 alter table session_ add foreign key(user_id)     references user_(id);
 
 
 alter table user_ add foreign key(student_id) references student_(id);
 alter table user_ add foreign key(teacher_id) references teacher_(id);
 
-/*
+
 alter table subject add foreign key(teacher_id) references user_(id);
 alter table subject add foreign key(classroom_id) references classroom(id);
 

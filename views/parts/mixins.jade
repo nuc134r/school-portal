@@ -2,16 +2,24 @@ mixin MessageCard(cardSettings, title, message, icon, style)
   +Card(cardSettings, style)
     .mdl-card__title
       h2.mdl-card__title-text
-        i.material-icons.mdl-card-icon #{ icon || '&#xE000;'}
+        i.material-icons.mdl-card-icon !{ icon || '&#xE000;'}
         | #{ title }
     if message
       .mdl-card__supporting-text(style='padding: 16px')
-        | #{ message }
+        | !{ message }
 
 mixin Fab(href, icon)
   - var style = href ? 'visibility: visible;' : 'visibility: collapse;'
   a#fab-link.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored.floating-button(href=href, onclick="return ajax(this)", style=style)
     i#fab-icon.material-icons #{icon}
+
+mixin ComboBox(placeholder, id, items)
+  .mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label
+    select.mdl-selectfield__select(id=(id + 'field'))
+      option
+      for item in items
+        option(value=item.value) #{ item.text }
+    label.mdl-selectfield__label(for=(id + 'field')) #{ placeholder }
 
 mixin InputField(placeholder, id, autofocus)
 
@@ -71,22 +79,23 @@ mixin GroupCompactList(people)
 mixin Card(options, style)
 
   - var classes = [];
-  - options.shadow = options.shadow || 2;
-  - if (options.phone) {
-  -   if (options.phone.s) classes.push('mdl-cell--' + options.phone.s + '-col-phone');
-  -   if (options.phone.o) classes.push('mdl-cell--' + options.phone.o + '-offset-phone');
-  - }
-  - if (options.tablet) {
-  -   if (options.tablet.s) classes.push('mdl-cell--' + options.tablet.s + '-col-tablet');
-  -   if (options.tablet.o) classes.push('mdl-cell--' + options.tablet.o + '-offset-tablet');
-  - }
-  - if (options.desktop) {
-  -   if (options.desktop.s) classes.push('mdl-cell--' + options.desktop.s + '-col-desktop');
-  -   if (options.desktop.o) classes.push('mdl-cell--' + options.desktop.o + '-offset-desktop');
-  - }
-  - if (options.shadow) {
-  -   classes.push('mdl-shadow--' + options.shadow + 'dp')
-  - }
+  - ['phone', 'desktop', 'tablet'].forEach((device) => {
+  -   var settings = options[device]; 
+  -   if (settings) {
+  -     if (settings.s) classes.push('mdl-cell--' + settings.s + '-col-' + device);
+  -     if (settings.o) classes.push('mdl-cell--' + settings.o + '-offset-' + device);
+  -   }
+  - });
+  - classes.push('mdl-shadow--' + (options.shadow || 2) + 'dp')
 
   .mdl-card.mdl-cell.mdl-grid(class=classes, style=style)
     block
+
+
+mixin Form(cardSettings, id, url)
+  +Card(cardSettings)
+    .mdl-card__supporting-text
+      form(action=url, method='POST', style='padding: 5px 25px', id=id)
+        block
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('" + id + "').submit()") сохранить

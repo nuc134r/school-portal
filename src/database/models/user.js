@@ -1,16 +1,17 @@
 'use strict';
 
 const Sequelize = require('sequelize');
+const helper = require('./model-helper');
 
 function Init(sequelize) {
     let User = sequelize.define('user', {
 
-        login: { type: Sequelize.STRING, unique: true },
-        password: Sequelize.STRING(32),
+        login: helper.nonEmptyUniqueString(32),
+        password: helper.nonEmptyString(32),
 
-        firstname: Sequelize.STRING,
-        middlename: Sequelize.STRING,
-        lastname: Sequelize.STRING,
+        firstname: helper.nonEmptyString(64),
+        middlename: Sequelize.STRING(64),
+        lastname: helper.nonEmptyString(64),
 
         //image
 

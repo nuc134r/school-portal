@@ -1,3 +1,5 @@
+include ../parts/mixins
+
 .mdl-grid
   - cardSettings = { desktop: { s: 12 } }
   
@@ -5,7 +7,7 @@
     +MessageCard(cardSettings, 'Пользователь создан', null, 'done', 'left: 50%; transform: translateX(-50%);')
 
 .mdl-grid
-  +Card(cardSettings, 'width: auto; max-width: none; padding: 0px; ' + 'left: 50%; transform: translateX(-50%);')
+  +Card(cardSettings, 'width: auto; max-width: none; padding: 0px; left: 50%; transform: translateX(-50%);')
     table.mdl-data-table.mdl-js-data-table
       thead
         tr

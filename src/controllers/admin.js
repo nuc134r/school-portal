@@ -39,9 +39,15 @@ function createUser(req, res) {
         .then(() => res.redirect('/a/users?message=created'))
         .catch(err => {
             
-            console.error(err);
-            
-            options.error = err.message;
+            if (~err.message.indexOf('#MANDATORYFIELD')) {
+                options.error = 'Обязательные поля не заполнены:';
+                err.errors.forEach((error) => {
+                    options.error += `\n${error.path}`;
+                });
+            } else {
+                console.error(err);
+                options.error = err.message;
+            }
 
             var redirect_url = url.format({
                 query: options,

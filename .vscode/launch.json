@@ -22,7 +22,7 @@
             "outDir": null
         },
         {
-            "name": "create db",
+            "name": "drop db",
             "type": "node",
             "request": "launch",
             "program": "${workspaceRoot}/tools/db-creator.js",

@@ -4,11 +4,9 @@ const Sequelize = require('sequelize');
 const helper = require('./model-helper');
 
 function Init(sequelize) {
-    let Session = sequelize.define('session', {
-        token: helper.nonEmptyString(32)
+    let Specialty = sequelize.define('specialty', {
+        name: helper.nonEmptyString(128)
     });
-
-    Session.belongsTo(sequelize.models.user);
 }
 
 module.exports.Init = Init;

@@ -39,6 +39,8 @@ function get(token) {
             }
         }
     }).then(session => {
+        if (!session) return null;
+
         cache[session.token] = session.dataValues;
         cache[session.token].user = session.user.asViewModel();
 

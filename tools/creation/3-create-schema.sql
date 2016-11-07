@@ -1,4 +1,4 @@
-create table user_
+/*create table user_
 (
     id              serial          primary key,
     
@@ -52,7 +52,6 @@ create table session_
     started         timestamp       DEFAULT CURRENT_TIMESTAMP
 );
 
-/*
 create table subject
 (
     id              serial          primary key,

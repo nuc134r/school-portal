@@ -1,6 +1,6 @@
-GRANT ALL ON SCHEMA public TO ${superuser};
+/*GRANT ALL ON SCHEMA public TO ${superuser};
 GRANT ALL ON SCHEMA public TO ${user};
 GRANT ALL ON SCHEMA public TO public;
 
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ${user};
-GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public to ${user};
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public to ${user};*/
