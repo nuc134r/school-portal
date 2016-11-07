@@ -1,8 +1,10 @@
-/*div {
-    position: relative;
-}*/
-
 /* mdl-card */
+
+@media (min-width: 840px) {
+    .mdl-card {
+        max-width: 320px;
+    }
+}
 
 .mdl-card {
     min-height: 0px;
@@ -14,6 +16,10 @@
 
 .mdl-card__supporting-text-heightfix {
     height: calc(100% - 123px);
+}
+
+.mdl-card__supporting-text-heightfix-no-actions {
+    height: calc(100% - 79px);
 }
 
 .mdl-card__supporting-text {

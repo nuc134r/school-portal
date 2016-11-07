@@ -1,11 +1,12 @@
 'use strict';
 
-const db = require('../database/postgre-pool');
 const UUID = require('node-uuid');
 const database = require('../database/database');
 const connection = database.getConnection();
 
 const config = require('../../config.json');
+
+let cache = {};
 
 function create(user) {
     let token = UUID().replace(/-/g, '');
@@ -16,7 +17,16 @@ function create(user) {
     }).then(session => session.token);
 }
 
+function getExpirationBoundary() {
+    return new Date(new Date() - config.session_timeout_in_hours * 60 * 60 * 1000);
+}
+
 function get(token) {
+
+    let cached = cache[token];
+    if (cached && cached.createdAt > getExpirationBoundary()) {
+        return Promise.resolve(cached.user);
+    }
 
     return connection.models.session.find({
         include: [{
@@ -25,33 +35,20 @@ function get(token) {
         where: {
             token,
             createdAt: {
-                $gt: new Date(new Date() - config.session_timeout_in_hours * 60 * 60 * 1000)
+                $gt: getExpirationBoundary()
             }
         }
-    }).then(session => session.user.asViewModel());
+    }).then(session => {
+        cache[session.token] = session.dataValues;
+        cache[session.token].user = session.user.asViewModel();
 
-
-    /*let sql = `SELECT *
-               FROM users
-               WHERE
-                   id = (SELECT "userId" 
-                         FROM sessions 
-                         WHERE 
-                             token = '${token}' 
-                             AND 
-                             "createdAt" > (CURRENT_TIMESTAMP - INTERVAL '7 days'))`;
-
-    return db.execute(sql).then(user => {
-        if (user[0]) {
-            user = user[0];
-            return user; 
-        }
-        return null;
-    });*/
+        return session.user.asViewModel();
+    });
 }
 
 function remove(token) {
-    //sessions[token] = null;
+    cache[token] = null;
+    connection.models.session.destroy({ where: { token } }).then();
 }
 
 module.exports.create = create;

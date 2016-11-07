@@ -13,13 +13,12 @@ html
     link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css")
 
     script(defer src="/vendor/material.min.js")
+
     //script(src='/vendor/jquery.min.js')
-    script(src='/common.js')
+    //script(src='/common.js')
     
     block head
 
 body.mdl-color--grey-100
-  .mdl-layout
-    main.mdl-layout__content(style='height: 100hw; width: 100vw;')
-      .mdl-grid
-        block content
+  main.mdl-layout__content(style='height: 100hw; width: 100vw;')
+    block content

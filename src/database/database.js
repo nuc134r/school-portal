@@ -17,7 +17,8 @@ const sequelize = new Sequelize(
             max: 5,
             min: 0,
             idle: 30000
-        }
+        },
+        logging: false
     });
 
 function getConnection() {
@@ -25,8 +26,6 @@ function getConnection() {
 }
 
 function Init() {
-    console.log('Initializing database');
-
     UserModel.Init(sequelize);
     SessionModel.Init(sequelize);
 

@@ -1,8 +1,5 @@
 'use strict';
 
-const SQL = require('sql-template-strings')
-const db = require('../database/postgre-pool');
-
 const database = require('../database/database');
 const connection = database.getConnection();
 

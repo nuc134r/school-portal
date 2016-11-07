@@ -1,27 +1,34 @@
 .mdl-grid
-  .section--center.mdl-grid.mdl-grid--no-spacing
-    if users.length
-      table.mdl-data-table.mdl-js-data-table.mdl-shadow--2dp.mdl-cell.mdl-cell--12-col
-        thead
+  - cardSettings = { desktop: { s: 12 } }
+  
+  if query_params.message === 'created'
+    +MessageCard(cardSettings, 'Пользователь создан', null, 'done', 'left: 50%; transform: translateX(-50%);')
+
+.mdl-grid
+  +Card(cardSettings, 'width: auto; max-width: none; padding: 0px; ' + 'left: 50%; transform: translateX(-50%);')
+    table.mdl-data-table.mdl-js-data-table
+      thead
+        tr
+          th.mdl-data-table__cell--non-numeric Фамилия 
+          th.mdl-data-table__cell--non-numeric Имя 
+          th.mdl-data-table__cell--non-numeric Отчество
+          th.mdl-data-table__cell--non-numeric Тип
+          th.mdl-data-table__cell--non-numeric Удалить
+          th.mdl-data-table__cell--non-numeric Изменить
+      tbody
+        each user in users 
           tr
-            th.mdl-data-table__cell--non-numeric Фамилия 
-            th.mdl-data-table__cell--non-numeric Имя 
-            th.mdl-data-table__cell--non-numeric Отчество
-            th.mdl-data-table__cell--non-numeric Тип
-            th.mdl-data-table__cell--non-numeric Удалить
-            th.mdl-data-table__cell--non-numeric Изменить
-        tbody
-          each user in users 
-            tr
-              td.mdl-data-table__cell--non-numeric #{user.lastname}
-              td.mdl-data-table__cell--non-numeric #{user.firstname}
-              td.mdl-data-table__cell--non-numeric #{user.middlename}
-              td.mdl-data-table__cell--non-numeric #{ { 'student' : 'Студент', 'teacher': 'Преподаватель', 'admin': 'Администатор' }[user.type] }
-              td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
-                button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
-                  i.material-icons delete
-              td.mdl-data-table__cell--non-numeric(style='text-align: center;')
-                button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
-                  i.material-icons edit
-    else
-      | Пользователей нет
+            td.mdl-data-table__cell--non-numeric #{user.lastname}
+            td.mdl-data-table__cell--non-numeric #{user.firstname}
+            td.mdl-data-table__cell--non-numeric #{user.middlename}
+            td.mdl-data-table__cell--non-numeric #{ { 'student' : 'Студент', 'teacher': 'Преподаватель', 'admin': 'Администатор' }[user.type] }
+            td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
+              button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+                i.material-icons delete
+            td.mdl-data-table__cell--non-numeric(style='text-align: center;')
+              button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+                i.material-icons edit
+
+
+
+    
