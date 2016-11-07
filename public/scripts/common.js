@@ -47,17 +47,19 @@ function ajax(link, closeDrawer) {
             History.pushState({}, response.title + ' | Студенческий портал', link.href);
         })
         .error(function (error) {
+            showMessage('Ошибка AJAX навигации: ' + error.status);
             console.error(error);
         });
 
     return false;
 }
 
-/*$(window).bind('statechange', function () {
-    if (event.state) {
-        var state = History.getState();
-        var url = state.url;
+function showMessage(message) {
+    var notification = document.querySelector('.mdl-js-snackbar');
+    notification.MaterialSnackbar.showSnackbar(
+        {
+            message: message
+        }
+    );
+}
 
-        ajax(url);
-    }
-});*/

@@ -99,3 +99,29 @@ mixin Form(cardSettings, id, url)
         block
     .mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('" + id + "').submit()") сохранить
+
+
+mixin Table(cardSettings, definition)
+  +Card(cardSettings, 'width: auto; max-width: none; padding: 0px; left: 50%; transform: translateX(-50%);')
+    table.mdl-data-table.mdl-js-data-table
+      thead
+        tr
+          each column in definition.columns
+            th.mdl-data-table__cell--non-numeric #{ column.title }
+          if definition.deleteLink
+            th.mdl-data-table__cell--non-numeric Удалить
+          if definition.editLink
+            th.mdl-data-table__cell--non-numeric Изменить
+      tbody
+        each item in definition.items
+          tr
+            each column in definition.columns
+              td.mdl-data-table__cell--non-numeric #{ column.converter ?  column.converter(item[column.field]) : item[column.field] }
+            if definition.deleteLink
+              td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
+                button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+                  i.material-icons delete
+            if definition.editLink
+              td.mdl-data-table__cell--non-numeric(style='text-align: center;')
+                button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+                  i.material-icons edit

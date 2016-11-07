@@ -31,6 +31,10 @@ html
     block body
       +Fab('', '')
 
+    .mdl-snackbar.mdl-js-snackbar(aria-live='assertive', aria-atomic='true', aria-relevant='text')
+      .mdl-snackbar__text
+      button.mdl-snackbar__action(type='button')
+
     .mdl-layout.mdl-js-layout.mdl-layout--fixed-header.mdl-layout--fixed-drawer
 
       header.mdl-layout__header
@@ -54,22 +58,24 @@ html
         
         if layout == 'student'
           .mdl-navigation
-            +MenuItem({label: 'Сегодня',    link: '/',         icon: '&#xE8DF;',  counter: null})
-            +MenuItem({label: 'Расписание', link: '/s/lessons',   icon: '&#xE916;',  counter: null})
-            +MenuItem({label: 'Задания',    link: '/s/tasks',     icon: '&#xE877;',  counter: null})
-            +MenuItem({label: 'Сообщения',  link: '/s/messages',  icon: '&#xE0C9;',  counter: 3})
-            +MenuItem({label: 'Группа',     link: '/s/students',  icon: '&#xE7FB;',  counter: null})
-            +MenuItem({label: 'Материалы',  link: '/s/materials', icon: '&#xE86E;',  counter: null})
-            +MenuItem({label: 'Клубы',      link: '/s/clubs',     icon: '&#xE420;',  counter: null})
-        
-        if layout == 'teacher'
-          .mdl-navigation
-            +MenuItem({label: 'Сегодня',    link: '/',         icon: '&#xE8DF;',  counter: null})
-            +MenuItem({label: 'Расписание', link: '/t/lessons',   icon: '&#xE916;',  counter: null})
+            +MenuItem({label: 'Сегодня',       link: '/',            icon: '&#xE8DF;',  counter: null})
+            +MenuItem({label: 'Расписание',    link: '/s/lessons',   icon: '&#xE916;',  counter: null})
+            +MenuItem({label: 'Задания',       link: '/s/tasks',     icon: '&#xE877;',  counter: null})
+            +MenuItem({label: 'Сообщения',     link: '/s/messages',  icon: '&#xE0C9;',  counter: 3})
+            +MenuItem({label: 'Группа',        link: '/s/students',  icon: '&#xE7FB;',  counter: null})
+            +MenuItem({label: 'Материалы',     link: '/s/materials', icon: '&#xE86E;',  counter: null})
+            +MenuItem({label: 'Клубы',         link: '/s/clubs',     icon: '&#xE420;',  counter: null})
+           
+        if layout == 'teacher'   
+          .mdl-navigation   
+            +MenuItem({label: 'Сегодня',       link: '/',          icon: '&#xE8DF;',  counter: null})
+            +MenuItem({label: 'Расписание',    link: '/t/lessons', icon: '&#xE916;',  counter: null})
 
         if layout == 'admin'
           .mdl-navigation
-            +MenuItem({label: 'Пользователи', link: '/a/users',   icon: '&#xE7FB;',  counter: null})
+            +MenuItem({label: 'Пользователи',  link: '/a/users',       icon: '&#xE7FB;',  counter: null})
+            +MenuItem({label: 'Специальности', link: '/a/specialties', icon: '&#xE7FB;',  counter: null})
+    
       
       main#content.mdl-layout__content.mdl-color--grey-100
         block content

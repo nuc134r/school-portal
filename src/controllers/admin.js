@@ -5,20 +5,22 @@ const url = require('url');
 const UsersRepository = require('../repository/users');
 
 const helper = require('./controller-helper')('admin');
+const config = require('../../config.json');
 
 function getUsersPage(req, res) {
 
     let message = req.query.message;
 
     UsersRepository.getUserList()
-        .then(users => helper.render(req, res, { users, message }, {
-            view: 'admin/users',
-            title: 'Пользователи',
-            fab: {
-                icon: 'add',
-                link: '/a/users/create'
-            }
-        }))
+        .then((users) =>
+            helper.render(req, res, { users, message }, {
+                view: 'admin/users',
+                title: 'Пользователи',
+                fab: {
+                    icon: 'add',
+                    link: '/a/users/create'
+                }
+            }))
         .catch(err => console.error(err));
 }
 
@@ -30,15 +32,20 @@ function getCreateUserPage(req, res) {
     });
 }
 
+
+
 function createUser(req, res) {
 
     var options = req.body;
-    // TODO Validate
+
+    if (options.user_type && options.user_type != 'admin') {
+        options.password = config.default_user_password;
+    }
 
     UsersRepository.createUser(options)
         .then(() => res.redirect('/a/users?message=created'))
         .catch(err => {
-            
+
             if (~err.message.indexOf('#MANDATORYFIELD')) {
                 options.error = 'Обязательные поля не заполнены:';
                 err.errors.forEach((error) => {
