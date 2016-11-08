@@ -1,24 +1,7 @@
-# Портал для студенов. 
+# Портал для студентов. 
 
 Дипломный проект. В разработке.
-Тестовое окружение: [nuc134r.myihor.ru](http://nuc134r.myihor.ru), uptime не гарантирован. 
-
-Данные для входа:
-
-```
-Преподаватель
-login: teacher
-pass:  teacher
-
-Студент
-login: student
-pass:  student
-
-Админ
-login: admin
-pass:  admin
-```
-
+Хостится тут: [nuc134r.myihor.ru](http://nuc134r.myihor.ru). Uptime не гарантирован. 
 
 #Вещи, которые я изучил
 
@@ -36,7 +19,7 @@ WEB:
 * [x] Bootstrap
 * [x] Material Design
 * [x] MDL
-* [ ] HTML5 Push/Notification API
+* [x] SequelizeJS
 
 NodeJS:
 * [x] NodeJS
@@ -46,5 +29,4 @@ NodeJS:
 * [x] AsyncJS
 
 Базы данных:
-* [ ] MongoDB (Redis?)
-* [ ] PostgreSQL
+* [x] PostgreSQL
