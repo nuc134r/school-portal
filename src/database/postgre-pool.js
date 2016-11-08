@@ -3,7 +3,7 @@
 let config = require('../../config');
 
 let pg = require('pg');
-let pool = new pg.Pool(Object.assign(config.db_user, config.db));
+let pool = new pg.Pool(Object.assign(config.db_superuser, config.db));
 
 let async = require('async');
 

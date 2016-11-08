@@ -1,30 +1,35 @@
 'use strict';
 
-let sessions = require('./session/sessions');
+const database = require('./database/database');
+const connection = database.getConnection();
 
-let db = require('./database/postgre-pool');
+let sessions = require('./session/sessions');
 
 function authorize(login, password) {
     return new Promise((resolve, reject) => {
         if (!login || !password) {
-            reject();
+            reject('no_credentials_supplied');
         }
 
         var user = null;
 
-        if (login == 'student' && password == 'student') {
-            var user = student_mock;
-        } else if (login == 'teacher' && password == 'teacher') {
-            var user = teacher_mock;
-        } else if (login == 'admin' && password == 'admin') {
-            var user = admin_mock;
-        } else {
-            reject();
-            return;
-        }
+        connection.models.user.findAll({ where: { login, password } })
+            .then(result => {
+                if (result[0]) {
+                    user = result[0].asViewModel();
 
-        var token = sessions.create(user);
-        resolve(token);
+                    sessions.create(user)
+                        .then(token => resolve(token))
+                        .catch(error => {
+                            console.error(error);
+                            reject(error.message);
+                        });
+
+                } else {
+                    reject('invalid_credentials');
+                }
+            })
+            .catch(error => reject(error.message));
     });
 }
 
@@ -32,50 +37,44 @@ module.exports.authorize = authorize;
 
 let student_mock = {
     id: 42,
-    profile: 'slava-sychov',
+    image_id: null,
+    type: 's',
+    roles: [],
     name: {
         first: 'Слава',
         last: 'Сычёв',
         middle: 'Захарович'
     },
-    badges: [],
-    image_id: null,
-    type: 'student',
-    teacher: {},
-    admin: {},
     student: {
-        group: 'P-307'
+        group: 'P-307',
+        profile: 'slava-sychov',
+        badges: []
     }
 };
 
 let teacher_mock = {
     id: 15,
-    profile: 'alexander-glusker',
+    image_id: null,
+    type: 't',
+    roles: [],
     name: {
         first: 'Александр',
         last: 'Глускер',
         middle: 'Игоревич'
     },
-    badges: [],
-    image_id: null,
-    type: 'teacher',
-    teacher: {},
-    admin: {},
-    student: {}
+    teacher: {
+        profile: 'alexander-glusker'
+    }
 };
 
 let admin_mock = {
-    id: 3,
-    profile: null,
+    id: 1,
+    image_id: null,
+    type: 'a',
+    roles: [],
     name: {
         first: 'Татьяна',
         last: 'Доррер',
         middle: 'Васильевна'
-    },
-    badges: [],
-    image_id: null,
-    type: 'admin',
-    teacher: {},
-    admin: {},
-    student: {}
+    }
 };

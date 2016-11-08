@@ -1,0 +1,161 @@
+/* mdl-card */
+
+@media (min-width: 840px) {
+    .mdl-card {
+        max-width: 320px;
+    }
+}
+
+.mdl-card {
+    min-height: 0px;
+}
+
+.mdl-card__title-subtext {
+    padding-left: 5px;
+}
+
+.mdl-card__supporting-text-heightfix {
+    height: calc(100% - 123px);
+}
+
+.mdl-card__supporting-text-heightfix-no-actions {
+    height: calc(100% - 79px);
+}
+
+.mdl-card__supporting-text {
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    width: 100%;
+}
+
+.mdl-card__supporting-text-plaintext {
+    padding-left: 17px;
+}
+
+.mdl-card__actions {
+    padding: 0;
+    padding-top: 8px;
+}
+
+.mdl-card-icon {
+    margin-right: 5px;
+    margin-top: 2px;
+    color: rgb(84, 84, 84);
+}
+
+/* mdl-button */
+
+.mdl-button-custom {
+    height: auto;
+    text-transform: none;
+    text-align: left;
+    width: 100%;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+.mdl-button-custom--header {
+    font-size: 16px;
+    margin-bottom: 0px;
+}
+
+.mdl-button-custom--text {
+    opacity: .6;
+    margin-bottom: 0px;
+}
+
+.mdl-button-custom--right {
+    opacity: .6;
+    margin-bottom: 0px;
+    float: right;
+    font-size: 13px;
+    text-transform: lowercase;
+}
+
+.mdl-card__actions > .mdl-button {
+    float: right;
+}
+
+/* list */ 
+.mdl-list-custom {
+    padding: 0px;
+}
+
+.mdl-list__item--two-line-custom {
+    position: relative;
+    padding: 0px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+/* drawer */
+
+.mdl-user-avatar {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    float: left;
+}
+
+.mdl-user-box {
+    padding: 16px;
+    color: white;
+}
+
+.mdl-user-name {
+    margin-top: 60px;
+    margin-bottom: 0px;
+}
+
+.mdl-user-group {
+    margin: 0px;
+    opacity: .7;
+}
+
+.mdl-navigation-icon {
+    padding-right: 12px;
+}
+
+.mdl-layout__drawer-custom {
+    border-width: 0px;
+}
+
+.mdl-navigation__link {
+    padding: 16px !important;
+}
+
+.mdl-navigation__counter {
+    float: right;
+    background: black;
+    color: white;
+    border-radius: 3px;
+    text-align: center;
+    opacity: .4;
+    min-width: 10px;
+    padding: 0px 5px;
+    width: auto;
+}
+
+.mdl-navigation__label {
+    position: relative;
+    top: 1px;
+}
+
+.floating-button {
+    position: fixed;
+    display: block;
+    right: 0;
+    bottom: 0;
+    margin-right: calc(5 * 1%);
+    margin-bottom: calc(5 * 1%);
+    z-index: 2;
+}
+
+@media only screen and (min-width: 768px) {
+    .floating-button {
+        margin-right: calc(3 * 1%);
+        margin-bottom: calc(3 * 1%);
+    }
+}
+

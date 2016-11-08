@@ -3,9 +3,9 @@
 let sessions = require('./sessions');
 
 function SessionMiddleware() {
-    
+
     function middleware(req, res, next) {
-        
+
         var token = req.cookies['token'];
 
         if (!token) {
@@ -14,16 +14,22 @@ function SessionMiddleware() {
             return;
         }
 
-        var session = sessions.get(token);
-
-        if (!session) {
-            res.redirect('/login?reason=session_expired');
-            res.end();
-            return;
-        }
-        
-        req.school_context.user = session;
-        next();
+        sessions.get(token)
+            .then(user => {
+                if (user) {
+                    req.school_context.user = user;
+                    next();
+                } else {
+                    res.redirect('/login?reason=session_expired');
+                    res.end();
+                }
+            })
+            .catch(error => {
+                // TODO: error page
+                console.error(error);
+                res.write(error.toString());
+                res.end(JSON.stringify(error, null, 4));
+            });
     }
 
     return middleware;

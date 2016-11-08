@@ -1,0 +1,29 @@
+include ../parts/mixins
+
+.mdl-grid
+  - cardSettings = { desktop: { s: 12 } }
+  
+  if query_params.message === 'created'
+    +MessageCard(cardSettings, 'Пользователь создан', null, 'done', 'left: 50%; transform: translateX(-50%);')
+
+
+
+- typeConverter = function(value) { return { 'student' : 'Студент', 'teacher': 'Преподаватель', 'admin': 'Администатор' }[value] }
+
+- lastname = { title: 'Фамилия',  field: 'lastname' }
+- firstname = { title: 'Имя',      field: 'firstname' }
+- middlename = { title: 'Отчество', field: 'middlename' }
+- type = { title: 'Тип',  field: 'type', converter: typeConverter }
+
+- tableDefinition = {}
+- tableDefinition.items = list_page_items
+- tableDefinition.columns = [lastname, firstname, middlename, type]
+- tableDefinition.editLink = '/a/users/'
+- tableDefinition.deleteLink = '/a/users/'
+
+
+
+.mdl-grid
+  +Table(cardSettings, tableDefinition)
+
+    

@@ -1,12 +1,26 @@
 'use strict';
 
-const db = require('../database/postgre-pool');
+const database = require('../database/database');
+const connection = database.getConnection();
 
-function CreateRepository() {
-    this.getUserList = () => {
-        return db.execute('SELECT firstname, middlename, lastname, type FROM _user;')
-    }
 
+function getUserList() {
+    return connection.models.user.findAll({
+        attributes: ['firstname', 'middlename', 'lastname', 'type']
+    });
 }
 
-module.exports = CreateRepository;
+function createUser(options) {
+
+    return connection.models.user.create({
+        firstname: options.firstname,
+        middlename: options.middlename,
+        lastname: options.lastname,
+        login: options.login,
+        password: options.password,
+        type: options.user_type
+    });
+}
+
+module.exports.getUserList = getUserList;
+module.exports.createUser = createUser;

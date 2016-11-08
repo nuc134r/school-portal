@@ -1,0 +1,24 @@
+include mixins
+
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='x-ua-compatible', content='ie=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no')
+
+    link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(rel="stylesheet" href="/vendor/material.teal-blue.min.css")
+    link(rel="stylesheet" href="/material.custom.css")
+    link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css")
+
+    script(defer src="/vendor/material.min.js")
+
+    //script(src='/vendor/jquery.min.js')
+    //script(src='/common.js')
+    
+    block head
+
+body.mdl-color--grey-100
+  main.mdl-layout__content(style='height: 100hw; width: 100vw;')
+    block content

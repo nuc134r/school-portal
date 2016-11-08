@@ -14,7 +14,7 @@ function CreateRepository(db) {
             tasks: new TasksRepository(db, req.user),
             time: new TimeRepository(),
             students: new StudentsRepository(),
-            users: new UsersRepository(),
+            //users: new UsersRepository(),
         };
 
         req.school_context.repository = repository;

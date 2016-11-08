@@ -1,0 +1,132 @@
+mixin MessageCard(cardSettings, title, message, icon, style)
+  +Card(cardSettings, style)
+    .mdl-card__title
+      h2.mdl-card__title-text
+        i.material-icons.mdl-card-icon !{ icon || '&#xE000;'}
+        | #{ title }
+    if message
+      .mdl-card__supporting-text(style='padding: 16px')
+        | !{ message }
+
+mixin Fab(href, icon)
+  - var style = href ? 'visibility: visible;' : 'visibility: collapse;'
+  a#fab-link.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored.floating-button(href=href, onclick="return ajax(this)", style=style)
+    i#fab-icon.material-icons #{icon}
+
+mixin ComboBox(placeholder, id, items)
+  .mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label
+    select.mdl-selectfield__select(id=(id + 'field'))
+      option
+      for item in items
+        option(value=item.value) #{ item.text }
+    label.mdl-selectfield__label(for=(id + 'field')) #{ placeholder }
+
+mixin InputField(placeholder, id, autofocus)
+
+  - var preset_value = query_params[id]; 
+
+  .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: 100%;', id=(id + 'field_container'))
+    input.mdl-textfield__input(type='text', name=id, id=(id + 'field'), value=preset_value, autofocus=autofocus)
+    label.mdl-textfield__label(for=(id + 'field')) #{ placeholder }
+
+mixin RadioButton(placeholder, name, id, checked)
+  label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=(id + '_radio'))
+    input.mdl-radio__button(id=(id + '_radio'), type='radio', name=name, value=id, checked=checked)
+    span.mdl-radio__label #{placeholder}
+
+mixin LessonList(lessons)
+  if lessons.length
+    each lesson in lessons
+      button.mdl-button.mdl-button-custom.mdl-js-button(class={
+        'mdl-button--accent': lesson.now,
+        'mdl-button--raised': lesson.now,
+        'mdl-js-ripple-effect': lesson.now
+        })
+        p.mdl-button-custom--right #{lesson.room}
+        p.mdl-button-custom--header #{lesson.subject}
+        p.mdl-button-custom--right #{lesson.starts + ' - ' + lesson.ends}
+        p.mdl-button-custom--text #{lesson.tutor}
+  else
+    span.mdl-card__supporting-text-plaintext Занятий нет
+
+mixin TaskList(tasks)
+  each task in tasks
+    button.mdl-button.mdl-button-custom.mdl-js-button 
+      p.mdl-button-custom--right #{task.details}
+      p.mdl-button-custom--header #{task.title}
+      p.mdl-button-custom--text #{task.subject}
+
+mixin MenuItem(options)
+  a.mdl-navigation__link(href=options.link, onclick='return ajax(this, true)')
+    i.material-icons.mdl-navigation-icon !{options.icon}
+    span.mdl-navigation__label #{ options.label }
+    span.mdl-navigation__counter #{ options.counter }
+
+mixin GroupCompactList(people)
+  .mdl-list.mdl-list-custom
+    each hooman in people
+      button.mdl-button.mdl-button-custom.mdl-js-button
+        .mdl-list__item.mdl-list__item--two-line.mdl-list__item--two-line-custom
+          .mdl-list__item-primary-content
+            a(href=hooman.userlink)
+              span.link-wrapper(style='position:absolute; width:100%; height:100%; top:0; left: 0;')
+            img.mdl-list__item-avatar(src=hooman.avatar) 
+            span= hooman.name
+            span.mdl-list__item-sub-title= hooman.position 
+          a(href=hooman.messagelink).mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--colored
+            i.material-icons &#xE158;
+
+mixin Card(options, style)
+
+  - var classes = [];
+  - ['phone', 'desktop', 'tablet'].forEach((device) => {
+  -   var settings = options[device]; 
+  -   if (settings) {
+  -     if (settings.s) classes.push('mdl-cell--' + settings.s + '-col-' + device);
+  -     if (settings.o) classes.push('mdl-cell--' + settings.o + '-offset-' + device);
+  -   }
+  - });
+  - classes.push('mdl-shadow--' + (options.shadow || 2) + 'dp')
+
+  .mdl-card.mdl-cell.mdl-grid(class=classes, style=style)
+    block
+
+
+mixin Form(cardSettings, id, url)
+  +Card(cardSettings)
+    .mdl-card__supporting-text
+      form(action=url, method='POST', style='padding: 5px 25px', id=id)
+        block
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('" + id + "').submit()") сохранить
+
+
+mixin Table(cardSettings, definition)
+  - style = 'width: auto; max-width: none; padding: 0px; left: 50%; transform: translateX(-50%);'
+  
+  if definition.items.length
+    +Card(cardSettings, style)
+      table.mdl-data-table.mdl-js-data-table
+        thead
+          tr
+            each column in definition.columns
+              th.mdl-data-table__cell--non-numeric #{ column.title }
+            if definition.deleteLink
+              th.mdl-data-table__cell--non-numeric Удалить
+            if definition.editLink
+              th.mdl-data-table__cell--non-numeric Изменить
+        tbody
+          each item in definition.items
+            tr
+              each column in definition.columns
+                td.mdl-data-table__cell--non-numeric #{ column.converter ?  column.converter(item[column.field]) : item[column.field] }
+              if definition.deleteLink
+                td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
+                  button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+                    i.material-icons delete
+              if definition.editLink
+                td.mdl-data-table__cell--non-numeric(style='text-align: center;')
+                  button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+                    i.material-icons edit
+  else
+    +MessageCard(cardSettings, 'Этот список пуст', 'Нажмите кнопку ( + ) в нижнем правом углу экрана, чтобы создать новый элемент.', '&#xE88E;', 'left: 50%; transform: translateX(-50%);')

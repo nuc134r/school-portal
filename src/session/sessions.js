@@ -1,64 +1,58 @@
 'use strict';
 
+const UUID = require('node-uuid');
+const database = require('../database/database');
+const connection = database.getConnection();
+
 const config = require('../../config.json');
-const moment = require('moment');
 
-let sessions = {};
-
-function generate_token(user) {
-    let random = "" + Math.floor(Math.random() * 1000000);
-
-    let payload = {
-        ts: moment().toISOString(),
-        u: user.id
-    }
-
-    return new Buffer(random +  JSON.stringify(payload)).toString('base64');
-}
+let cache = {};
 
 function create(user) {
-    let token = generate_token(user);
+    let token = UUID().replace(/-/g, '');
 
-    let session_expires = moment().add(config.session_timeout_in_hours, 'hours').unix();
+    return connection.models.session.create({
+        token,
+        userId: user.id
+    }).then(session => session.token);
+}
 
-    sessions[token] = user;
-    sessions[token].expires = session_expires;
-
-    return token;
+function getExpirationBoundary() {
+    return new Date(new Date() - config.session_timeout_in_hours * 60 * 60 * 1000);
 }
 
 function get(token) {
-    let session = sessions[token];
-    if (!session) return null;
 
-    let has_expired = moment().unix() > session.expires
+    let cached = cache[token];
+    if (cached && cached.createdAt > getExpirationBoundary()) {
+        return Promise.resolve(cached.user);
+    }
 
-    return has_expired ? null : session;
+    return connection.models.session.find({
+        include: [{
+            model: connection.models.user
+        }],
+        where: {
+            token,
+            createdAt: {
+                $gt: getExpirationBoundary()
+            }
+        }
+    }).then(session => {
+        if (!session) return null;
+
+        cache[session.token] = session.dataValues;
+        cache[session.token].user = session.user.asViewModel();
+
+        return session.user.asViewModel();
+    });
 }
 
 function remove(token) {
-    sessions[token] = null;
-}
-
-function load(saved_sessions) {
-
-}
-
-function getAll() {
-    let sessions_arr = [];
-
-    for (let token in sessions) {
-        sessions_arr.push({
-            token,
-            data: sessions[token]
-        });
-    }
-
-    return sessions_arr;
+    cache[token] = null;
+    connection.models.session.destroy({ where: { token } }).then();
 }
 
 module.exports.create = create;
 module.exports.get = get;
-module.exports.load = load;
 module.exports.remove = remove;
-module.exports.getAll = getAll;
