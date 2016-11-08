@@ -47,7 +47,7 @@ function ajax(link, closeDrawer) {
             History.pushState({}, response.title + ' | Студенческий портал', link.href);
         })
         .error(function (error) {
-            showMessage('Ошибка AJAX навигации: ' + error.status);
+            showMessage('AJAX navigation error: ' + error.status);
             console.error(error);
         });
 

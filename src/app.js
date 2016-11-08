@@ -46,10 +46,6 @@ app.use('/', require('./routes/login'));
 /* session */
 app.use(require('./session/middleware')());
 
-// TODO: remove
-/* repositories */
-app.use(require('./repository/middleware')());
-
 /* authorized routes */
 app.use('/', require('./routes/routes'));
 

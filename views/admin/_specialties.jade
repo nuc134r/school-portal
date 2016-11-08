@@ -1,0 +1,21 @@
+include ../parts/mixins
+
+.mdl-grid
+  - cardSettings = { desktop: { s: 12 } }
+  
+  if query_params.message === 'created'
+    +MessageCard(cardSettings, 'Специальность создана', null, 'done', 'left: 50%; transform: translateX(-50%);')
+
+- name = { title: 'Название',  field: 'name' }
+
+- tableDefinition = {}
+- tableDefinition.items = list_page_items
+- tableDefinition.columns = [name]
+- tableDefinition.editLink = '/a/specialties/'
+- tableDefinition.deleteLink = '/a/specialties/'
+
+
+.mdl-grid
+  +Table(cardSettings, tableDefinition)
+
+    

@@ -22,5 +22,5 @@ function createUser(options) {
     });
 }
 
-module.exports.createUser = createUser;
 module.exports.getUserList = getUserList;
+module.exports.createUser = createUser;
