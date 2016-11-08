@@ -7,7 +7,6 @@ include ../parts/mixins
     +MessageCard(cardSettings, 'Пользователь создан', null, 'done', 'left: 50%; transform: translateX(-50%);')
 
 
-
 - typeConverter = function(value) { return { 'student' : 'Студент', 'teacher': 'Преподаватель', 'admin': 'Администатор' }[value] }
 
 - lastname = { title: 'Фамилия',  field: 'lastname' }
@@ -20,7 +19,6 @@ include ../parts/mixins
 - tableDefinition.columns = [lastname, firstname, middlename, type]
 - tableDefinition.editLink = '/a/users/'
 - tableDefinition.deleteLink = '/a/users/'
-
 
 
 .mdl-grid

@@ -51,8 +51,8 @@ app.use('/', require('./routes/routes'));
 
 // TODO: move to ./routes/routes
 //app.use('/', require('./routes/main'));
-app.use('/s', require('./routes/student'));
-app.use('/t', require('./routes/teacher'));
+//app.use('/s', require('./routes/student'));
+//app.use('/t', require('./routes/teacher'));
 //app.use('/a', require('./routes/admin'));
 
 app.use(require('./routes/error'));
