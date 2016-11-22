@@ -1,0 +1,24 @@
+include ../parts/mixins
+
+.mdl-grid
+  - cardSettings = { desktop: { s: 12 } }
+  
+  if query_params.message === 'created'
+    +MessageCard(cardSettings, 'Группа создана', null, 'done', 'left: 50%; transform: translateX(-50%);')
+
+- specialtyConverter = function (value) { if (value) return value.shortname }
+
+- name = { title: 'Имя',  field: 'name' }
+- specialty = { title: 'Специальность', field: 'specialty', converter: specialtyConverter }
+
+- tableDefinition = {}
+- tableDefinition.items = list_page_items
+- tableDefinition.columns = [name, specialty]
+- tableDefinition.editLink = '/a/groups/'
+- tableDefinition.deleteLink = '/a/groups/'
+
+
+.mdl-grid
+  +Table(cardSettings, tableDefinition)
+
+    

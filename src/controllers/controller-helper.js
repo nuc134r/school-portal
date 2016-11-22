@@ -4,6 +4,8 @@ const jade = require('jade');
 const path = require('path');
 const url = require('url');
 
+const async = require('async');
+
 const utils = require('../utils');
 
 const STUDENT_THEME = { primary: 'teal', secondary: 'blue' };
@@ -64,7 +66,7 @@ function create(user_mode, urlPrefix) {
 
     return {
         render,
-        generateCrud: function (options) {
+        generateCrud: function(options) {
             return {
                 browse: (req, res) => {
 
@@ -80,7 +82,9 @@ function create(user_mode, urlPrefix) {
                     let message = req.query.message;
 
                     options.repository.browse()
-                        .then((list_page_items) => render(req, res, { list_page_items, message, entity: options }, renderOptions))
+                        .then((list_page_items) => {
+                            render(req, res, { list_page_items, message, entity: options }, renderOptions);
+                        })
                         .catch(err => {
                             res.end(err.toString());
                             console.error(err);
@@ -115,12 +119,31 @@ function create(user_mode, urlPrefix) {
                         });
                 },
                 new: (req, res) => {
-                    var newStatementGendered = options.displayNameIsMasculine ? 'Новый' : 'Новая';
 
-                    render(req, res, {}, {
-                        view: `${user_mode}/${options.entityNamePlural}_create`,
-                        title: `${newStatementGendered} ${options.displayName}`
+                    let resolvedLists = {};
+                    async.forEachOf(options.lists, function(listPromiseGenerator, key, callback) {
+                        listPromiseGenerator()
+                            .then(data => {
+                                resolvedLists[key] = data.map(_ => _.dataValues);
+                                if (options.listProcessors[key]) {
+                                    resolvedLists[key] = resolvedLists[key].map(options.listProcessors[key]);
+                                }
+                                callback();
+                            })
+                            .catch((err) => {
+                                callback(err);
+                            });
+                    }, function(err) {
+                        if (err) console.error(err.message); // TODO Handle
+
+                        let newStatementGendered = options.displayNameIsMasculine ? 'Новый' : 'Новая';
+                        render(req, res, { lists : resolvedLists }, {
+                            view: `${user_mode}/${options.entityNamePlural}_create`,
+                            title: `${newStatementGendered} ${options.displayName}`
+                        });
                     });
+
+
                 },
                 options
             }

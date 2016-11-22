@@ -4,6 +4,7 @@ const url = require('url');
 
 const UsersRepository = require('../repository/users');
 const SpecialtiesRepository = require('../repository/specialties');
+const GroupsRepository = require('../repository/groups');
 
 const helper = require('./controller-helper')('admin', 'a');
 const config = require('../../config.json');
@@ -38,5 +39,23 @@ const SpecialtiesCrud = helper.generateCrud({
     repository: SpecialtiesRepository
 });
 
+const GroupsCrud = helper.generateCrud({
+    entityName: 'group',
+    entityNamePlural: 'groups',
+    displayName: 'группа',
+    displayNamePlural: 'группы',
+    displayNameIsMasculine: false,
+    repository: GroupsRepository,
+    lists: {
+        specialties: SpecialtiesRepository.browse
+    },
+    listProcessors: {
+        specialties: (item) => {
+            return { text: item.shortname, value: item.id }
+        }
+    }
+});
+
 module.exports.UsersCrud = UsersCrud;
 module.exports.SpecialtiesCrud = SpecialtiesCrud;
+module.exports.GroupsCrud = GroupsCrud;

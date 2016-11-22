@@ -23,6 +23,7 @@ function SessionMiddleware() {
                     res.redirect('/login?reason=session_expired');
                     res.end();
                 }
+                return null;
             })
             .catch(error => {
                 // TODO: error page
