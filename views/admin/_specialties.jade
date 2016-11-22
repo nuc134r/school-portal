@@ -6,11 +6,12 @@ include ../parts/mixins
   if query_params.message === 'created'
     +MessageCard(cardSettings, 'Специальность создана', null, 'done', 'left: 50%; transform: translateX(-50%);')
 
-- name = { title: 'Название',  field: 'name' }
+- name = { title: 'Имя',  field: 'name' }
+- shortname = { title: 'Короткое имя',  field: 'shortname' }
 
 - tableDefinition = {}
 - tableDefinition.items = list_page_items
-- tableDefinition.columns = [name]
+- tableDefinition.columns = [name, shortname]
 - tableDefinition.editLink = '/a/specialties/'
 - tableDefinition.deleteLink = '/a/specialties/'
 

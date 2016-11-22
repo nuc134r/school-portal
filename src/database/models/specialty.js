@@ -5,7 +5,8 @@ const helper = require('./model-helper');
 
 function Init(sequelize) {
     let Specialty = sequelize.define('specialty', {
-        name: helper.nonEmptyString(128)
+        name: helper.nonEmptyString(128),
+        shortname: helper.nonEmptyString(32),
     });
 }
 
