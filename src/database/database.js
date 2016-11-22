@@ -31,7 +31,7 @@ function getConnection() {
 function Init() {
     UserModel.Init(sequelize);
     SessionModel.Init(sequelize);
-    CourseModel.Init(sequelize);
+    //CourseModel.Init(sequelize);
     SpecialtyModel.Init(sequelize);
     GroupModel.Init(sequelize);
 

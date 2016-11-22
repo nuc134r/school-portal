@@ -8,7 +8,6 @@ function Init(sequelize) {
         name: helper.nonEmptyString(8),
     });
 
-    Group.belongsTo(sequelize.models.course);
     Group.belongsTo(sequelize.models.specialty);
 }
 

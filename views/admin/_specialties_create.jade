@@ -6,7 +6,6 @@ include ../parts/mixins
   if query_params.error
     +MessageCard(cardSettings, 'Ошибка при создании специальности', query_params.error)
   
-  //- var selected_type = query_params.user_type || 'student';
-
   +Form(cardSettings, 'createspecialtyform', '/a/specialties/create')
-    +InputField('Название', 'name', true)
+    +InputField('Имя', 'name', true)
+    +InputField('Короткое имя', 'shortname')

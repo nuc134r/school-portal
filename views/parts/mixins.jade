@@ -15,7 +15,7 @@ mixin Fab(href, icon)
 
 mixin ComboBox(placeholder, id, items)
   .mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label
-    select.mdl-selectfield__select(id=(id + 'field'))
+    select.mdl-selectfield__select(id=(id + 'field'), name=id)
       option
       for item in items
         option(value=item.value) #{ item.text }
@@ -100,7 +100,6 @@ mixin Form(cardSettings, id, url)
     .mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('" + id + "').submit()") сохранить
 
-
 mixin Table(cardSettings, definition)
   - style = 'width: auto; max-width: none; padding: 0px; left: 50%; transform: translateX(-50%);'
   
@@ -119,7 +118,7 @@ mixin Table(cardSettings, definition)
           each item in definition.items
             tr
               each column in definition.columns
-                td.mdl-data-table__cell--non-numeric #{ column.converter ?  column.converter(item[column.field]) : item[column.field] }
+                td.mdl-data-table__cell--non-numeric #{ (column.converter ?  column.converter(item[column.field]) : item[column.field]) }
               if definition.deleteLink
                 td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
                   button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
