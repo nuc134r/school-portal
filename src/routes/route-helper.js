@@ -20,7 +20,15 @@ function init(router) {
             // TODO: error page
         }
     });
+}
 
+function createCrudRoutes(prefix, router, crud) {
+    let entity = crud.options.entityNamePlural;
+
+    router.get(`/${prefix}/${entity}`, crud.browse);
+    router.get(`/${prefix}/${entity}/create`, crud.new);
+    router.post(`/${prefix}/${entity}/create`, crud.create);
 }
 
 module.exports.init = init;
+module.exports.createCrudRoutes = createCrudRoutes;
