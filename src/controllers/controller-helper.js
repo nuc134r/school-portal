@@ -82,7 +82,7 @@ function create(user_mode, urlPrefix) {
                     options.repository.browse()
                         .then((list_page_items) => render(req, res, { list_page_items, message, entity: options }, renderOptions))
                         .catch(err => {
-                            res.end(err);
+                            res.end(err.toString());
                             console.error(err);
                         });
                 },

@@ -1,21 +1,22 @@
 'use strict';
 
-const helper = require('./model-helper');
+const helper = require('../../src/database/models/model-helper');
+const Sequelize = require('sequelize');
 
 module.exports = {
     up: function (queryInterface, Sequelize) {
         return [
             queryInterface.addColumn(
-                'specialty',
+                'specialties',
                 'shortname',
-                helper.nonEmptyString(32)
+                Sequelize.STRING(32)
             )
         ];
     },
 
     down: function (queryInterface, Sequelize) {
         return [
-            queryInterface.removeColumn('specialty', 'shortname')
+            queryInterface.removeColumn('specialties', 'shortname')
         ];
     }
 };
