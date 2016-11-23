@@ -108,6 +108,9 @@ function create(user_mode, urlPrefix) {
                             } else {
                                 console.error(err);
                                 requestOptions.error = err.message;
+                                err.errors.forEach((error) => {
+                                    requestOptions.error += '\n' + error.message;
+                                });
                             }
 
                             var redirect_url = url.format({

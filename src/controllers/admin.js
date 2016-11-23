@@ -16,6 +16,14 @@ const UsersCrud = helper.generateCrud({
     displayNamePlural: 'пользователи',
     displayNameIsMasculine: true,
     repository: UsersRepository,
+    lists: {
+        groups: GroupsRepository.browse
+    },
+    listProcessors: {
+        groups: (item) => {
+            return { text: item.name, value: item.id }
+        }
+    },
     onProcessForm: (formData) => {
         return {
             firstname: formData.firstname,
@@ -25,7 +33,8 @@ const UsersCrud = helper.generateCrud({
             password: formData.user_type == 'admin'
                 ? config.default_admin_password
                 : config.default_user_password,
-            type: formData.user_type
+            type: formData.user_type,
+            groupId: formData.groupId
         }
     }
 });

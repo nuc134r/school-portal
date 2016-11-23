@@ -13,10 +13,11 @@ mixin Fab(href, icon)
   a#fab-link.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored.floating-button(href=href, onclick="return ajax(this)", style=style)
     i#fab-icon.material-icons #{icon}
 
-mixin ComboBox(placeholder, id, items)
+mixin ComboBox(placeholder, id, items, allowNull)
   .mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label
     select.mdl-selectfield__select(id=(id + 'field'), name=id)
-      option
+      if allowNull
+        option
       for item in items
         option(value=item.value) #{ item.text }
     label.mdl-selectfield__label(for=(id + 'field')) #{ placeholder }

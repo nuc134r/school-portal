@@ -27,7 +27,30 @@ include ../parts/mixins
     +RadioButton('Администратор', 'user_type', 'admin', (selected_type=='admin'))
     br
     br
-    +ComboBox('Группа', 'group', [{ text: '101' }, { text: '102' }, { text: 'П-403' }])
+    #student-fields-wrapper
+      +ComboBox('Группа', 'groupId', lists.groups)
+    #teacher-fields-wrapper(style='visibility: collapse;')
+    #admin-fields-wrapper(style='visibility: collapse;')
+
+script.
+  var studentRadio = document.getElementById('student_radio'),
+      teacherRadio = document.getElementById('teacher_radio'),
+      adminRadio   = document.getElementById('admin_radio');
+
+  var studentFieldsWrapper = document.getElementById('student-fields-wrapper'),
+      teacherFieldsWrapper = document.getElementById('teacher-fields-wrapper'),
+      adminFieldsWrapper   = document.getElementById('admin-fields-wrapper');
+
+  function onUserTypeChange() {
+    studentFieldsWrapper.style.display = studentRadio.checked ? 'block' : 'none' ;
+    teacherFieldsWrapper.style.display = teacherRadio.checked ? 'block' : 'none' ;
+    adminFieldsWrapper.style.display   = adminRadio.checked ? 'block' : 'none' ;
+  }
+
+  studentRadio.onchange = onUserTypeChange;
+  teacherRadio.onchange = onUserTypeChange;
+  adminRadio.onchange   = onUserTypeChange;
+
 
 script.
   var loginEdited = false;
