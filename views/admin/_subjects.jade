@@ -4,14 +4,14 @@ include ../parts/mixins
   - cardSettings = { desktop: { s: 12 } }
   
   if query_params.message === 'created'
-    +MessageCard(cardSettings, 'Специальность создана', null, 'done', 'left: 50%; transform: translateX(-50%);')
+    +MessageCard(cardSettings, 'Предмет создан', null, 'done', 'left: 50%; transform: translateX(-50%);')
 
-- name = { title: 'Имя',  field: 'name' }
 - shortname = { title: 'Короткое имя',  field: 'shortname' }
+- name = { title: 'Имя',  field: 'name' }
 
 - tableDefinition = {}
 - tableDefinition.items = list_page_items
-- tableDefinition.columns = [name, shortname]
+- tableDefinition.columns = [shortname, name]
 
 
 .mdl-grid

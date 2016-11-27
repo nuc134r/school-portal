@@ -5,7 +5,7 @@ const helper = require('./model-helper');
 
 function Init(sequelize) {
     let Group = sequelize.define('group', {
-        name: helper.nonEmptyString(8),
+        name: helper.nonEmptyString(8, "имя"),
     });
 
     Group.belongsTo(sequelize.models.specialty);

@@ -9,6 +9,7 @@ const SpecialtyModel = require('./models/specialty');
 const CourseModel = require('./models/course');
 const GroupModel = require('./models/group');
 const StudentModel = require('./models/student');
+const SubjectModel = require('./models/subject');
 
 const sequelize = new Sequelize(
     config.db.database,
@@ -36,6 +37,7 @@ function Init() {
     SpecialtyModel.Init(sequelize);
     GroupModel.Init(sequelize);
     StudentModel.Init(sequelize);
+    SubjectModel.Init(sequelize);
 
     sequelize.sync().then(() => {
         console.log('Database initialized');

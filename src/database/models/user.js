@@ -6,14 +6,12 @@ const helper = require('./model-helper');
 function Init(sequelize) {
     let User = sequelize.define('user', {
 
-        login: helper.nonEmptyUniqueString(32),
-        password: helper.nonEmptyString(32),
+        login: helper.nonEmptyUniqueString(32, "Логин"),
+        password: helper.nonEmptyString(32, "Пароль"),
 
-        firstname: helper.nonEmptyString(64),
+        firstname: helper.nonEmptyString(64, "Имя"),
         middlename: Sequelize.STRING(64),
-        lastname: helper.nonEmptyString(64),
-
-        //image
+        lastname: helper.nonEmptyString(64, "Фамилия"),
 
         type: Sequelize.ENUM('student', 'teacher', 'admin')
     },

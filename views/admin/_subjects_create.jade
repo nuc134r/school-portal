@@ -4,8 +4,8 @@ include ../parts/mixins
   - cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 6, o: 4 } }
   
   if query_params.error
-    +MessageCard(cardSettings, 'Ошибка при создании специальности', "Не заполнены следующие поля: " + query_params.error)
+    +MessageCard(cardSettings, 'Ошибка при создании предмета', "Не заполнены следующие поля: " + query_params.error)
   
-  +Form(cardSettings, 'createspecialtyform', '/a/specialties/create')
+  +Form(cardSettings, 'createsubjectform', '/a/subjects/create')
     +InputField('Имя', 'name', true)
     +InputField('Короткое имя', 'shortname')

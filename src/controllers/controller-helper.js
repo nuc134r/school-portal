@@ -66,7 +66,7 @@ function create(user_mode, urlPrefix) {
 
     return {
         render,
-        generateCrud: function(options) {
+        generateCrud: function (options) {
             return {
                 browse: (req, res) => {
 
@@ -99,19 +99,9 @@ function create(user_mode, urlPrefix) {
                     options.repository.create(requestOptions)
                         .then(() => res.redirect(`/${urlPrefix}/${options.entityNamePlural}?message=created`))
                         .catch(err => {
-
-                            if (~err.message.indexOf('#MANDATORYFIELD')) {
-                                requestOptions.error = 'Обязательные поля не заполнены:';
-                                err.errors.forEach((error) => {
-                                    requestOptions.error += `\n${error.path}`;
-                                });
-                            } else {
-                                console.error(err);
-                                requestOptions.error = err.message;
-                                err.errors.forEach((error) => {
-                                    requestOptions.error += '\n' + error.message;
-                                });
-                            }
+                            err.errors.forEach((error, i) => {
+                                requestOptions[`error[${i}]`] = error.message; 
+                            });
 
                             var redirect_url = url.format({
                                 query: requestOptions,
@@ -124,7 +114,7 @@ function create(user_mode, urlPrefix) {
                 new: (req, res) => {
 
                     let resolvedLists = {};
-                    async.forEachOf(options.lists, function(listPromiseGenerator, key, callback) {
+                    async.forEachOf(options.lists, function (listPromiseGenerator, key, callback) {
                         listPromiseGenerator()
                             .then(data => {
                                 resolvedLists[key] = data.map(_ => _.dataValues);
@@ -136,11 +126,11 @@ function create(user_mode, urlPrefix) {
                             .catch((err) => {
                                 callback(err);
                             });
-                    }, function(err) {
+                    }, function (err) {
                         if (err) console.error(err.message); // TODO Handle
 
                         let newStatementGendered = options.displayNameIsMasculine ? 'Новый' : 'Новая';
-                        render(req, res, { lists : resolvedLists }, {
+                        render(req, res, { lists: resolvedLists }, {
                             view: `${user_mode}/${options.entityNamePlural}_create`,
                             title: `${newStatementGendered} ${options.displayName}`
                         });

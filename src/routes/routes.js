@@ -16,6 +16,7 @@ router.get('/a', (req, res) => res.redirect('/a/users'));
 helper.createCrudRoutes('a', router, adminController.UsersCrud);
 helper.createCrudRoutes('a', router, adminController.SpecialtiesCrud);
 helper.createCrudRoutes('a', router, adminController.GroupsCrud);
+helper.createCrudRoutes('a', router, adminController.SubjectsCrud);
 
 /* student */
 router.get('/s', (req, res) => res.redirect('/s/dashboard'));

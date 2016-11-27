@@ -5,6 +5,7 @@ const url = require('url');
 const UsersRepository = require('../repository/users');
 const SpecialtiesRepository = require('../repository/specialties');
 const GroupsRepository = require('../repository/groups');
+const SubjectsRepository = require('../repository/subjects');
 
 const helper = require('./controller-helper')('admin', 'a');
 const config = require('../../config.json');
@@ -65,6 +66,16 @@ const GroupsCrud = helper.generateCrud({
     }
 });
 
+const SubjectsCrud = helper.generateCrud({
+    entityName: 'subject',
+    entityNamePlural: 'subjects',
+    displayName: 'предмет',
+    displayNamePlural: 'предметы',
+    displayNameIsMasculine: true,
+    repository: SubjectsRepository
+});
+
 module.exports.UsersCrud = UsersCrud;
 module.exports.SpecialtiesCrud = SpecialtiesCrud;
 module.exports.GroupsCrud = GroupsCrud;
+module.exports.SubjectsCrud = SubjectsCrud;
