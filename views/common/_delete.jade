@@ -1,0 +1,14 @@
+include ../parts/mixins
+
+- cardSettings = { desktop: { s: 8 } }
+
+.mdl-grid
+  +Card(cardSettings, 'left: 50%; transform: translateX(-50%); margin-left: 0;')
+    .mdl-card__title
+      h2.mdl-card__title-text
+        | Удаление #{entity.displayNameGenetive}
+    .mdl-card__supporting-text
+      | Вы действительно хотите удалить #{entity.displayNameAccusative} #[b #{item.name}]?
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='lessons') удалить
+      a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='lessons') отмена

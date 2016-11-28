@@ -9,3 +9,5 @@ module.exports.create = (options) => {
 module.exports.browse = () => connection.models.group.findAll({
     include: connection.models.specialty
 });
+
+module.exports.get = (options) => connection.models.group.findOne({ where: options });

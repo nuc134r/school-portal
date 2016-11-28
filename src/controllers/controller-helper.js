@@ -67,6 +67,7 @@ function create(user_mode, urlPrefix) {
     return {
         render,
         generateCrud: function (options) {
+            options.urlPrefix = urlPrefix;
             return {
                 browse: (req, res) => {
 
@@ -90,28 +91,7 @@ function create(user_mode, urlPrefix) {
                             console.error(err);
                         });
                 },
-                create: (req, res) => {
-
-                    let requestOptions = options.onProcessForm
-                        ? options.onProcessForm(req.body)
-                        : req.body;
-
-                    options.repository.create(requestOptions)
-                        .then(() => res.redirect(`/${urlPrefix}/${options.entityNamePlural}?message=created`))
-                        .catch(err => {
-                            err.errors.forEach((error, i) => {
-                                requestOptions[`error[${i}]`] = error.message; 
-                            });
-
-                            var redirect_url = url.format({
-                                query: requestOptions,
-                                pathname: `/${urlPrefix}/${options.entityNamePlural}/create`
-                            });
-
-                            res.redirect(redirect_url);
-                        });
-                },
-                new: (req, res) => {
+                createPage: (req, res) => {
 
                     let resolvedLists = {};
                     async.forEachOf(options.lists, function (listPromiseGenerator, key, callback) {
@@ -135,8 +115,47 @@ function create(user_mode, urlPrefix) {
                             title: `${newStatementGendered} ${options.displayName}`
                         });
                     });
+                },
+                create: (req, res) => {
 
+                    let requestOptions = options.onProcessForm
+                        ? options.onProcessForm(req.body)
+                        : req.body;
 
+                    options.repository.create(requestOptions)
+                        .then(() => res.redirect(`/${urlPrefix}/${options.entityNamePlural}?message=created`))
+                        .catch(err => {
+                            err.errors.forEach((error, i) => {
+                                requestOptions[`error[${i}]`] = error.message;
+                            });
+
+                            var redirect_url = url.format({
+                                query: requestOptions,
+                                pathname: `/${urlPrefix}/${options.entityNamePlural}/create`
+                            });
+
+                            res.redirect(redirect_url);
+                        });
+                },
+                deletePage: (req, res) => {
+                    let renderOptions = {
+                        view: 'common/delete.jade',
+                        title: 'Удаление ' + options.displayNameGenetive.toLowerCase()
+                    };
+
+                    options.repository.get({ id: req.params.id })
+                        .then((item) => {
+                            render(req, res, { item, entity: options }, renderOptions);
+                        })
+                        .catch(err => {
+                            res.end(err.toString());
+                            console.error(err);
+                        });
+                },
+                delete: (req, res) => {
+                    options.repository.delete()
+                        .then(() => res.redirect(`/${urlPrefix}/${options.entityNamePlural}?message=deleted`))
+                        .catch(err => res.redirect(`/${urlPrefix}/${options.entityNamePlural}?error=${err}`));
                 },
                 options
             }

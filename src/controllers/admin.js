@@ -15,6 +15,8 @@ const UsersCrud = helper.generateCrud({
     entityNamePlural: 'users',
     displayName: 'пользователь',
     displayNamePlural: 'пользователи',
+    displayNameGenetive: 'пользователя',
+    displayNameAccusative: 'пользователя',
     displayNameIsMasculine: true,
     repository: UsersRepository,
     lists: {
@@ -45,6 +47,8 @@ const SpecialtiesCrud = helper.generateCrud({
     entityNamePlural: 'specialties',
     displayName: 'специальность',
     displayNamePlural: 'специальности',
+    displayNameGenetive: 'специальности',
+    displayNameAccusative: 'специальность',
     displayNameIsMasculine: false,
     repository: SpecialtiesRepository
 });
@@ -54,6 +58,8 @@ const GroupsCrud = helper.generateCrud({
     entityNamePlural: 'groups',
     displayName: 'группа',
     displayNamePlural: 'группы',
+    displayNameGenetive: 'группы',
+    displayNameAccusative: 'группу',
     displayNameIsMasculine: false,
     repository: GroupsRepository,
     lists: {
@@ -71,6 +77,8 @@ const SubjectsCrud = helper.generateCrud({
     entityNamePlural: 'subjects',
     displayName: 'предмет',
     displayNamePlural: 'предметы',
+    displayNameGenetive: 'предмета',
+    displayNameAccusative: 'предмет',
     displayNameIsMasculine: true,
     repository: SubjectsRepository
 });
