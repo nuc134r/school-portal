@@ -8,7 +8,18 @@ include ../parts/mixins
       h2.mdl-card__title-text
         | Удаление #{entity.displayNameGenetive}
     .mdl-card__supporting-text
-      | Вы действительно хотите удалить #{entity.displayNameAccusative} #[b #{item.name}]?
+      | Вы действительно хотите удалить #{entity.displayNameAccusative} #[b #{item.getDisplayName()}]?
     .mdl-card__actions.mdl-card--border
-      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='lessons') удалить
-      a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='lessons') отмена
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(
+        onclick='confirmDelete(); return false;', 
+        href=('/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/delete')) 
+        | удалить
+      a.mdl-button.mdl-js-button.mdl-js-ripple-effect(onclick='window.history.back();') отмена
+
+    script.
+      function confirmDelete() {
+        $.ajax({ 
+          url: this.href,
+          type: 'DELETE'
+        });
+      }

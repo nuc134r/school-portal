@@ -18,6 +18,9 @@ function Init(sequelize) {
         {
             paranoid: true,
             instanceMethods: {
+                getDisplayName: function () {
+                    return `${this.lastname} ${this.firstname}`;
+                },
                 asViewModel: function () {
                     return {
                         id: this.id,

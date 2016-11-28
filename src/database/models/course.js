@@ -6,7 +6,15 @@ const helper = require('./model-helper');
 function Init(sequelize) {
     let Course = sequelize.define('course', {
         name: helper.nonEmptyString(64, "имя"),
-    }, helper.defaultOptions);
+    },
+        {
+            paranoid: true,
+            instanceMethods: {
+                getDisplayName: function () {
+                    return this.name;
+                }
+            }
+        });
 }
 
 module.exports.Init = Init;
