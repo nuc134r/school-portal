@@ -3,5 +3,8 @@
 const database = require('../database/database');
 const connection = database.getConnection();
 
-module.exports.create = (options) => connection.models.subject.create(options);
-module.exports.browse = () => connection.models.subject.findAll();
+const helper = require('./repository-helper')(connection, 'subject');
+
+module.exports.create = helper.create;
+module.exports.browse = helper.browse;
+module.exports.get = helper.get;

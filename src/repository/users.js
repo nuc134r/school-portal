@@ -3,12 +3,17 @@
 const database = require('../database/database');
 const connection = database.getConnection();
 
-module.exports.create = (options) => {
-    return connection.models.user.create(options)
-        .then(user => {
-            if (user.type == "student") {
+const helper = require('./repository-helper')(connection, 'user');
+
+module.exports.create = (options) => helper.create(options)
+    .then(user => {
+        switch (user.type) {
+            case "student":
                 return connection.models.student.create({ userId: user.id, groupId: options.groupId });
-            }
-        });
-}
-module.exports.browse = () => connection.models.user.findAll();
+            case "teacher":
+                break;
+        }
+    });
+
+module.exports.browse = helper.browse;
+module.exports.get = helper.get;

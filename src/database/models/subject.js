@@ -7,7 +7,7 @@ function Init(sequelize) {
     let Subject = sequelize.define('subject', {
         name: helper.nonEmptyString(128, "имя"),
         shortname: helper.nonEmptyString(32, "короткое имя"),
-    });
+    }, helper.defaultOptions);
 }
 
 module.exports.Init = Init;

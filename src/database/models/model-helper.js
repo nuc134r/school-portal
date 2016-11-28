@@ -25,5 +25,8 @@ module.exports = {
             allowNull: false,
             unique: true
         }
+    },
+    defaultOptions: {
+        paranoid: true
     }
 }

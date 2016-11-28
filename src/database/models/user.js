@@ -16,6 +16,7 @@ function Init(sequelize) {
         type: Sequelize.ENUM('student', 'teacher', 'admin')
     },
         {
+            paranoid: true,
             instanceMethods: {
                 asViewModel: function () {
                     return {
