@@ -9,7 +9,6 @@ function Init(sequelize) {
         shortname: helper.nonEmptyString(32, "короткое имя")
     },
         {
-            paranoid: true,
             instanceMethods: {
                 getDisplayName: function () {
                     return this.name;

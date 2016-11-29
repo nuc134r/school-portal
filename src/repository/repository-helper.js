@@ -7,7 +7,8 @@ function Create(connection, modelName) {
         browseWith: (includes) => () => connection.models[modelName].findAll({
             include: includes.map(model => connection.models[model])
         }),
-        get: (options) => connection.models[modelName].findOne({ where: options })
+        get: (options) => connection.models[modelName].findOne({ where: options }),
+        delete: (options) => connection.models[modelName].destroy({ where: options })
     }
 }
 

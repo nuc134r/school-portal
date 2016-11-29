@@ -16,7 +16,6 @@ function Init(sequelize) {
         type: Sequelize.ENUM('student', 'teacher', 'admin')
     },
         {
-            paranoid: true,
             instanceMethods: {
                 getDisplayName: function () {
                     return `${this.lastname} ${this.firstname}`;

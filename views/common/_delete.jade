@@ -21,5 +21,11 @@ include ../parts/mixins
         $.ajax({ 
           url: this.href,
           type: 'DELETE'
+        }).done(function (data) {
+          if (data == 'ok') {
+            window.location.replace('!{'/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/?message=deleted'}');
+          } else {
+            window.location.replace('!{'/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/?error='}' + data);
+          }
         });
       }

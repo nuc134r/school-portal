@@ -8,7 +8,6 @@ function Init(sequelize) {
         name: helper.nonEmptyString(8, "имя"),
     },
         {
-            paranoid: true,
             instanceMethods: {
                 getDisplayName: function () {
                     return this.name;
@@ -16,7 +15,10 @@ function Init(sequelize) {
             }
         });
 
-    Group.belongsTo(sequelize.models.specialty);
+    Group.belongsTo(sequelize.models.specialty, { 
+        foreignKey: { allowNull: false }, 
+        onDelete: 'RESTRICT'
+    });
 }
 
 module.exports.Init = Init;

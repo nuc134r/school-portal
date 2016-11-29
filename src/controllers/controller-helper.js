@@ -66,7 +66,7 @@ function create(user_mode, urlPrefix) {
 
     return {
         render,
-        generateCrud: function (options) {
+        generateCrud: function(options) {
             options.urlPrefix = urlPrefix;
             return {
                 browse: (req, res) => {
@@ -94,7 +94,7 @@ function create(user_mode, urlPrefix) {
                 createPage: (req, res) => {
 
                     let resolvedLists = {};
-                    async.forEachOf(options.lists, function (listPromiseGenerator, key, callback) {
+                    async.forEachOf(options.lists, function(listPromiseGenerator, key, callback) {
                         listPromiseGenerator()
                             .then(data => {
                                 resolvedLists[key] = data.map(_ => _.dataValues);
@@ -106,7 +106,7 @@ function create(user_mode, urlPrefix) {
                             .catch((err) => {
                                 callback(err);
                             });
-                    }, function (err) {
+                    }, function(err) {
                         if (err) console.error(err.message); // TODO Handle
 
                         let newStatementGendered = options.displayNameIsMasculine ? 'Новый' : 'Новая';
@@ -125,9 +125,13 @@ function create(user_mode, urlPrefix) {
                     options.repository.create(requestOptions)
                         .then(() => res.redirect(`/${urlPrefix}/${options.entityNamePlural}?message=created`))
                         .catch(err => {
-                            err.errors.forEach((error, i) => {
-                                requestOptions[`error[${i}]`] = error.message;
-                            });
+                            if (err.errors) {
+                                err.errors.forEach((error, i) => {
+                                    requestOptions[`error[${i}]`] = error.message;
+                                });
+                            } else {
+                                requestOptions['error'] = err.message;
+                            }
 
                             var redirect_url = url.format({
                                 query: requestOptions,
@@ -153,9 +157,16 @@ function create(user_mode, urlPrefix) {
                         });
                 },
                 delete: (req, res) => {
-                    options.repository.delete()
-                        .then(() => res.redirect(`/${urlPrefix}/${options.entityNamePlural}?message=deleted`))
-                        .catch(err => res.redirect(`/${urlPrefix}/${options.entityNamePlural}?error=${err}`));
+                    let id = req.params.id;
+
+                    options.repository.delete({ id })
+                        .then(() => res.end('ok'))
+                        .catch(err => {
+                            options.repository.get({ id })
+                                .then((item) => {
+                                    res.end(`Невозможно удалить ${options.displayNameGenetive} ${item.getDisplayName()}: возможно, этот объект ещё используется в других местах.`)
+                                })
+                        });
                 },
                 options
             }

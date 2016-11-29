@@ -8,7 +8,6 @@ function Init(sequelize) {
         name: helper.nonEmptyString(64, "имя"),
     },
         {
-            paranoid: true,
             instanceMethods: {
                 getDisplayName: function () {
                     return this.name;
