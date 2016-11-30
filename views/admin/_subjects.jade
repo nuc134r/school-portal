@@ -4,8 +4,6 @@ include ../parts/mixins
   - cardSettings = { desktop: { s: 12 } }
   
   +MvcMessages('Предмет создан', 'Предмет удалён', 'Предмет сохранён')
-  if query_params.message === 'created'
-    +MessageCard(cardSettings, 'Предмет создан', null, 'done', 'left: 50%; transform: translateX(-50%);')
 
 - shortname = { title: 'Короткое имя',  field: 'shortname' }
 - name = { title: 'Имя',  field: 'name' }

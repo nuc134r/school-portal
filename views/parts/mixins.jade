@@ -129,10 +129,12 @@ mixin Table(cardSettings, definition)
               each column in definition.columns
                 td.mdl-data-table__cell--non-numeric #{ (column.converter ?  column.converter(item[column.field]) : item[column.field]) }
               td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
-                a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/delete')
-                  i.material-icons delete
+                if !item.lock
+                  a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/delete')
+                    i.material-icons delete
               td.mdl-data-table__cell--non-numeric(style='text-align: center;')
-                a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/edit')
-                  i.material-icons edit
+                if !item.lock
+                  a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/edit')
+                    i.material-icons edit
   else
     +MessageCard(cardSettings, 'Этот список пуст', 'Нажмите кнопку ( + ) в нижнем правом углу экрана, чтобы создать новый элемент.', '&#xE88E;', 'left: 50%; transform: translateX(-50%);')

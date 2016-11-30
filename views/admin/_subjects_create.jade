@@ -4,7 +4,7 @@ include ../parts/mixins
   - cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 6, o: 4 } }
   
   if query_params.error
-    +MessageCard(cardSettings, 'Ошибка при создании предмета', "Не заполнены следующие поля: " + query_params.error)
+    +MessageCard(cardSettings, 'Ошибка при создании предмета', query_params.error)
   
   +Form(cardSettings, 'createsubjectform', '/a/subjects/create')
     +InputField('Имя', 'name', true)
