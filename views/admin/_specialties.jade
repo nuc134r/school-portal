@@ -3,8 +3,7 @@ include ../parts/mixins
 .mdl-grid
   - cardSettings = { desktop: { s: 12 } }
   
-  if query_params.message === 'created'
-    +MessageCard(cardSettings, 'Специальность создана', null, 'done', 'left: 50%; transform: translateX(-50%);')
+  +MvcMessages('Специальность создана', 'Специальность удалена', 'Специальность сохранена')
 
 - name = { title: 'Имя',  field: 'name' }
 - shortname = { title: 'Короткое имя',  field: 'shortname' }

@@ -3,8 +3,7 @@ include ../parts/mixins
 .mdl-grid
   - cardSettings = { desktop: { s: 12 } }
   
-  if query_params.message === 'created'
-    +MessageCard(cardSettings, 'Группа создана', null, 'done', 'left: 50%; transform: translateX(-50%);')
+  +MvcMessages('Группа создана', 'Группа удалена', 'Группа сохранена')
 
 - specialtyConverter = function (value) { if (value) return value.name }
 

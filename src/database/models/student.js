@@ -12,7 +12,7 @@ function Init(sequelize) {
     });
     Student.belongsTo(sequelize.models.user, { 
         foreignKey: { allowNull: false }, 
-        onDelete: 'RESTRICT'
+        onDelete: 'CASCADE'
     });
 }
 

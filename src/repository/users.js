@@ -18,9 +18,21 @@ module.exports.create = (options) => helper.create(options)
 module.exports.browse = helper.browse;
 module.exports.get = helper.get;
 module.exports.delete = (options) => {
+
     if (options.id == 1) {
         return Promise.reject("Cannot delete root admin");
     } else {
-        return connection.models['user'].destroy({ where: options });
+        return helper.get(options)
+            .then((user) => {
+                if (user.type == 'student') {
+                    return connection.models['student']
+                        .find({ where: { userId: user.id } })
+                        .then(student => student.destroy())
+                }
+                return Promise.resolve();
+            })
+            .then(() => {
+                return connection.models['user'].destroy({ where: options });
+            })
     }
 }

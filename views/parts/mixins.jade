@@ -8,6 +8,16 @@ mixin MessageCard(cardSettings, title, message, icon, style)
       .mdl-card__supporting-text(style='padding: 16px')
         | !{ message }
 
+mixin MvcMessages(createdMessage, deletedMessage, editedMessage)
+  if query_params.message === 'created'
+    +MessageCard(cardSettings, createdMessage, null, 'done', 'left: 50%; transform: translateX(-50%);')
+  if query_params.message === 'deleted'
+    +MessageCard(cardSettings, deletedMessage, null, 'done', 'left: 50%; transform: translateX(-50%);')
+  if query_params.message === 'edited'
+    +MessageCard(cardSettings, editedMessage, null, 'done', 'left: 50%; transform: translateX(-50%);')
+  if query_params.error
+    +MessageCard(cardSettings, 'Ошибка при изменении', query_params.error, null, 'left: 50%; transform: translateX(-50%);')
+
 mixin Fab(href, icon)
   - var style = href ? 'visibility: visible;' : 'visibility: collapse;'
   a#fab-link.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored.floating-button(href=href, onclick="return ajax(this)", style=style)

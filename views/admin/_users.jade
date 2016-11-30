@@ -3,9 +3,7 @@ include ../parts/mixins
 .mdl-grid
   - cardSettings = { desktop: { s: 12 } }
   
-  if query_params.message === 'created'
-    +MessageCard(cardSettings, 'Пользователь создан', null, 'done', 'left: 50%; transform: translateX(-50%);')
-
+  +MvcMessages('Пользователь создан', 'Пользователь удалён', 'Пользователь сохранён')
 
 - typeConverter = function(value) { return { 'student' : 'Студент', 'teacher': 'Преподаватель', 'admin': 'Администатор' }[value] }
 
