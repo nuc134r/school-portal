@@ -6,11 +6,12 @@ const UsersRepository = require('../repository/users');
 const SpecialtiesRepository = require('../repository/specialties');
 const GroupsRepository = require('../repository/groups');
 const SubjectsRepository = require('../repository/subjects');
+const AuditoriesRepository = require('../repository/auditory');
 
 const helper = require('./controller-helper')('admin', 'a');
 const config = require('../../config.json');
 
-const UsersCrud = helper.generateCrud({
+module.exports.UsersCrud = helper.generateCrud({
     entityName: 'user',
     entityNamePlural: 'users',
     displayName: 'пользователь',
@@ -42,7 +43,7 @@ const UsersCrud = helper.generateCrud({
     }
 });
 
-const SpecialtiesCrud = helper.generateCrud({
+module.exports.SpecialtiesCrud = helper.generateCrud({
     entityName: 'specialty',
     entityNamePlural: 'specialties',
     displayName: 'специальность',
@@ -53,7 +54,7 @@ const SpecialtiesCrud = helper.generateCrud({
     repository: SpecialtiesRepository
 });
 
-const GroupsCrud = helper.generateCrud({
+module.exports.GroupsCrud = helper.generateCrud({
     entityName: 'group',
     entityNamePlural: 'groups',
     displayName: 'группа',
@@ -72,7 +73,7 @@ const GroupsCrud = helper.generateCrud({
     }
 });
 
-const SubjectsCrud = helper.generateCrud({
+module.exports.SubjectsCrud = helper.generateCrud({
     entityName: 'subject',
     entityNamePlural: 'subjects',
     displayName: 'предмет',
@@ -83,7 +84,13 @@ const SubjectsCrud = helper.generateCrud({
     repository: SubjectsRepository
 });
 
-module.exports.UsersCrud = UsersCrud;
-module.exports.SpecialtiesCrud = SpecialtiesCrud;
-module.exports.GroupsCrud = GroupsCrud;
-module.exports.SubjectsCrud = SubjectsCrud;
+module.exports.AuditoriesCrud = helper.generateCrud({
+    entityName: 'auditory',
+    entityNamePlural: 'auditories',
+    displayName: 'аудитория',
+    displayNamePlural: 'аудитории',
+    displayNameGenetive: 'аудитории',
+    displayNameAccusative: 'аудиторию',
+    displayNameIsMasculine: false,
+    repository: AuditoriesRepository
+});

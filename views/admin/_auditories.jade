@@ -1,0 +1,18 @@
+include ../parts/mixins
+
+.mdl-grid
+  - cardSettings = { desktop: { s: 12 } }
+  
+  +MvcMessages('Аудитория создана', 'Аудитория удалена', 'Аудитория сохранена')
+
+- name = { title: 'Имя',  field: 'name' }
+
+- tableDefinition = {}
+- tableDefinition.items = list_page_items
+- tableDefinition.columns = [name]
+
+
+.mdl-grid
+  +Table(cardSettings, tableDefinition)
+
+    

@@ -3,14 +3,6 @@
 const config = require('../../config');
 const Sequelize = require('sequelize');
 
-const UserModel = require('./models/user');
-const SessionModel = require('./models/session');
-const SpecialtyModel = require('./models/specialty');
-const CourseModel = require('./models/course');
-const GroupModel = require('./models/group');
-const StudentModel = require('./models/student');
-const SubjectModel = require('./models/subject');
-
 const sequelize = new Sequelize(
     config.db.database,
     config.db_superuser.user,
@@ -26,19 +18,21 @@ const sequelize = new Sequelize(
         logging: false
     });
 
+require('./models/user').Init(sequelize);
+require('./models/session').Init(sequelize);
+require('./models/specialty').Init(sequelize);
+require('./models/course').Init(sequelize);
+require('./models/group').Init(sequelize);
+require('./models/student').Init(sequelize);
+require('./models/teacher').Init(sequelize);
+require('./models/subject').Init(sequelize);
+require('./models/auditory').Init(sequelize);
+
 function getConnection() {
     return sequelize;
 }
 
 function Init() {
-    UserModel.Init(sequelize);
-    SessionModel.Init(sequelize);
-    //CourseModel.Init(sequelize);
-    SpecialtyModel.Init(sequelize);
-    GroupModel.Init(sequelize);
-    StudentModel.Init(sequelize);
-    SubjectModel.Init(sequelize);
-
     sequelize.sync().then(() => {
         console.log('Database initialized');
         CreateRootAdmin()

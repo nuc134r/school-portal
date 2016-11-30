@@ -11,7 +11,7 @@ module.exports.create = (options) => helper.create(options)
             case "student":
                 return connection.models.student.create({ userId: user.id, groupId: options.groupId });
             case "teacher":
-                break;
+                return connection.models.teacher.create({ userId: user.id});
         }
     });
 
