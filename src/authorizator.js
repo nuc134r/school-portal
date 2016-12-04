@@ -34,7 +34,7 @@ function authorize(login, password) {
 }
 
 module.exports.authorize = authorize;
-
+/*
 let student_mock = {
     id: 42,
     image_id: null,
@@ -77,4 +77,4 @@ let admin_mock = {
         last: 'Доррер',
         middle: 'Васильевна'
     }
-};
+};*/

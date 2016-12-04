@@ -3,14 +3,14 @@ include ../parts/mixins
 .mdl-grid
   - cardSettings = { desktop: { s: 12 } }
   
-  +MvcMessages('Специальность создана', 'Специальность удалена', 'Специальность сохранена')
+  +MvcMessages('Предмет создан', 'Предмет удалён', 'Предмет сохранён')
 
-- name = { title: 'Имя',  field: 'name' }
 - shortname = { title: 'Короткое имя',  field: 'shortname' }
+- name = { title: 'Имя',  field: 'name' }
 
 - tableDefinition = {}
 - tableDefinition.items = list_page_items
-- tableDefinition.columns = [name, shortname]
+- tableDefinition.columns = [shortname, name]
 
 
 .mdl-grid

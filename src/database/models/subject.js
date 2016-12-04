@@ -4,8 +4,9 @@ const Sequelize = require('sequelize');
 const helper = require('./model-helper');
 
 function Init(sequelize) {
-    let Group = sequelize.define('group', {
-        name: helper.nonEmptyString(8, "имя"),
+    let Subject = sequelize.define('subject', {
+        name: helper.nonEmptyString(128, "имя"),
+        shortname: helper.nonEmptyString(32, "короткое имя"),
     },
         {
             instanceMethods: {
@@ -14,11 +15,6 @@ function Init(sequelize) {
                 }
             }
         });
-
-    Group.belongsTo(sequelize.models.specialty, { 
-        foreignKey: { allowNull: false }, 
-        onDelete: 'RESTRICT'
-    });
 }
 
 module.exports.Init = Init;

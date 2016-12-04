@@ -8,15 +8,26 @@ mixin MessageCard(cardSettings, title, message, icon, style)
       .mdl-card__supporting-text(style='padding: 16px')
         | !{ message }
 
+mixin MvcMessages(createdMessage, deletedMessage, editedMessage)
+  if query_params.message === 'created'
+    +MessageCard(cardSettings, createdMessage, null, 'done', 'left: 50%; transform: translateX(-50%);')
+  if query_params.message === 'deleted'
+    +MessageCard(cardSettings, deletedMessage, null, 'done', 'left: 50%; transform: translateX(-50%);')
+  if query_params.message === 'edited'
+    +MessageCard(cardSettings, editedMessage, null, 'done', 'left: 50%; transform: translateX(-50%);')
+  if query_params.error
+    +MessageCard(cardSettings, 'Ошибка при изменении', query_params.error, null, 'left: 50%; transform: translateX(-50%);')
+
 mixin Fab(href, icon)
   - var style = href ? 'visibility: visible;' : 'visibility: collapse;'
   a#fab-link.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored.floating-button(href=href, onclick="return ajax(this)", style=style)
     i#fab-icon.material-icons #{icon}
 
-mixin ComboBox(placeholder, id, items)
+mixin ComboBox(placeholder, id, items, allowNull)
   .mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label
     select.mdl-selectfield__select(id=(id + 'field'), name=id)
-      option
+      if allowNull
+        option
       for item in items
         option(value=item.value) #{ item.text }
     label.mdl-selectfield__label(for=(id + 'field')) #{ placeholder }
@@ -109,23 +120,21 @@ mixin Table(cardSettings, definition)
         thead
           tr
             each column in definition.columns
-              th.mdl-data-table__cell--non-numeric #{ column.title }
-            if definition.deleteLink
-              th.mdl-data-table__cell--non-numeric Удалить
-            if definition.editLink
-              th.mdl-data-table__cell--non-numeric Изменить
+              th(class={'mdl-data-table__cell--non-numeric' : !column.numeric}) #{ column.title }
+            th.mdl-data-table__cell--non-numeric #{ (false ? ' ' : 'Удалить') }
+            //th.mdl-data-table__cell--non-numeric Изменить
         tbody
           each item in definition.items
             tr
               each column in definition.columns
-                td.mdl-data-table__cell--non-numeric #{ (column.converter ?  column.converter(item[column.field]) : item[column.field]) }
-              if definition.deleteLink
-                td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
-                  button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+                td(class={'mdl-data-table__cell--non-numeric' : !column.numeric}) #{ (column.converter ?  column.converter(item[column.field]) : item[column.field]) }
+              td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
+                if !item.lock
+                  a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/delete')
                     i.material-icons delete
-              if definition.editLink
-                td.mdl-data-table__cell--non-numeric(style='text-align: center;')
-                  button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+              //td.mdl-data-table__cell--non-numeric(style='text-align: center;')
+                if !item.lock
+                  a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/edit')
                     i.material-icons edit
   else
     +MessageCard(cardSettings, 'Этот список пуст', 'Нажмите кнопку ( + ) в нижнем правом углу экрана, чтобы создать новый элемент.', '&#xE88E;', 'left: 50%; transform: translateX(-50%);')

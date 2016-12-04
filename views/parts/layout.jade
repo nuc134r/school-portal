@@ -58,24 +58,27 @@ html
         
         if layout == 'student'
           .mdl-navigation
-            +MenuItem({label: 'Сегодня',       link: '/s/dashboard', icon: '&#xE8DF;',  counter: null})
-            +MenuItem({label: 'Расписание',    link: '/s/lessons',   icon: '&#xE916;',  counter: null})
-            +MenuItem({label: 'Задания',       link: '/s/tasks',     icon: '&#xE877;',  counter: null})
+            +MenuItem({label: 'Сегодня',       link: '/s/dashboard', icon: '&#xE8DF;' })
+            +MenuItem({label: 'Расписание',    link: '/s/lessons',   icon: '&#xE916;' })
+            +MenuItem({label: 'Задания',       link: '/s/tasks',     icon: '&#xE877;' })
             +MenuItem({label: 'Сообщения',     link: '/s/messages',  icon: '&#xE0C9;',  counter: 3})
-            +MenuItem({label: 'Группа',        link: '/s/students',  icon: '&#xE7FB;',  counter: null})
-            +MenuItem({label: 'Материалы',     link: '/s/materials', icon: '&#xE86E;',  counter: null})
-            +MenuItem({label: 'Клубы',         link: '/s/clubs',     icon: '&#xE420;',  counter: null})
+            +MenuItem({label: 'Группа',        link: '/s/students',  icon: '&#xE7FB;' })
+            +MenuItem({label: 'Материалы',     link: '/s/materials', icon: '&#xE86E;' })
+            +MenuItem({label: 'Клубы',         link: '/s/clubs',     icon: '&#xE420;' })
            
         if layout == 'teacher'   
           .mdl-navigation   
-            +MenuItem({label: 'Сегодня',       link: '/',          icon: '&#xE8DF;',  counter: null})
-            +MenuItem({label: 'Расписание',    link: '/t/lessons', icon: '&#xE916;',  counter: null})
+            +MenuItem({label: 'Сегодня',       link: '/',          icon: '&#xE8DF;' })
+            +MenuItem({label: 'Расписание',    link: '/t/lessons', icon: '&#xE916;' })
 
         if layout == 'admin'
           .mdl-navigation
-            +MenuItem({label: 'Пользователи',  link: '/a/users',       icon: '&#xE7FB;',  counter: null})
-            +MenuItem({label: 'Специальности', link: '/a/specialties', icon: '&#xE7FB;',  counter: null})
-            +MenuItem({label: 'Группы',        link: '/a/groups',      icon: '&#xE7FB;',  counter: null})
+            +MenuItem({label: 'Пользователи',  link: '/a/users',       icon: '&#xE7FD;' })
+            +MenuItem({label: 'Специальности', link: '/a/specialties', icon: '&#xE85E;' })
+            +MenuItem({label: 'Группы',        link: '/a/groups',      icon: '&#xE7FB;' })
+            +MenuItem({label: 'Предметы',      link: '/a/subjects',    icon: '&#xE865;' })
+            +MenuItem({label: 'Аудитории',     link: '/a/auditories',  icon: '&#xE8B4;' })
+            +MenuItem({label: 'Звонки',        link: '/a/timings',     icon: '&#xE192;' })
     
       
       main#content.mdl-layout__content.mdl-color--grey-100

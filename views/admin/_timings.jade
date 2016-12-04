@@ -1,0 +1,20 @@
+include ../parts/mixins
+
+.mdl-grid
+  - cardSettings = { desktop: { s: 12 } }
+  
+  +MvcMessages('Звонок создан', 'Звонок удалён', 'Звонок сохранён')
+
+- start = { title: 'Начало',  field: 'start' }
+- end = { title: 'Конец',  field: 'end' }
+- duration = { title: 'В минутах',  field: 'duration', numeric: true }
+
+- tableDefinition = {}
+- tableDefinition.items = list_page_items
+- tableDefinition.columns = [start, end, duration]
+
+
+.mdl-grid
+  +Table(cardSettings, tableDefinition)
+
+    

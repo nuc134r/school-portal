@@ -3,5 +3,24 @@
 const database = require('../database/database');
 const connection = database.getConnection();
 
-module.exports.create = (options) => connection.models.user.create(options);
-module.exports.browse = () => connection.models.user.findAll();
+const helper = require('./repository-helper')(connection, 'user');
+
+module.exports.create = (options) => helper.create(options)
+    .then(user => {
+        switch (user.type) {
+            case "student":
+                return connection.models.student.create({ userId: user.id, groupId: options.groupId });
+            case "teacher":
+                return connection.models.teacher.create({ userId: user.id});
+        }
+    });
+
+module.exports.browse = helper.browse;
+module.exports.get = helper.get;
+module.exports.delete = (options) => {
+    if (options.id == 1) {
+        return Promise.reject("Cannot delete root admin");
+    } else {
+        return helper.delete(options);
+    }
+}

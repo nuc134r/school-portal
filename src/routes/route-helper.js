@@ -22,13 +22,17 @@ function init(router) {
     });
 }
 
-function createCrudRoutes(prefix, router, crud) {
+function createContollerRoutes(prefix, router, crud) {
     let entity = crud.options.entityNamePlural;
 
     router.get(`/${prefix}/${entity}`, crud.browse);
-    router.get(`/${prefix}/${entity}/create`, crud.new);
+
+    router.get(`/${prefix}/${entity}/create`, crud.createPage);
     router.post(`/${prefix}/${entity}/create`, crud.create);
+
+    router.get(`/${prefix}/${entity}/:id/delete`, crud.deletePage);
+    router.delete(`/${prefix}/${entity}/:id/delete`, crud.delete);
 }
 
 module.exports.init = init;
-module.exports.createCrudRoutes = createCrudRoutes;
+module.exports.createContollerRoutes = createContollerRoutes;

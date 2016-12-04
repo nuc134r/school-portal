@@ -3,23 +3,21 @@ include ../parts/mixins
 .mdl-grid
   - cardSettings = { desktop: { s: 12 } }
   
-  if query_params.message === 'created'
-    +MessageCard(cardSettings, 'Пользователь создан', null, 'done', 'left: 50%; transform: translateX(-50%);')
-
+  +MvcMessages('Пользователь создан', 'Пользователь удалён', 'Пользователь сохранён')
 
 - typeConverter = function(value) { return { 'student' : 'Студент', 'teacher': 'Преподаватель', 'admin': 'Администатор' }[value] }
 
-- lastname = { title: 'Фамилия',  field: 'lastname' }
-- firstname = { title: 'Имя',      field: 'firstname' }
+- lastname = { title: 'Фамилия', field: 'lastname' }
+- firstname = { title: 'Имя', field: 'firstname' }
 - middlename = { title: 'Отчество', field: 'middlename' }
+- login = { title: 'Логин', field: 'login' }
 - type = { title: 'Тип',  field: 'type', converter: typeConverter }
 
 - tableDefinition = {}
 - tableDefinition.items = list_page_items
-- tableDefinition.columns = [lastname, firstname, middlename, type]
-- tableDefinition.editLink = '/a/users/'
-- tableDefinition.deleteLink = '/a/users/'
+- tableDefinition.columns = [lastname, firstname, login, type]
 
+- list_page_items[0].lock = true
 
 .mdl-grid
   +Table(cardSettings, tableDefinition)

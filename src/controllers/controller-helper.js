@@ -66,7 +66,8 @@ function create(user_mode, urlPrefix) {
 
     return {
         render,
-        generateCrud: function(options) {
+        generateContoller: function(options) {
+            options.urlPrefix = urlPrefix;
             return {
                 browse: (req, res) => {
 
@@ -90,35 +91,7 @@ function create(user_mode, urlPrefix) {
                             console.error(err);
                         });
                 },
-                create: (req, res) => {
-
-                    let requestOptions = options.onProcessForm
-                        ? options.onProcessForm(req.body)
-                        : req.body;
-
-                    options.repository.create(requestOptions)
-                        .then(() => res.redirect(`/${urlPrefix}/${options.entityNamePlural}?message=created`))
-                        .catch(err => {
-
-                            if (~err.message.indexOf('#MANDATORYFIELD')) {
-                                requestOptions.error = 'Обязательные поля не заполнены:';
-                                err.errors.forEach((error) => {
-                                    requestOptions.error += `\n${error.path}`;
-                                });
-                            } else {
-                                console.error(err);
-                                requestOptions.error = err.message;
-                            }
-
-                            var redirect_url = url.format({
-                                query: requestOptions,
-                                pathname: `/${urlPrefix}/${options.entityNamePlural}/create`
-                            });
-
-                            res.redirect(redirect_url);
-                        });
-                },
-                new: (req, res) => {
+                createPage: (req, res) => {
 
                     let resolvedLists = {};
                     async.forEachOf(options.lists, function(listPromiseGenerator, key, callback) {
@@ -137,13 +110,63 @@ function create(user_mode, urlPrefix) {
                         if (err) console.error(err.message); // TODO Handle
 
                         let newStatementGendered = options.displayNameIsMasculine ? 'Новый' : 'Новая';
-                        render(req, res, { lists : resolvedLists }, {
+                        render(req, res, { lists: resolvedLists }, {
                             view: `${user_mode}/${options.entityNamePlural}_create`,
                             title: `${newStatementGendered} ${options.displayName}`
                         });
                     });
+                },
+                create: (req, res) => {
 
+                    let requestOptions = options.onProcessForm
+                        ? options.onProcessForm(req.body)
+                        : req.body;
 
+                    options.repository.create(requestOptions)
+                        .then(() => res.redirect(`/${urlPrefix}/${options.entityNamePlural}?message=created`))
+                        .catch(err => {
+                            if (err.errors) {
+                                err.errors.forEach((error, i) => {
+                                    requestOptions[`error[${i}]`] = error.message;
+                                });
+                            } else {
+                                requestOptions['error'] = err.message || err;
+                            }
+
+                            var redirect_url = url.format({
+                                query: requestOptions,
+                                pathname: `/${urlPrefix}/${options.entityNamePlural}/create`
+                            });
+
+                            res.redirect(redirect_url);
+                        });
+                },
+                deletePage: (req, res) => {
+                    let renderOptions = {
+                        view: 'common/delete.jade',
+                        title: 'Удаление ' + options.displayNameGenetive.toLowerCase()
+                    };
+
+                    options.repository.get({ id: req.params.id })
+                        .then((item) => {
+                            render(req, res, { item, entity: options }, renderOptions);
+                        })
+                        .catch(err => {
+                            res.end(err.toString());
+                            console.error(err);
+                        });
+                },
+                delete: (req, res) => {
+                    let id = req.params.id;
+
+                    options.repository.delete({ id })
+                        .then(() => res.end('ok'))
+                        .catch(err => {
+                            options.repository.get({ id })
+                                .then((item) => {
+                                    res.end(`Невозможно удалить ${options.displayNameGenetive} ${item.getDisplayName()}. Возможно, этот объект ещё используется в других местах.`)
+                                })
+                        });
                 },
                 options
             }

@@ -3,9 +3,9 @@
 const database = require('../database/database');
 const connection = database.getConnection();
 
-module.exports.create = (options) => {
-    return connection.models.group.create(options);
-}
-module.exports.browse = () => connection.models.group.findAll({
-    include: connection.models.specialty
-});
+const helper = require('./repository-helper')(connection, 'group');
+
+module.exports.create = helper.create;
+module.exports.browse = helper.browseWith(['specialty']);
+module.exports.get = helper.get;
+module.exports.delete = helper.delete;
