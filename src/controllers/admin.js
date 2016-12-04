@@ -6,12 +6,13 @@ const UsersRepository = require('../repository/users');
 const SpecialtiesRepository = require('../repository/specialties');
 const GroupsRepository = require('../repository/groups');
 const SubjectsRepository = require('../repository/subjects');
-const AuditoriesRepository = require('../repository/auditory');
+const AuditoriesRepository = require('../repository/auditories');
+const TimingsRepository = require('../repository/timings');
 
 const helper = require('./controller-helper')('admin', 'a');
 const config = require('../../config.json');
 
-module.exports.UsersCrud = helper.generateCrud({
+module.exports.UsersContoller = helper.generateContoller({
     entityName: 'user',
     entityNamePlural: 'users',
     displayName: 'пользователь',
@@ -43,7 +44,7 @@ module.exports.UsersCrud = helper.generateCrud({
     }
 });
 
-module.exports.SpecialtiesCrud = helper.generateCrud({
+module.exports.SpecialtiesContoller = helper.generateContoller({
     entityName: 'specialty',
     entityNamePlural: 'specialties',
     displayName: 'специальность',
@@ -54,7 +55,7 @@ module.exports.SpecialtiesCrud = helper.generateCrud({
     repository: SpecialtiesRepository
 });
 
-module.exports.GroupsCrud = helper.generateCrud({
+module.exports.GroupsContoller = helper.generateContoller({
     entityName: 'group',
     entityNamePlural: 'groups',
     displayName: 'группа',
@@ -73,7 +74,7 @@ module.exports.GroupsCrud = helper.generateCrud({
     }
 });
 
-module.exports.SubjectsCrud = helper.generateCrud({
+module.exports.SubjectsContoller = helper.generateContoller({
     entityName: 'subject',
     entityNamePlural: 'subjects',
     displayName: 'предмет',
@@ -84,7 +85,7 @@ module.exports.SubjectsCrud = helper.generateCrud({
     repository: SubjectsRepository
 });
 
-module.exports.AuditoriesCrud = helper.generateCrud({
+module.exports.AuditoriesContoller = helper.generateContoller({
     entityName: 'auditory',
     entityNamePlural: 'auditories',
     displayName: 'аудитория',
@@ -93,4 +94,15 @@ module.exports.AuditoriesCrud = helper.generateCrud({
     displayNameAccusative: 'аудиторию',
     displayNameIsMasculine: false,
     repository: AuditoriesRepository
+});
+
+module.exports.TimingsContoller = helper.generateContoller({
+    entityName: 'timing',
+    entityNamePlural: 'timings',
+    displayName: 'звонок',
+    displayNamePlural: 'звонки',
+    displayNameGenetive: 'звонка',
+    displayNameAccusative: 'звонок',
+    displayNameIsMasculine: true,
+    repository: TimingsRepository
 });

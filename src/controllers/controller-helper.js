@@ -66,7 +66,7 @@ function create(user_mode, urlPrefix) {
 
     return {
         render,
-        generateCrud: function(options) {
+        generateContoller: function(options) {
             options.urlPrefix = urlPrefix;
             return {
                 browse: (req, res) => {
@@ -130,7 +130,7 @@ function create(user_mode, urlPrefix) {
                                     requestOptions[`error[${i}]`] = error.message;
                                 });
                             } else {
-                                requestOptions['error'] = err.message;
+                                requestOptions['error'] = err.message || err;
                             }
 
                             var redirect_url = url.format({

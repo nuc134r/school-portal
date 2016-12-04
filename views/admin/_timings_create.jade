@@ -1,0 +1,21 @@
+include ../parts/mixins
+
+.mdl-grid
+  - cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 6, o: 4 } }
+  
+  if query_params.error
+    +MessageCard(cardSettings, 'Ошибка при создании звонка', query_params.error)
+  
+  - var hours = []
+  - for (var i = 0; i < 24; i++) hours.push({ text: i, value: i });
+  
+  - var minutes = []
+  - for (var i = 0; i < 60; i += 5) minutes.push({ text: i, value: i });
+
+  +Form(cardSettings, 'createtimingform', '/a/timings/create')
+    h5 Начало
+    +ComboBox('Час', 'beginHour', hours)
+    +ComboBox('Минута', 'beginMinute', minutes)
+    h5 Конец
+    +ComboBox('Час', 'endHour', hours)
+    +ComboBox('Минута', 'endMinute', minutes)

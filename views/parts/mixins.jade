@@ -120,19 +120,19 @@ mixin Table(cardSettings, definition)
         thead
           tr
             each column in definition.columns
-              th.mdl-data-table__cell--non-numeric #{ column.title }
-            th.mdl-data-table__cell--non-numeric Удалить
-            th.mdl-data-table__cell--non-numeric Изменить
+              th(class={'mdl-data-table__cell--non-numeric' : !column.numeric}) #{ column.title }
+            th.mdl-data-table__cell--non-numeric #{ (false ? ' ' : 'Удалить') }
+            //th.mdl-data-table__cell--non-numeric Изменить
         tbody
           each item in definition.items
             tr
               each column in definition.columns
-                td.mdl-data-table__cell--non-numeric #{ (column.converter ?  column.converter(item[column.field]) : item[column.field]) }
+                td(class={'mdl-data-table__cell--non-numeric' : !column.numeric}) #{ (column.converter ?  column.converter(item[column.field]) : item[column.field]) }
               td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
                 if !item.lock
                   a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/delete')
                     i.material-icons delete
-              td.mdl-data-table__cell--non-numeric(style='text-align: center;')
+              //td.mdl-data-table__cell--non-numeric(style='text-align: center;')
                 if !item.lock
                   a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/edit')
                     i.material-icons edit

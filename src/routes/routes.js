@@ -13,11 +13,12 @@ helper.init(router);
 /* admin */
 router.get('/a', (req, res) => res.redirect('/a/users'));
 
-helper.createCrudRoutes('a', router, adminController.UsersCrud);
-helper.createCrudRoutes('a', router, adminController.SpecialtiesCrud);
-helper.createCrudRoutes('a', router, adminController.GroupsCrud);
-helper.createCrudRoutes('a', router, adminController.SubjectsCrud);
-helper.createCrudRoutes('a', router, adminController.AuditoriesCrud);
+helper.createContollerRoutes('a', router, adminController.UsersContoller);
+helper.createContollerRoutes('a', router, adminController.SpecialtiesContoller);
+helper.createContollerRoutes('a', router, adminController.GroupsContoller);
+helper.createContollerRoutes('a', router, adminController.SubjectsContoller);
+helper.createContollerRoutes('a', router, adminController.AuditoriesContoller);
+helper.createContollerRoutes('a', router, adminController.TimingsContoller);
 
 /* student */
 router.get('/s', (req, res) => res.redirect('/s/dashboard'));

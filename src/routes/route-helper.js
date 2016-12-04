@@ -22,7 +22,7 @@ function init(router) {
     });
 }
 
-function createCrudRoutes(prefix, router, crud) {
+function createContollerRoutes(prefix, router, crud) {
     let entity = crud.options.entityNamePlural;
 
     router.get(`/${prefix}/${entity}`, crud.browse);
@@ -35,4 +35,4 @@ function createCrudRoutes(prefix, router, crud) {
 }
 
 module.exports.init = init;
-module.exports.createCrudRoutes = createCrudRoutes;
+module.exports.createContollerRoutes = createContollerRoutes;

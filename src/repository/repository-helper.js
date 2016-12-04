@@ -12,6 +12,10 @@ function Create(connection, modelName) {
         sortingRules.push(['lastname', 'ASC']);
     }
 
+    if (modelAttriutes['start']) {
+        sortingRules.push(['start', 'ASC']);
+    }
+
     return {
         create: (options) => connection.models[modelName].create(options),
         browse: () => connection.models[modelName].findAll({ order: sortingRules }),
