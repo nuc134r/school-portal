@@ -4,6 +4,7 @@ const helper = require('./route-helper');
 
 const adminController = require('../controllers/admin');
 const studentController = require('../controllers/student');
+const teacherController = require('../controllers/teacher');
 
 const express = require('express');
 const router = express.Router();
@@ -19,6 +20,11 @@ helper.createContollerRoutes('a', router, adminController.GroupsContoller);
 helper.createContollerRoutes('a', router, adminController.SubjectsContoller);
 helper.createContollerRoutes('a', router, adminController.AuditoriesContoller);
 helper.createContollerRoutes('a', router, adminController.TimingsContoller);
+
+/* teacher */
+router.get('/t', (req, res) => res.redirect('/t/timetable'));
+
+router.get('/t/timetable', teacherController.getLessonsEditorPage);
 
 /* student */
 router.get('/s', (req, res) => res.redirect('/s/dashboard'));

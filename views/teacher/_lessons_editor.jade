@@ -1,0 +1,21 @@
+include ../parts/mixins
+
+.mdl-grid
+  - cardSettings = { phone: { s: 4 }, tablet: { s: 6, o: 1 }, desktop: { s: 8, o: 2 } }
+
+- var groups = [{ text: 'П-403', value: 0 }, { text: 'П-404', value: 1 }, { text: 'П-307', value: 2 }]
+- var weekdays = [{value: 'mon', text: 'понедельник'}, {value: 'tue', text: 'вторник'}, {value: 'wed', text: 'среда'}, {value: 'thu', text: 'четверг'}, {value: 'fri', text: 'пятница'}, {value: 'sat', text: 'суббота'}]
+
++Form(cardSettings, 'createauditoryform', '/a/auditories/create', '')
+  .mdl-card__supporting-text
+    +ComboBox('Группа', 'group', groups, false, 'width: 100px;')
+    +ComboBox('День недели', 'group', weekdays, false, 'width: 150px; margin-left: 30px;')
+
+    br
+    br
+
+    button.mdl-button.mdl-button-custom.mdl-js-button
+        p.mdl-button-custom--right asas
+        p.mdl-button-custom--header dsdfsdf
+        p.mdl-button-custom--right sdfsdf
+        p.mdl-button-custom--text sdfsdf

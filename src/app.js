@@ -38,7 +38,9 @@ app.use(express.static(scritps_path));
 app.use(express.static(assets_path));
 
 // creating app context in 'req' object
-app.use((req, res, next) => { req.school_context = {}; next(); })
+app.use((req, res, next) => { 
+      req.school_context = {}; next(); 
+})
 
 /* public routes */
 app.use('/', require('./routes/login'));

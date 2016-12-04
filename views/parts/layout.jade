@@ -67,9 +67,9 @@ html
             +MenuItem({label: 'Клубы',         link: '/s/clubs',     icon: '&#xE420;' })
            
         if layout == 'teacher'   
-          .mdl-navigation   
-            +MenuItem({label: 'Сегодня',       link: '/',          icon: '&#xE8DF;' })
-            +MenuItem({label: 'Расписание',    link: '/t/lessons', icon: '&#xE916;' })
+          .mdl-navigation
+            +MenuItem({label: 'Сегодня',       link: '/dashboard',   icon: '&#xE8DF;' })
+            +MenuItem({label: 'Расписание',    link: '/t/timetable', icon: '&#xE916;' })
 
         if layout == 'admin'
           .mdl-navigation
