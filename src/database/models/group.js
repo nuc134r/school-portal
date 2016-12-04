@@ -5,7 +5,7 @@ const helper = require('./model-helper');
 
 function Init(sequelize) {
     let Group = sequelize.define('group', {
-        name: helper.nonEmptyString(8, "имя"),
+        name: helper.nonEmptyUniqueString(8, "имя"),
     },
         {
             instanceMethods: {
