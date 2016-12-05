@@ -1,10 +1,10 @@
 /* mdl-card */
 
-@media (min-width: 840px) {
+/*@media (min-width: 840px) {
     .mdl-card {
         max-width: 320px;
     }
-}
+}*/
 
 .mdl-card {
     min-height: 0px;
@@ -140,6 +140,7 @@
 .mdl-navigation__label {
     position: relative;
     top: 1px;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
 
 .floating-button {
@@ -159,3 +160,14 @@
     }
 }
 
+.lesson-editing-pane {
+    max-height: 200px;
+    padding-bottom: 0px; 
+    margin-top: 5px;
+    transition: max-height 0.2s ease-out;
+}
+
+.lesson-editing-pane-hidden {
+    max-height: 0px;
+    transition: max-height 0.2s ease-out;
+}

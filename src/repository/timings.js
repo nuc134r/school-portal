@@ -11,8 +11,8 @@ function toDomain(timing) {
     let start = moment(timing.start);
     let end = moment(start).add(timing.duration, 'minutes');
 
-    let displayStart = start.format('hh:mm');
-    let displayEnd = end.format('hh:mm');
+    let displayStart = start.format('k:mm');
+    let displayEnd = end.format('k:mm');
 
     return {
         id: timing.id,

@@ -60,13 +60,46 @@ function create(user_mode, urlPrefix) {
 
             res.json(result);
         } else {
-            res.render(options.view, params);
+            try {
+                res.render(options.view, params);
+            } catch (err) {
+                console.error(err);
+            }
         }
+    }
+
+    function processPromises(promiseList, processors) {
+        return new Promise((resolve, reject) => {
+            let resolvedLists = {};
+            async.forEachOf(promiseList, function (listGetterPromise, key, callback) {
+                listGetterPromise()
+                    .then(data => {
+                        resolvedLists[key] = data;
+                        if (data.length && data[0].dataValues) {
+                            resolvedLists[key] = data.map(_ => _.dataValues);
+                        }
+                        if (processors && processors[key]) {
+                            resolvedLists[key] = resolvedLists[key].map(processors[key]);
+                        }
+                        callback();
+                    })
+                    .catch((err) => {
+                        callback(err);
+                    });
+            }, function (err) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(resolvedLists);
+                }
+            })
+        });
     }
 
     return {
         render,
-        generateContoller: function(options) {
+        processPromises,
+        generateContoller: function (options) {
             options.urlPrefix = urlPrefix;
             return {
                 browse: (req, res) => {
@@ -93,28 +126,19 @@ function create(user_mode, urlPrefix) {
                 },
                 createPage: (req, res) => {
 
-                    let resolvedLists = {};
-                    async.forEachOf(options.lists, function(listPromiseGenerator, key, callback) {
-                        listPromiseGenerator()
-                            .then(data => {
-                                resolvedLists[key] = data.map(_ => _.dataValues);
-                                if (options.listProcessors[key]) {
-                                    resolvedLists[key] = resolvedLists[key].map(options.listProcessors[key]);
-                                }
-                                callback();
-                            })
-                            .catch((err) => {
-                                callback(err);
+                    processPromises(options.lists, options.listProcessors)
+                        .then((lists) => {
+                            let newStatementGendered = options.displayNameIsMasculine ? 'Новый' : 'Новая';
+                            render(req, res, { lists }, {
+                                view: `${user_mode}/${options.entityNamePlural}_create`,
+                                title: `${newStatementGendered} ${options.displayName}`
                             });
-                    }, function(err) {
-                        if (err) console.error(err.message); // TODO Handle
+                        })
+                        .catch((err) => {
+                            if (err) console.error(err.message);
 
-                        let newStatementGendered = options.displayNameIsMasculine ? 'Новый' : 'Новая';
-                        render(req, res, { lists: resolvedLists }, {
-                            view: `${user_mode}/${options.entityNamePlural}_create`,
-                            title: `${newStatementGendered} ${options.displayName}`
+                            res.end(err);
                         });
-                    });
                 },
                 create: (req, res) => {
 
