@@ -23,6 +23,11 @@ mixin Fab(href, icon)
   a#fab-link.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored.floating-button(href=href, onclick="return ajax(this)", style=style)
     i#fab-icon.material-icons #{icon}
 
+mixin Toggle(id, text, style, checked)
+  label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for=(id + 'field'), style=style)
+    input.mdl-switch__input(id=(id + 'field'), name=id, type='checkbox', checked=checked)
+    span.mdl-switch__label #{text}
+
 mixin ComboBox(placeholder, id, items, allowNull, style)
   .mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label(style=style)
     select.mdl-selectfield__select(id=(id + 'field'), name=id)
@@ -102,9 +107,20 @@ mixin Card(options, style)
   .mdl-card.mdl-cell.mdl-grid(class=classes, style=style)
     block
 
+mixin Text(options)
+  - var classes = [];
+  - ['phone', 'desktop', 'tablet'].forEach((device) => {
+  -   var settings = options[device]; 
+  -   if (settings) {
+  -     if (settings.s) classes.push('mdl-cell--' + settings.s + '-col-' + device);
+  -     if (settings.o) classes.push('mdl-cell--' + settings.o + '-offset-' + device);
+  -   }
+  - });
+  div(class=classes)
+    block
 
-mixin Form(cardSettings, id, url, style)
-  +Card(cardSettings)
+mixin Form(cardSettings, id, url, style, cardStyle)
+  +Card(cardSettings, (cardStyle == null ? 'max-width: 320px;' : ''))
     .mdl-card__supporting-text
       form(action=url, method='POST', style=(style == null ? 'padding: 5px 25px' : ''), id=id)
         block

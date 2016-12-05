@@ -6,7 +6,11 @@ const routing_table = {
     'student': 's'
 }
 
+let helper_router = null;
+
 function init(router) {
+
+    helper_router = router;
 
     router.get('/', (req, res) => {
         let user_type = req.school_context.user.type;
@@ -34,5 +38,16 @@ function createContollerRoutes(prefix, router, crud) {
     router.delete(`/${prefix}/${entity}/:id/delete`, crud.delete);
 }
 
+function whitelist(pathMask, valueGetter, assertValue) {
+    helper_router.all(pathMask, (req, res, next) => {
+        if (valueGetter(req) == assertValue) {
+            next();
+        } else {
+            res.redirect('/404');
+        }
+    });
+}
+
 module.exports.init = init;
 module.exports.createContollerRoutes = createContollerRoutes;
+module.exports.whitelist = whitelist;

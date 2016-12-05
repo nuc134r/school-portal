@@ -11,6 +11,10 @@ const router = express.Router();
 
 helper.init(router);
 
+helper.whitelist('/t/*', (req) => req.school_context.user.type, 'teacher');
+helper.whitelist('/a/*', (req) => req.school_context.user.type, 'admin');
+helper.whitelist('/s/*', (req) => req.school_context.user.type, 'student');
+
 /* admin */
 router.get('/a', (req, res) => res.redirect('/a/users'));
 
@@ -25,6 +29,7 @@ helper.createContollerRoutes('a', router, adminController.TimingsContoller);
 router.get('/t', (req, res) => res.redirect('/t/timetable'));
 
 router.get('/t/timetable', teacherController.getLessonsEditorPage);
+router.post('/t/timetable', teacherController.saveLessons);
 
 /* student */
 router.get('/s', (req, res) => res.redirect('/s/dashboard'));
