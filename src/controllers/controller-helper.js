@@ -188,7 +188,7 @@ function create(user_mode, urlPrefix) {
                         .catch(err => {
                             options.repository.get({ id })
                                 .then((item) => {
-                                    res.end(`Невозможно удалить ${options.displayNameGenetive} ${item.getDisplayName()}. Возможно, этот объект ещё используется в других местах.`)
+                                    res.end(`Невозможно удалить ${options.displayNameAccusative} ${item.getDisplayName()}. Возможно, этот объект ещё используется в других местах.`)
                                 })
                         });
                 },

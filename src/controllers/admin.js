@@ -69,7 +69,7 @@ module.exports.GroupsContoller = helper.generateContoller({
     },
     listProcessors: {
         specialties: (item) => {
-            return { text: item.shortname, value: item.id }
+            return { text: item.name, value: item.id }
         }
     }
 });

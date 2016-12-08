@@ -7,7 +7,7 @@ include ../parts/mixins
     .mdl-card__title
       h2.mdl-card__title-text
         | Удаление #{entity.displayNameGenetive}
-    .mdl-card__supporting-text
+    .mdl-card__supporting-text(style='padding: 16px')
       | Вы действительно хотите удалить #{entity.displayNameAccusative} #[b #{item.getDisplayName()}]?
     .mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(
