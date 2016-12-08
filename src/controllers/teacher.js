@@ -24,21 +24,16 @@ module.exports.getLessonsEditorPage = (req, res) => {
     }
 
     let processors = {
-        teachers: (teacher) => {
-            return {
-                text: `${teacher.user.lastname} ${teacher.user.firstname.charAt(0)}. ${teacher.user.middlename.charAt(0)}.`,
-                value: teacher.id
-            }
-        },
-        subjects: (_) => { return { text: _.name, value: _.id}},
-        auditories: (_) => { return { text: _.name, value: _.id}},
-        groups: (_) => { return { text: _.name, value: _.id}}
+        teachers: (teacher) => { return { text: `${teacher.user.lastname} ${teacher.user.firstname.charAt(0)}. ${teacher.user.middlename.charAt(0)}.`, value: teacher.id } },
+        subjects: (_) => { return { text: _.name, value: _.id } },
+        auditories: (_) => { return { text: _.name, value: _.id } },
+        groups: (_) => { return { text: _.name, value: _.id } }
     }
 
     helper.processPromises(lists, processors)
         .then((lists) => {
             let renderOptions = {
-                view: 'teacher/lessons_editor',
+                view: 'teacher/lessons',
                 title: 'Изменение расписания'
             };
 

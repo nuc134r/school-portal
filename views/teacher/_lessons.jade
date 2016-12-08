@@ -1,0 +1,17 @@
+include ../parts/mixins
+
+.mdl-grid
+  - cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } }
+
+form#timetableform(action='/t/timetable/', method='POST')
+  +Card(cardSettings)
+    .mdl-card__supporting-text(style='margin-top: 5px;')
+      +ComboBox('Группа', 'group', lists.groups, true, 'width: 45%; margin-right: 5%')
+      +ComboBox('Неделя', 'weektype', [{text: 'верхняя', value: 'upper'}, {text: 'нижняя', value: 'lower'}], false, 'width: 45%;')
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('timetableform').submit()") сохранить расписание
+  
+  script.
+    
+  #days-container
+    include _lessons_editor
