@@ -9,14 +9,16 @@ mixin MessageCard(cardSettings, title, message, icon, style)
         | !{ message }
 
 mixin MvcMessages(createdMessage, deletedMessage, editedMessage)
+  - var styles = null && 'left: 50%; transform: translateX(-50%);';
+  - var cardSettings = {desktop: {s:4, o: 4}};
   if query_params.message === 'created'
-    +MessageCard(cardSettings, createdMessage, null, 'done', 'left: 50%; transform: translateX(-50%);')
+    +MessageCard(cardSettings, createdMessage, null, 'done', styles)
   if query_params.message === 'deleted'
-    +MessageCard(cardSettings, deletedMessage, null, 'done', 'left: 50%; transform: translateX(-50%);')
+    +MessageCard(cardSettings, deletedMessage, null, 'done', styles)
   if query_params.message === 'edited'
-    +MessageCard(cardSettings, editedMessage, null, 'done', 'left: 50%; transform: translateX(-50%);')
+    +MessageCard(cardSettings, editedMessage, null, 'done', styles)
   if query_params.error
-    +MessageCard(cardSettings, 'Ошибка при изменении', query_params.error, null, 'left: 50%; transform: translateX(-50%);')
+    +MessageCard(cardSettings, 'Ошибка при изменении', query_params.error, null, styles)
 
 mixin Fab(href, icon)
   - var style = href ? 'visibility: visible;' : 'visibility: collapse;'
@@ -93,7 +95,6 @@ mixin GroupCompactList(people)
             i.material-icons &#xE158;
 
 mixin Card(options, style)
-
   - var classes = [];
   - ['phone', 'desktop', 'tablet'].forEach((device) => {
   -   var settings = options[device]; 
@@ -120,7 +121,7 @@ mixin Text(options)
     block
 
 mixin Form(cardSettings, id, url, style, cardStyle)
-  +Card(cardSettings, (cardStyle == null ? 'max-width: 320px;' : ''))
+  +Card(cardSettings, '', (cardStyle == null ? 'max-width: 320px;' : ''))
     .mdl-card__supporting-text
       form(action=url, method='POST', style=(style == null ? 'padding: 5px 25px' : ''), id=id)
         block
