@@ -60,10 +60,10 @@ mixin LessonList(lessons)
         'mdl-button--raised': lesson.now,
         'mdl-js-ripple-effect': lesson.now
         })
-        p.mdl-button-custom--right #{lesson.room}
+        p.mdl-button-custom--right #{lesson.auditory}
         p.mdl-button-custom--header #{lesson.subject}
-        p.mdl-button-custom--right #{lesson.starts + ' - ' + lesson.ends}
-        p.mdl-button-custom--text #{lesson.tutor}
+        p.mdl-button-custom--right #{lesson.start + ' - ' + lesson.end}
+        p.mdl-button-custom--text #{lesson.teacher}
   else
     span.mdl-card__supporting-text-plaintext Занятий нет
 

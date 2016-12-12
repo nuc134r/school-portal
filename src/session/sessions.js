@@ -38,14 +38,31 @@ function get(token) {
                 $gt: getExpirationBoundary()
             }
         }
-    }).then(session => {
-        if (!session) return null;
+    })
+        .then(session => {
+            if (session.user.type == 'student') {
+                return connection.models["student"].find({
+                    where: { userId: session.user.id },
+                    include: connection.models.group
+                })
+                .then(student => {
+                    session.user.student = {
+                        group: student.group.name,
+                        groupId: student.group.id
+                    };
 
-        cache[session.token] = session.dataValues;
-        cache[session.token].user = session.user.asViewModel();
+                    return session;
+                })
+            }
+        })
+        .then(session => {
+            if (!session) return null;
 
-        return session.user.asViewModel();
-    });
+            cache[session.token] = session.dataValues;
+            cache[session.token].user = session.user.asViewModel();
+
+            return session.user.asViewModel();
+        });
 }
 
 function remove(token) {
