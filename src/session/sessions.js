@@ -53,6 +53,8 @@ function get(token) {
 
                     return session;
                 })
+            } else {
+                return session;
             }
         })
         .then(session => {

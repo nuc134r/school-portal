@@ -140,7 +140,7 @@ require('../src/database/database').Init().then(() => {
                 .then(() => UsersRepository.create({ lastname: 'Миланова', firstname: 'Ирина', middlename: 'Анатольевна', type: 'teacher', login: 'irina.milanova', password: 'portal' }))
                 .then(() => UsersRepository.create({ lastname: 'Скачкова', firstname: 'Светлана', middlename: 'Ивановна', type: 'teacher', login: 'svetlana.skachkova', password: 'portal' }))
                 .then(() => UsersRepository.create({ lastname: 'Сорокин', firstname: 'Юрий', middlename: 'Сергеевич', type: 'teacher', login: 'yury.sorokin', password: 'portal' }))
-                .then(() => UsersRepository.create({ lastname: 'Павлов', firstname: 'А', middlename: 'В', type: 'teacher', login: 'a.pavlov', password: 'portal' }))
+                .then(() => UsersRepository.create({ lastname: 'Павлов', firstname: 'Алексей', middlename: 'Владимирович', type: 'teacher', login: 'alexey.pavlov', password: 'portal' }))
                 .then(() => UsersRepository.create({ lastname: 'Яблонская', firstname: 'Юлия', middlename: 'Викторовна', type: 'teacher', login: 'rozovay_blonkdinka', password: 'portal' }))
         })
         .then(() => {
