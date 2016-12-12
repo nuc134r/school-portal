@@ -62,7 +62,7 @@ mixin LessonList(lessons)
         })
         p.mdl-button-custom--right #{lesson.auditory}
         p.mdl-button-custom--header #{lesson.subject}
-        p.mdl-button-custom--right #{lesson.start + ' - ' + lesson.end}
+        p.mdl-button-custom--right #{lesson.time}
         p.mdl-button-custom--text #{lesson.teacher}
   else
     span.mdl-card__supporting-text-plaintext Занятий нет

@@ -14,9 +14,9 @@ function Init(sequelize) {
             instanceMethods: {
                 getDisplayName: function () {
                     let start = moment(this.start);
-                    let end = start.add(this.duration, 'minutes');
+                    let end = start.clone().add(this.duration, 'minutes');
 
-                    return `${start.format('hh:mm')} - ${end.format('hh:mm')}`;
+                    return `${start.format('HH:mm')} - ${end.format('HH:mm')}`;
                 }
             }
         });
