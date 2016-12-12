@@ -41,3 +41,5 @@ module.exports.create = (options) => fromDomain(options).then(helper.create);
 module.exports.browse = () => helper.browse().then((timings) => timings.map(toDomain));
 module.exports.get = (options) => helper.get(options).then(toDomain);
 module.exports.delete = helper.delete;
+
+module.exports.toDomain = toDomain;

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./entry-point.js",
-    "initdb": "node ./tools/db-creator.js"
+    "initdb": "node ./tools/db-creator.js",
+    "initdemo": "node ./tools/demo-db.js"
   },
   "dependencies": {
     "body-parser": "~1.12.4",

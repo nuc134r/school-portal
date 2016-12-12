@@ -21,7 +21,7 @@ function Init(sequelize) {
                     return `${this.lastname} ${this.firstname}`;
                 },
                 asViewModel: function () {
-                    return {
+                    let result = {
                         id: this.id,
                         image_id: null,
                         type: this.type,
@@ -32,6 +32,10 @@ function Init(sequelize) {
                             middle: this.middlename
                         }
                     }
+
+                    if (this.student) result.student = this.student;
+
+                    return result;
                 }
             }
         });

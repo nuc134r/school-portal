@@ -35,7 +35,7 @@ function getConnection() {
 }
 
 function Init() {
-    sequelize.sync().then(() => {
+    return sequelize.sync().then(() => {
         console.log('Database initialized');
         CreateRootAdmin()
             .then((instance, created) => created && console.log('Root admin created'))
