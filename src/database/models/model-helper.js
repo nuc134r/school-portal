@@ -27,6 +27,6 @@ module.exports = {
         }
     },
     defaultOptions: {
-        paranoid: true
+        //paranoid: true
     }
 }

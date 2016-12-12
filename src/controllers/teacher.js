@@ -85,7 +85,7 @@ module.exports.saveLessons = (req, res) => {
                         timingId: timing.id,
                         teacherId: formData[`${day}_${timing.id}_teacher`],
                         subjectId: formData[`${day}_${timing.id}_subject`],
-                        auditoryId: formData[`${day}_${timing.id}_auditory`]
+                        auditoryId: formData[`${day}_${timing.id}_auditory`] || null
                     });
                 }
             })

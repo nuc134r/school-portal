@@ -154,4 +154,4 @@ mixin Table(cardSettings, definition)
                   a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/edit')
                     i.material-icons edit
   else
-    +MessageCard(cardSettings, 'Этот список пуст', 'Нажмите кнопку ( + ) в нижнем правом углу экрана, чтобы создать новый элемент.', '&#xE88E;', 'left: 50%; transform: translateX(-50%);')
+    +MessageCard(cardSettings, 'Этот список пуст', 'Нажмите кнопку ( + ) в нижнем правом углу экрана, чтобы создать новый элемент.', '&#xE88E;', 'left: 50%; transform: translateX(-50%); max-width: 500px;')
