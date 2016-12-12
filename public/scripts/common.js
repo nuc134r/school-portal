@@ -21,7 +21,7 @@ function ajax(link, closeDrawer) {
     }
 
     $fab_link.css('visibility', 'collapse');
-    $content.html('<div class="loading-text">=^_^=</div>');
+    $content.html('<div class="loading-text loading-text-vert-centered">=^_^=</div>');
 
     //return false;
 

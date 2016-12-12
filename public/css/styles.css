@@ -1,8 +1,23 @@
 .loading-text {
     width: 100%;
     text-align: center;
-    top: 25%;
-    position: absolute;
     font-size: 50px;
     opacity: .3;
+}
+
+.loading-text-vert-centered {
+    position: absolute;
+    top: 25%;
+}
+
+.lesson-editing-pane {
+    max-height: 200px;
+    padding-bottom: 0px; 
+    margin: 5px 16px;
+    transition: max-height 0.2s ease-out;
+}
+
+.lesson-editing-pane-hidden {
+    max-height: 0px;
+    transition: max-height 0.2s ease-out;
 }
