@@ -2,16 +2,42 @@ include ../parts/mixins
 
 .mdl-grid
   - cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } }
+  - weekTypes = [{text: 'верхняя', value: 'upper'}, {text: 'нижняя', value: 'lower'}]
+
++MvcMessages('Расписание сохранено', '', '', cardSettings)
 
 form#timetableform(action='/t/timetable/', method='POST')
   +Card(cardSettings)
-    .mdl-card__supporting-text(style='margin-top: 5px;')
-      +ComboBox('Группа', 'group', lists.groups, true, 'width: 45%; margin-right: 5%')
-      +ComboBox('Неделя', 'weektype', [{text: 'верхняя', value: 'upper'}, {text: 'нижняя', value: 'lower'}], false, 'width: 45%;')
+    .mdl-card__supporting-text.mdl-grid(style='margin: 5px 10px 0px 10px;')
+      +ComboBox('Неделя', 'weektype', weekTypes, false, 'width: calc(50% - 5px); margin-right: 10px;')
+      +ComboBox('Группа', 'group', lists.groups, true, 'width: calc(50% - 5px);')
     .mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('timetableform').submit()") сохранить расписание
   
-  script.
-    
+
   #days-container
-    include _lessons_editor
+
+script.
+  $combos = $('#groupfield, #weektypefield');
+  $groupfield = $('#groupfield');
+  $weektypefield = $('#weektypefield');
+  $container = $('#days-container');
+  $combos.on('change', function (ctx) {
+    if ($groupfield[0].value) {
+        $container.html('<div class="loading-text" style="padding-top: 80px;">=^_^=</div>');
+        $.ajax({ 
+            url: "/t/timetable_editor", 
+            data: { 
+              'ajax': 1, 
+              'group': $groupfield[0].value, 
+              'weektype': $weektypefield[0].value 
+            } 
+          })
+          .done(function (response) {
+            $container.html(response.html);
+            if (!(typeof (componentHandler) == 'undefined')) {
+                componentHandler.upgradeAllRegistered();
+            }
+          });
+    }    
+  })

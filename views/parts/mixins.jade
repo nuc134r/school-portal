@@ -8,9 +8,9 @@ mixin MessageCard(cardSettings, title, message, icon, style)
       .mdl-card__supporting-text(style='padding: 0px 16px 16px 16px;')
         | !{ message }
 
-mixin MvcMessages(createdMessage, deletedMessage, editedMessage)
+mixin MvcMessages(createdMessage, deletedMessage, editedMessage, cardSettingsParam)
   - var styles = null && 'left: 50%; transform: translateX(-50%);';
-  - var cardSettings = {desktop: {s:4, o: 4}};
+  - var cardSettings = cardSettingsParam || {desktop: {s:4, o: 4}};
   if query_params.message === 'created'
     +MessageCard(cardSettings, createdMessage, null, 'done', styles)
   if query_params.message === 'deleted'
@@ -30,13 +30,13 @@ mixin Toggle(id, text, style, checked)
     input.mdl-switch__input(id=(id + 'field'), name=id, type='checkbox', checked=checked)
     span.mdl-switch__label #{text}
 
-mixin ComboBox(placeholder, id, items, allowNull, style)
+mixin ComboBox(placeholder, id, items, allowNull, style, preset_value)
   .mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label(style=style)
     select.mdl-selectfield__select(id=(id + 'field'), name=id)
       if allowNull
         option
       for item in items
-        option(value=item.value) #{ item.text }
+        option(value=item.value, selected=(preset_value == item.value)) #{ item.text }
     label.mdl-selectfield__label(for=(id + 'field')) #{ placeholder }
 
 mixin InputField(placeholder, id, autofocus)

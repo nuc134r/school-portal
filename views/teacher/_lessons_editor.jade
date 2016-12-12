@@ -1,23 +1,22 @@
 include ../parts/mixins
 
+- var cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } }
 - var weekdays = [['Понедельник', 'mon'], ['Вторник', 'tue'], ['Среда', 'wed'], ['Четверг', 'thu'], ['Пятница', 'fri'], ['Суббота', 'sat']]
 
 each weekday in weekdays
   +Text(cardSettings)
     h5(style='color: rgba(0,0,0,.3); text-align: center;') #{ weekday[0] }
   
-  - var lessonIndex = 0;
   each lesson in lists.timings
-    - var lessonCode = 'lesson_' + (lessonIndex++) + '_' + weekday[1];
-    - var hasLesson = !!lessonData.filter((item) => item.id == lesson.id).length;
+    - var lessonCode = weekday[1] + '_' + (lesson.id) + '_';
+    - var lessonData = lists.lessons.filter((item) => item.timingId == lesson.id && item.weekday == weekday[1])[0];
     +Card(cardSettings, 'padding-bottom: 0px')
       .mdl-card__title
-        +Toggle(lessonCode + 'toggle', lesson.getDisplayName(), null, hasLesson)
-      .mdl-card__supporting-text.lesson-editing-pane(id=(lessonCode+'wrapper'), class={'lesson-editing-pane-hidden': !hasLesson})
-        +ComboBox('Предмет', lessonCode + 'subject', lists.subjects, false, 'width: 180px; margin-right: 30px;')
-        +ComboBox('Преподаватель', lessonCode + 'teacher', lists.teachers, false, 'width: 180px; margin-right: 30px;')
-        +ComboBox('Аудитория', lessonCode + 'auditory', lists.auditories, false, 'width: 100px; margin-right: 30px;')
-
+        +Toggle(lessonCode + 'toggle', lesson.getDisplayName(), null, !!lessonData)
+      .mdl-card__supporting-text.lesson-editing-pane(id=(lessonCode+'wrapper'), class={'lesson-editing-pane-hidden': !lessonData})
+        +ComboBox('Предмет', lessonCode + 'subject', lists.subjects, false, 'width: 180px; margin-right: 30px;', (lessonData && lessonData.subjectId))
+        +ComboBox('Преподаватель', lessonCode + 'teacher', lists.teachers, false, 'width: 180px; margin-right: 30px;', (lessonData && lessonData.teacherId))
+        +ComboBox('Аудитория', lessonCode + 'auditory', lists.auditories, false, 'width: 100px;', (lessonData && lessonData.auditoryId))
 
 script.
   $toggles = $('.mdl-switch__input');

@@ -29,6 +29,7 @@ helper.createContollerRoutes('a', router, adminController.TimingsContoller);
 router.get('/t', (req, res) => res.redirect('/t/timetable'));
 
 router.get('/t/timetable', teacherController.getLessonsEditorPage);
+router.get('/t/timetable_editor', teacherController.getLessonsEditor);
 router.post('/t/timetable', teacherController.saveLessons);
 
 /* student */
