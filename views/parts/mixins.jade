@@ -31,7 +31,7 @@ mixin Toggle(id, text, style, checked)
     span.mdl-switch__label #{text}
 
 mixin ComboBox(placeholder, id, items, allowNull, style, preset_value)
-  .mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label(style=style)
+  .mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label(style=style || 'width: 100%;')
     select.mdl-selectfield__select(id=(id + 'field'), name=id)
       if allowNull
         option
