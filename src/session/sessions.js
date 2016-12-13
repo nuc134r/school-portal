@@ -40,6 +40,8 @@ function get(token) {
         }
     })
         .then(session => {
+            if (!session) return null;
+
             if (session.user.type == 'student') {
                 return connection.models["student"].find({
                     where: { userId: session.user.id },

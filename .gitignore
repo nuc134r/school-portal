@@ -1,4 +1,4 @@
 node_modules
 typings
-config.json
+config*.json
 npm-debug.log
