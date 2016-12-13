@@ -39,7 +39,10 @@ function Init() {
         console.log('Database initialized');
         CreateRootAdmin()
             .then((instance, created) => created && console.log('Root admin created'))
-            .catch(err => console.error(err));
+            .catch(err => {
+                //Swallowing errors if admin already exists
+                //console.error(err)
+            });
     });
 }
 

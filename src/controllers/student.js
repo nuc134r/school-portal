@@ -24,7 +24,7 @@ module.exports.getDashboardPage = (req, res) => {
 
             return {
                 now: isLessonNow,
-                auditory: lesson.auditory.name,
+                auditory: lesson.auditory ? lesson.auditory.name : null,
                 subject: lesson.subject.shortname,
                 time: isLessonNow ? `осталось ${ends - now} мин` : lesson.timing.getDisplayName(),
                 teacher: `${lesson.teacher.user.lastname} ${lesson.teacher.user.firstname.charAt(0)}. ${lesson.teacher.user.middlename.charAt(0)}.`,
