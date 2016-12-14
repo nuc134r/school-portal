@@ -140,19 +140,21 @@ mixin Table(options, definition)
 
   if definition.items.length
     +Card(options, 'padding: 0px')
-      .table-responsive(style='width: 100%')
+      .table-responsive#table-list(style='width: 100%')
         table.mdl-data-table.mdl-js-data-table.mdl-shadow--2dp(style='width: 100%')
           thead
             tr
               each column in definition.columns
-                th(class={'mdl-data-table__cell--non-numeric' : !column.numeric}) #{ column.title }
+                th(class={ 'mdl-data-table__cell--non-numeric': !column.numeric, 'sort': true }, sort=(column.field + '-value')) #{ column.title }
               th.mdl-data-table__cell--non-numeric(style='text-align: right;') Удалить
               //th.mdl-data-table__cell--non-numeric Изменить
-          tbody
+          tbody(class="list")
             each item in definition.items
               tr
                 each column in definition.columns
-                  td(class={'mdl-data-table__cell--non-numeric' : !column.numeric}) #{ (column.converter ?  column.converter(item[column.field]) : item[column.field]) }
+                  - var columnClasses0 = [column.field + '-value'];
+                  - if (!column.numeric) columnClasses0.push('mdl-data-table__cell--non-numeric');
+                  td(class=columnClasses0) #{ (column.converter ?  column.converter(item[column.field]) : item[column.field]) }
                 td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: right;')
                   if !item.lock
                     a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/delete')
@@ -163,3 +165,10 @@ mixin Table(options, definition)
                       i.material-icons edit
   else
     +MessageCard(cardSettings, 'Этот список пуст', 'Нажмите кнопку ( + ) в нижнем правом углу экрана, чтобы создать новый элемент.', '&#xE88E;', 'left: 50%; transform: translateX(-50%); max-width: 500px;')
+  
+  script.
+    var options = {
+      valueNames: !{JSON.stringify(definition.columns.map(function (column) { return column.field + '-value' }))}
+    };
+
+    var hackerList = new List('table-list', options);
