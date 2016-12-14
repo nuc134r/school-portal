@@ -128,30 +128,38 @@ mixin Form(cardSettings, id, url, style, cardStyle)
     .mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('" + id + "').submit()") сохранить
 
-mixin Table(cardSettings, definition)
-  - style = 'width: auto; max-width: none; padding: 0px; left: 50%; transform: translateX(-50%);'
-  
+mixin Table(options, definition)
+  - var classes = [];
+  - ['phone', 'desktop', 'tablet'].forEach((device) => {
+  -   var settings = options[device]; 
+  -   if (settings) {
+  -     if (settings.s) classes.push('mdl-cell--' + settings.s + '-col-' + device);
+  -     if (settings.o) classes.push('mdl-cell--' + settings.o + '-offset-' + device);
+  -   }
+  - });
+
   if definition.items.length
-    +Card(cardSettings, style)
-      table.mdl-data-table.mdl-js-data-table
-        thead
-          tr
-            each column in definition.columns
-              th(class={'mdl-data-table__cell--non-numeric' : !column.numeric}) #{ column.title }
-            th.mdl-data-table__cell--non-numeric #{ (false ? ' ' : 'Удалить') }
-            //th.mdl-data-table__cell--non-numeric Изменить
-        tbody
-          each item in definition.items
+    +Card(options, 'padding: 0px')
+      .table-responsive(style='width: 100%')
+        table.mdl-data-table.mdl-js-data-table.mdl-shadow--2dp(style='width: 100%')
+          thead
             tr
               each column in definition.columns
-                td(class={'mdl-data-table__cell--non-numeric' : !column.numeric}) #{ (column.converter ?  column.converter(item[column.field]) : item[column.field]) }
-              td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: center;')
-                if !item.lock
-                  a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/delete')
-                    i.material-icons delete
-              //td.mdl-data-table__cell--non-numeric(style='text-align: center;')
-                if !item.lock
-                  a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/edit')
-                    i.material-icons edit
+                th(class={'mdl-data-table__cell--non-numeric' : !column.numeric}) #{ column.title }
+              th.mdl-data-table__cell--non-numeric(style='text-align: right;') Удалить
+              //th.mdl-data-table__cell--non-numeric Изменить
+          tbody
+            each item in definition.items
+              tr
+                each column in definition.columns
+                  td(class={'mdl-data-table__cell--non-numeric' : !column.numeric}) #{ (column.converter ?  column.converter(item[column.field]) : item[column.field]) }
+                td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: right;')
+                  if !item.lock
+                    a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/delete')
+                      i.material-icons delete
+                //td.mdl-data-table__cell--non-numeric(style='text-align: center;')
+                  if !item.lock
+                    a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/edit')
+                      i.material-icons edit
   else
     +MessageCard(cardSettings, 'Этот список пуст', 'Нажмите кнопку ( + ) в нижнем правом углу экрана, чтобы создать новый элемент.', '&#xE88E;', 'left: 50%; transform: translateX(-50%); max-width: 500px;')
