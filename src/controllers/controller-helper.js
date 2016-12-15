@@ -37,6 +37,7 @@ function create(user_mode, urlPrefix) {
         let mandatory_params = {
             title: options.title,
             fab: options.fab,
+            searchable: options.searchable,
 
             layout: user_mode,
             theme: getTheme(user_mode),
@@ -57,6 +58,7 @@ function create(user_mode, urlPrefix) {
             result.title = options.title;
             result.html = jade.renderFile(view_path, params);
             result.fab = options.fab;
+            result.searchable = options.searchable;
 
             res.json(result);
         } else {
@@ -107,6 +109,7 @@ function create(user_mode, urlPrefix) {
                     let renderOptions = {
                         view: `${user_mode}/${options.entityNamePlural}`,
                         title: utils.capitalize(options.displayNamePlural),
+                        searchable: true,
                         fab: {
                             icon: 'add',
                             link: `/${urlPrefix}/${options.entityNamePlural}/create`

@@ -1,8 +1,7 @@
 include ../parts/mixins
 
+- cardSettings = { desktop: { s: 10, o: 1 }, tablet: { s: 8 }, phone: { s: 4 } }
 .mdl-grid
-  - cardSettings = { desktop: { s: 12 } }
-  
   +MvcMessages('Пользователь создан', 'Пользователь удалён', 'Пользователь сохранён')
 
 - typeConverter = function(value) { return { 'student' : 'Студент', 'teacher': 'Преподаватель', 'admin': 'Администатор' }[value] }

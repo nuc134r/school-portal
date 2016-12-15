@@ -1,7 +1,9 @@
 var $content,
     $title,
     $fab_link,
-    $fab_icon;
+    $fab_icon,
+    $searchbox,
+    $searchwrapper;
 
 
 $(document).ready(function () {
@@ -9,6 +11,8 @@ $(document).ready(function () {
     $title = $('.mdl-layout__title');
     $fab_link = $('#fab-link');
     $fab_icon = $('#fab-icon');
+    $searchbox = $('#search');
+    $searchwrapper = $('#search-wrapper');
 });
 
 function ajax(link, closeDrawer) {
@@ -22,8 +26,9 @@ function ajax(link, closeDrawer) {
 
     $fab_link.css('visibility', 'collapse');
     $content.html('<div class="loading-text loading-text-vert-centered">=^_^=</div>');
-
-    //return false;
+    $searchbox.val('');
+    $searchwrapper.css('visibility', 'collapse');
+    $searchwrapper.removeClass('is-focused, is-dirty');
 
     $.ajax({ url: link.href, data: { 'ajax': 1 } })
         .done(function (response) {
@@ -31,13 +36,16 @@ function ajax(link, closeDrawer) {
             // TODO: Validate 'response'
 
             $content.html(response.html);
-
             $title.html(response.title);
 
             if (response.fab) {
                 $fab_link.css('visibility', 'visible');
                 $fab_link.attr('href', response.fab.link);
                 $fab_icon.html(response.fab.icon);
+            }
+
+            if (response.searchable) {
+                $searchwrapper.css('visibility', 'visible');
             }
 
             if (!(typeof (componentHandler) == 'undefined')) {
