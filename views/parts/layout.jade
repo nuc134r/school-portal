@@ -37,16 +37,18 @@ html
       button.mdl-snackbar__action(type='button')
 
     .mdl-layout.mdl-js-layout.mdl-layout--fixed-header.mdl-layout--fixed-drawer
-
       header.mdl-layout__header
         .mdl-layout__header-row
           span.mdl-layout__title #{title}
           .mdl-layout-spacer
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--expandable.mdl-textfield--floating-label.mdl-textfield--align-right
-            label.mdl-button.mdl-js-button.mdl-button--icon(for='fixed-header-drawer-exp')
+          - searchWrapperStyle = 'visibility: ' + (searchable ? 'visible' : 'hidden');
+          #search-wrapper.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable(style=searchWrapperStyle)
+            label.mdl-button.mdl-js-button.mdl-button--icon(for='search')
               i.material-icons search
             .mdl-textfield__expandable-holder
-              input.mdl-textfield__input(type='text', class='search')
+              input#search.mdl-textfield__input(type='text', class='search')
+              label.mdl-textfield__label(for='search') Enter your query...
+
 
       .mdl-layout__drawer.mdl-layout__drawer-custom
         .mdl-user-box(class=[('mdl-color--' + theme.primary + '-600')], style='position: relative;')
@@ -87,3 +89,6 @@ html
       
       main#content.mdl-layout__content.mdl-color--grey-100
         block content
+      
+      script.
+        $('#search').keyup(function() { list.search($(this).val()) });

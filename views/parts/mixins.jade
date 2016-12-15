@@ -145,7 +145,7 @@ mixin Table(options, definition)
           thead
             tr
               each column in definition.columns
-                th(class={ 'mdl-data-table__cell--non-numeric': !column.numeric, 'sort': true }, sort=(column.field + '-value')) #{ column.title }
+                th(class={ 'mdl-data-table__cell--non-numeric': !column.numeric, 'sort': true }, data-sort=(column.field + '-value')) #{ column.title }
               th.mdl-data-table__cell--non-numeric(style='text-align: right;') Удалить
               //th.mdl-data-table__cell--non-numeric Изменить
           tbody(class="list")
@@ -171,4 +171,4 @@ mixin Table(options, definition)
       valueNames: !{JSON.stringify(definition.columns.map(function (column) { return column.field + '-value' }))}
     };
 
-    var hackerList = new List('table-list', options);
+    var list = new List('table-list', options);
