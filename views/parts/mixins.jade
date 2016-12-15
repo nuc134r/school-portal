@@ -144,7 +144,7 @@ mixin Table(options, definition)
   if definition.items.length
     +Card(options, 'padding: 0px')
       .table-responsive#table-list(style='width: 100%')
-        table.mdl-data-table.mdl-js-data-table.mdl-shadow--2dp(style='width: 100%')
+        table.mdl-data-table.mdl-js-data-table.mdl-shadow--2dp(style='width: 100%; border-width: 0px;')
           thead
             tr
               each column in definition.columns
