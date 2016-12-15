@@ -65,7 +65,10 @@ mixin LessonList(lessons)
         p.mdl-button-custom--right #{lesson.time}
         p.mdl-button-custom--text #{lesson.teacher}
   else
-    span.mdl-card__supporting-text-plaintext Занятий нет
+    div(style="text-align: center; padding: 15px 15px 10px 15px; opacity: .5;")
+      img(src="/bell-icon.png" style="margin-bottom: 10px;")
+      br
+      span занятий нет
 
 mixin TaskList(tasks)
   each task in tasks
