@@ -60,9 +60,9 @@ mixin LessonList(lessons)
         'mdl-button--raised': lesson.now,
         'mdl-js-ripple-effect': lesson.now
         })
-        p.mdl-button-custom--right #{lesson.auditory}
-        p.mdl-button-custom--header #{lesson.subject}
         p.mdl-button-custom--right #{lesson.time}
+        p.mdl-button-custom--header #{lesson.subject}
+        p.mdl-button-custom--right #{lesson.auditory}
         p.mdl-button-custom--text #{lesson.teacher}
   else
     div(style="text-align: center; padding: 15px 15px 10px 15px; opacity: .5;")
