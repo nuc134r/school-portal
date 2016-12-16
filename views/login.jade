@@ -9,10 +9,10 @@ block content
     - var cardSettings = { shadow: 2, phone: { s: 4 }, tablet : { s: 4, o: 2 }, desktop: { s: 4, o: 4 } };
 
     if error_code == 'invalid_credentials'
-      +MessageCard(cardSettings, 'Ошибка входа', 'Проверьте верность введённых данных')
+      +MessageCard(cardSettings, 'Ошибка входа', 'Проверьте верность введённых данных', null, 'max-width: 320px;')
 
     if error_code == 'session_expired'
-      +MessageCard(cardSettings, 'Ошибка', 'Пожалуйста, войдите в систему')
+      +MessageCard(cardSettings, 'Ошибка', 'Пожалуйста, войдите в систему', null, 'max-width: 320px;')
     
     +Card(cardSettings, 'max-width: 320px;')
       .mdl-card__supporting-text
