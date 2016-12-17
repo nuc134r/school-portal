@@ -14,6 +14,8 @@ module.exports = {
         let isNow = begins <= now && now < ends; 
 
         return {
+            begins,
+            ends,
             isNow,
             timeleftString: isNow ? `осталось ${ends - now} мин` : null
         }
