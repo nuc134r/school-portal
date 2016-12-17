@@ -23,6 +23,8 @@ module.exports.getDashboardPage = (req, res) => {
             let isLessonNow = begins <= now && now < ends;
 
             return {
+                begins,
+                ends,
                 now: isLessonNow,
                 auditory: lesson.auditory ? lesson.auditory.name : null,
                 subject: lesson.subject.shortname,
@@ -34,6 +36,8 @@ module.exports.getDashboardPage = (req, res) => {
 
     helper.processPromises(promises, processors)
         .then(lists => {
+            lists.lessons.sort((a, b) => a.begins > b.begins);
+
             let renderOptions = {
                 view: 'student/dashboard',
                 title: 'Сегодня',
