@@ -20,6 +20,8 @@ module.exports.getDashboardPage = (req, res) => {
             let locateResult = utils.locateLessonInTime(lesson);
 
             return {
+                begins : locateResult.begins,
+                ends : locateResult.ends,
                 now: locateResult.isNow,
                 auditory: lesson.auditory ? lesson.auditory.name : null,
                 subject: lesson.subject.shortname,
@@ -31,7 +33,7 @@ module.exports.getDashboardPage = (req, res) => {
 
     helper.processPromises(promises, processors)
         .then(lists => {
-            lists.lessons.sort((a, b) => a.begins > b.begins);
+            lists.lessons = lists.lessons.sort((a, b) => a.begins > b.begins);
 
             let renderOptions = {
                 view: 'student/dashboard',
