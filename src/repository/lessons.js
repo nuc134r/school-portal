@@ -13,7 +13,6 @@ module.exports.get = helper.get;
 module.exports.delete = helper.delete;
 
 module.exports.saveTimetable = (timetable, group, weekType) => {
-
     return helper.delete({ "groupId": group, "weektype": weekType })
         .then(() => {
 
@@ -27,14 +26,34 @@ module.exports.saveTimetable = (timetable, group, weekType) => {
 }
 
 module.exports.getTimetable = (group, weekType) => {
-
     return connection.models['lesson'].findAll({
         where: {
             "groupId": group,
             "weektype": weekType
         }
     });
+}
 
+module.exports.getWeekLessons = (group, weekType) => {
+    if (!weekType) weekType = time.getCurrentWeektype();
+
+    return connection.models['lesson'].findAll({
+        where: {
+            "groupId": group,
+            "weektype": weekType
+        },
+        include: [
+            connection.models['subject'],
+            {
+                model: connection.models['teacher'],
+                include: [
+                    connection.models['user']
+                ]
+            },
+            connection.models['timing'],
+            connection.models['auditory']
+        ]
+    })
 }
 
 module.exports.getTodayLessons = (group) => {
