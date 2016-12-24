@@ -8,6 +8,44 @@ const utils = require('../utils');
 
 const helper = require('./controller-helper')('student');
 
+module.exports.getTimetablePage = (req, res) => {
+    let promises = {
+        lessons: () => LessonsRepository.getWeekLessons(req.school_context.user.student.groupId)
+    }
+
+    let processors = {
+        lessons: (lesson) => {
+            
+            let locateResult = utils.locateLessonInTime(lesson);
+
+            return {
+                day: lesson.weekday,
+                begins : locateResult.begins,
+                ends : locateResult.ends,
+                now: locateResult.isNow,
+                auditory: lesson.auditory ? lesson.auditory.name : null,
+                subject: lesson.subject.shortname,
+                time: locateResult.isNow ? locateResult.timeleftString : lesson.timing.getDisplayName(),
+                teacher: `${lesson.teacher.user.lastname} ${lesson.teacher.user.firstname.charAt(0)}. ${lesson.teacher.user.middlename.charAt(0)}.`,
+            }
+        }
+    }
+
+    helper.processPromises(promises, processors)
+        .then(lists => {
+            lists.lessons = lists.lessons.sort((a, b) => a.begins > b.begins);
+
+            lists.weekdays = Time.getCurrentWeekDates();
+
+            let renderOptions = {
+                view: 'student/timetable',
+                title: 'Расписание',
+            };
+
+            helper.render(req, res, { lists }, renderOptions);
+        });
+}
+
 module.exports.getDashboardPage = (req, res) => {
 
     let promises = {

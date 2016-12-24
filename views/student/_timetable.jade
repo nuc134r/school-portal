@@ -1,0 +1,14 @@
+include ../parts/mixins
+
+- var weekdayIndex = 0;
+.mdl-grid
+  for day in [['Понедельник', 'mon'], ['Вторник', 'tue'], ['Среда', 'wed'], ['Четверг', 'thu'], ['Пятница', 'fri'], ['Суббота', 'sat']]
+    +Card({all: 4})
+      .mdl-card__title
+        h2.mdl-card__title-text
+          | #{day[0]}
+        h2.mdl-card__title-text.mdl-card__title-subtext
+          small #{lists.weekdays[weekdayIndex++]}
+      .mdl-card__supporting-text.mdl-card__supporting-text-heightfix-no-actions
+        - var dayLessons = lists.lessons.filter((lesson) => lesson.day == day[1])
+        +LessonList(dayLessons)

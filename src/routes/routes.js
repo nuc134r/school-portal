@@ -36,5 +36,6 @@ router.post('/t/timetable', teacherController.saveLessons);
 router.get('/s', (req, res) => res.redirect('/s/dashboard'));
 
 router.get('/s/dashboard', studentController.getDashboardPage);
+router.get('/s/timetable', studentController.getTimetablePage);
 
 module.exports = router;
