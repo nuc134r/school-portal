@@ -15,9 +15,8 @@ module.exports.getTimetablePage = (req, res) => {
 
     let processors = {
         lessons: (lesson) => {
-            
             let locateResult = utils.locateLessonInTime(lesson);
-
+            locateResult.isNow = locateResult.isNow && lesson.weekday == Time.getCurrentWeekdayCode();
             return {
                 day: lesson.weekday,
                 begins : locateResult.begins,
@@ -42,7 +41,7 @@ module.exports.getTimetablePage = (req, res) => {
                 title: 'Расписание',
             };
 
-            helper.render(req, res, { lists }, renderOptions);
+            helper.render(req, res, { lists, weekType: Time.getCurrentWeektype() }, renderOptions);
         });
 }
 
