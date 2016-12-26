@@ -55,6 +55,7 @@ function ajax(link, closeDrawer) {
             History.pushState({}, response.title + ' | Студенческий портал', link.href);
         })
         .error(function (error) {
+            $content.html('<div class="loading-text loading-text-vert-centered">T.T</div>');
             showMessage('AJAX navigation error: ' + error.status);
             console.error(error);
         });

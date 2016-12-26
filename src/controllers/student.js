@@ -41,7 +41,11 @@ module.exports.getTimetablePage = (req, res) => {
                 title: 'Расписание',
             };
 
-            helper.render(req, res, { lists, weekType: Time.getCurrentWeektype() }, renderOptions);
+            helper.render(req, res, { 
+                lists, 
+                weekType: Time.getCurrentWeektype(),
+                today: Time.getCurrentWeekdayCode()
+            }, renderOptions);
         });
 }
 
@@ -77,6 +81,6 @@ module.exports.getDashboardPage = (req, res) => {
                 title: 'Сегодня',
             };
 
-            helper.render(req, res, { lists }, renderOptions);
+            helper.render(req, res, { lists, today: Time.getCurrentWeekdayCode() }, renderOptions);
         });
 }
