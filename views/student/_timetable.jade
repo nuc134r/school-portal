@@ -6,7 +6,8 @@ include ../parts/mixins
   +Text({ phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } })
     h5(style='color: rgba(0,0,0,.3); text-align: center;') #{ {'upper': 'верхняя', 'lower': 'нижняя'}[weekType] }
   for day in [['Понедельник', 'mon'], ['Вторник', 'tue'], ['Среда', 'wed'], ['Четверг', 'thu'], ['Пятница', 'fri'], ['Суббота', 'sat']]
-    +Card({all: 4})
+    - var cardSettings = (day[1] == today) ? { all: 4, shadow: 8 } : { all: 4 }
+    +Card(cardSettings)
       .mdl-card__title
         h2.mdl-card__title-text
           | #{day[0]}

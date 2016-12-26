@@ -7,8 +7,8 @@ include ../parts/mixins
       i.material-icons.mdl-card-icon &#xE916;
       | Занятия
     h2.mdl-card__title-text.mdl-card__title-subtext
-      small вторник
+      small #{ {mon: 'понедельник', tue: 'вторник', wed: 'среда', thu: 'четверг',  fri: 'пятница', sat: 'суббота'}[today] }
   .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
     +LessonList(lists.lessons)
   .mdl-card__actions.mdl-card--border
-    a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='lessons') расписание
+    a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='timetable', onclick="return ajax(this)") расписание
