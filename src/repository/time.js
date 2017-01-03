@@ -22,8 +22,6 @@ module.exports.getCurrentWeek = (now) => {
         ? moment([now.year(), 8])
         : moment([now.year() - 1, 8]);
 
-    now.subtract(1, 'd');
-
     let weekIndex = now.diff(_1sep, 'weeks') + 1;
 
     return { type: ((weekIndex % 2) ? 'upper' : 'lower'), index: weekIndex };
