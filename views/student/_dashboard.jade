@@ -9,6 +9,6 @@ include ../parts/mixins
     h2.mdl-card__title-text.mdl-card__title-subtext
       small #{ {mon: 'понедельник', tue: 'вторник', wed: 'среда', thu: 'четверг',  fri: 'пятница', sat: 'суббота'}[today] }
   .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
-    +LessonList(lists.lessons)
+    +LessonList(lists.lessons.sort((a, b) => a.begins > b.begins))
   .mdl-card__actions.mdl-card--border
     a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='timetable', onclick="return ajax(this)") расписание

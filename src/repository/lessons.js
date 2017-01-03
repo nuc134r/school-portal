@@ -35,7 +35,7 @@ module.exports.getTimetable = (group, weekType) => {
 }
 
 module.exports.getWeekLessons = (group, weekType) => {
-    if (!weekType) weekType = time.getCurrentWeektype();
+    if (!weekType) weekType = time.getCurrentWeek().type;
 
     return connection.models['lesson'].findAll({
         where: {
@@ -60,8 +60,8 @@ module.exports.getTodayLessons = (group) => {
     return connection.models['lesson'].findAll({
         where: {
             "groupId": group,
-            "weektype": time.getCurrentWeektype(),
-            "weekday": time.getCurrentWeekdayCode()
+            "weektype": time.getCurrentWeek().type,
+            "weekday": time.getToday().code
         },
         include: [
             connection.models['subject'],

@@ -1,57 +1,58 @@
 'use strict';
 
 const moment = require('moment');
-
 require('moment/locale/ru');
 
-module.exports.getCurrentWeektype = () => {
-    let now = moment();
+const WeekDays = [
+    { code: 'mon', displayName: 'понедельник' },
+    { code: 'tue', displayName: 'вторник' },
+    { code: 'wed', displayName: 'среда' },
+    { code: 'thu', displayName: 'четверг' },
+    { code: 'fri', displayName: 'пятница' },
+    { code: 'sat', displayName: 'суббота' }
+];
+
+module.exports.WeekDays = WeekDays;
+
+module.exports.getCurrentWeek = (now) => {
+    if (!now) now = moment();
     let month = now.month() + 1;
 
     let _1sep = (month >= 7)
         ? moment([now.year(), 8])
         : moment([now.year() - 1, 8]);
 
-    _1sep.day('monday');
     now.subtract(1, 'd');
 
-    let current_week = now.diff(_1sep, 'weeks') + 1;
+    let weekIndex = now.diff(_1sep, 'weeks') + 1;
 
-    return current_week % 2 ? 'upper' : 'lower';
+    return { type: ((weekIndex % 2) ? 'upper' : 'lower'), index: weekIndex };
 };
 
-module.exports.getCurrentWeekDates = () => {
+module.exports.getCurrentWeekDays = () => {
     let result = [];
-    let weekdays = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
     let now = moment();
 
-    for (let i = 0; i < weekdays.length; i++) {
-        let day = moment().day(weekdays[i]);
-        let humanizedDate = day.format('DD MMMM');
+    for (let i = 0; i < WeekDays.length; i++) {
+        let day = moment().day(WeekDays[i].displayName);
+        let displayDate = day.format('DD MMMM');
 
         if (day.isoWeekday() == now.isoWeekday()) {
-            humanizedDate = 'сегодня';
+            displayDate = 'сегодня';
         }
 
         if (day.isoWeekday() == now.isoWeekday() + 1) {
-            humanizedDate = 'завтра';
+            displayDate = 'завтра';
         }
 
-        result.push(humanizedDate);
+        result.push(displayDate);
     }
 
     return result;
 }
 
-module.exports.getCurrentWeekdayCode = () => {
-    let day = moment().isoWeekday() - 1;
+module.exports.getToday = () => {
+    let dayIndex = moment().isoWeekday() - 1;
 
-    return {
-        0: 'mon',
-        1: 'tue',
-        2: 'wed',
-        3: 'thu',
-        4: 'fri',
-        5: 'sat'
-    }[day];
+    return WeekDays[dayIndex];
 }

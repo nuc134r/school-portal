@@ -16,11 +16,11 @@ module.exports.getTimetablePage = (req, res) => {
     let processors = {
         lessons: (lesson) => {
             let locateResult = utils.locateLessonInTime(lesson);
-            locateResult.isNow = locateResult.isNow && lesson.weekday == Time.getCurrentWeekdayCode();
+            locateResult.isNow = locateResult.isNow && lesson.weekday == Time.getToday().code;
             return {
                 day: lesson.weekday,
-                begins : locateResult.begins,
-                ends : locateResult.ends,
+                begins: locateResult.begins,
+                ends: locateResult.ends,
                 now: locateResult.isNow,
                 auditory: lesson.auditory ? lesson.auditory.name : null,
                 subject: lesson.subject.shortname,
@@ -34,18 +34,23 @@ module.exports.getTimetablePage = (req, res) => {
         .then(lists => {
             lists.lessons = lists.lessons.sort((a, b) => a.begins > b.begins);
 
-            lists.weekdays = Time.getCurrentWeekDates();
+            lists.weekdays = Time.getCurrentWeekDays();
 
             let renderOptions = {
                 view: 'student/timetable',
                 title: 'Расписание',
             };
 
-            helper.render(req, res, { 
-                lists, 
-                weekType: Time.getCurrentWeektype(),
-                today: Time.getCurrentWeekdayCode()
+            helper.render(req, res, {
+                lists,
+                week: Time.getCurrentWeek(),
+                today: Time.getToday().code
             }, renderOptions);
+        })
+        .catch(error => {
+            console.log(error);
+            res.send(error.toString());
+            res.end();
         });
 }
 
@@ -57,12 +62,12 @@ module.exports.getDashboardPage = (req, res) => {
 
     let processors = {
         lessons: (lesson) => {
-            
+
             let locateResult = utils.locateLessonInTime(lesson);
 
             return {
-                begins : locateResult.begins,
-                ends : locateResult.ends,
+                begins: locateResult.begins,
+                ends: locateResult.ends,
                 now: locateResult.isNow,
                 auditory: lesson.auditory ? lesson.auditory.name : null,
                 subject: lesson.subject.shortname,
@@ -81,6 +86,11 @@ module.exports.getDashboardPage = (req, res) => {
                 title: 'Сегодня',
             };
 
-            helper.render(req, res, { lists, today: Time.getCurrentWeekdayCode() }, renderOptions);
+            helper.render(req, res, { lists, today: Time.getToday().code }, renderOptions);
+        })
+        .catch(error => {
+            console.log(error);
+            res.send(error.toString());
+            res.end();
         });
 }
