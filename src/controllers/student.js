@@ -10,7 +10,7 @@ const helper = require('./controller-helper')('student');
 
 module.exports.getTimetablePage = (req, res) => {
     let promises = {
-        lessons: () => LessonsRepository.getWeekLessons(req.school_context.user.student.groupId)
+        lessons: () => LessonsRepository.getLessonsFor(req.school_context.user.student.groupId, Time.getThisWeekDays())
     }
 
     let processors = {
@@ -34,7 +34,7 @@ module.exports.getTimetablePage = (req, res) => {
         .then(lists => {
             lists.lessons = lists.lessons.sort((a, b) => a.begins > b.begins);
 
-            lists.weekdays = Time.getCurrentWeekDays();
+            lists.weekdays = Time.getThisWeekDays();
 
             let renderOptions = {
                 view: 'student/timetable',
@@ -43,7 +43,7 @@ module.exports.getTimetablePage = (req, res) => {
 
             helper.render(req, res, {
                 lists,
-                week: Time.getCurrentWeek(),
+                week: Time.getWeekInfo(),
                 today: Time.getToday().code
             }, renderOptions);
         })

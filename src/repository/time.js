@@ -14,7 +14,9 @@ const WeekDays = [
 
 module.exports.WeekDays = WeekDays;
 
-module.exports.getCurrentWeek = (now) => {
+module.exports.getWeekInfo = getWeekInfo;
+
+function getWeekInfo(now) {
     if (!now) now = moment();
     let month = now.month() + 1;
 
@@ -27,7 +29,7 @@ module.exports.getCurrentWeek = (now) => {
     return { type: ((weekIndex % 2) ? 'upper' : 'lower'), index: weekIndex };
 };
 
-module.exports.getCurrentWeekDays = () => {
+module.exports.getThisWeekDays = () => {
     let result = [];
     let now = moment();
 
@@ -43,7 +45,7 @@ module.exports.getCurrentWeekDays = () => {
             displayDate = 'завтра';
         }
 
-        result.push(displayDate);
+        result.push({ displayDate, moment: day, weekday: WeekDays[i], week: getWeekInfo(day) });
     }
 
     return result;
