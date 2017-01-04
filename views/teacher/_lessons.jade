@@ -1,10 +1,15 @@
 include ../parts/mixins
 
-.mdl-grid
-  - cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } }
-  - weekTypes = [{text: 'верхняя', value: 'upper'}, {text: 'нижняя', value: 'lower'}]
+
+- cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } }
+- weekTypes = [{text: 'верхняя', value: 'upper'}, {text: 'нижняя', value: 'lower'}]
 
 +MvcMessages('Расписание сохранено', '', '', cardSettings)
+
++Text({ phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } })
+  h5(style='color: rgba(0,0,0,.3); text-align: center;') Сейчас неделя #{week.index}, #{ {'upper': 'верхняя', 'lower': 'нижняя'}[week.type] }
+  //h5(style='color: rgba(0,0,0,.3); text-align: center;') 
+
 
 form#timetableform(action='/t/timetable/', method='POST')
   +Card(cardSettings)

@@ -1,7 +1,6 @@
 include ../parts/mixins
 
 - var cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } }
-- var weekdays = [['Понедельник', 'mon'], ['Вторник', 'tue'], ['Среда', 'wed'], ['Четверг', 'thu'], ['Пятница', 'fri'], ['Суббота', 'sat']]
 
 +Card(cardSettings)
   .mdl-tabs.mdl-js-tabs
@@ -12,29 +11,39 @@ include ../parts/mixins
     - var dayIndex = 0;
     each day in lists.weekdays
       .mdl-tabs__panel(class={ 'is-active': dayIndex == 1 }, id='day' + dayIndex++ + '-panel')
-        p #{day.displayName}
+        table.mdl-data-table.mdl-js-data-table(style='width: 100%; border-width: 0px;')
+          thead
+            tr
+              th 
+              th.mdl-data-table__cell--non-numeric Время
+              th.mdl-data-table__cell--non-numeric Предмет
+              th.mdl-data-table__cell--non-numeric Преподаватель
+              th.mdl-data-table__cell--non-numeric Аудитория
+          tbody
+            each lesson in lists.timings
+              - var lessonCode = day.code + '_' + (lesson.id) + '_';
+              - var lessonData = lists.lessons.filter((item) => item.timingId == lesson.id && item.weekday == day.code)[0];
+              tr
+                td
+                  +Toggle(lessonCode + 'toggle', '', null, !!lessonData)
+                td #{lesson.getDisplayName()}
+                  td.mdl-data-table__cell--non-numeric.lesson-editing-pane(id=(lessonCode+'wrapper1'), class={'lesson-editing-pane-hidden': !lessonData})
+                    +ComboBox('', lessonCode + 'subject', lists.subjects, false, '', (lessonData && lessonData.subjectId))
+                  td.mdl-data-table__cell--non-numeric.lesson-editing-pane(id=(lessonCode+'wrapper2'), class={'lesson-editing-pane-hidden': !lessonData})
+                    +ComboBox('', lessonCode + 'teacher', lists.teachers, false, '', (lessonData && lessonData.teacherId))
+                  td.mdl-data-table__cell--non-numeric.lesson-editing-pane(id=(lessonCode+'wrapper3'), class={'lesson-editing-pane-hidden': !lessonData})
+                    +ComboBox('', lessonCode + 'auditory', lists.auditories, true, '', (lessonData && lessonData.auditoryId))
+        
+      
   .mdl-card__actions.mdl-card--border
     a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('timetableform').submit()") сохранить расписание на неделю
-
-each weekday in weekdays
-  +Text(cardSettings)
-    h5(style='color: rgba(0,0,0,.3); text-align: center;') #{ weekday[0] }
-  
-  each lesson in lists.timings
-    - var lessonCode = weekday[1] + '_' + (lesson.id) + '_';
-    - var lessonData = lists.lessons.filter((item) => item.timingId == lesson.id && item.weekday == weekday[1])[0];
-    +Card(cardSettings, 'padding-bottom: 0px')
-      .mdl-card__title
-        +Toggle(lessonCode + 'toggle', lesson.getDisplayName(), null, !!lessonData)
-      .mdl-card__supporting-text.lesson-editing-pane(id=(lessonCode+'wrapper'), class={'lesson-editing-pane-hidden': !lessonData})
-        +ComboBox('Предмет', lessonCode + 'subject', lists.subjects, false, 'width: 180px; margin-right: 30px;', (lessonData && lessonData.subjectId))
-        +ComboBox('Преподаватель', lessonCode + 'teacher', lists.teachers, false, 'width: 180px; margin-right: 30px;', (lessonData && lessonData.teacherId))
-        +ComboBox('Аудитория', lessonCode + 'auditory', lists.auditories, true, 'width: 100px;', (lessonData && lessonData.auditoryId))
 
 script.
   $toggles = $('.mdl-switch__input');
 
   $toggles.on('click', function (ctx) {
     var lessonCode = ctx.target.id.split('togglefield')[0];
-    $('#' + lessonCode + 'wrapper').toggleClass('lesson-editing-pane-hidden');    
+    $('#' + lessonCode + 'wrapper1').toggleClass('lesson-editing-pane-hidden');    
+    $('#' + lessonCode + 'wrapper2').toggleClass('lesson-editing-pane-hidden');    
+    $('#' + lessonCode + 'wrapper3').toggleClass('lesson-editing-pane-hidden');    
   })

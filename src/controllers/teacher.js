@@ -31,7 +31,11 @@ module.exports.getLessonsEditorPage = (req, res) => {
                 title: 'Изменение расписания'
             };
 
-            helper.render(req, res, { lists }, renderOptions);
+            helper.render(req, res, { 
+                lists,
+                week: TimeRepository.getWeekInfo(),
+                weekDays: TimeRepository.getAcademicWeekDays()
+             }, renderOptions);
         })
         .catch(err => {
             console.error(err);
