@@ -10,13 +10,13 @@ const helper = require('./controller-helper')('student');
 
 module.exports.getTimetablePage = (req, res) => {
     let promises = {
-        lessons: () => LessonsRepository.getLessonsFor(req.school_context.user.student.groupId, Time.getThisWeekDays())
+        lessons: () => LessonsRepository.getLessonsFor(req.school_context.user.student.groupId, Time.getWeekDays())
     }
 
     let processors = {
         lessons: (lesson) => {
             let locateResult = utils.locateLessonInTime(lesson);
-            locateResult.isNow = locateResult.isNow && lesson.weekday == Time.getToday().code;
+            locateResult.isNow = locateResult.isNow && lesson.weekday == Time.getDayInfo().code;
             return {
                 day: lesson.weekday,
                 begins: locateResult.begins,
@@ -34,7 +34,7 @@ module.exports.getTimetablePage = (req, res) => {
         .then(lists => {
             lists.lessons = lists.lessons.sort((a, b) => a.begins > b.begins);
 
-            lists.weekdays = Time.getThisWeekDays();
+            lists.weekdays = Time.getWeekDays();
 
             let renderOptions = {
                 view: 'student/timetable',
@@ -44,7 +44,7 @@ module.exports.getTimetablePage = (req, res) => {
             helper.render(req, res, {
                 lists,
                 week: Time.getWeekInfo(),
-                today: Time.getToday().code
+                today: Time.getDayInfo().code
             }, renderOptions);
         })
         .catch(error => {
@@ -57,7 +57,7 @@ module.exports.getTimetablePage = (req, res) => {
 module.exports.getDashboardPage = (req, res) => {
 
     let promises = {
-        lessons: () => LessonsRepository.getTodayLessons(req.school_context.user.student.groupId)
+        lessons: () => LessonsRepository.getDayInfoLessons(req.school_context.user.student.groupId)
     }
 
     let processors = {
@@ -86,7 +86,7 @@ module.exports.getDashboardPage = (req, res) => {
                 title: 'Сегодня',
             };
 
-            helper.render(req, res, { lists, today: Time.getToday().code }, renderOptions);
+            helper.render(req, res, { lists, today: Time.getDayInfo().code }, renderOptions);
         })
         .catch(error => {
             console.log(error);

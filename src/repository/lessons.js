@@ -87,12 +87,12 @@ module.exports.getWeekLessons = (group, weekType) => {
     })
 }
 
-module.exports.getTodayLessons = (group) => {
+module.exports.getDayInfoLessons = (group) => {
     return connection.models['lesson'].findAll({
         where: {
             "groupId": group,
             "weektype": time.getWeekInfo().type,
-            "weekday": time.getToday().code
+            "weekday": time.getDayInfo().code
         },
         include: [
             connection.models['subject'],

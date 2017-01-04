@@ -8,6 +8,7 @@ const SubjectsRepository = require('../repository/subjects');
 const AuditoriesRepository = require('../repository/auditories');
 const TimingsRepository = require('../repository/timings');
 const TeachersRepository = require('../repository/teachers');
+const TimeRepository = require('../repository/time');
 
 const helper = require('./controller-helper')('teacher', 't');
 //const config = require('../../config.json');
@@ -24,6 +25,7 @@ module.exports.getLessonsEditorPage = (req, res) => {
 
     helper.processPromises(lists, processors)
         .then((lists) => {
+
             let renderOptions = {
                 view: 'teacher/lessons',
                 title: 'Изменение расписания'
@@ -58,6 +60,8 @@ module.exports.getLessonsEditor = (req, res) => {
 
     helper.processPromises(lists, processors)
         .then((lists) => {
+            lists.weekdays = TimeRepository.getAcademicWeekDays();
+
             let renderOptions = {
                 view: 'teacher/lessons_editor',
                 title: 'Изменение расписания'

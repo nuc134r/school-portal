@@ -11,9 +11,6 @@ form#timetableform(action='/t/timetable/', method='POST')
     .mdl-card__supporting-text.mdl-grid(style='margin: 5px 10px 0px 10px;')
       +ComboBox('Неделя', 'weektype', weekTypes, false, 'width: calc(50% - 5px); margin-right: 10px;')
       +ComboBox('Группа', 'group', lists.groups, true, 'width: calc(50% - 5px);')
-    .mdl-card__actions.mdl-card--border
-      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('timetableform').submit()") сохранить расписание
-  
 
   #days-container
 

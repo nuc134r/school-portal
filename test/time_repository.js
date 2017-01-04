@@ -2,6 +2,8 @@
 
 let assert = require('assert');
 let moment = require('moment');
+require('moment/locale/ru');
+
 let TimeRepository = require('../src/repository/time');
 
 describe('getWeekInfo()', function () {
@@ -51,5 +53,23 @@ describe('getWeekInfo()', function () {
 
         assert.equal(week.index, 18);
         assert.equal(week.type, 'lower');
+    });
+});
+
+describe('getAcademicWeekDays()', function () {
+    it('is correct when 1st of September is on Thursday', function () {
+        let now = moment("2016-09-01")
+        let days = TimeRepository.getAcademicWeekDays(now)
+
+        assert.equal(days[0].code, "thu");
+    });
+});
+
+describe('getAcademicWeekDays()', function () {
+    it('is correct when 1st of September is on Tuesday', function () {
+        let now = moment("2015-09-09")
+        let days = TimeRepository.getAcademicWeekDays(now)
+
+        assert.equal(days[0].code, "tue");
     });
 });

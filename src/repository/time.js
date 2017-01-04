@@ -4,32 +4,53 @@ const moment = require('moment');
 require('moment/locale/ru');
 
 const WeekDays = [
-    { code: 'mon', displayName: 'понедельник' },
-    { code: 'tue', displayName: 'вторник' },
-    { code: 'wed', displayName: 'среда' },
-    { code: 'thu', displayName: 'четверг' },
-    { code: 'fri', displayName: 'пятница' },
-    { code: 'sat', displayName: 'суббота' }
+    { code: 'mon', displayName: 'понедельник', shortDisplayName: 'пн' },
+    { code: 'tue', displayName: 'вторник', shortDisplayName: 'вт' },
+    { code: 'wed', displayName: 'среда', shortDisplayName: 'ср' },
+    { code: 'thu', displayName: 'четверг', shortDisplayName: 'чт' },
+    { code: 'fri', displayName: 'пятница', shortDisplayName: 'пт' },
+    { code: 'sat', displayName: 'суббота', shortDisplayName: 'сб' }
 ];
 
 module.exports.WeekDays = WeekDays;
 
 module.exports.getWeekInfo = getWeekInfo;
 
+function getFirstOfSeptember(now) {
+    if (!now) now = moment();
+
+    let month = now.month() + 1;
+    return (month >= 7) ? moment([now.year(), 8]) : moment([now.year() - 1, 8]);
+}
+
 function getWeekInfo(now) {
     if (!now) now = moment();
-    let month = now.month() + 1;
 
-    let _1sep = (month >= 7)
-        ? moment([now.year(), 8])
-        : moment([now.year() - 1, 8]);
+    let firstOfSeptebmer = getFirstOfSeptember(now);
 
-    let weekIndex = now.diff(_1sep, 'weeks') + 1;
+    let weekIndex = now.diff(firstOfSeptebmer, 'weeks') + 1;
 
     return { type: ((weekIndex % 2) ? 'upper' : 'lower'), index: weekIndex };
 };
 
-module.exports.getThisWeekDays = () => {
+module.exports.getAcademicWeekDays = (now) => {
+    if (!now) now = moment();
+    let firstOfSeptember = getDayInfo(getFirstOfSeptember(now));
+
+    let weekdays = WeekDays.slice(0);
+
+    while (weekdays[0].code != firstOfSeptember.code) {
+        let last = weekdays.pop();
+        weekdays.unshift(last);
+    }
+
+    return weekdays;
+}
+
+module.exports.getWeekDays = (options) => {
+    //let isThisWeek = !options || !options.isNextWeek;
+    //let humanize = (!options || options.humanize || true) && isThisWeek;
+
     let result = [];
     let now = moment();
 
@@ -37,22 +58,25 @@ module.exports.getThisWeekDays = () => {
         let day = moment().day(WeekDays[i].displayName);
         let displayDate = day.format('DD MMMM');
 
-        if (day.isoWeekday() == now.isoWeekday()) {
-            displayDate = 'сегодня';
-        }
+        //if (humanize) {
+            if (day.isoWeekday() == now.isoWeekday()) {
+                displayDate = 'сегодня';
+            }
 
-        if (day.isoWeekday() == now.isoWeekday() + 1) {
-            displayDate = 'завтра';
-        }
-
+            if (day.isoWeekday() == now.isoWeekday() + 1) {
+                displayDate = 'завтра';
+            }
+        //}
         result.push({ displayDate, moment: day, weekday: WeekDays[i], week: getWeekInfo(day) });
     }
 
     return result;
 }
 
-module.exports.getToday = () => {
-    let dayIndex = moment().isoWeekday() - 1;
+module.exports.getDayInfo = getDayInfo;
+function getDayInfo (now) {
+    if (!now) now = moment();
+    let dayIndex = now.isoWeekday() - 1;
 
     return WeekDays[dayIndex];
 }
