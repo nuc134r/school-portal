@@ -18,7 +18,7 @@
 }
 
 .lesson-editing-pane-hidden {
-    max-height: 0px;
+    opacity: 0.3;
     transition: max-height 0.2s ease-out;
 }
 

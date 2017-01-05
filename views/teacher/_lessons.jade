@@ -1,19 +1,21 @@
 include ../parts/mixins
 
-.mdl-grid
-  - cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } }
-  - weekTypes = [{text: 'верхняя', value: 'upper'}, {text: 'нижняя', value: 'lower'}]
+
+- cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } }
+- weekTypes = [{text: 'верхняя', value: 'upper'}, {text: 'нижняя', value: 'lower'}]
 
 +MvcMessages('Расписание сохранено', '', '', cardSettings)
+
++Text({ phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } })
+  h5(style='color: rgba(0,0,0,.3); text-align: center;') Сейчас неделя #{week.index}, #{ {'upper': 'верхняя', 'lower': 'нижняя'}[week.type] }
+  //h5(style='color: rgba(0,0,0,.3); text-align: center;') 
+
 
 form#timetableform(action='/t/timetable/', method='POST')
   +Card(cardSettings)
     .mdl-card__supporting-text.mdl-grid(style='margin: 5px 10px 0px 10px;')
       +ComboBox('Неделя', 'weektype', weekTypes, false, 'width: calc(50% - 5px); margin-right: 10px;')
       +ComboBox('Группа', 'group', lists.groups, true, 'width: calc(50% - 5px);')
-    .mdl-card__actions.mdl-card--border
-      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('timetableform').submit()") сохранить расписание
-  
 
   #days-container
 

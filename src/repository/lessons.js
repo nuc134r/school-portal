@@ -34,8 +34,39 @@ module.exports.getTimetable = (group, weekType) => {
     });
 }
 
+module.exports.getLessonsFor = (group, days) => {
+    let filter = [];
+
+    days.forEach((day) => {
+        filter.push({
+            $and: {
+                "weektype": day.week.type,
+                "weekday": day.weekday.code
+            }
+        })
+    })
+
+    return connection.models['lesson'].findAll({
+        where: {
+            "groupId": group,
+            $or: filter
+        },
+        include: [
+            connection.models['subject'],
+            {
+                model: connection.models['teacher'],
+                include: [
+                    connection.models['user']
+                ]
+            },
+            connection.models['timing'],
+            connection.models['auditory']
+        ]
+    })
+}
+
 module.exports.getWeekLessons = (group, weekType) => {
-    if (!weekType) weekType = time.getCurrentWeektype();
+    if (!weekType) weekType = time.getWeekInfo().type;
 
     return connection.models['lesson'].findAll({
         where: {
@@ -56,12 +87,12 @@ module.exports.getWeekLessons = (group, weekType) => {
     })
 }
 
-module.exports.getTodayLessons = (group) => {
+module.exports.getDayInfoLessons = (group) => {
     return connection.models['lesson'].findAll({
         where: {
             "groupId": group,
-            "weektype": time.getCurrentWeektype(),
-            "weekday": time.getCurrentWeekdayCode()
+            "weektype": time.getWeekInfo().type,
+            "weekday": time.getDayInfo().code
         },
         include: [
             connection.models['subject'],
