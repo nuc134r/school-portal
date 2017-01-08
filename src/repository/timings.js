@@ -19,6 +19,10 @@ function toDomain(timing) {
         getDisplayName: () => `${displayStart} - ${displayEnd}`,
         start: displayStart,
         end: displayEnd,
+        beginHour: start.hours(),
+        beginMinute: start.minutes(),
+        endHour: end.hours(),
+        endMinute: end.minutes(),
         duration: end.diff(start, 'minutes')
     }
 }
@@ -38,6 +42,7 @@ function fromDomain(timing) {
 }
 
 module.exports.create = (options) => fromDomain(options).then(helper.create);
+module.exports.update = (id, options) => fromDomain(options).then((options) => helper.update(id, options));
 module.exports.browse = () => helper.browse().then((timings) => timings.map(toDomain));
 module.exports.get = (options) => helper.get(options).then(toDomain);
 module.exports.delete = helper.delete;

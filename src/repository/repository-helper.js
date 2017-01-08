@@ -23,7 +23,8 @@ function Create(connection, modelName) {
             include: includes.map(model => connection.models[model])
         }),
         get: (options) => connection.models[modelName].findOne({ where: options }),
-        delete: (options) => connection.models[modelName].destroy({ where: options })
+        delete: (options) => connection.models[modelName].destroy({ where: options }),
+        update: (entityId, options) => connection.models[modelName].update(options, { where: { id: entityId }, returning: true })
     }
 }
 

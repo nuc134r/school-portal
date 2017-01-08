@@ -6,6 +6,7 @@ include ../parts/mixins
   if query_params.error
     +MessageCard(cardSettings, 'Ошибка при создании предмета', query_params.error)
   
-  +Form(cardSettings, 'createsubjectform', '/a/subjects/create')
+  - var post_url = '/a/' + options.entityNamePlural + (edit_mode ? ('/' + query_params.id + '/edit') : '/create')
+  +Form(cardSettings, 'createsubjectform', post_url)
     +InputField('Имя', 'name', true)
     +InputField('Короткое имя', 'shortname')
