@@ -6,6 +6,7 @@ include ../parts/mixins
   if query_params.error
     +MessageCard(cardSettings, 'Ошибка при создании специальности', query_params.error)
   
-  +Form(cardSettings, 'createspecialtyform', '/a/specialties/create')
+  - var post_url = '/a/' + options.entityNamePlural + (edit_mode ? ('/' + query_params.id + '/edit') : '/create')
+  +Form(cardSettings, 'createspecialtyform', post_url)
     +InputField('Имя', 'name', true)
     +InputField('Короткое имя', 'shortname')

@@ -6,9 +6,10 @@ include ../parts/mixins
   if query_params.error
     +MessageCard(cardSettings, 'Ошибка при создании пользователя', query_params.error)
   
-  - var selected_type = query_params.user_type || 'student';
+  - var selected_type = query_params.user_type || query_params.type || 'student';
 
-  +Form(cardSettings, 'createuserform', '/a/users/create')
+  - var post_url = '/a/' + options.entityNamePlural + (edit_mode ? ('/' + query_params.id + '/edit') : '/create')
+  +Form(cardSettings, 'createuserform', post_url)
     +InputField('Имя', 'firstname', true)
     br
     +InputField('Фамилия', 'lastname')
@@ -18,19 +19,24 @@ include ../parts/mixins
     +InputField('Логин', 'login')
     br
     br
-    +RadioButton('Студент', 'user_type', 'student', (selected_type=='student'))
-    br
-    br
-    +RadioButton('Преподаватель', 'user_type', 'teacher', (selected_type=='teacher'))
-    br
-    br
-    +RadioButton('Администратор', 'user_type', 'admin', (selected_type=='admin'))
-    br
-    br
-    #student-fields-wrapper
-      +ComboBox('Группа', 'groupId', lists.groups)
-    #teacher-fields-wrapper(style='visibility: collapse;')
-    #admin-fields-wrapper(style='visibility: collapse;')
+    if !edit_mode
+      +RadioButton('Студент', 'user_type', 'student', (selected_type=='student'), user_type_block_style)
+      br
+      br
+      +RadioButton('Преподаватель', 'user_type', 'teacher', (selected_type=='teacher'), user_type_block_style)
+      br
+      br
+      +RadioButton('Администратор', 'user_type', 'admin', (selected_type=='admin'), user_type_block_style)
+      br
+      br
+    #student-fields-wrapper(style= (selected_type=='student') ? '' : 'display: none;')
+      +ComboBox('Группа', 'groupId', lists.groups, false, null, query_params.student ? query_params.student.groupId : null)
+    #teacher-fields-wrapper(style= (selected_type=='teacher') ? '' : 'display: none;')
+      +Toggle('canCreateNews', 'Может создавать новости', '', query_params.teacher ? query_params.teacher.canCreateNews : false)
+      br
+      br
+      +Toggle('canEditTimetable', 'Может править расписание', '', query_params.teacher ? query_params.teacher.canEditTimetable : false)
+    #admin-fields-wrapper(style= (selected_type=='admin') ? '' : 'display: none;')
 
 script.
   var studentRadio = document.getElementById('student_radio'),

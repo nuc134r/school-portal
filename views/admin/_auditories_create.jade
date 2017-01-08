@@ -6,5 +6,6 @@ include ../parts/mixins
   if query_params.error
     +MessageCard(cardSettings, 'Ошибка при создании аудитории', query_params.error)
   
-  +Form(cardSettings, 'createauditoryform', '/a/auditories/create')
+  - var post_url = '/a/' + options.entityNamePlural + (edit_mode ? ('/' + query_params.id + '/edit') : '/create')
+  +Form(cardSettings, 'createauditoryform', post_url)
     +InputField('Имя', 'name', true)

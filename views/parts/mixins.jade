@@ -27,10 +27,12 @@ mixin Fab(href, icon)
 
 mixin Toggle(id, text, style, checked)
   label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for=(id + 'field'), style=style)
-    input.mdl-switch__input(id=(id + 'field'), name=id, type='checkbox', checked=checked)
+    input.mdl-switch__input(id=(id + 'field'), name=id, type='checkbox', checked=checked, value=1)
     span.mdl-switch__label #{text}
 
 mixin ComboBox(placeholder, id, items, allowNull, style, preset_value)
+  - var preset_value = preset_value || query_params[id];
+
   .mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label(style=style || 'width: 100%;')
     select.mdl-selectfield__select(id=(id + 'field'), name=id)
       if allowNull
@@ -47,8 +49,9 @@ mixin InputField(placeholder, id, autofocus)
     input.mdl-textfield__input(type='text', name=id, id=(id + 'field'), value=preset_value, autofocus=autofocus)
     label.mdl-textfield__label(for=(id + 'field')) #{ placeholder }
 
-mixin RadioButton(placeholder, name, id, checked)
-  label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=(id + '_radio'))
+mixin RadioButton(placeholder, name, id, checked, style)
+
+  label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=(id + '_radio'), style=style)
     input.mdl-radio__button(id=(id + '_radio'), type='radio', name=name, value=id, checked=checked)
     span.mdl-radio__label #{placeholder}
 
@@ -150,19 +153,21 @@ mixin Table(options, definition)
               each column in definition.columns
                 th(class={ 'mdl-data-table__cell--non-numeric': !column.numeric, 'sort': true }, data-sort=(column.field + '-value')) #{ column.title }
               th.mdl-data-table__cell--non-numeric(style='text-align: right;') Удалить
-              //th.mdl-data-table__cell--non-numeric Изменить
+              th.mdl-data-table__cell--non-numeric(style='text-align: right;') Изменить
           tbody(class="list")
             each item in definition.items
               tr
                 each column in definition.columns
                   - var columnClasses0 = [column.field + '-value'];
                   - if (!column.numeric) columnClasses0.push('mdl-data-table__cell--non-numeric');
-                  td(class=columnClasses0) #{ (column.converter ?  column.converter(item[column.field]) : item[column.field]) }
+                  - var text_data = (column.converter ?  column.converter(item[column.field]) : item[column.field]);
+                  - if (text_data.length > 50) { text_data = text_data.substring(0, 35).trim() + '..'; }
+                  td(class=columnClasses0) #{ text_data }
                 td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: right;')
                   if !item.lock
                     a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/delete')
                       i.material-icons delete
-                //td.mdl-data-table__cell--non-numeric(style='text-align: center;')
+                td.mdl-data-table__cell--non-numeric(style='text-align: right;')
                   if !item.lock
                     a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/edit')
                       i.material-icons edit

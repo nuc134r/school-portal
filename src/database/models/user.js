@@ -34,6 +34,8 @@ function Init(sequelize) {
                     }
 
                     if (this.student) result.student = this.student;
+                    if (this.teacher) result.teacher = this.teacher;
+                    if (this.admin) result.admin = this.admin;
 
                     return result;
                 }

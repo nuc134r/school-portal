@@ -12,7 +12,8 @@ include ../parts/mixins
   - var minutes = []
   - for (var i = 0; i < 60; i += 5) minutes.push({ text: i, value: i });
 
-  +Form(cardSettings, 'createtimingform', '/a/timings/create')
+  - var post_url = '/a/' + options.entityNamePlural + (edit_mode ? ('/' + query_params.id + '/edit') : '/create')
+  +Form(cardSettings, 'createtimingform', post_url)
     h5 Начало
     +ComboBox('Час', 'beginHour', hours)
     +ComboBox('Минута', 'beginMinute', minutes)

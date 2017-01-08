@@ -132,7 +132,7 @@ function create(user_mode, urlPrefix) {
                     processPromises(options.lists, options.listProcessors)
                         .then((lists) => {
                             let newStatementGendered = options.displayNameIsMasculine ? 'Новый' : 'Новая';
-                            render(req, res, { lists }, {
+                            render(req, res, { lists, options }, {
                                 view: `${user_mode}/${options.entityNamePlural}_create`,
                                 title: `${newStatementGendered} ${options.displayName}`
                             });
@@ -141,6 +141,52 @@ function create(user_mode, urlPrefix) {
                             if (err) console.error(err.message);
 
                             res.end(err);
+                        });
+                },
+                editPage: (req, res) => {
+
+                    processPromises(options.lists, options.listProcessors)
+                        .then((lists) => {
+                            options.repository.get({ id: req.params.id })
+                                .then((item) => {
+                                    req.query = item;
+
+                                    render(req, res, { lists, edit_mode: true, options }, {
+                                        view: `${user_mode}/${options.entityNamePlural}_create`,
+                                        title: `Изменение ${options.displayNameGenetive}`
+                                    });
+                                })
+                        })
+                        .catch((err) => {
+                            res.end(err.toString());
+                                console.error(err);
+                        });
+                },
+                edit: (req, res) => {
+
+                    let entity_id = req.params.id;
+
+                    let requestOptions = options.onProcessForm
+                        ? options.onProcessForm(req.body)
+                        : req.body;
+
+                    options.repository.update(entity_id, requestOptions)
+                        .then(() => res.redirect(`/${urlPrefix}/${options.entityNamePlural}?message=edited`))
+                        .catch(err => {
+                            if (err.errors) {
+                                err.errors.forEach((error, i) => {
+                                    requestOptions[`error[${i}]`] = error.message;
+                                });
+                            } else {
+                                requestOptions['error'] = err.message || err;
+                            }
+
+                            var redirect_url = url.format({
+                                query: requestOptions,
+                                pathname: `/${urlPrefix}/${options.entityNamePlural}`
+                            });
+
+                            res.redirect(redirect_url);
                         });
                 },
                 create: (req, res) => {

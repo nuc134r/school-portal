@@ -36,6 +36,9 @@ function createContollerRoutes(prefix, router, crud) {
 
     router.get(`/${prefix}/${entity}/:id/delete`, crud.deletePage);
     router.delete(`/${prefix}/${entity}/:id/delete`, crud.delete);
+
+    router.get(`/${prefix}/${entity}/:id/edit`, crud.editPage);
+    router.post(`/${prefix}/${entity}/:id/edit`, crud.edit);
 }
 
 function whitelist(pathMask, valueGetter, assertValue) {

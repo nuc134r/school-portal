@@ -39,7 +39,9 @@ module.exports.UsersContoller = helper.generateContoller({
                 ? config.default_admin_password
                 : config.default_user_password,
             type: formData.user_type,
-            groupId: formData.groupId
+            groupId: formData.groupId,
+            canCreateNews: !!formData.canCreateNews,
+            canEditTimetable: !!formData.canEditTimetable
         }
     }
 });
