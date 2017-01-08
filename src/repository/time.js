@@ -9,7 +9,8 @@ const WeekDays = [
     { code: 'wed', displayName: 'среда', shortDisplayName: 'ср' },
     { code: 'thu', displayName: 'четверг', shortDisplayName: 'чт' },
     { code: 'fri', displayName: 'пятница', shortDisplayName: 'пт' },
-    { code: 'sat', displayName: 'суббота', shortDisplayName: 'сб' }
+    { code: 'sat', displayName: 'суббота', shortDisplayName: 'сб' },
+    { code: 'sun', displayName: 'воскресенье', shortDisplayName: 'вс' }
 ];
 
 module.exports.WeekDays = WeekDays;
@@ -37,7 +38,7 @@ module.exports.getAcademicWeekDays = (now) => {
     if (!now) now = moment();
     let firstOfSeptember = getDayInfo(getFirstOfSeptember(now));
 
-    let weekdays = WeekDays.slice(0);
+    let weekdays = WeekDays.slice(0, -1);
 
     while (weekdays[0].code != firstOfSeptember.code) {
         let last = weekdays.pop();

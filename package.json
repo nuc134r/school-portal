@@ -6,7 +6,7 @@
     "start": "node ./entry-point.js",
     "test": "mocha",
     "initdb": "node ./tools/db-creator.js",
-    "initdemo": "node ./tools/demo-db.js"
+    "initdemo": "node ./tools/db-creator.js && node ./tools/demo-db.js"
   },
   "dependencies": {
     "async": "2.0.1",

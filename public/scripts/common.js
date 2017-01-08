@@ -3,7 +3,8 @@ var $content,
     $fab_link,
     $fab_icon,
     $searchbox,
-    $searchwrapper;
+    $searchwrapper,
+    $loading_spinner;
 
 
 $(document).ready(function () {
@@ -13,6 +14,7 @@ $(document).ready(function () {
     $fab_icon = $('#fab-icon');
     $searchbox = $('#search');
     $searchwrapper = $('#search-wrapper');
+    $loading_spinner = $('#loading-spinner');
 });
 
 function ajax(link, closeDrawer) {
@@ -25,7 +27,8 @@ function ajax(link, closeDrawer) {
     }
 
     $fab_link.css('visibility', 'collapse');
-    $content.html('<div class="loading-text loading-text-vert-centered">=^_^=</div>');
+    $content.html('');
+    $loading_spinner.css('visibility', 'visible');
     $searchbox.val('');
     $searchwrapper.css('visibility', 'collapse');
     $searchwrapper.removeClass('is-focused, is-dirty');
@@ -35,6 +38,7 @@ function ajax(link, closeDrawer) {
 
             // TODO: Validate 'response'
 
+            $loading_spinner.css('visibility', 'collapse');
             $content.html(response.html);
             $title.html(response.title);
 
@@ -55,7 +59,7 @@ function ajax(link, closeDrawer) {
             History.pushState({}, response.title + ' | Студенческий портал', link.href);
         })
         .error(function (error) {
-            $content.html('<div class="loading-text loading-text-vert-centered">T.T</div>');
+            $loading_spinner.css('visibility', 'collapse');
             showMessage('AJAX navigation error: ' + error.status);
             console.error(error);
         });

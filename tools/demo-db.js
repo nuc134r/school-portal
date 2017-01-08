@@ -142,6 +142,7 @@ require('../src/database/database').Init().then(() => {
                 .then(() => UsersRepository.create({ lastname: 'Сорокин', firstname: 'Юрий', middlename: 'Сергеевич', type: 'teacher', login: 'yury.sorokin', password: 'portal' }))
                 .then(() => UsersRepository.create({ lastname: 'Павлов', firstname: 'Алексей', middlename: 'Владимирович', type: 'teacher', login: 'alexey.pavlov', password: 'portal' }))
                 .then(() => UsersRepository.create({ lastname: 'Яблонская', firstname: 'Юлия', middlename: 'Викторовна', type: 'teacher', login: 'rozovay_blonkdinka', password: 'portal' }))
+                .then(() => UsersRepository.create({ lastname: 'Тихонов', firstname: 'Сергей', middlename: 'Сергеевич', type: 'student', login: 'sergey.tikhonov', password: 'portal', groupId: 25 }))
         })
         .then(() => {
             console.log("Successfully deployed demo db");
