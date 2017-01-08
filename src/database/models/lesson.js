@@ -5,7 +5,7 @@ const helper = require('./model-helper');
 
 function Init(sequelize) {
     let Entity = sequelize.define('lesson', {
-        weekday: Sequelize.ENUM('mon', 'tue', 'wed', 'thu', 'fri', 'sat'),
+        weekday: Sequelize.ENUM('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'),
         weektype: Sequelize.ENUM('upper', 'lower')
     }, helper.defaultOptions);
 

@@ -1,12 +1,12 @@
 include ../parts/mixins
 
 
-- cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } }
+- cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 8, o: 2 } }
 - weekTypes = [{text: 'верхняя', value: 'upper'}, {text: 'нижняя', value: 'lower'}]
 
 +MvcMessages('Расписание сохранено', '', '', cardSettings)
 
-+Text({ phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } })
++Text(cardSettings)
   h5(style='color: rgba(0,0,0,.3); text-align: center;') Сейчас неделя #{week.index}, #{ {'upper': 'верхняя', 'lower': 'нижняя'}[week.type] }
   //h5(style='color: rgba(0,0,0,.3); text-align: center;') 
 
@@ -23,10 +23,11 @@ script.
   $combos = $('#groupfield, #weektypefield');
   $groupfield = $('#groupfield');
   $weektypefield = $('#weektypefield');
-  $container = $('#days-container');
+  $days_container = $('#days-container');
   $combos.on('change', function (ctx) {
     if ($groupfield[0].value) {
-        $container.html('<div class="loading-text" style="padding-top: 80px;">=^_^=</div>');
+      $days_container.html('');
+        $loading_spinner.css('visibility', 'visible');
         $.ajax({ 
             url: "/t/timetable_editor", 
             data: { 
@@ -36,7 +37,8 @@ script.
             } 
           })
           .done(function (response) {
-            $container.html(response.html);
+            $loading_spinner.css('visibility', 'collapse');
+            $days_container.html(response.html);
             if (!(typeof (componentHandler) == 'undefined')) {
                 componentHandler.upgradeAllRegistered();
             }

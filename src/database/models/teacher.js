@@ -4,10 +4,14 @@ const Sequelize = require('sequelize');
 const helper = require('./model-helper');
 
 function Init(sequelize) {
-    let Student = sequelize.define('teacher', {}, helper.defaultOptions);
+    let Entity = sequelize.define('teacher', {
+        canCreateNews: Sequelize.BOOLEAN,
+        canEditTimetable: Sequelize.BOOLEAN
+    },
+        helper.defaultOptions);
 
-    Student.belongsTo(sequelize.models.user, { 
-        foreignKey: { allowNull: false }, 
+    Entity.belongsTo(sequelize.models.user, {
+        foreignKey: { allowNull: false },
         onDelete: 'CASCADE'
     });
 }

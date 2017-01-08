@@ -1,9 +1,9 @@
 include ../parts/mixins
 
-- var cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 7, o: 2 } }
+- var cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 8, o: 2 } }
 
 +Card(cardSettings)
-  .mdl-tabs.mdl-js-tabs
+  .mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
     .mdl-tabs__tab-bar
       - var dayIndex = 0;
       each day in lists.weekdays
