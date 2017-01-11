@@ -9,9 +9,20 @@ const AuditoriesRepository = require('../repository/auditories');
 const TimingsRepository = require('../repository/timings');
 const TeachersRepository = require('../repository/teachers');
 const TimeRepository = require('../repository/time');
+const NewsRepository = require('../repository/news');
 
 const helper = require('./controller-helper')('teacher', 't');
-//const config = require('../../config.json');
+
+module.exports.NewsController = helper.generateContoller({
+    entityName: 'new',
+    entityNamePlural: 'news',
+    displayName: 'новость',
+    displayNamePlural: 'новости',
+    displayNameGenetive: 'новости',
+    displayNameAccusative: 'новость',
+    displayNameIsMasculine: false,
+    repository: NewsRepository
+});
 
 module.exports.getLessonsEditorPage = (req, res) => {
 

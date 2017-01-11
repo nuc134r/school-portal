@@ -174,9 +174,9 @@ mixin Table(options, definition)
   else
     +MessageCard(cardSettings, 'Этот список пуст', 'Нажмите кнопку ( + ) в нижнем правом углу экрана, чтобы создать новый элемент.', '&#xE88E;', 'left: 50%; transform: translateX(-50%); max-width: 500px;')
   
-  script.
-    var options = {
-      valueNames: !{JSON.stringify(definition.columns.map(function (column) { return column.field + '-value' }))}
-    };
-
-    var list = new List('table-list', options);
+  if definition.items.length
+    script.
+      var options = {
+        valueNames: !{JSON.stringify(definition.columns.map(function (column) { return column.field + '-value' }))}
+      };
+      var list = new List('table-list', options);
