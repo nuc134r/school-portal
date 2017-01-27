@@ -21,7 +21,7 @@ app.use(logger(config.logger_format));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
+ 
 /* database */
 const database = require('./database/database');
 database.Init();
