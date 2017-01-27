@@ -5,7 +5,7 @@
             "name": "launch",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/built/entry-point.js",
+            "program": "${workspaceRoot}/src/entry-point.js",
             "stopOnEntry": false,
             "args": [],
             "cwd": "${workspaceRoot}",

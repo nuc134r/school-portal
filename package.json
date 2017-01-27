@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./entry-point.js",
+    "start": "node ./src/entry-point.js",
     "test": "mocha",
     "initdb": "node ./tools/db-creator.js",
     "initdemo": "node ./tools/db-creator.js && node ./tools/demo-db.js"
