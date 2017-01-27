@@ -1,14 +1,14 @@
 'use strict';
 
-let path = require('path');
-let config = require('../config.json');
+import path = require('path');
+import config = require('../config');
 
 /* express */
-let express = require('express');
-let favicon = require('serve-favicon');
-let logger = require('morgan');
-let cookieParser = require('cookie-parser');
-let bodyParser = require('body-parser');
+import express = require('express');
+import favicon = require('serve-favicon');
+import logger = require('morgan');
+import cookieParser = require('cookie-parser');
+import bodyParser = require('body-parser');
 
 let app = express();
 
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
  
 /* database */
-const database = require('./database/database');
+import database = require('./database/database');
 database.Init();
 
 /* static resources */
