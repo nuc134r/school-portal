@@ -98,7 +98,7 @@ module.exports.saveLessons = (req, res) => {
         let timetable = [];
         weekdays.forEach((day, dayIndex) => {
             timings.forEach((timing) => {
-                if (formData[`${day}_${timing.id}_toggle`] == 'on') {
+                if (formData[`${day}_${timing.id}_toggle`]) {
                     timetable.push({
                         weekday: day,
                         timingId: timing.id,
