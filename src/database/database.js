@@ -29,6 +29,7 @@ require('./models/subject').Init(sequelize);
 require('./models/auditory').Init(sequelize);
 require('./models/timing').Init(sequelize);
 require('./models/lesson').Init(sequelize);
+require('./models/new').Init(sequelize);
 
 function getConnection() {
     return sequelize;

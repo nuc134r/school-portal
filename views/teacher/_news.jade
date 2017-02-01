@@ -1,0 +1,20 @@
+include ../parts/mixins
+
+.mdl-grid
+  - cardSettings = { desktop: { s: 10, o: 1 }, tablet: { s: 8 }, phone: { s: 4 } }
+  
+  +MvcMessages('Новость создана', 'Новость удалена', 'Новость сохранена')
+
+- title = { title: 'Заголовок',  field: 'title' }
+- text = { title: 'Текст',  field: 'text' }
+- createdAt = { title: 'Дата создания',  field: 'createdAt' }
+
+- tableDefinition = {}
+- tableDefinition.items = list_page_items
+- tableDefinition.columns = [title, createdAt]
+
+
+.mdl-grid
+  +Table(cardSettings, tableDefinition)
+
+    
