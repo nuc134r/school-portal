@@ -36,7 +36,7 @@ function create(user_mode, urlPrefix) {
 
         let mandatory_params = {
             title: options.title,
-            fab: options.fab,
+            fab: options.fab || {link: null, icon: null},
             searchable: options.searchable,
 
             layout: user_mode,

@@ -90,6 +90,15 @@ module.exports.getLessonsEditor = (req, res) => {
         })
 }
 
+module.exports.getDashboardPage = (req, res) => {
+    let renderOptions = {
+        view: 'teacher/dashboard',
+        title: 'Сегодня'
+    };
+
+    helper.render(req, res, { }, renderOptions);
+}
+
 module.exports.saveLessons = (req, res) => {
     let formData = req.body;
     let weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];

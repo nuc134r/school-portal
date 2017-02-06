@@ -74,9 +74,11 @@ html
            
         if layout == 'teacher'   
           .mdl-navigation
-            +MenuItem({label: 'Сегодня',          link: '/dashboard',   icon: '&#xE8DF;' })
-            +MenuItem({label: 'Расписание',       link: '/t/timetable', icon: '&#xE916;' })
-            +MenuItem({label: 'Реактор новостей', link: '/t/news',      icon: '&#xE916;' })
+            +MenuItem({label: 'Сегодня',          link: '/t/dashboard',   icon: '&#xE8DF;' })
+            if user.teacher.canEditTimetable
+              +MenuItem({label: 'Расписание',       link: '/t/timetable', icon: '&#xE916;' })
+            if user.teacher.canCreateNews
+              +MenuItem({label: 'Редактор новостей', link: '/t/news',      icon: '&#xE916;' })
 
         if layout == 'admin'
           .mdl-navigation

@@ -7,8 +7,7 @@ function Init(sequelize) {
     let Entity = sequelize.define('teacher', {
         canCreateNews: Sequelize.BOOLEAN,
         canEditTimetable: Sequelize.BOOLEAN
-    },
-        helper.defaultOptions);
+    });
 
     Entity.belongsTo(sequelize.models.user, {
         foreignKey: { allowNull: false },

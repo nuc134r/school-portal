@@ -26,7 +26,9 @@ helper.createContollerRoutes('a', router, adminController.AuditoriesContoller);
 helper.createContollerRoutes('a', router, adminController.TimingsContoller);
 
 /* teacher */
-router.get('/t', (req, res) => res.redirect('/t/timetable'));
+router.get('/t', (req, res) => res.redirect('/t/dashboard'));
+
+router.get('/t/dashboard', teacherController.getDashboardPage);
 
 router.get('/t/timetable', teacherController.getLessonsEditorPage);
 router.get('/t/timetable_editor', teacherController.getLessonsEditor);

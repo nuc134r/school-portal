@@ -35,7 +35,7 @@ function Create(connection, modelName) {
         }).then(formatAuditFields),
         get: (options) => connection.models[modelName].findOne({ where: options }),
         delete: (options) => connection.models[modelName].destroy({ where: options }),
-        update: (entityId, options) => connection.models[modelName].update(options, { where: { id: entityId }, returning: true })
+        update: (entityId, options) => connection.models[modelName].update(options, { where: { id: entityId }, returning: true, individualHooks: true })
     }
 }
 

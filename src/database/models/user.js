@@ -16,6 +16,11 @@ function Init(sequelize) {
         type: Sequelize.ENUM('student', 'teacher', 'admin')
     },
         {
+            hooks: {
+                afterUpdate: function (user) {
+                    require('../../session/sessions').invalidate(user);
+                }
+            },
             instanceMethods: {
                 getDisplayName: function () {
                     return `${this.lastname} ${this.firstname}`;
