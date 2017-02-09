@@ -5,6 +5,7 @@ const helper = require('./route-helper');
 const adminController = require('../controllers/admin');
 const studentController = require('../controllers/student');
 const teacherController = require('../controllers/teacher');
+const commonController = require('../controllers/common');
 
 const express = require('express');
 const router = express.Router();
@@ -14,10 +15,10 @@ helper.init(router);
 helper.whitelist('/t/*', (req) => req.school_context.user.type, 'teacher');
 helper.whitelist('/a/*', (req) => req.school_context.user.type, 'admin');
 helper.whitelist('/s/*', (req) => req.school_context.user.type, 'student');
+helper.blacklist('/settings', (req) => req.school_context.user.type, 'admin');
 
 /* admin */
 router.get('/a', (req, res) => res.redirect('/a/users'));
-
 helper.createContollerRoutes('a', router, adminController.UsersContoller);
 helper.createContollerRoutes('a', router, adminController.SpecialtiesContoller);
 helper.createContollerRoutes('a', router, adminController.GroupsContoller);
@@ -27,19 +28,18 @@ helper.createContollerRoutes('a', router, adminController.TimingsContoller);
 
 /* teacher */
 router.get('/t', (req, res) => res.redirect('/t/dashboard'));
-
 router.get('/t/dashboard', teacherController.getDashboardPage);
-
 router.get('/t/timetable', teacherController.getLessonsEditorPage);
 router.get('/t/timetable_editor', teacherController.getLessonsEditor);
 router.post('/t/timetable', teacherController.saveLessons);
-
 helper.createContollerRoutes('t', router, teacherController.NewsController);
 
 /* student */
 router.get('/s', (req, res) => res.redirect('/s/dashboard'));
-
 router.get('/s/dashboard', studentController.getDashboardPage);
 router.get('/s/timetable', studentController.getTimetablePage);
+
+/* common */
+router.get('/settings', commonController.getSettingsPage);
 
 module.exports = router;

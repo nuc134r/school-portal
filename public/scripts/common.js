@@ -33,6 +33,8 @@ function ajax(link, closeDrawer) {
     $searchwrapper.css('visibility', 'collapse');
     $searchwrapper.removeClass('is-focused, is-dirty');
 
+    link.href = link.href || link.attributes["href"].value
+
     $.ajax({ url: link.href, data: { 'ajax': 1 } })
         .done(function (response) {
 

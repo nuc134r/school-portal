@@ -47,7 +47,7 @@ html
               i.material-icons search
             .mdl-textfield__expandable-holder
               input#search.mdl-textfield__input(type='text', class='search')
-              label.mdl-textfield__label(for='search') Enter your query...
+              label.mdl-textfield__label(for='search') Поиск...
 
 
       .mdl-layout__drawer.mdl-layout__drawer-custom
@@ -59,7 +59,8 @@ html
           button#hdrbtn.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(style='position: absolute; bottom: 10px; right: 5px;')
             i.material-icons more_vert
           ul.mdl-menu.mdl-js-menu.mdl-js-ripple-effect.mdl-menu--bottom-right(for='hdrbtn')
-            li.mdl-menu__item(onclick='') Настройки
+            if layout != 'admin'
+              li.mdl-menu__item(href='/settings' onclick='return ajax(this, true)') Настройки
             li.mdl-menu__item(onclick='window.location.href = "/logout"') Выход
         
         if layout == 'student'

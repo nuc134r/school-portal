@@ -51,6 +51,17 @@ function whitelist(pathMask, valueGetter, assertValue) {
     });
 }
 
+function blacklist(pathMask, valueGetter, assertValue) {
+    helper_router.all(pathMask, (req, res, next) => {
+        if (valueGetter(req) != assertValue) {
+            next();
+        } else {
+            res.redirect('/404');
+        }
+    });
+}
+
 module.exports.init = init;
+module.exports.blacklist = blacklist;
 module.exports.createContollerRoutes = createContollerRoutes;
 module.exports.whitelist = whitelist;

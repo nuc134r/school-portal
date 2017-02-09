@@ -44,18 +44,8 @@ app.use((req, res, next) => {
 
 /* public routes */
 app.use('/', require('./routes/login'));
-
-/* session */
 app.use(require('./session/middleware')());
-
-/* authorized routes */
 app.use('/', require('./routes/routes'));
-
-// TODO: move to ./routes/routes
-//app.use('/', require('./routes/main'));
-//app.use('/s', require('./routes/student'));
-//app.use('/t', require('./routes/teacher'));
-//app.use('/a', require('./routes/admin'));
 
 app.use(require('./routes/error'));
 
