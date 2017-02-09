@@ -55,6 +55,18 @@ function get(token) {
 
                     return session;
                 })
+            } else if (session.user.type == 'teacher') {
+                return connection.models["teacher"].find({
+                    where: { userId: session.user.id }
+                })
+                .then(teacher => {
+                    session.user.teacher = {
+                        canCreateNews: teacher.canCreateNews,
+                        canEditTimetable: teacher.canEditTimetable
+                    };
+
+                    return session;
+                })
             } else {
                 return session;
             }
@@ -74,6 +86,16 @@ function remove(token) {
     connection.models.session.destroy({ where: { token } }).then();
 }
 
+function invalidate(user) {
+    for (let key in cache) {
+        let entry = cache[key];
+        if (entry.user.id == user.id) {
+            cache[key] = null;
+        }
+    }
+}
+
+module.exports.invalidate = invalidate;
 module.exports.create = create;
 module.exports.get = get;
 module.exports.remove = remove;

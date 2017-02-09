@@ -1,0 +1,7 @@
+include ../parts/mixins
+
+- cardSettings = { desktop: { s: 5, o: 3 } }
+
+form(action='/saveSettings', method='POST', id='settingsForm')
+  //+Toggle(lessonCode + 'toggle', '', null, !!lessonData)
+  img(src="/empty-avatar.png")
