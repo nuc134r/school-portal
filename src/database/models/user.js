@@ -13,7 +13,9 @@ function Init(sequelize) {
         middlename: Sequelize.STRING(64),
         lastname: helper.nonEmptyString(64, "Фамилия"),
 
-        type: Sequelize.ENUM('student', 'teacher', 'admin')
+        type: Sequelize.ENUM('student', 'teacher', 'admin'),
+
+        image_id: Sequelize.STRING(64)
     },
         {
             hooks: {
@@ -28,13 +30,26 @@ function Init(sequelize) {
                 asViewModel: function () {
                     let result = {
                         id: this.id,
-                        image_id: null,
+                        image_id: this.image_id,
                         type: this.type,
                         roles: [],
                         name: {
                             first: this.firstname,
                             last: this.lastname,
                             middle: this.middlename
+                        },
+                        getImageUrls: function () {
+                            if (this.image_id) {
+                                return {
+                                    'small': `/images/small/${this.image_id}`,
+                                    'large': `/images/large/${this.image_id}`
+                                }
+                            }
+                            return {
+                                'small': '/empty_avatar_48.jpg',
+                                'large': '/empty_avatar_128.jpg'
+                            }
+
                         }
                     }
 

@@ -1,7 +1,37 @@
 include ../parts/mixins
 
-- cardSettings = { desktop: { s: 5, o: 3 } }
+- cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 4, o: 4 } }
 
-form(action='/saveSettings', method='POST', id='settingsForm')
-  //+Toggle(lessonCode + 'toggle', '', null, !!lessonData)
-  img(src="/empty-avatar.png")
+form(action='/saveProfileImage', enctype="multipart/form-data", method='POST', id='profileimageform')
+  +Card(cardSettings)
+    .mdl-card__title
+      h2.mdl-card__title-text
+        | Фотография
+    .mdl-card__supporting-text
+      img.settings-avatar-image(src=user.getImageUrls().large)
+    .mdl-card__actions.mdl-card--border
+      a#upload-image-button.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#', style='') Изменить
+      input(type="file", name="profile-image" style="display: none;")
+
+script.
+  var file_input =  $('input[type=file]');
+
+  file_input.change(function (){
+    var file = this.files[0];
+    
+    if (!file) return;
+    if (file.type != 'image/png' && file.type != 'image/jpg' && file.type != 'image/gif' && file.type != 'image/jpeg') {
+      alert('Изображение должно быть формата PNG, JPG или GIF');
+      return;
+    }
+    if (file.size > 1024 * 1024 * 500) {
+      alert("Слишком большой файл");
+      return;
+    }
+
+    $loading_spinner.css('visibility', 'visible');
+
+    $('#profileimageform').submit();
+  });
+
+  $('#upload-image-button').click(function() { file_input.click() });

@@ -82,7 +82,7 @@ function get(token) {
 }
 
 function remove(token) {
-    cache[token] = null;
+    delete cache[token];
     connection.models.session.destroy({ where: { token } }).then();
 }
 
@@ -90,7 +90,7 @@ function invalidate(user) {
     for (let key in cache) {
         let entry = cache[key];
         if (entry.user.id == user.id) {
-            cache[key] = null;
+            delete cache[key];
         }
     }
 }
