@@ -41,5 +41,9 @@ router.get('/s/timetable', studentController.getTimetablePage);
 
 /* common */
 router.get('/settings', commonController.getSettingsPage);
+router.post('/saveProfileImage', commonController.saveProfileImage);
+
+router.get('/images/small/:image_id', commonController.getSmallProfileImage);
+router.get('/images/large/:image_id', commonController.getLargeProfileImage);
 
 module.exports = router;

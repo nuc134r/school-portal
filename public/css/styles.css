@@ -1,3 +1,13 @@
+.settings-avatar-image {
+    border-radius: 50%;
+    height: 128px;
+    width: 128px;
+    object-fit: cover;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
 .loading-text {
     width: 100%;
     text-align: center;

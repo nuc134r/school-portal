@@ -5,13 +5,17 @@ const connection = database.getConnection();
 
 const helper = require('./repository-helper')(connection, 'user');
 
+module.exports.updateImageId = (req, imageId) => {
+    return helper.update(req.school_context.user.id, { image_id: imageId });
+}
+
 module.exports.create = (options) => helper.create(options)
     .then(user => {
         switch (user.type) {
             case "student":
                 return connection.models.student.create({ userId: user.id, groupId: options.groupId });
             case "teacher":
-                return connection.models.teacher.create({ userId: user.id, canCreateNews: options.canCreateNews, canEditTimetable: options.canEditTimetable});
+                return connection.models.teacher.create({ userId: user.id, canCreateNews: options.canCreateNews, canEditTimetable: options.canEditTimetable });
         }
     });
 
@@ -23,25 +27,25 @@ module.exports.get = (options) => helper.get(options)
                 where: { userId: user.id },
                 include: connection.models.group
             })
-            .then(student => {
-                user.student = {
-                    group: student.group.name,
-                    groupId: student.group.id
-                };
+                .then(student => {
+                    user.student = {
+                        group: student.group.name,
+                        groupId: student.group.id
+                    };
 
-                return user;
-            })
+                    return user;
+                })
         }
 
         if (user.type == 'teacher') {
             return connection.models["teacher"].find({
                 where: { userId: user.id }
             })
-            .then(teacher => {
-                user.teacher = teacher;
+                .then(teacher => {
+                    user.teacher = teacher;
 
-                return user;
-            })
+                    return user;
+                })
         }
     });
 
@@ -55,20 +59,20 @@ module.exports.update = (id, options) => {
             if (user.type == 'student') {
                 let promise = connection.models["student"]
                     .update(
-                        { groupId: update_values.groupId },
-                        { where: { userId: user.id } }
+                    { groupId: update_values.groupId },
+                    { where: { userId: user.id } }
                     );
-                
+
                 return promise;
             }
 
             if (user.type == 'teacher') {
                 let promise = connection.models["teacher"]
                     .update(
-                        { canCreateNews: update_values.canCreateNews, canEditTimetable: update_values.canEditTimetable },
-                        { where: { userId: user.id } }
+                    { canCreateNews: update_values.canCreateNews, canEditTimetable: update_values.canEditTimetable },
+                    { where: { userId: user.id } }
                     );
-                
+
                 return promise;
             }
         });

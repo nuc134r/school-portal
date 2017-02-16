@@ -52,7 +52,7 @@ html
 
       .mdl-layout__drawer.mdl-layout__drawer-custom
         .mdl-user-box(class=[('mdl-color--' + theme.primary + '-600')], style='position: relative;')
-          img.mdl-user-avatar(src='/serg.jpg')
+          img.mdl-user-avatar(src=user.getImageUrls().small)
           h6.mdl-user-name #{user.name.first} #{user.name.last}
           if layout == 'student'
             h6.mdl-user-group #{(user.student && user.student.group)}
