@@ -1,15 +1,17 @@
 'use strict';
 
-const helper = require('../../src/database/models/model-helper');
 const Sequelize = require('sequelize');
 
 module.exports = {
     up: function (queryInterface, Sequelize) {
         return [
             queryInterface.changeColumn(
-                'specialties',
-                'shortname',
-                helper.nonEmptyString(32)
+                'news',
+                'text',
+                {
+                    type: Sequelize.TEXT,
+                    allowNull: false
+                }
             )
         ];
     },
@@ -17,10 +19,10 @@ module.exports = {
     down: function (queryInterface, Sequelize) {
         return [
             queryInterface.changeColumn(
-                'specialties',
-                'shortname',
+                'news',
+                'text',
                 {
-                    type: Sequelize.STRING(32)
+                    type: Sequelize.TEXT
                 }
             )
         ];

@@ -6,7 +6,7 @@ const helper = require('./model-helper');
 function Init(sequelize) {
     let Entity = sequelize.define('new', {
         title: helper.nonEmptyString(128, "заголовок"),
-        text: helper.nonEmptyString(null, "текст"),
+        text: Sequelize.TEXT,
         isImportant: Sequelize.BOOLEAN,
         forAllGroups: Sequelize.BOOLEAN,
         forAllTeachers: Sequelize.BOOLEAN

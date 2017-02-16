@@ -20,6 +20,6 @@ include ../parts/mixins
         i.material-icons.mdl-card-icon &#xE0E5;
         | Новости
     .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
-      
+      +NewsList(lists.news)
     .mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='newsfeed', onclick="return ajax(this)") все новости

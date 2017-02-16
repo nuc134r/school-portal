@@ -55,6 +55,19 @@ mixin RadioButton(placeholder, name, id, checked, style)
     input.mdl-radio__button(id=(id + '_radio'), type='radio', name=name, value=id, checked=checked)
     span.mdl-radio__label #{placeholder}
 
+mixin NewsList(news)
+  if news.length
+    each entry in news
+      button.mdl-button.mdl-button-custom.mdl-js-button.mdl-js-ripple-effect
+        p.mdl-button-custom--right 17 фев
+        p.mdl-button-custom--header #{entry.title}
+        p.mdl-button-custom--right 
+        p.mdl-button-custom--text 
+  else
+    div(style="text-align: center; padding: 15px 15px 10px 15px; opacity: .5;")
+      //img(src="/bell-icon.png" style="margin-bottom: 10px;")
+      div новостей нет
+
 mixin LessonList(lessons)
   if lessons.length
     each lesson in lessons
