@@ -1,7 +1,7 @@
 include ../parts/mixins
 
 .mdl-grid
-  - cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 4, o: 4 } }
+  - cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 8, o: 2 } }
   
   if query_params.error
     +MessageCard(cardSettings, 'Ошибка при создании новости', query_params.error)
@@ -9,4 +9,19 @@ include ../parts/mixins
   - var post_url = '/t/' + options.entityNamePlural + (edit_mode ? ('/' + query_params.id + '/edit') : '/create')
   +Form(cardSettings, 'createnewform', post_url)
     +InputField('Заголовок', 'title', true)
-    +InputField('Текст', 'text')
+    //+InputField('Текст', 'text')
+    #editor
+
+
+
+// https://quilljs.com/docs/modules/toolbar/
+
+
+
+script.
+  var quill = new Quill('#editor', {
+    /*modules: {
+      toolbar: '#toolbar'
+    },*/
+    theme: 'snow'
+  }); 
