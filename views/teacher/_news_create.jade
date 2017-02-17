@@ -1,12 +1,56 @@
 include ../parts/mixins
 
 .mdl-grid
-  - cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 4, o: 4 } }
+  - cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 10, o: 1 } }
   
   if query_params.error
     +MessageCard(cardSettings, 'Ошибка при создании новости', query_params.error)
   
   - var post_url = '/t/' + options.entityNamePlural + (edit_mode ? ('/' + query_params.id + '/edit') : '/create')
-  +Form(cardSettings, 'createnewform', post_url)
-    +InputField('Заголовок', 'title', true)
-    +InputField('Текст', 'text')
+  +Card(cardSettings, '')
+    .mdl-card__supporting-text
+      form(action=post_url, method='POST', style='padding: 5px 25px', id='createnewform')
+        +InputField('Заголовок', 'title', true)
+        #editor(style='min-height: 200px')
+        input#delta-data(name='text', style='display:none;')
+        h5 Получатели:
+
+        - let selectedGroups = query_params.groups ? query_params.groups.map(_ => _.id) : [];
+        +ListSelector({
+          name: 'group', 
+          header: 'Группы', 
+          list: lists.groups,
+          isItemSelected: (item) => selectedGroups.indexOf(item.id) != -1,
+          getter: _ => _.name, 
+          style: 'width: 40%; display: inline-block; vertical-align:top;'})
+        
+        - let selectedTeachers = query_params.teachers ? query_params.teachers.map(_ => _.id) : [];
+        +ListSelector({
+          name: 'teacher', 
+          header: 'Преподаватели', 
+          list: lists.teachers,
+          isItemSelected: (item) => selectedTeachers.indexOf(item.id) != -1,
+          getter: _ => _.user.getDisplayName(), 
+          style: 'width: 40%; display: inline-block; vertical-align:top;'})
+
+
+        
+
+
+
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="post_form()") сохранить
+
+script.
+  var quill = new Quill('#editor', {
+    theme: 'snow'
+  }); 
+
+  function post_form() {
+    document.getElementById('delta-data').value = JSON.stringify(quill.getContents());
+    document.getElementById('createnewform').submit();
+  }
+
+if query_params.text
+  script.
+    quill.setContents(!{query_params.text});

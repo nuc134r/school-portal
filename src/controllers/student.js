@@ -2,7 +2,10 @@
 
 const LessonsRepository = require('../repository/lessons');
 const TimingsRepository = require('../repository/timings');
+const NewsRepository = require('../repository/news');
 const Time = require('../repository/time');
+
+const QuillRenderer = require('quill-render');
 
 const utils = require('../utils');
 
@@ -57,7 +60,8 @@ module.exports.getTimetablePage = (req, res) => {
 module.exports.getDashboardPage = (req, res) => {
 
     let promises = {
-        lessons: () => LessonsRepository.getDayInfoLessons(req.school_context.user.student.groupId)
+        lessons: () => LessonsRepository.getDayInfoLessons(req.school_context.user.student.groupId),
+        news: () => NewsRepository.getNewsForStudent(req.school_context.user)
     }
 
     let processors = {

@@ -30,6 +30,12 @@ mixin Toggle(id, text, style, checked)
     input.mdl-switch__input(id=(id + 'field'), name=id, type='checkbox', checked=checked, value=1)
     span.mdl-switch__label #{text}
 
+mixin Checkbox(id, text, style, checked)
+  label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for=(id + 'field'), style=style)
+    input.mdl-checkbox__input(id=(id + 'field'), name=id, type='checkbox', checked=checked, value=1)
+    span.mdl-checkbox__label #{text}
+
+
 mixin ComboBox(placeholder, id, items, allowNull, style, preset_value)
   - var preset_value = preset_value || query_params[id];
 
@@ -54,6 +60,19 @@ mixin RadioButton(placeholder, name, id, checked, style)
   label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect(for=(id + '_radio'), style=style)
     input.mdl-radio__button(id=(id + '_radio'), type='radio', name=name, value=id, checked=checked)
     span.mdl-radio__label #{placeholder}
+
+mixin NewsList(news)
+  if news.length
+    each entry in news
+      button.mdl-button.mdl-button-custom.mdl-js-button.mdl-js-ripple-effect
+        p.mdl-button-custom--right 17 фев
+        p.mdl-button-custom--header #{entry.title}
+        p.mdl-button-custom--right 
+        p.mdl-button-custom--text 
+  else
+    div(style="text-align: center; padding: 15px 15px 10px 15px; opacity: .5;")
+      //img(src="/bell-icon.png" style="margin-bottom: 10px;")
+      div новостей нет
 
 mixin LessonList(lessons)
   if lessons.length
@@ -180,3 +199,12 @@ mixin Table(options, definition)
         valueNames: !{JSON.stringify(definition.columns.map(function (column) { return column.field + '-value' }))}
       };
       var list = new List('table-list', options);
+
+
+
+mixin ListSelector(options)
+  div(style=(options.style || ''))
+    h6 #{options.header}
+    div(style='padding-left: 18px; margin-left: -18px;')
+      each entry in options.list
+        +Checkbox((options.name + '_' + entry.id), options.getter(entry), '', options.isItemSelected(entry))
