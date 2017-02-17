@@ -38,6 +38,7 @@ module.exports.create = (options) => {
 }
 
 module.exports.browse = helper.browse;
+
 module.exports.get = (options) => {
     return connection
         .models['new']
@@ -51,6 +52,7 @@ module.exports.get = (options) => {
 };
 
 module.exports.delete = helper.delete;
+
 module.exports.update = function(id, options) {
     return helper
         .update(id, options)
@@ -87,7 +89,24 @@ module.exports.update = function(id, options) {
         });
 }
 
+module.exports.getNewsForStudent = (user) => {
+    return connection
+        .models['new']
+        .findAll({
+            include: [
+                connection.models['group']
+            ]
+        })
+        .then(news => {
+            let result = [];
 
-module.exports.getNewsForStudent = (student) => {
-    return helper.browse();
+            for(let i = 0; i < news.length; i++) {
+                let newEntry = news[i];
+                if (newEntry.groups.filter(_ => _.id == user.student.groupId).length) {
+                    result.push(newEntry);
+                }
+            }
+
+            return result;
+        })
 }
