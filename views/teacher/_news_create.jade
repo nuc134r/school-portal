@@ -15,7 +15,7 @@ include ../parts/mixins
         input#delta-data(name='text', style='display:none;')
         h5 Получатели:
 
-        - let selectedGroups = query_params.groups ? query_params.groups.map(_ => _.id) : [];
+        - var selectedGroups = query_params.groups ? query_params.groups.map(_ => _.id) : [];
         +ListSelector({
           name: 'group', 
           header: 'Группы', 
@@ -24,7 +24,7 @@ include ../parts/mixins
           getter: _ => _.name, 
           style: 'width: 40%; display: inline-block; vertical-align:top;'})
         
-        - let selectedTeachers = query_params.teachers ? query_params.teachers.map(_ => _.id) : [];
+        - var selectedTeachers = query_params.teachers ? query_params.teachers.map(_ => _.id) : [];
         +ListSelector({
           name: 'teacher', 
           header: 'Преподаватели', 
