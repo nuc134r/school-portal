@@ -21,7 +21,11 @@ module.exports.NewsController = helper.generateContoller({
     displayNameGenetive: 'новости',
     displayNameAccusative: 'новость',
     displayNameIsMasculine: false,
-    repository: NewsRepository
+    repository: NewsRepository,
+    lists: {
+        groups: GroupsRepository.browse,
+        teachers: TeachersRepository.browse
+    }
 });
 
 module.exports.getLessonsEditorPage = (req, res) => {

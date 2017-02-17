@@ -30,6 +30,12 @@ mixin Toggle(id, text, style, checked)
     input.mdl-switch__input(id=(id + 'field'), name=id, type='checkbox', checked=checked, value=1)
     span.mdl-switch__label #{text}
 
+mixin Checkbox(id, text, style, checked)
+  label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for=(id + 'field'), style=style)
+    input.mdl-checkbox__input(id=(id + 'field'), name=id, type='checkbox', checked=checked, value=1)
+    span.mdl-checkbox__label #{text}
+
+
 mixin ComboBox(placeholder, id, items, allowNull, style, preset_value)
   - var preset_value = preset_value || query_params[id];
 
@@ -193,3 +199,12 @@ mixin Table(options, definition)
         valueNames: !{JSON.stringify(definition.columns.map(function (column) { return column.field + '-value' }))}
       };
       var list = new List('table-list', options);
+
+
+
+mixin ListSelector(options)
+  div(style=(options.style || ''))
+    h6 #{options.header}
+    div(style='padding-left: 18px; margin-left: -18px;')
+      each entry in options.list
+        +Checkbox((options.name + '_' + entry.id), options.getter(entry), '', options.isItemSelected(entry))

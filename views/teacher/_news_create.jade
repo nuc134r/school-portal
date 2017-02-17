@@ -13,6 +13,31 @@ include ../parts/mixins
         +InputField('Заголовок', 'title', true)
         #editor(style='min-height: 200px')
         input#delta-data(name='text', style='display:none;')
+        h5 Получатели:
+
+        - let selectedGroups = query_params.groups ? query_params.groups.map(_ => _.id) : [];
+        +ListSelector({
+          name: 'group', 
+          header: 'Группы', 
+          list: lists.groups,
+          isItemSelected: (item) => selectedGroups.indexOf(item.id) != -1,
+          getter: _ => _.name, 
+          style: 'width: 40%; display: inline-block; vertical-align:top;'})
+        
+        - let selectedTeachers = query_params.teachers ? query_params.teachers.map(_ => _.id) : [];
+        +ListSelector({
+          name: 'teacher', 
+          header: 'Преподаватели', 
+          list: lists.teachers,
+          isItemSelected: (item) => selectedTeachers.indexOf(item.id) != -1,
+          getter: _ => _.user.getDisplayName(), 
+          style: 'width: 40%; display: inline-block; vertical-align:top;'})
+
+
+        
+
+
+
     .mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="post_form()") сохранить
 
