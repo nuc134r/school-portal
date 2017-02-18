@@ -40,6 +40,26 @@
             "externalConsole": false,
             "sourceMaps": false,
             "outDir": null
+        },
+        {
+            "name": "demo db",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/tools/demo-db.js",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
+            "runtimeExecutable": null,
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "externalConsole": false,
+            "sourceMaps": false,
+            "outDir": null
         }
     ]
 }

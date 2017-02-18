@@ -60,13 +60,18 @@
     margin-bottom: 0px;
 }
 
+.mdl-button-custom--header-mini {
+    margin-bottom: 0px;
+    opacity: 1
+}
+
 .mdl-button-custom--text {
     opacity: .6;
     margin-bottom: 0px;
 }
 
 .mdl-button-custom--right {
-    opacity: .6;
+    opacity: .4;
     margin-bottom: 0px;
     float: right;
     font-size: 13px;

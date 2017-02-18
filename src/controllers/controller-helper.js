@@ -167,7 +167,7 @@ function create(user_mode, urlPrefix) {
                     let entity_id = req.params.id;
 
                     let requestOptions = options.onProcessForm
-                        ? options.onProcessForm(req.body)
+                        ? options.onProcessForm(req.body, req, true)
                         : req.body;
 
                     options.repository.update(entity_id, requestOptions)

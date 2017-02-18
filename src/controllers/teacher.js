@@ -26,8 +26,11 @@ module.exports.NewsController = helper.generateContoller({
         groups: GroupsRepository.browse,
         teachers: TeachersRepository.browse
     },
-    onProcessForm: (formData, req) => {
-        formData.userId = req.school_context.user.id;
+    onProcessForm: (formData, req, isEdit) => {
+        if (!isEdit)
+        {
+            formData.userId = req.school_context.user.id;
+        }
         return formData;
     }
 });
