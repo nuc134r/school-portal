@@ -29,7 +29,7 @@ module.exports.UsersContoller = helper.generateContoller({
             return { text: item.name, value: item.id }
         }
     },
-    onProcessForm: (formData) => {
+    onProcessForm: (formData, req) => {
         return {
             firstname: formData.firstname,
             middlename: formData.middlename,

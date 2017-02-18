@@ -65,7 +65,7 @@ mixin NewsList(news)
   if news.length
     each entry in news
       button.mdl-button.mdl-button-custom.mdl-js-button.mdl-js-ripple-effect
-        p.mdl-button-custom--right 17 фев
+        p.mdl-button-custom--right #{entry.createdDate}
         p.mdl-button-custom--header #{entry.title}
         p.mdl-button-custom--right 
         p.mdl-button-custom--text 
@@ -177,9 +177,10 @@ mixin Table(options, definition)
             each item in definition.items
               tr
                 each column in definition.columns
+                  - var columnData = column.valueGetter ? column.valueGetter(item) : item[column.field]
                   - var columnClasses0 = [column.field + '-value'];
                   - if (!column.numeric) columnClasses0.push('mdl-data-table__cell--non-numeric');
-                  - var text_data = (column.converter ?  column.converter(item[column.field]) : item[column.field]);
+                  - var text_data = (column.converter ?  column.converter(columnData) : columnData);
                   - if (text_data.length > 50) { text_data = text_data.substring(0, 35).trim() + '..'; }
                   td(class=columnClasses0) #{ text_data }
                 td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: right;')

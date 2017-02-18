@@ -8,10 +8,11 @@ include ../parts/mixins
 - title = { title: 'Заголовок',  field: 'title' }
 - text = { title: 'Текст',  field: 'text' }
 - createdAt = { title: 'Дата создания',  field: 'createdAt' }
+- author = { title: 'Автор', field: 'author', valueGetter: _ => _.user.getDisplayName() }
 
 - tableDefinition = {}
 - tableDefinition.items = list_page_items
-- tableDefinition.columns = [title, createdAt]
+- tableDefinition.columns = [title, author, createdAt]
 
 
 .mdl-grid

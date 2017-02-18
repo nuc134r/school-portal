@@ -192,7 +192,7 @@ function create(user_mode, urlPrefix) {
                 create: (req, res) => {
 
                     let requestOptions = options.onProcessForm
-                        ? options.onProcessForm(req.body)
+                        ? options.onProcessForm(req.body, req)
                         : req.body;
 
                     options.repository.create(requestOptions)

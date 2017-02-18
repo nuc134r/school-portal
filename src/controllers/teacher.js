@@ -25,6 +25,10 @@ module.exports.NewsController = helper.generateContoller({
     lists: {
         groups: GroupsRepository.browse,
         teachers: TeachersRepository.browse
+    },
+    onProcessForm: (formData, req) => {
+        formData.userId = req.school_context.user.id;
+        return formData;
     }
 });
 
