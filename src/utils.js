@@ -1,6 +1,19 @@
 'use strict';
 
 module.exports = {
+    getArrayFromFormData: (formData, idKey) => {
+        let result = [];
+
+        for (let key in formData) {
+            if (~key.indexOf(idKey + '_')) {
+                let id = key.split(idKey + '_')[1];
+                
+                result.push(id);
+            }
+        }
+
+        return result;
+    },
 
     capitalize: (s) => s.charAt(0).toUpperCase() + s.slice(1),
 

@@ -1,7 +1,7 @@
 include ../parts/mixins
 
 .mdl-grid
-  - cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 4, o: 4 } }
+  - cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 8, o: 2 } }
   
   if query_params.error
     +MessageCard(cardSettings, 'Ошибка при создании пользователя', query_params.error)
@@ -32,10 +32,27 @@ include ../parts/mixins
     #student-fields-wrapper(style= (selected_type=='student') ? '' : 'display: none;')
       +ComboBox('Группа', 'groupId', lists.groups, false, null, query_params.student ? query_params.student.groupId : null)
     #teacher-fields-wrapper(style= (selected_type=='teacher') ? '' : 'display: none;')
+      h5 Права
       +Toggle('canCreateNews', 'Может создавать новости', '', query_params.teacher ? query_params.teacher.canCreateNews : false)
       br
       br
       +Toggle('canEditTimetable', 'Может править расписание', '', query_params.teacher ? query_params.teacher.canEditTimetable : false)
+      br
+      br
+      h5 Описание
+      h7 Тут можно написать об образовании, опыте и личных качествах преподавателя. Эти данные отразятся на странице его профиля.
+      +InputField('Описание', 'description')
+      br
+      br
+      h5(style='margin-top: 0px;') Дисциплины
+      h7 Эти дисциплины будут отображаться при выборе преподавателя для проведения занятия, а так же по этим дисциплинам преподаватель сможет создавать задания группам.
+      - var selectedSubjects = query_params.teacher ? query_params.teacher.subjects.map(_ => _.id) : [];
+      +ListSelector({
+        name: 'subject', 
+        list: lists.subjects,
+        isItemSelected: (item) => selectedSubjects.indexOf(item.id) != -1,
+        getter: _ => _.name
+        })
     #admin-fields-wrapper(style= (selected_type=='admin') ? '' : 'display: none;')
 
 script.

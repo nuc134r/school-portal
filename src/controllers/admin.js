@@ -22,7 +22,8 @@ module.exports.UsersContoller = helper.generateContoller({
     displayNameIsMasculine: true,
     repository: UsersRepository,
     lists: {
-        groups: GroupsRepository.browse
+        groups: GroupsRepository.browse,
+        subjects: SubjectsRepository.browse
     },
     listProcessors: {
         groups: (item) => {
@@ -30,19 +31,9 @@ module.exports.UsersContoller = helper.generateContoller({
         }
     },
     onProcessForm: (formData, req) => {
-        return {
-            firstname: formData.firstname,
-            middlename: formData.middlename,
-            lastname: formData.lastname,
-            login: formData.login,
-            password: formData.user_type == 'admin'
-                ? config.default_admin_password
-                : config.default_user_password,
-            type: formData.user_type,
-            groupId: formData.groupId,
-            canCreateNews: !!formData.canCreateNews,
-            canEditTimetable: !!formData.canEditTimetable
-        }
+        formData.type = formData.user_type;
+        formData.password = formData.user_type == 'admin' ? config.default_admin_password : config.default_user_password;
+        return formData;
     }
 });
 

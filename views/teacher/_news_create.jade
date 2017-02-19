@@ -1,7 +1,7 @@
 include ../parts/mixins
 
 .mdl-grid
-  - cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 10, o: 1 } }
+  - cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 10, o: 1 } }
   
   if query_params.error
     +MessageCard(cardSettings, 'Ошибка при создании новости', query_params.error)
@@ -15,23 +15,26 @@ include ../parts/mixins
         input#delta-data(name='text', style='display:none;')
         h5 Получатели:
 
-        - var selectedGroups = query_params.groups ? query_params.groups.map(_ => _.id) : [];
-        +ListSelector({
-          name: 'group', 
-          header: 'Группы', 
-          list: lists.groups,
-          isItemSelected: (item) => selectedGroups.indexOf(item.id) != -1,
-          getter: _ => _.name, 
-          style: 'width: 40%; display: inline-block; vertical-align:top;'})
-        
-        - var selectedTeachers = query_params.teachers ? query_params.teachers.map(_ => _.id) : [];
-        +ListSelector({
-          name: 'teacher', 
-          header: 'Преподаватели', 
-          list: lists.teachers,
-          isItemSelected: (item) => selectedTeachers.indexOf(item.id) != -1,
-          getter: _ => _.user.getDisplayName(), 
-          style: 'width: 40%; display: inline-block; vertical-align:top;'})
+        .mdl-grid
+          .mdl-cell--4-col-phone.mdl-cell--8-col-tablet.mdl-cell--6-col-desktop
+            - var selectedGroups = query_params.groups ? query_params.groups.map(_ => _.id) : [];
+            +ListSelector({
+              name: 'group', 
+              header: 'Группы', 
+              list: lists.groups,
+              isItemSelected: (item) => selectedGroups.indexOf(item.id) != -1,
+              getter: _ => _.name
+              })
+
+          .mdl-cell--4-col-phone.mdl-cell--8-col-tablet.mdl-cell--6-col-desktop
+            - var selectedTeachers = query_params.teachers ? query_params.teachers.map(_ => _.id) : [];
+            +ListSelector({
+              name: 'teacher', 
+              header: 'Преподаватели', 
+              list: lists.teachers,
+              isItemSelected: (item) => selectedTeachers.indexOf(item.id) != -1,
+              getter: _ => _.user.getDisplayName()
+              })
 
 
         
