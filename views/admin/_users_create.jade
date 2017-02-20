@@ -30,7 +30,14 @@ include ../parts/mixins
       br
       br
     #student-fields-wrapper(style= (selected_type=='student') ? '' : 'display: none;')
-      +ComboBox('Группа', 'groupId', lists.groups, false, null, query_params.student ? query_params.student.groupId : null)
+      h5 Группа
+      if lists.groups.length
+        +ComboBox('Группа', 'groupId', lists.groups, false, null, query_params.student ? query_params.student.groupId : null)
+      else
+        h7 
+          b 
+            | #{"Ни одной группы ещё не создано. "}
+            a(href='/a/groups', onclick='ajax(this)') Перейти к созданию групп
     #teacher-fields-wrapper(style= (selected_type=='teacher') ? '' : 'display: none;')
       h5 Права
       +Toggle('canCreateNews', 'Может создавать новости', '', query_params.teacher ? query_params.teacher.canCreateNews : false)
@@ -45,14 +52,22 @@ include ../parts/mixins
       br
       br
       h5(style='margin-top: 0px;') Дисциплины
-      h7 Эти дисциплины будут отображаться при выборе преподавателя для проведения занятия, а так же по этим дисциплинам преподаватель сможет создавать задания группам.
+      h7 Эти предметы будут отображаться при выборе преподавателя для проведения занятия; по этим предметам преподаватель сможет создавать задания.
       - var selectedSubjects = query_params.teacher ? query_params.teacher.subjects.map(_ => _.id) : [];
-      +ListSelector({
-        name: 'subject', 
-        list: lists.subjects,
-        isItemSelected: (item) => selectedSubjects.indexOf(item.id) != -1,
-        getter: _ => _.name
-        })
+      if lists.subjects.length
+        +ListSelector({
+            name: 'subject', 
+            list: lists.subjects,
+            isItemSelected: (item) => selectedSubjects.indexOf(item.id) != -1,
+            getter: _ => _.name
+            })
+      else
+        br
+        br
+        h7 
+          b 
+            | #{"Ни одного предмета ещё не создано. "}
+            a(href='/a/subjects', onclick='ajax(this)') Перейти к созданию предметов
     #admin-fields-wrapper(style= (selected_type=='admin') ? '' : 'display: none;')
 
 script.

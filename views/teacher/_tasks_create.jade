@@ -1,0 +1,60 @@
+include ../parts/mixins
+
+.mdl-grid
+  - cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 10, o: 1 } }
+  
+  if query_params.error
+    +MessageCard(cardSettings, 'Ошибка при создании задания', query_params.error)
+  
+  - var post_url = '/t/' + options.entityNamePlural + (edit_mode ? ('/' + query_params.id + '/edit') : '/create')
+  +Card(cardSettings, '')
+    .mdl-card__supporting-text
+      form(action=post_url, method='POST', style='padding: 5px 25px', id='createtaskform')
+        +InputField('Имя', 'name', true)
+        br
+        br
+        +Toggle('isRemote', 'Задание можно отправить удалённо', '', query_params.isRemote)
+        br
+        br
+
+        +Toggle('hasDueDate', 'Дата сдачи', '', query_params.hasDueDate)
+        br
+        br
+        input(type='date', 
+          name='dueDate', 
+          style='position: absolute; left: 190px; top: 140px; z-index: 1;',
+          value=(query_params && query_params.dueDate ? query_params.getDueDate() : ''))
+
+        +ComboBox('Предмет', 'subjectId', lists.subjects)
+
+        h5 Формулировка задания
+        #editor(style='min-height: 200px') 
+        input#delta-data(name='text', style='display:none;')
+        
+        br
+        br
+        - var selectedGroups = query_params.groups ? query_params.groups.map(_ => _.id) : [];
+        +ListSelector({
+          name: 'group', 
+          header: 'Группы', 
+          list: lists.groups,
+          isItemSelected: (item) => selectedGroups.indexOf(item.id) != -1,
+          getter: _ => _.name
+          })
+
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="post_form()") сохранить
+
+script.
+  var quill = new Quill('#editor', {
+    theme: 'snow'
+  }); 
+
+  function post_form() {
+    document.getElementById('delta-data').value = JSON.stringify(quill.getContents());
+    document.getElementById('createtaskform').submit();
+  }
+
+if query_params.text
+  script.
+    quill.setContents(!{query_params.text});

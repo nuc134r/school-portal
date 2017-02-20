@@ -16,7 +16,7 @@ function Init(sequelize) {
         });
 
     Group.belongsTo(sequelize.models.specialty, { 
-        foreignKey: { allowNull: false }, 
+        foreignKey: { allowNull: true }, 
         onDelete: 'RESTRICT'
     });
 }
