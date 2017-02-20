@@ -10,8 +10,40 @@ const TimingsRepository = require('../repository/timings');
 const TeachersRepository = require('../repository/teachers');
 const TimeRepository = require('../repository/time');
 const NewsRepository = require('../repository/news');
+const TasksRepository = require('../repository/tasks');
 
 const helper = require('./controller-helper')('teacher', 't');
+
+module.exports.TasksController = helper.generateContoller({
+    entityName: 'task',
+    entityNamePlural: 'tasks',
+    displayName: 'задание',
+    displayNamePlural: 'задания',
+    displayNameGenetive: 'задания',
+    displayNameAccusative: 'задание',
+    displayNameIsNeutral: true,
+    repository: TasksRepository,
+    lists: {
+        groups: GroupsRepository.browse,
+        subjects: (req, res) => {
+            return SubjectsRepository.browseMySubjects(req.school_context.user.teacher.id).then(result => result.map(_ => {
+                return { text: _.name, value: _.id }
+            }))
+        }
+    },
+    onProcessForm: (formData, req, isEdit) => {
+        if (!isEdit) {
+            formData.userId = req.school_context.user.id;
+        }
+        if (formData.hasDueDate) {
+            formData.dueDate = new Date(formData.dueDate);
+        }
+        else {
+            formData.dueDate = new Date();
+        }
+        return formData;
+    }
+});
 
 module.exports.NewsController = helper.generateContoller({
     entityName: 'new',
@@ -25,6 +57,12 @@ module.exports.NewsController = helper.generateContoller({
     lists: {
         groups: GroupsRepository.browse,
         teachers: TeachersRepository.browse
+    },
+    onProcessForm: (formData, req, isEdit) => {
+        if (!isEdit) {
+            formData.userId = req.school_context.user.id;
+        }
+        return formData;
     }
 });
 
@@ -46,11 +84,11 @@ module.exports.getLessonsEditorPage = (req, res) => {
                 title: 'Изменение расписания'
             };
 
-            helper.render(req, res, { 
+            helper.render(req, res, {
                 lists,
                 week: TimeRepository.getWeekInfo(),
                 weekDays: TimeRepository.getAcademicWeekDays()
-             }, renderOptions);
+            }, renderOptions);
         })
         .catch(err => {
             console.error(err);
@@ -100,7 +138,7 @@ module.exports.getDashboardPage = (req, res) => {
         title: 'Сегодня'
     };
 
-    helper.render(req, res, { }, renderOptions);
+    helper.render(req, res, {}, renderOptions);
 }
 
 module.exports.saveLessons = (req, res) => {

@@ -3,6 +3,8 @@
 const database = require('../database/database');
 const connection = database.getConnection();
 
+const utils = require('../utils');
+
 const helper = require('./repository-helper')(connection, 'user');
 
 module.exports.updateImageId = (req, imageId) => {
@@ -15,7 +17,15 @@ module.exports.create = (options) => helper.create(options)
             case "student":
                 return connection.models.student.create({ userId: user.id, groupId: options.groupId });
             case "teacher":
-                return connection.models.teacher.create({ userId: user.id, canCreateNews: options.canCreateNews, canEditTimetable: options.canEditTimetable });
+                return connection.models.teacher.create({ userId: user.id, canCreateNews: options.canCreateNews, canEditTimetable: options.canEditTimetable })
+                    .then(teacher => {
+                        let subjectIds = utils.getArrayFromFormData(options, 'subject');
+
+                        return Promise.resolve()
+                            .then(connection.models['teachers_subjects'].destroy({ where: { teacherId: teacher.id } }))
+                            .then(connection.models['teachers_subjects'].bulkCreate(subjectIds.map(function (id) { return { subjectId: id, teacherId: teacher.id } })))
+                            .then(() => teacher);
+                    });
         }
     });
 
@@ -39,6 +49,7 @@ module.exports.get = (options) => helper.get(options)
 
         if (user.type == 'teacher') {
             return connection.models["teacher"].find({
+                include: connection.models["subject"],
                 where: { userId: user.id }
             })
                 .then(teacher => {
@@ -50,30 +61,25 @@ module.exports.get = (options) => helper.get(options)
     });
 
 module.exports.update = (id, options) => {
-    let update_values = options;
-
     return helper.update(id, options)
         .then(result => {
             let user = result[1][0];
 
             if (user.type == 'student') {
-                let promise = connection.models["student"]
-                    .update(
-                    { groupId: update_values.groupId },
-                    { where: { userId: user.id } }
-                    );
-
-                return promise;
+                return connection.models["student"]
+                    .update({ groupId: options.groupId }, { where: { userId: user.id } });
             }
 
             if (user.type == 'teacher') {
-                let promise = connection.models["teacher"]
-                    .update(
-                    { canCreateNews: update_values.canCreateNews, canEditTimetable: update_values.canEditTimetable },
-                    { where: { userId: user.id } }
-                    );
+                return connection.models["teacher"]
+                    .update({ canCreateNews: options.canCreateNews, canEditTimetable: options.canEditTimetable, description: options.description }, { where: { userId: user.id }, returning: true })
+                    .then(result => {
+                        let teacher = result[1][0];
+                        let subjectIds = utils.getArrayFromFormData(options, 'subject');
 
-                return promise;
+                        return connection.models['teachers_subjects'].destroy({ where: { teacherId: teacher.id } })
+                            .then(() => connection.models['teachers_subjects'].bulkCreate(subjectIds.map(function (id) { return { subjectId: id, teacherId: teacher.id } })))
+                    });
             }
         });
 };

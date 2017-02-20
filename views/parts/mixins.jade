@@ -9,7 +9,7 @@ mixin MessageCard(cardSettings, title, message, icon, style)
         | !{ message }
 
 mixin MvcMessages(createdMessage, deletedMessage, editedMessage, cardSettingsParam)
-  - var styles = null && 'left: 50%; transform: translateX(-50%);';
+  //- var styles = null || 'left: 50%; transform: translateX(-50%);';
   - var cardSettings = cardSettingsParam || {desktop: {s:4, o: 4}};
   if query_params.message === 'created'
     +MessageCard(cardSettings, createdMessage, null, 'done', styles)
@@ -33,8 +33,7 @@ mixin Toggle(id, text, style, checked)
 mixin Checkbox(id, text, style, checked)
   label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for=(id + 'field'), style=style)
     input.mdl-checkbox__input(id=(id + 'field'), name=id, type='checkbox', checked=checked, value=1)
-    span.mdl-checkbox__label #{text}
-
+    span.mdl-checkbox__label(style='white-space: nowrap;') #{text}
 
 mixin ComboBox(placeholder, id, items, allowNull, style, preset_value)
   - var preset_value = preset_value || query_params[id];
@@ -43,8 +42,9 @@ mixin ComboBox(placeholder, id, items, allowNull, style, preset_value)
     select.mdl-selectfield__select(id=(id + 'field'), name=id)
       if allowNull
         option
-      for item in items
-        option(value=item.value, selected=(preset_value == item.value)) #{ item.text }
+      if items && items.length
+        for item in items
+          option(value=item.value, selected=(preset_value == item.value)) #{ item.text }
     label.mdl-selectfield__label(for=(id + 'field')) #{ placeholder }
 
 mixin InputField(placeholder, id, autofocus)
@@ -65,8 +65,8 @@ mixin NewsList(news)
   if news.length
     each entry in news
       button.mdl-button.mdl-button-custom.mdl-js-button.mdl-js-ripple-effect
-        p.mdl-button-custom--right 17 фев
-        p.mdl-button-custom--header #{entry.title}
+        p.mdl-button-custom--right #{entry.createdDate}
+        p.mdl-button-custom--header-mini #{entry.title}
         p.mdl-button-custom--right 
         p.mdl-button-custom--text 
   else
@@ -177,9 +177,10 @@ mixin Table(options, definition)
             each item in definition.items
               tr
                 each column in definition.columns
+                  - var columnData = column.valueGetter ? column.valueGetter(item) : item[column.field]
                   - var columnClasses0 = [column.field + '-value'];
                   - if (!column.numeric) columnClasses0.push('mdl-data-table__cell--non-numeric');
-                  - var text_data = (column.converter ?  column.converter(item[column.field]) : item[column.field]);
+                  - var text_data = (column.converter ?  column.converter(columnData) : columnData) || '';
                   - if (text_data.length > 50) { text_data = text_data.substring(0, 35).trim() + '..'; }
                   td(class=columnClasses0) #{ text_data }
                 td.mdl-data-table__cell--non-numeric(style='color: #EF5350; text-align: right;')
@@ -191,7 +192,7 @@ mixin Table(options, definition)
                     a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href= '/' + entity.urlPrefix + '/' + entity.entityNamePlural + '/' + item.id + '/edit')
                       i.material-icons edit
   else
-    +MessageCard(cardSettings, 'Этот список пуст', 'Нажмите кнопку ( + ) в нижнем правом углу экрана, чтобы создать новый элемент.', '&#xE88E;', 'left: 50%; transform: translateX(-50%); max-width: 500px;')
+    +MessageCard({ desktop: { s: 6, o: 3 }, tablet: { s: 6, o: 1 }, phone: { s: 4 } }, 'Этот список пуст', 'Нажмите кнопку ( + ) в нижнем правом углу экрана, чтобы создать новый объект.', '&#xE88E;')
   
   if definition.items.length
     script.
@@ -200,11 +201,9 @@ mixin Table(options, definition)
       };
       var list = new List('table-list', options);
 
-
-
 mixin ListSelector(options)
   div(style=(options.style || ''))
-    h6 #{options.header}
+    h5(style='margin-top: 0px;') #{options.header}
     div(style='padding-left: 18px; margin-left: -18px;')
       each entry in options.list
         +Checkbox((options.name + '_' + entry.id), options.getter(entry), '', options.isItemSelected(entry))

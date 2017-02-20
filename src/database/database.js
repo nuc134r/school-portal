@@ -24,12 +24,13 @@ require('./models/specialty').Init(sequelize);
 require('./models/course').Init(sequelize);
 require('./models/group').Init(sequelize);
 require('./models/student').Init(sequelize);
-require('./models/teacher').Init(sequelize);
 require('./models/subject').Init(sequelize);
+require('./models/teacher').Init(sequelize);
 require('./models/auditory').Init(sequelize);
 require('./models/timing').Init(sequelize);
 require('./models/lesson').Init(sequelize);
 require('./models/new').Init(sequelize);
+require('./models/task').Init(sequelize);
 
 function getConnection() {
     return sequelize;

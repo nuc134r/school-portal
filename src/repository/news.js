@@ -37,7 +37,7 @@ module.exports.create = (options) => {
         })
 }
 
-module.exports.browse = helper.browse;
+module.exports.browse = helper.browseWith(['user']);
 
 module.exports.get = (options) => {
     return connection

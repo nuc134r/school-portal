@@ -2,6 +2,11 @@
 
 console.time('deploying time');
 
+const copydir = require('copy-dir');
+const path = require('path');
+
+let konnova, skachkova, yablonskaya;
+
 require('../src/database/database').Init().then(() => {
 
     const UsersRepository = require('../src/repository/users');
@@ -11,6 +16,7 @@ require('../src/database/database').Init().then(() => {
     const AuditoriesRepository = require('../src/repository/auditories');
     const TimingsRepository = require('../src/repository/timings');
     const LessonsRepository = require('../src/repository/lessons');
+    const NewsRepository = require('../src/repository/news');
 
     Promise.resolve()
         .then(() => {
@@ -133,16 +139,55 @@ require('../src/database/database').Init().then(() => {
         })
         .then(() => {
             return Promise.resolve()
-                .then(() => UsersRepository.create({ lastname: 'Кириллов', firstname: 'Алексей', middlename: 'Иванович', type: 'teacher', login: 'alexey.kirillov', password: 'portal' }))
-                .then(() => UsersRepository.create({ lastname: 'Глускер', firstname: 'Александр', middlename: 'Игоревич', type: 'teacher', login: 'alexander.glusker', password: 'portal' }))
-                .then(() => UsersRepository.create({ lastname: 'Коннова', firstname: 'Ирина', middlename: 'Геннадьевна', type: 'teacher', login: 'irina.konnova', password: 'portal' }))
-                .then(() => UsersRepository.create({ lastname: 'Ларионова', firstname: 'Елена', middlename: 'Анатольевна', type: 'teacher', login: 'elena.larionova', password: 'portal' }))
-                .then(() => UsersRepository.create({ lastname: 'Миланова', firstname: 'Ирина', middlename: 'Анатольевна', type: 'teacher', login: 'irina.milanova', password: 'portal' }))
-                .then(() => UsersRepository.create({ lastname: 'Скачкова', firstname: 'Светлана', middlename: 'Ивановна', type: 'teacher', login: 'svetlana.skachkova', password: 'portal' }))
-                .then(() => UsersRepository.create({ lastname: 'Сорокин', firstname: 'Юрий', middlename: 'Сергеевич', type: 'teacher', login: 'yury.sorokin', password: 'portal' }))
+                .then(() => UsersRepository.create({ lastname: 'Кириллов', firstname: 'Алексей', middlename: 'Иванович', type: 'teacher', login: 'alexey.kirillov', password: 'portal', image_id: 'kirillov' }))
+                .then(() => UsersRepository.create({ lastname: 'Глускер', firstname: 'Александр', middlename: 'Игоревич', type: 'teacher', login: 'alexander.glusker', password: 'portal', image_id: 'glu' }))
+                .then(user => {
+                    return user.update({ canCreateNews: true, canEditTimetable: true });
+                })
+                .then(() => UsersRepository.create({ lastname: 'Коннова', firstname: 'Ирина', middlename: 'Геннадьевна', type: 'teacher', login: 'irina.konnova', password: 'portal', image_id: 'konnova' }).then(_ => konnova = _))
+                .then(() => UsersRepository.create({ lastname: 'Ларионова', firstname: 'Елена', middlename: 'Анатольевна', type: 'teacher', login: 'elena.larionova', password: 'portal', image_id: 'konnova' }))
+                .then(() => UsersRepository.create({ lastname: 'Миланова', firstname: 'Ирина', middlename: 'Анатольевна', type: 'teacher', login: 'irina.milanova', password: 'portal', image_id: 'milanova' }))
+                .then(() => UsersRepository.create({ lastname: 'Скачкова', firstname: 'Светлана', middlename: 'Ивановна', type: 'teacher', login: 'svetlana.skachkova', password: 'portal' }).then(_ => skachkova = _))
+                .then(() => UsersRepository.create({ lastname: 'Сорокин', firstname: 'Юрий', middlename: 'Сергеевич', type: 'teacher', login: 'yury.sorokin', password: 'portal', image_id: 'sorokin' }))
                 .then(() => UsersRepository.create({ lastname: 'Павлов', firstname: 'Алексей', middlename: 'Владимирович', type: 'teacher', login: 'alexey.pavlov', password: 'portal' }))
-                .then(() => UsersRepository.create({ lastname: 'Яблонская', firstname: 'Юлия', middlename: 'Викторовна', type: 'teacher', login: 'rozovay_blonkdinka', password: 'portal' }))
-                .then(() => UsersRepository.create({ lastname: 'Тихонов', firstname: 'Сергей', middlename: 'Сергеевич', type: 'student', login: 'sergey.tikhonov', password: 'portal', groupId: 25 }))
+                .then(() => UsersRepository.create({ lastname: 'Яблонская', firstname: 'Юлия', middlename: 'Викторовна', type: 'teacher', login: 'rozovay_blondinka', password: 'portal', image_id: 'blondinko' }).then(_ => yablonskaya = _))
+                .then(() => UsersRepository.create({ lastname: 'Тихонов', firstname: 'Сергей', middlename: 'Сергеевич', type: 'student', login: 'sergey.tikhonov', password: 'portal', groupId: 25, image_id: 'tixon' }))
+        })
+        .then(() => {
+            return Promise.resolve()
+                .then(() => NewsRepository.create({
+                    title: 'Введение обязательной казаческой формы для студентов и преподавателей',
+                    userId: konnova.id,
+                    text: `{"ops":[{"insert":"В наш колледж поступил указ от "},{"attributes":{"italic":true},"insert":"Главного Казаческого Управления Российской Федерации"},{"insert":" (ГКУ РФ) о том, что молодые казаки, обучающиеся в Первом Казаческом Колледже Информационных Технологий, а также преподаватели обязаны "},{"attributes":{"bold":true},"insert":"с 1 марта "},{"insert":"носить парадную форму казаческого образца.\\n\\nФорма будет повторять образ боевых казаков XVII века. \\n\\n"},{"attributes":{"link":"https://www.google.ru/search?q=%D0%BA%D0%B0%D0%B7%D0%B0%D1%87%D1%8C%D0%B8+%…D%D0%B0%D1%80%D1%8F%D0%B4%D1%8B+%D0%BA%D0%B0%D0%B7%D0%B0%D0%BA%D0%BE%D0%B2"},"insert":"Подробнее про казаческие наряды"},{"insert":".\\n"}]}`,
+                    createdAt: new Date(new Date().getFullYear(), new Date().getMonth() - 1, new Date().getDate() - 3)
+                }))
+                .then(() => NewsRepository.create({
+                    title: 'Новое предложение в студенческой столовой',
+                    userId: skachkova.id,
+                    text: `{"ops":[{"insert":"По утрам в нашей столовой теперь можно заказать комплексный казаческий завтрак.\\n\\nСкажи промокод \\"казачок \\" тёте Рае и получи казан харчёв бесплатно.\\n"}]}`,
+                    createdAt: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 25)
+                }))
+                .then(() => NewsRepository.create({
+                    title: 'Повышение стипендий для 1-4 курсов',
+                    userId: yablonskaya.id,
+                    text: `{"ops":[{"insert":"По причине благополучного финансового положения России в последние 20 лет со следующего семестра для студентов всех курсов стипендия будет повышена "},{"attributes":{"bold":true},"insert":"до 45 000 руб"},{"insert":".\\n"}]}`,
+                    createdAt: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 3)
+                }))
+        })
+        .then(() => {
+            return new Promise((resolve, reject) => {
+                console.log('copying images..')
+                copydir(
+                    path.join(__dirname, 'demo-images'),
+                    path.join(__dirname, '..', 'public', 'user-images'),
+                    function (err) {
+                        if (err) {
+                            return reject(err);
+                        }
+                        console.log('images copied!')
+                        resolve();
+                    });
+            });
         })
         .then(() => {
             console.log("Successfully deployed demo db");

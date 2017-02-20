@@ -6,6 +6,7 @@ const NewsRepository = require('../repository/news');
 const Time = require('../repository/time');
 
 const QuillRenderer = require('quill-render');
+const moment = require('moment');
 
 const utils = require('../utils');
 
@@ -78,12 +79,18 @@ module.exports.getDashboardPage = (req, res) => {
                 time: locateResult.isNow ? locateResult.timeleftString : lesson.timing.getDisplayName(),
                 teacher: `${lesson.teacher.user.lastname} ${lesson.teacher.user.firstname.charAt(0)}. ${lesson.teacher.user.middlename.charAt(0)}.`,
             }
+        },
+        news: (entry) => { 
+            let createdMoment = moment(entry.createdAt);
+            entry.createdDate = createdMoment.format('DD ') + createdMoment.format('MMMM').substr(0, 3);
+            return entry;
         }
     }
 
     helper.processPromises(promises, processors)
         .then(lists => {
             lists.lessons = lists.lessons.sort((a, b) => a.begins > b.begins);
+            lists.news = lists.news.sort((a, b) => +a.createdAt < +b.createdAt);
 
             let renderOptions = {
                 view: 'student/dashboard',

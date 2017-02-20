@@ -60,10 +60,7 @@ function get(token) {
                     where: { userId: session.user.id }
                 })
                 .then(teacher => {
-                    session.user.teacher = {
-                        canCreateNews: teacher.canCreateNews,
-                        canEditTimetable: teacher.canEditTimetable
-                    };
+                    session.user.teacher = teacher;
 
                     return session;
                 })

@@ -70,11 +70,11 @@ function create(user_mode, urlPrefix) {
         }
     }
 
-    function processPromises(promiseList, processors) {
+    function processPromises(promiseList, processors, req, res) {
         return new Promise((resolve, reject) => {
             let resolvedLists = {};
             async.forEachOf(promiseList, function (listGetterPromise, key, callback) {
-                listGetterPromise()
+                listGetterPromise(req, res)
                     .then(data => {
                         resolvedLists[key] = data;
                         if (data.length && data[0].dataValues) {
@@ -129,9 +129,17 @@ function create(user_mode, urlPrefix) {
                 },
                 createPage: (req, res) => {
 
-                    processPromises(options.lists, options.listProcessors)
+                    processPromises(options.lists, options.listProcessors, req, res)
                         .then((lists) => {
-                            let newStatementGendered = options.displayNameIsMasculine ? 'Новый' : 'Новая';
+                            let newStatementGendered = '';
+                            if (options.displayNameIsMasculine) {
+                                newStatementGendered = 'Новый';
+                            } else if(options.displayNameIsNeutral) {
+                                newStatementGendered = 'Новое';
+                            } else {
+                                newStatementGendered = 'Новая';
+                            }
+
                             render(req, res, { lists, options }, {
                                 view: `${user_mode}/${options.entityNamePlural}_create`,
                                 title: `${newStatementGendered} ${options.displayName}`
@@ -140,12 +148,12 @@ function create(user_mode, urlPrefix) {
                         .catch((err) => {
                             if (err) console.error(err.message);
 
-                            res.end(err);
+                            res.end(err.toString());
                         });
                 },
                 editPage: (req, res) => {
 
-                    processPromises(options.lists, options.listProcessors)
+                    processPromises(options.lists, options.listProcessors, req, res)
                         .then((lists) => {
                             options.repository.get({ id: req.params.id })
                                 .then((item) => {
@@ -167,7 +175,7 @@ function create(user_mode, urlPrefix) {
                     let entity_id = req.params.id;
 
                     let requestOptions = options.onProcessForm
-                        ? options.onProcessForm(req.body)
+                        ? options.onProcessForm(req.body, req, true)
                         : req.body;
 
                     options.repository.update(entity_id, requestOptions)
@@ -192,7 +200,7 @@ function create(user_mode, urlPrefix) {
                 create: (req, res) => {
 
                     let requestOptions = options.onProcessForm
-                        ? options.onProcessForm(req.body)
+                        ? options.onProcessForm(req.body, req)
                         : req.body;
 
                     options.repository.create(requestOptions)

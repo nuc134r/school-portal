@@ -6,7 +6,8 @@
     "start": "node ./src/entry-point.js",
     "test": "mocha",
     "initdb": "node ./tools/db-creator.js",
-    "initdemo": "node ./tools/db-creator.js && node ./tools/demo-db.js"
+    "initdemo": "node ./tools/db-creator.js && node ./tools/demo-db.js",
+    "migrate": "cd tools && sequelize db:migrate"
   },
   "dependencies": {
     "@types/express": "^4.0.35",
@@ -31,6 +32,7 @@
     "quill-render": "^1.0.5",
     "sequelize": "3.24.8",
     "serve-favicon": "~2.2.1",
-    "sql-template-strings": "2.2.2"
+    "sql-template-strings": "2.2.2",
+    "copy-dir": "0.3.0"
   }
 }

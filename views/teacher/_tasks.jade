@@ -1,0 +1,19 @@
+include ../parts/mixins
+
+- cardSettings = { desktop: { s: 12, o: 0 }, tablet: { s: 8 }, phone: { s: 4 } }
+.mdl-grid
+  +MvcMessages('Задание создано', 'Задание удалено', 'Задание сохранено')
+
+- title = { title: 'Имя',  field: 'name' }
+- groups = { title: 'Группы',  field: 'groups', valueGetter: _ => _.groups.map(_ => _.name).join(', ') }
+- dueDate = { title: 'Срок сдачи', valueGetter: _ => _.getDisplayDueDate() }
+- subject = { title: 'Дисциплина', valueGetter: _ => _.subject.shortname }
+- createdAt = { title: 'Дата создания',  field: 'createdAt' }
+
+- tableDefinition = {}
+- tableDefinition.items = list_page_items
+- tableDefinition.columns = [title, groups, dueDate, subject]
+
+
+.mdl-grid
+  +Table(cardSettings, tableDefinition)
