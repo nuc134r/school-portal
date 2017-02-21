@@ -1,0 +1,27 @@
+include ../parts/mixins
+
+
+
+- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 6, o: 3 } }
+
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
+  .mdl-tabs__tab-bar(style='background: rgba(255, 255, 255, 0.84);')
+    a.mdl-tabs__tab.is-active(href='#new-tasks') Новые
+    a.mdl-tabs__tab(href='#sent-tasks') Отправленные
+
+  #new-tasks.mdl-tabs__panel.is-active
+    for task in lists.tasks
+      +Card(taskCardSettings)
+        .mdl-card__title(style='padding-bottom: 8px;')
+          h2.mdl-card__title-text #{task.name}
+        .mdl-card__supporting-text(style='padding-top: 0px; color: black;')
+          h2.mdl-card__title-text
+            small #{task.subject.shortname}
+        if task.getDisplayDueDate()
+          .mdl-card__supporting-text(style='padding-top: 0px;')
+            span Сдать до:&nbsp;
+            span #{ task.getDisplayDueDate() }
+        .mdl-card__actions.mdl-card--border
+          a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/s/tasks/' + task.id, onclick="return ajax(this)") открыть
+  #sent-tasks.mdl-tabs__panel
+    | keker

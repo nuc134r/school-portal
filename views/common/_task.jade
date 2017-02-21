@@ -1,0 +1,44 @@
+include ../parts/mixins
+
+
+- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 6, o: 3 } }
+
++Card(taskCardSettings)
+  .mdl-card__title(style='padding-bottom: 8px;')
+    h2.mdl-card__title-text #{task.name}
+  .mdl-card__supporting-text(style='padding-top: 0px;')
+    h2.mdl-card__title-text
+      small #{task.subject.shortname}
+  if task.getDisplayDueDate()
+    .mdl-card__supporting-text(style='padding-top: 0px;')
+      h5(style='font-weight: 400; margin-top: 0px; color: black;') Срок сдачи
+      | #{ task.getDisplayDueDate() }
+  .mdl-card__supporting-text(style='padding-top: 0px;')
+    h5(style='font-weight: 400; margin-top: 0px; color: black;') Задание
+    | !{task.textHtml}
+    h5(style='font-weight: 400; margin-top: 0px; color: black;') Вложения
+    | Вложений нет
+  if user.type == 'teacher'
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/a/tasks/' + task.id, onclick="return ajax(this)") Изменить формулировку
+
++Card(taskCardSettings)
+  .mdl-card__title(style='padding-bottom: 8px;')
+    h2.mdl-card__title-text Отправка работы
+  .mdl-card__supporting-text(style='height:100%;')
+    h5(style='margin-top:0px;') Пояснения
+    #editor(style='min-height: 200px')
+    input#delta-data(name='text', style='display:none;')
+    h5 Вложения
+  .mdl-card__actions.mdl-card--border
+    a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/a/tasks/' + task.id, onclick="return ajax(this)") Отправить
+
+script.
+  var quill = new Quill('#editor', {
+    theme: 'snow'
+  }); 
+
+  function post_form() {
+    document.getElementById('delta-data').value = JSON.stringify(quill.getContents());
+    document.getElementById('createnewform').submit();
+  }

@@ -8,7 +8,7 @@ include ../parts/mixins
   
   - var post_url = '/t/' + options.entityNamePlural + (edit_mode ? ('/' + query_params.id + '/edit') : '/create')
   +Card(cardSettings, '')
-    .mdl-card__supporting-text
+    .mdl-card__supporting-text.mdl-card__supporting-text-strip-borders
       form(action=post_url, method='POST', style='padding: 5px 25px', id='createnewform')
         +InputField('Заголовок', 'title', true)
         #editor(style='min-height: 200px')

@@ -147,7 +147,7 @@ mixin Text(options)
 
 mixin Form(cardSettings, id, url, style, cardStyle)
   +Card(cardSettings, '', (cardStyle == null ? 'max-width: 320px;' : ''))
-    .mdl-card__supporting-text
+    .mdl-card__supporting-text.mdl-card__supporting-text-strip-borders
       form(action=url, method='POST', style=(style == null ? 'padding: 5px 25px' : ''), id=id)
         block
     .mdl-card__actions.mdl-card--border

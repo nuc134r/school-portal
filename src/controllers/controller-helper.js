@@ -78,7 +78,7 @@ function create(user_mode, urlPrefix) {
                     .then(data => {
                         resolvedLists[key] = data;
                         if (data.length && data[0].dataValues) {
-                            resolvedLists[key] = data.map(_ => _.dataValues);
+                            resolvedLists[key] = data;//.map(_ => _.dataValues);
                         }
                         if (processors && processors[key]) {
                             resolvedLists[key] = resolvedLists[key].map(processors[key]);

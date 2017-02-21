@@ -8,7 +8,7 @@ include ../parts/mixins
   
   - var post_url = '/t/' + options.entityNamePlural + (edit_mode ? ('/' + query_params.id + '/edit') : '/create')
   +Card(cardSettings, '')
-    .mdl-card__supporting-text
+    .mdl-card__supporting-text.mdl-card__supporting-text-strip-borders
       form(action=post_url, method='POST', style='padding: 5px 25px', id='createtaskform')
         +InputField('Имя', 'name', true)
         br
@@ -31,6 +31,10 @@ include ../parts/mixins
         #editor(style='min-height: 200px') 
         input#delta-data(name='text', style='display:none;')
         
+        h5 Вложения
+
+        a(href='#') Добавить вложение
+
         br
         br
         - var selectedGroups = query_params.groups ? query_params.groups.map(_ => _.id) : [];

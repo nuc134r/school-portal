@@ -9,7 +9,7 @@ include ../parts/mixins
         | Занятия
       h2.mdl-card__title-text.mdl-card__title-subtext
         small #{ {mon: 'понедельник', tue: 'вторник', wed: 'среда', thu: 'четверг',  fri: 'пятница', sat: 'суббота'}[today] }
-    .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
+    .mdl-card__supporting-text.mdl-card__supporting-text-strip-borders.mdl-card__supporting-text-heightfix
       +LessonList(lists.lessons.sort((a, b) => a.begins > b.begins))
     .mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='timetable', onclick="return ajax(this)") расписание
@@ -19,7 +19,7 @@ include ../parts/mixins
       h2.mdl-card__title-text
         i.material-icons.mdl-card-icon &#xE0E5;
         | Новости
-    .mdl-card__supporting-text.mdl-card__supporting-text-heightfix
+    .mdl-card__supporting-text.mdl-card__supporting-text-strip-borders.mdl-card__supporting-text-heightfix
       +NewsList(lists.news)
     .mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='newsfeed', onclick="return ajax(this)") все новости
