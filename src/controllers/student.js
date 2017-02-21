@@ -3,6 +3,7 @@
 const LessonsRepository = require('../repository/lessons');
 const TimingsRepository = require('../repository/timings');
 const NewsRepository = require('../repository/news');
+const TasksRepository = require('../repository/tasks');
 const Time = require('../repository/time');
 
 const QuillRenderer = require('quill-render');
@@ -80,7 +81,7 @@ module.exports.getDashboardPage = (req, res) => {
                 teacher: `${lesson.teacher.user.lastname} ${lesson.teacher.user.firstname.charAt(0)}. ${lesson.teacher.user.middlename.charAt(0)}.`,
             }
         },
-        news: (entry) => { 
+        news: (entry) => {
             let createdMoment = moment(entry.createdAt);
             entry.createdDate = createdMoment.format('DD ') + createdMoment.format('MMMM').substr(0, 3);
             return entry;
@@ -98,6 +99,50 @@ module.exports.getDashboardPage = (req, res) => {
             };
 
             helper.render(req, res, { lists, today: Time.getDayInfo().code }, renderOptions);
+        })
+        .catch(error => {
+            console.log(error);
+            res.send(error.toString());
+            res.end();
+        });
+}
+
+module.exports.getTaskPage = (req, res) => {
+
+    TasksRepository.get({ id: req.params['id'] })
+        .then(task => {
+
+            task.textHtml = QuillRenderer(JSON.parse(task.text).ops);
+
+            let renderOptions = {
+                view: 'common/task',
+                title: 'Задание',
+            };
+
+            helper.render(req, res, { task }, renderOptions);
+        })
+        .catch(error => {
+            console.log(error);
+            res.send(error.toString());
+            res.end();
+        });
+}
+
+module.exports.getTaskListPage = (req, res) => {
+
+    let promises = {
+        tasks: () => TasksRepository.getTasksForGroup(req.school_context.user.student.groupId)
+    }
+
+    helper.processPromises(promises, [])
+        .then(lists => {
+
+            let renderOptions = {
+                view: 'common/tasks',
+                title: 'Задания',
+            };
+
+            helper.render(req, res, { lists }, renderOptions);
         })
         .catch(error => {
             console.log(error);

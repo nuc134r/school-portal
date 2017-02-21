@@ -24,8 +24,28 @@ module.exports.get = (options) => {
         .find({
             where: { id: options.id },
             include: [
-                connection.models['group']
+                connection.models['group'],
+                connection.models['subject'],
+                connection.models['user'],
+                connection.models['task_comment']
             ]
+        });
+};
+
+module.exports.getTasksForGroup = (groupId) => {
+    return helper.browseWith(['group', 'subject'])()
+        .then((tasks) => {
+            let result = [];
+
+            for (let i = 0; i < tasks.length; i++) {
+                let task = tasks[i];
+
+                if (task.groups.filter((_) => _.id == groupId).length) {
+                    result.push(task);
+                }
+            }
+
+            return result;
         });
 };
 

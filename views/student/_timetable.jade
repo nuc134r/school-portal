@@ -14,6 +14,6 @@ include ../parts/mixins
           | #{day[0]}
         h2.mdl-card__title-text.mdl-card__title-subtext
           small #{lists.weekdays[weekdayIndex++].displayDate}
-      .mdl-card__supporting-text.mdl-card__supporting-text-heightfix-no-actions
+      .mdl-card__supporting-text.mdl-card__supporting-text-strip-borders.mdl-card__supporting-text-heightfix-no-actions
         - var dayLessons = lists.lessons.filter((lesson) => lesson.day == day[1]).sort((a, b) => a.begins > b.begins)
         +LessonList(dayLessons)

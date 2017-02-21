@@ -26,8 +26,8 @@ function Init(sequelize) {
             }
         });
 
+    Entity.belongsToMany(sequelize.models['task_comment'], { through: 'tasks_task_comments' });
     //Entity.belongsToMany(sequelize.models['attachment'], { through: 'tasks_attachments' });
-    //Entity.belongsToMany(sequelize.models['task_state'], { through: 'task_states' });
     //Entity.belongsToMany(sequelize.models['task_result'], { through: 'task_results' });
 
     Entity.belongsToMany(sequelize.models['group'], { through: 'tasks_groups' });
