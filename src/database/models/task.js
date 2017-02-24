@@ -22,20 +22,24 @@ function Init(sequelize) {
                 },
                 getDisplayDueDate: function () {
                     return this.hasDueDate ? moment(this.dueDate).format('LL') : '';
+                },
+                isDueDateToday: function () {
+                    let dueDateMoment = moment(this.dueDate);
+                    let nowMoment = moment();
+                    return dueDateMoment.dayOfYear() == nowMoment.dayOfYear() && dueDateMoment.year() == nowMoment.year();
                 }
             }
         });
 
-    Entity.belongsToMany(sequelize.models['task_comment'], { through: 'tasks_task_comments' });
+    Entity.belongsToMany(sequelize.models['task_result'], { through: 'tasks_task_results' });
     //Entity.belongsToMany(sequelize.models['attachment'], { through: 'tasks_attachments' });
-    //Entity.belongsToMany(sequelize.models['task_result'], { through: 'task_results' });
 
     Entity.belongsToMany(sequelize.models['group'], { through: 'tasks_groups' });
-    Entity.belongsTo(sequelize.models.user, { 
+    Entity.belongsTo(sequelize.models['user'], { 
         foreignKey: { allowNull: false },
         onDelete: 'CASCADE'
     });
-    Entity.belongsTo(sequelize.models.subject, { 
+    Entity.belongsTo(sequelize.models['subject'], { 
         foreignKey: { allowNull: false },
         onDelete: 'CASCADE'
     });

@@ -34,6 +34,8 @@ router.get('/t/timetable_editor', teacherController.getLessonsEditor);
 router.post('/t/timetable', teacherController.saveLessons);
 helper.createContollerRoutes('t', router, teacherController.NewsController);
 helper.createContollerRoutes('t', router, teacherController.TasksController);
+router.get('/t/tasks/review', teacherController.getTaskListPage);
+router.get('/t/tasks/review/:id', teacherController.getTaskPage);
 
 /* student */
 router.get('/s', (req, res) => res.redirect('/s/dashboard'));

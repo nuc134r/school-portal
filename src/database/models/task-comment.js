@@ -7,18 +7,14 @@ const moment = require('moment');
 function Init(sequelize) {
     let Entity = sequelize.define('task_comment', {
         text: Sequelize.TEXT,
-        mark: {
-            type: Sequelize.ENUM('excellent', 'good', 'ok', 'needs_revision'),
+        hasMark: Sequelize.BOOLEAN,
+        resultMark: {
+            type: Sequelize.ENUM('A', 'B', 'C', 'D'),
             allowNull: true
         }
     });
 
-    //Entity.belongsToMany(sequelize.models['attachment'], { through: 'task_comments_attachments' });
-    
-    Entity.belongsTo(sequelize.models['user'], { 
-        foreignKey: { allowNull: false },
-        onDelete: 'CASCADE'
-    });
+    //Entity.belongsToMany(sequelize.models['attachment'], { through: 'task_comments_attachments' });    
 }
 
 module.exports.Init = Init;

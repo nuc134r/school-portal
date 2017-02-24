@@ -13,28 +13,26 @@ include ../parts/mixins
         +InputField('Заголовок', 'title', true)
         #editor(style='min-height: 200px')
         input#delta-data(name='text', style='display:none;')
-        h5 Получатели:
 
-        .mdl-grid
-          .mdl-cell--4-col-phone.mdl-cell--8-col-tablet.mdl-cell--6-col-desktop
-            - var selectedGroups = query_params.groups ? query_params.groups.map(_ => _.id) : [];
-            +ListSelector({
-              name: 'group', 
-              header: 'Группы', 
-              list: lists.groups,
-              isItemSelected: (item) => selectedGroups.indexOf(item.id) != -1,
-              getter: _ => _.name
-              })
+        - var selectedGroups = query_params.groups ? query_params.groups.map(_ => _.id) : [];
+        +ListSelector({
+          name: 'group', 
+          header: 'Группы', 
+          list: lists.groups,
+          isItemSelected: (item) => selectedGroups.indexOf(item.id) != -1,
+          getter: _ => _.name,
+          columnWidth: 200
+          })
 
-          .mdl-cell--4-col-phone.mdl-cell--8-col-tablet.mdl-cell--6-col-desktop
-            - var selectedTeachers = query_params.teachers ? query_params.teachers.map(_ => _.id) : [];
-            +ListSelector({
-              name: 'teacher', 
-              header: 'Преподаватели', 
-              list: lists.teachers,
-              isItemSelected: (item) => selectedTeachers.indexOf(item.id) != -1,
-              getter: _ => _.user.getDisplayName()
-              })
+        - var selectedTeachers = query_params.teachers ? query_params.teachers.map(_ => _.id) : [];
+        +ListSelector({
+          name: 'teacher', 
+          header: 'Преподаватели', 
+          list: lists.teachers,
+          isItemSelected: (item) => selectedTeachers.indexOf(item.id) != -1,
+          getter: _ => _.user.getDisplayFullName(),
+          columnWidth: 300
+          })
 
 
         

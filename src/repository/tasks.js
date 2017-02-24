@@ -49,6 +49,10 @@ module.exports.getTasksForGroup = (groupId) => {
         });
 };
 
+module.exports.getTasksForTeacher = (userId) => {
+    return helper.browseWith(['group', 'subject', 'task_comment'], { userId })();
+};
+
 module.exports.delete = helper.delete;
 module.exports.update = (id, options) => {
     return helper.update(id, options)

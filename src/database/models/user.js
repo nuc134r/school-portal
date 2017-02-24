@@ -27,6 +27,9 @@ function Init(sequelize) {
                 getDisplayName: function () {
                     return `${this.lastname} ${this.firstname}`;
                 },
+                getDisplayFullName: function () {
+                    return `${this.lastname} ${this.firstname} ${this.middlename}`;
+                },
                 asViewModel: function () {
                     let result = {
                         id: this.id,

@@ -30,8 +30,9 @@ function Create(connection, modelName) {
     return {
         create: (options) => connection.models[modelName].create(options),
         browse: () => connection.models[modelName].findAll({ order: sortingRules }).then(formatAuditFields),
-        browseWith: (includes) => () => connection.models[modelName].findAll({
-            include: includes.map(model => connection.models[model])
+        browseWith: (includes, options) => () => connection.models[modelName].findAll({
+            include: includes.map(model => connection.models[model]),
+            where: options
         }).then(formatAuditFields),
         get: (options) => connection.models[modelName].findOne({ where: options }),
         delete: (options) => connection.models[modelName].destroy({ where: options }),

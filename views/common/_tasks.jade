@@ -17,10 +17,10 @@ include ../parts/mixins
         .mdl-card__supporting-text(style='padding-top: 0px; color: black;')
           h2.mdl-card__title-text
             small #{task.subject.shortname}
-        if task.getDisplayDueDate()
+        if task.hasDueDate
           .mdl-card__supporting-text(style='padding-top: 0px;')
-            span Сдать до:&nbsp;
-            span #{ task.getDisplayDueDate() }
+            span Дата сдачи:&nbsp;
+            span(style=(task.isDueDateToday() ? 'color: red;' : '')) #{ task.getDisplayDueDate() }
         .mdl-card__actions.mdl-card--border
           a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/s/tasks/' + task.id, onclick="return ajax(this)") открыть
   #sent-tasks.mdl-tabs__panel

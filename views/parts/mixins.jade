@@ -203,7 +203,7 @@ mixin Table(options, definition)
 
 mixin ListSelector(options)
   div(style=(options.style || ''))
-    h5(style='margin-top: 0px;') #{options.header}
-    div(style='padding-left: 18px; margin-left: -18px;')
+    h5(style='margin-top: 16px;') #{options.header}
+    div(style='padding-left: 18px; margin-left: -18px; columns: ' + (options.columnWidth || 400) + 'px;')
       each entry in options.list
         +Checkbox((options.name + '_' + entry.id), options.getter(entry), '', options.isItemSelected(entry))

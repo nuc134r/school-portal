@@ -170,3 +170,47 @@ module.exports.saveLessons = (req, res) => {
             });
     });
 }
+
+module.exports.getTaskListPage = (req, res) => {
+
+    let promises = {
+        tasks: () => TasksRepository.getTasksForTeacher(req.school_context.user.id)
+    }
+
+    helper.processPromises(promises, [])
+        .then(lists => {
+
+            let renderOptions = {
+                view: 'common/tasks',
+                title: 'Задания',
+            };
+
+            helper.render(req, res, { lists }, renderOptions);
+        })
+        .catch(error => {
+            console.log(error);
+            res.send(error.toString());
+            res.end();
+        });
+}
+
+module.exports.getTaskPage = (req, res) => {
+
+    TasksRepository.get({ id: req.params['id'] })
+        .then(task => {
+
+            task.textHtml = QuillRenderer(JSON.parse(task.text).ops);
+
+            let renderOptions = {
+                view: 'common/task',
+                title: 'Задание',
+            };
+
+            helper.render(req, res, { task }, renderOptions);
+        })
+        .catch(error => {
+            console.log(error);
+            res.send(error.toString());
+            res.end();
+        });
+}
