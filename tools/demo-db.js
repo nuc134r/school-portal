@@ -80,7 +80,7 @@ database.Init().then(() => {
                 /* 4 курс П */
                 .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.01 Технология разработки программного обеспечения', shortname: 'Технология разработки ПО' }).then(_ => programming_subjects.push(_)))
                 .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.01 Компьютерная графика', shortname: 'Компьютерная графика' }).then(_ => yablonskaya_subjects.push(_)))
-                .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.02 Инструментальные средства разработки программного обеспечения', shortname: 'Инстр. ср-ва разр-ки ПО' }).then(_ => programming_subjects.push(_)))
+                .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.02 Инструментальные средства разработки программного обеспечения', shortname: 'Инстр. средства разр-ки ПО' }).then(_ => programming_subjects.push(_)))
                 .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.03 Документирование и сертификация', shortname: 'Документирование и сертификация' }))
                 .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.02 Системы автоматизированного проектирования', shortname: 'Системы авт. проектирования' }))
                 .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.03 Автоматизированные системы управления', shortname: 'Авт. системы управления' }).then(_ => programming_subjects.push(_)))
