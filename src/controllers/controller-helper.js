@@ -118,7 +118,7 @@ function create(user_mode, urlPrefix) {
 
                     let message = req.query.message;
 
-                    options.repository.browse()
+                    options.repository.browse(req.school_context.user)
                         .then((list_page_items) => {
                             render(req, res, { list_page_items, message, entity: options }, renderOptions);
                         })

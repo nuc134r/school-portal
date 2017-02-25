@@ -5,7 +5,7 @@ include ../parts/mixins
 
 +Card(taskCardSettings)
   .mdl-card__title(style='padding-bottom: 8px;')
-    h2.mdl-card__title-text #{task.name}
+    h2.mdl-card__title-text(style='font-size: 19px;') #{task.name}
   .mdl-card__supporting-text(style='padding-top: 0px;')
     h2.mdl-card__title-text
       small #{task.subject.shortname}
@@ -20,18 +20,45 @@ include ../parts/mixins
     | Вложений нет
   if user.type == 'teacher'
     .mdl-card__actions.mdl-card--border
-      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/a/tasks/' + task.id, onclick="return ajax(this)") Изменить формулировку
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/t/tasks/' + task.id, onclick="return ajax(this)") Изменить формулировку
+  else
+    if task.isRemote
+      #send-button-wrapper(style='width: 100%;')
+        .mdl-card__actions.mdl-card--border
+          a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="$('#sendtaskform').css('display', 'block'); $('#send-button-wrapper').css('display', 'none'); setTimeout(10, window.scrollTo(0,document.body.scrollHeight));") Отправить решение
 
-+Card(taskCardSettings)
-  .mdl-card__title(style='padding-bottom: 8px;')
-    h2.mdl-card__title-text Отправка работы
-  .mdl-card__supporting-text(style='height:100%;')
-    h5(style='margin-top:0px;') Пояснения
-    #editor(style='min-height: 200px')
-    input#delta-data(name='text', style='display:none;')
-    h5 Вложения
-  .mdl-card__actions.mdl-card--border
-    a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/a/tasks/' + task.id, onclick="return ajax(this)") Отправить
+.mdl-grid
+
+if !task.isRemote
+  +Text(taskCardSettings)
+    h5(style='text-align: center; opacity: 0.3;') Это задание нельзя сдать удалённо
+
+each comment in task.comments.sort(_ => +_.createdAt)
+  +Card(taskCardSettings)
+    .mdl-card__supporting-text
+      img.mdl-user-avatar(src=user.getImageUrls().small)
+      h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px;') #{ comment.user.firstname + ' ' + comment.user.lastname }
+      h2.mdl-card__title-text(style='font-size: 13px; padding-left: 10px; padding-top: 7px; font-weight: 400;') #{ comment.createdAtDisplay }
+    .mdl-card__supporting-text(style='padding-top: 0px;')
+      h5(style='font-weight: 400; margin-top: 0px; color: black;') Вложения
+      | Вложений нет
+      h5(style='font-weight: 400; color: black;') Пояснения
+      | !{comment.textHtml}
+
+.mdl-grid
+
+form(action=('/s/tasks/' + task.id), method='POST', id='sendtaskform', style='display: none;')
+  +Card(taskCardSettings)
+    .mdl-card__title(style='padding-bottom: 8px;')
+      h2.mdl-card__title-text Решение
+    .mdl-card__supporting-text(style='height:100%;')
+      h5(style='margin-top:0px;') Вложения
+      a(href='#') Добавить вложение
+      h5 Пояснения
+      #editor(style='min-height: 200px')
+      input#delta-data(name='text', style='display:none;')
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="post_form()") Отправить
 
 script.
   var quill = new Quill('#editor', {
@@ -40,5 +67,5 @@ script.
 
   function post_form() {
     document.getElementById('delta-data').value = JSON.stringify(quill.getContents());
-    document.getElementById('createnewform').submit();
+    document.getElementById('sendtaskform').submit();
   }

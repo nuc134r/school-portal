@@ -2,14 +2,75 @@
 
 const fs = require('fs');
 const path = require('path');
+
+const moment = require('moment');
 const gm = require('gm');
 const ImageMagick = gm.subClass({ imageMagick: true });
+const QuillRenderer = require('quill-render');
 const UUID = require('node-uuid');
 
 const UsersRepository = require('../repository/users');
+const TasksRepository = require('../repository/tasks');
+
+function getHelper(req) {
+    return require('./controller-helper')(req.school_context.user.type);
+}
+
+module.exports.getTaskPage = (req, res) => {
+
+    TasksRepository.get({ id: req.params['id'] }, req.school_context.user)
+        .then(task => {
+
+            task.textHtml = QuillRenderer(JSON.parse(task.text).ops);
+            task.comments.forEach(_ => {
+                _.textHtml = QuillRenderer(JSON.parse(_.text).ops)
+                _.createdAtDisplay = moment(_.createdAt).format('LLL')
+            });
+
+            let renderOptions = {
+                view: 'common/task',
+                title: 'Задание',
+            };
+
+            getHelper(req).render(req, res, { task }, renderOptions);
+        })
+        .catch(error => {
+            console.log(error);
+            res.send(error.toString());
+            res.end();
+        });
+}
+
+module.exports.getTaskListPage = (req, res) => {
+    let promises = {};
+
+    if (req.school_context.user.type == 'student') {
+        promises.tasks = () => TasksRepository.getTasksForGroup(req.school_context.user.student.groupId)
+    } else {
+        promises.tasks = () => TasksRepository.getTasksForTeacher(req.school_context.user.teacher.id)
+    }
+
+    getHelper(req).processPromises(promises, [])
+        .then(lists => {
+
+            // split tasks into categories to display in list
+
+            let renderOptions = {
+                view: 'common/tasks',
+                title: 'Задания',
+            };
+
+            getHelper(req).render(req, res, { lists }, renderOptions);
+        })
+        .catch(error => {
+            console.log(error);
+            res.send(error.toString());
+            res.end();
+        });
+}
 
 module.exports.getSettingsPage = (req, res) => {
-    const helper = require('./controller-helper')(req.school_context.user.type);
+    const helper = getHelper(req);
 
     let settings = "";
 

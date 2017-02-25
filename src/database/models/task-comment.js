@@ -14,6 +14,11 @@ function Init(sequelize) {
         }
     });
 
+    Entity.belongsTo(sequelize.models['user'], {
+        foreignKey: { allowNull: false },
+        onDelete: 'CASCADE'
+    });
+
     //Entity.belongsToMany(sequelize.models['attachment'], { through: 'task_comments_attachments' });    
 }
 
