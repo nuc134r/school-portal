@@ -64,11 +64,12 @@ mixin RadioButton(placeholder, name, id, checked, style)
 mixin NewsList(news)
   if news.length
     each entry in news
-      button.mdl-button.mdl-button-custom.mdl-js-button.mdl-js-ripple-effect
-        p.mdl-button-custom--right #{entry.createdDate}
-        p.mdl-button-custom--header-mini #{entry.title}
-        p.mdl-button-custom--right 
-        p.mdl-button-custom--text 
+      div(class={'button-list': entry != news[news.length - 1]})
+        button.mdl-button.mdl-button-custom.mdl-js-button.mdl-js-ripple-effect
+          p.mdl-button-custom--right #{entry.createdDate}
+          p.mdl-button-custom--header-mini #{entry.title}
+          p.mdl-button-custom--right 
+          p.mdl-button-custom--text 
   else
     div(style="text-align: center; padding: 15px 15px 10px 15px; opacity: .5;")
       //img(src="/bell-icon.png" style="margin-bottom: 10px;")
@@ -77,27 +78,21 @@ mixin NewsList(news)
 mixin LessonList(lessons)
   if lessons.length
     each lesson in lessons
-      button.mdl-button.mdl-button-custom.mdl-js-button(class={
-        'mdl-button--accent': lesson.now,
-        'mdl-button--raised': lesson.now,
-        'mdl-js-ripple-effect': lesson.now
-        })
-        p.mdl-button-custom--right #{lesson.time}
-        p.mdl-button-custom--header #{lesson.subject}
-        p.mdl-button-custom--right #{lesson.auditory}
-        p.mdl-button-custom--text #{lesson.teacher}
+      div(class={'button-list': lesson != lessons[lessons.length - 1]})
+        button.mdl-button.mdl-button-custom.mdl-js-button(class={
+          'mdl-button--accent': lesson.now,
+          'mdl-button--raised': lesson.now,
+          'mdl-js-ripple-effect': lesson.now
+          })
+          p.mdl-button-custom--right #{lesson.time}
+          p.mdl-button-custom--header #{lesson.subject}
+          p.mdl-button-custom--right #{lesson.auditory}
+          p.mdl-button-custom--text #{lesson.teacher}
   else
     div(style="text-align: center; padding: 15px 15px 10px 15px; opacity: .5;")
       img(src="/bell-icon.png" style="margin-bottom: 10px;")
       //i.material-icons(style="font-size: 100px") done
       div занятий нет
-
-mixin TaskList(tasks)
-  each task in tasks
-    button.mdl-button.mdl-button-custom.mdl-js-button 
-      p.mdl-button-custom--right #{task.details}
-      p.mdl-button-custom--header #{task.title}
-      p.mdl-button-custom--text #{task.subject}
 
 mixin MenuItem(options)
   a.mdl-navigation__link(href=options.link, onclick='return ajax(this, true)')
