@@ -33,7 +33,8 @@ module.exports.create = (options) => {
 
             return Promise.resolve()
                 .then(connection.models['news_groups'].bulkCreate(groupRecievers))
-                .then(connection.models['news_teachers'].bulkCreate(teacherRecievers));
+                .then(connection.models['news_teachers'].bulkCreate(teacherRecievers))
+                .then(() => instance);
         })
 }
 
