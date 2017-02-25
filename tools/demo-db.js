@@ -5,6 +5,8 @@ console.time('deploying time');
 const copydir = require('copy-dir');
 const path = require('path');
 
+const Sequelize = require('sequelize');
+
 const database = require('../src/database/database');
 const connection = database.getConnection();
 
@@ -164,18 +166,33 @@ database.Init().then(() => {
                     text: `{"ops":[{"insert":"В наш колледж поступил указ от "},{"attributes":{"italic":true},"insert":"Главного Казаческого Управления Российской Федерации"},{"insert":" (ГКУ РФ) о том, что молодые казаки, обучающиеся в Первом Казаческом Колледже Информационных Технологий, а также преподаватели обязаны "},{"attributes":{"bold":true},"insert":"с 1 марта "},{"insert":"носить парадную форму казаческого образца.\\n\\nФорма будет повторять образ боевых казаков XVII века. \\n\\n"},{"attributes":{"link":"https://www.google.ru/search?q=%D0%BA%D0%B0%D0%B7%D0%B0%D1%87%D1%8C%D0%B8+%…D%D0%B0%D1%80%D1%8F%D0%B4%D1%8B+%D0%BA%D0%B0%D0%B7%D0%B0%D0%BA%D0%BE%D0%B2"},"insert":"Подробнее про казаческие наряды"},{"insert":".\\n"}]}`,
                     createdAt: new Date(new Date().getFullYear(), new Date().getMonth() - 1, new Date().getDate() - 3)
                 }))
+                .then(newsEntry => {
+                    return connection
+                        .models['news_groups']
+                        .create({ newId: newsEntry.id, groupId: P_403.id });
+                })
                 .then(() => NewsRepository.create({
                     title: 'Новое предложение в студенческой столовой',
                     userId: skachkova.id,
                     text: `{"ops":[{"insert":"По утрам в нашей столовой теперь можно заказать комплексный казаческий завтрак.\\n\\nСкажи промокод \\"казачок \\" тёте Рае и получи казан харчёв бесплатно.\\n"}]}`,
                     createdAt: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 25)
                 }))
+                .then(newsEntry => {
+                    return connection
+                        .models['news_groups']
+                        .create({ newId: newsEntry.id, groupId: P_403.id });
+                })
                 .then(() => NewsRepository.create({
                     title: 'Повышение стипендий для 1-4 курсов',
                     userId: yablonskaya.id,
                     text: `{"ops":[{"insert":"По причине благополучного финансового положения России в последние 20 лет со следующего семестра для студентов всех курсов стипендия будет повышена "},{"attributes":{"bold":true},"insert":"до 45 000 руб"},{"insert":".\\n"}]}`,
                     createdAt: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 3)
                 }))
+                .then(newsEntry => {
+                    return connection
+                        .models['news_groups']
+                        .create({ newId: newsEntry.id, groupId: P_403.id });
+                })
         })
         .then(() => {
             return Promise.resolve()
@@ -254,6 +271,58 @@ database.Init().then(() => {
                         teacherId: yablonskaya.id
                     }
                 }));
+        })
+        .then(() => {
+            function getRandom(modelName) {
+                return connection.models[modelName].find({ order: [Sequelize.fn('RANDOM')], limit: 1 });
+            }
+
+            function randomInteger(min, max) {
+                var rand = min - 0.5 + Math.random() * (max - min + 1)
+                rand = Math.round(rand);
+                return rand;
+            }
+
+            let timetable = [];
+            let thePromise = Promise.resolve();
+
+            let weeks = ['upper', 'lower'];
+            for (let weekIndex = 0; weekIndex < weeks.length; weekIndex++) {
+                let days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+                for (let dayIndex = 0; dayIndex < days.length; dayIndex++) {
+                    let day;
+                    let maxLessons = randomInteger(4, 6);
+
+                    for (let index = 1; index < maxLessons; index++) {
+                        thePromise =
+                            thePromise
+                                .then(() => {
+                                    day = {
+                                        groupId: P_403.id,
+                                        timingId: index,
+                                        weekday: days[dayIndex],
+                                        weektype: weeks[weekIndex]
+                                    };
+                                    return getRandom('subject');
+                                })
+                                .then(subject => {
+                                    day.subjectId = subject.id;
+                                    return getRandom('teacher');
+                                })
+                                .then(teacher => {
+                                    day.teacherId = teacher.id;
+                                    return getRandom('auditory');
+                                })
+                                .then(auditory => {
+                                    day.auditoryId = auditory.id;
+                                    timetable.push(day);
+                                });
+                    }
+
+                }
+            }
+
+            return thePromise.then(() => connection.models['lesson'].bulkCreate(timetable));
         })
         .then(() => {
             return new Promise((resolve, reject) => {
