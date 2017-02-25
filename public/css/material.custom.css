@@ -11,6 +11,10 @@
     outline: 0px;
 }
 
+.button-list {
+    border-bottom: 1px solid rgba(0,0,0,.06);
+}
+
 .mdl-chip {
     cursor: default;
 }
@@ -85,7 +89,7 @@
 }
 
 .mdl-button-custom--text {
-    opacity: .6;
+    opacity: .5;
     margin-bottom: 0px;
 }
 
