@@ -6,7 +6,6 @@ const NewsRepository = require('../repository/news');
 const TasksRepository = require('../repository/tasks');
 const Time = require('../repository/time');
 
-const QuillRenderer = require('quill-render');
 const moment = require('moment');
 
 const utils = require('../utils');
@@ -107,46 +106,15 @@ module.exports.getDashboardPage = (req, res) => {
         });
 }
 
-module.exports.getTaskPage = (req, res) => {
+module.exports.saveTaskSolution = (req, res) => {
+    let formData = req.body;
 
-    TasksRepository.get({ id: req.params['id'] })
-        .then(task => {
-
-            task.textHtml = QuillRenderer(JSON.parse(task.text).ops);
-
-            let renderOptions = {
-                view: 'common/task',
-                title: 'Задание',
-            };
-
-            helper.render(req, res, { task }, renderOptions);
-        })
-        .catch(error => {
-            console.log(error);
-            res.send(error.toString());
-            res.end();
+    TasksRepository
+        .saveTaskSolution(req.params.id, req.school_context.user.id, req.body)
+        .then(() => res.redirect(req.originalUrl))
+        .catch((err) => {
+            res.send(err);
+            console.error(err);
         });
-}
 
-module.exports.getTaskListPage = (req, res) => {
-
-    let promises = {
-        tasks: () => TasksRepository.getTasksForGroup(req.school_context.user.student.groupId)
-    }
-
-    helper.processPromises(promises, [])
-        .then(lists => {
-
-            let renderOptions = {
-                view: 'common/tasks',
-                title: 'Задания',
-            };
-
-            helper.render(req, res, { lists }, renderOptions);
-        })
-        .catch(error => {
-            console.log(error);
-            res.send(error.toString());
-            res.end();
-        });
 }

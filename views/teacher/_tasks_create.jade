@@ -43,7 +43,8 @@ include ../parts/mixins
           header: 'Группы', 
           list: lists.groups,
           isItemSelected: (item) => selectedGroups.indexOf(item.id) != -1,
-          getter: _ => _.name
+          getter: _ => _.name,
+          columnWidth: 200
           })
 
     .mdl-card__actions.mdl-card--border

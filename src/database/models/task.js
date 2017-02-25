@@ -10,7 +10,7 @@ function Init(sequelize) {
         text: Sequelize.TEXT,
         isRemote: Sequelize.BOOLEAN,
         hasDueDate: Sequelize.BOOLEAN,
-        dueDate : Sequelize.DATE
+        dueDate: Sequelize.DATE
     },
         {
             instanceMethods: {
@@ -22,20 +22,30 @@ function Init(sequelize) {
                 },
                 getDisplayDueDate: function () {
                     return this.hasDueDate ? moment(this.dueDate).format('LL') : '';
+                },
+                isDueDateSoon: function () {
+                    let dueDateMoment = moment(this.dueDate);
+                    let nowMoment = moment();
+                    let days = Math.ceil(dueDateMoment.diff(nowMoment, 'days', true));
+                    return {
+                        isSoon: days <= 1,
+                        daysLeft: days
+                    };
                 }
             }
         });
 
-    Entity.belongsToMany(sequelize.models['task_comment'], { through: 'tasks_task_comments' });
     //Entity.belongsToMany(sequelize.models['attachment'], { through: 'tasks_attachments' });
-    //Entity.belongsToMany(sequelize.models['task_result'], { through: 'task_results' });
+
+    Entity.hasMany(sequelize.models['task_result'], { as: 'results' })
 
     Entity.belongsToMany(sequelize.models['group'], { through: 'tasks_groups' });
-    Entity.belongsTo(sequelize.models.user, { 
+
+    Entity.belongsTo(sequelize.models['user'], {
         foreignKey: { allowNull: false },
         onDelete: 'CASCADE'
     });
-    Entity.belongsTo(sequelize.models.subject, { 
+    Entity.belongsTo(sequelize.models['subject'], {
         foreignKey: { allowNull: false },
         onDelete: 'CASCADE'
     });

@@ -5,10 +5,15 @@ console.time('deploying time');
 const copydir = require('copy-dir');
 const path = require('path');
 
-let konnova, skachkova, yablonskaya;
+const database = require('../src/database/database');
+const connection = database.getConnection();
 
-require('../src/database/database').Init().then(() => {
+let konnova, skachkova, yablonskaya, glusker;
+let programming_subjects = [];
+let yablonskaya_subjects = [];
+let P_403;
 
+database.Init().then(() => {
     const UsersRepository = require('../src/repository/users');
     const SpecialtiesRepository = require('../src/repository/specialties');
     const GroupsRepository = require('../src/repository/groups');
@@ -56,7 +61,7 @@ require('../src/database/database').Init().then(() => {
                 /* 2 курс КС */
                 .then(() => SubjectsRepository.create({ name: 'Основы теории информации', shortname: 'Основы теории информации' }))
                 .then(() => SubjectsRepository.create({ name: 'Основы программирования баз данных', shortname: 'Основы программ-ия баз данных' }))
-                .then(() => SubjectsRepository.create({ name: 'Инженерная компьютерная графика', shortname: 'Инженерная компьютерная графика' }))
+                .then(() => SubjectsRepository.create({ name: 'Инженерная компьютерная графика', shortname: 'Инженерная компьютерная графика' }).then(_ => yablonskaya_subjects.push(_)))
                 .then(() => SubjectsRepository.create({ name: 'Операционные системы', shortname: 'Операционные системы' }))
                 .then(() => SubjectsRepository.create({ name: 'Русский язык и культура речи', shortname: 'Русский язык и культура речи' }))
                 .then(() => SubjectsRepository.create({ name: 'Элементы высшей математики', shortname: 'Элементы высшей математики' }))
@@ -64,19 +69,19 @@ require('../src/database/database').Init().then(() => {
                 /* 2 курс П */
                 .then(() => SubjectsRepository.create({ name: 'Архитектура компьютерных систем', shortname: 'Архитектура компьютерных систем' }))
                 .then(() => SubjectsRepository.create({ name: 'Иностранный язык', shortname: 'Иностранный язык' }))
-                .then(() => SubjectsRepository.create({ name: 'Информационные технологии', shortname: 'Информационные технологии' }))
-                .then(() => SubjectsRepository.create({ name: 'Основы программирования', shortname: 'Основы программирования' }))
+                .then(() => SubjectsRepository.create({ name: 'Информационные технологии', shortname: 'Информационные технологии' }).then(_ => yablonskaya_subjects.push(_)))
+                .then(() => SubjectsRepository.create({ name: 'Основы программирования', shortname: 'Основы программирования' }).then(_ => programming_subjects.push(_)))
                 /* 2 курс И */
                 .then(() => SubjectsRepository.create({ name: 'Архитектура ЭВМ и вычеслительные системы', shortname: 'Архитектура ЭВМ и выч. системы' }))
                 .then(() => SubjectsRepository.create({ name: 'Документационное обеспечение управления', shortname: 'Документационное обеспеч. упр.' }))
                 .then(() => SubjectsRepository.create({ name: 'Экономика организации', shortname: 'Экономика организации' }))
                 /* 4 курс П */
-                .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.01 Технология разработки программного обеспечения', shortname: 'Технология разработки ПО' }))
-                .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.01 Компьютерная графика', shortname: 'Компьютерная графика' }))
-                .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.02 Инструментальные средства разработки программного обеспечения', shortname: 'Инстр. ср-ва разр-ки ПО' }))
+                .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.01 Технология разработки программного обеспечения', shortname: 'Технология разработки ПО' }).then(_ => programming_subjects.push(_)))
+                .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.01 Компьютерная графика', shortname: 'Компьютерная графика' }).then(_ => yablonskaya_subjects.push(_)))
+                .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.02 Инструментальные средства разработки программного обеспечения', shortname: 'Инстр. ср-ва разр-ки ПО' }).then(_ => programming_subjects.push(_)))
                 .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.03 Документирование и сертификация', shortname: 'Документирование и сертификация' }))
                 .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.02 Системы автоматизированного проектирования', shortname: 'Системы авт. проектирования' }))
-                .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.03 Автоматизированные системы управления', shortname: 'Авт. системы управления' }))
+                .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.03 Автоматизированные системы управления', shortname: 'Авт. системы управления' }).then(_ => programming_subjects.push(_)))
         })
         .then(() => {
             return Promise.resolve()
@@ -132,7 +137,7 @@ require('../src/database/database').Init().then(() => {
 
                 .then(() => GroupsRepository.create({ name: 'КС-401', specialtyId: 1 }))
                 .then(() => GroupsRepository.create({ name: 'КС-402к', specialtyId: 1 }))
-                .then(() => GroupsRepository.create({ name: 'П-403', specialtyId: 2 }))
+                .then(() => GroupsRepository.create({ name: 'П-403', specialtyId: 2 }).then(_ => P_403 = _))
                 .then(() => GroupsRepository.create({ name: 'П-404', specialtyId: 2 }))
                 .then(() => GroupsRepository.create({ name: 'И-405к', specialtyId: 3 }))
                 .then(() => GroupsRepository.create({ name: 'З-406к', specialtyId: 4 }))
@@ -140,10 +145,8 @@ require('../src/database/database').Init().then(() => {
         .then(() => {
             return Promise.resolve()
                 .then(() => UsersRepository.create({ lastname: 'Кириллов', firstname: 'Алексей', middlename: 'Иванович', type: 'teacher', login: 'alexey.kirillov', password: 'portal', image_id: 'kirillov' }))
-                .then(() => UsersRepository.create({ lastname: 'Глускер', firstname: 'Александр', middlename: 'Игоревич', type: 'teacher', login: 'alexander.glusker', password: 'portal', image_id: 'glu' }))
-                .then(user => {
-                    return user.update({ canCreateNews: true, canEditTimetable: true });
-                })
+                .then(() => UsersRepository.create({ lastname: 'Глускер', firstname: 'Александр', middlename: 'Игоревич', type: 'teacher', login: 'alexander.glusker', password: 'portal', image_id: 'glu' }).then(_ => glusker = _))
+                .then(user => user.update({ canCreateNews: true, canEditTimetable: true }))
                 .then(() => UsersRepository.create({ lastname: 'Коннова', firstname: 'Ирина', middlename: 'Геннадьевна', type: 'teacher', login: 'irina.konnova', password: 'portal', image_id: 'konnova' }).then(_ => konnova = _))
                 .then(() => UsersRepository.create({ lastname: 'Ларионова', firstname: 'Елена', middlename: 'Анатольевна', type: 'teacher', login: 'elena.larionova', password: 'portal', image_id: 'konnova' }))
                 .then(() => UsersRepository.create({ lastname: 'Миланова', firstname: 'Ирина', middlename: 'Анатольевна', type: 'teacher', login: 'irina.milanova', password: 'portal', image_id: 'milanova' }))
@@ -173,6 +176,84 @@ require('../src/database/database').Init().then(() => {
                     text: `{"ops":[{"insert":"По причине благополучного финансового положения России в последние 20 лет со следующего семестра для студентов всех курсов стипендия будет повышена "},{"attributes":{"bold":true},"insert":"до 45 000 руб"},{"insert":".\\n"}]}`,
                     createdAt: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 3)
                 }))
+        })
+        .then(() => {
+            return Promise.resolve()
+                .then(() => {
+                    return connection
+                        .models['task']
+                        .create({
+                            name: 'Практическая работа №1. Простые программы с использованием событийно-ориентированного программирования (2 часа)',
+                            text: `{"ops":[{"insert":"Цель работы: \\nпрактическое закрепление знаний компонентов Delphi (TForm, TLabel, TEdit, TComboBox, TButton и, возможно, некоторых других – на выбор студента); "},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"практическое закрепление знаний об использовании событий в программировании; "},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"практическое закрепление знаний о функциях IntToStr; StrToInt; FloatToStr; StrToFloat; исключениях. "},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"\\nПорядок выполнения:\\nосуществите визуальное проектирование пользовательского интерфейса формы;"},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"разработайте методы – обработчики тех событий, что необходимо использовать в вашей программе; "},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"приведите вашу программу в соответствие с требованиями. "},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"\\nВарианты заданий – во вложенном файле.\\n"}]}`,
+                            isRemote: true,
+                            hasDueDate: true,
+                            dueDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 1),
+                            userId: glusker.id,
+                            subjectId: programming_subjects[0].id
+                        })
+                        .then(task => {
+                            return connection
+                                .models['tasks_groups']
+                                .create({ taskId: task.id, groupId: P_403.id });
+                        })
+                })
+                .then(() => {
+                    return connection
+                        .models['task']
+                        .create({
+                            name: 'Практическая работа №2. Программирование графики и таймера (6 часов)',
+                            text: `{"ops":[{"insert":"Цель работы:\\nпрактическое изучение компонентов TImage, TChart, TTimer, TOpenDialog; класса TCanvas."},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"Порядок выполнения: \\nосуществите визуальное проектирование пользовательского интерфейса формы (1-ое задание); "},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"разработайте методы – обработчики тех событий, что необходимо использовать в вашей программе (1-ое задание);"},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"приведите вашу программу в соответствие с требованиями (1-ое задание). "},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"осуществите визуальное проектирование пользовательского интерфейса формы (2-ое задание);"},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"разработайте методы – обработчики тех событий, что необходимо использовать в вашей программе (2-ое задание);"},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"приведите вашу программу в соответствие с требованиями (2-ое задание). "},{"attributes":{"list":"ordered"},"insert":"\\n"},{"insert":"\\nВторое задание для всех студентов имеет нулевой уровень. \\n\\nВарианты находятся во вложенном файле.\\n"}]}`,
+                            isRemote: true,
+                            hasDueDate: true,
+                            dueDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 10),
+                            userId: glusker.id,
+                            subjectId: programming_subjects[0].id
+                        })
+                        .then(task => {
+                            return connection
+                                .models['tasks_groups']
+                                .create({ taskId: task.id, groupId: P_403.id });
+                        })
+                })
+                .then(() => {
+                    return connection
+                        .models['task']
+                        .create({
+                            name: 'Лабораторная работа №1',
+                            text: `{"ops":[{"insert":"Необходимо создать иллюстрацию средствами простейших инструментов Adobe Photoshop.\\n\\nДля выполнения задания нужно прислать "},{"attributes":{"bold":true},"insert":"файл .psd "},{"insert":"и "},{"attributes":{"bold":true},"insert":"отчёт "},{"insert":"в формате Microsoft Word.\\n\\n"},{"attributes":{"italic":true},"insert":"Варианты и исходные изображения приложены к заданию."},{"insert":"\\n"}]}`,
+                            isRemote: false,
+                            hasDueDate: false,
+                            dueDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate() + 2),
+                            userId: yablonskaya.id,
+                            subjectId: yablonskaya_subjects[2].id
+                        })
+                        .then(task => {
+                            return connection
+                                .models['tasks_groups']
+                                .create({ taskId: task.id, groupId: P_403.id });
+                        })
+                })
+
+        })
+        .then(() => {
+            return connection
+                .models['teachers_subjects']
+                .bulkCreate(programming_subjects.map(function (subject) {
+                    return {
+                        subjectId: subject.id,
+                        teacherId: glusker.id
+                    }
+                }));
+        })
+        .then(() => {
+            return connection
+                .models['teachers_subjects']
+                .bulkCreate(yablonskaya_subjects.map(function (subject) {
+                    return {
+                        subjectId: subject.id,
+                        teacherId: yablonskaya.id
+                    }
+                }));
         })
         .then(() => {
             return new Promise((resolve, reject) => {

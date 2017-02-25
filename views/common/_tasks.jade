@@ -1,27 +1,44 @@
 include ../parts/mixins
 
-
-
 - var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 6, o: 3 } }
 
 .mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
   .mdl-tabs__tab-bar(style='background: rgba(255, 255, 255, 0.84);')
-    a.mdl-tabs__tab.is-active(href='#new-tasks') Новые
-    a.mdl-tabs__tab(href='#sent-tasks') Отправленные
+    a.mdl-tabs__tab.is-active(href='#first-tab') К&nbsp;выполнению
+    a.mdl-tabs__tab(href='#second-tab') Отправленные
 
-  #new-tasks.mdl-tabs__panel.is-active
-    for task in lists.tasks
-      +Card(taskCardSettings)
-        .mdl-card__title(style='padding-bottom: 8px;')
-          h2.mdl-card__title-text #{task.name}
-        .mdl-card__supporting-text(style='padding-top: 0px; color: black;')
-          h2.mdl-card__title-text
-            small #{task.subject.shortname}
-        if task.getDisplayDueDate()
-          .mdl-card__supporting-text(style='padding-top: 0px;')
-            span Сдать до:&nbsp;
-            span #{ task.getDisplayDueDate() }
-        .mdl-card__actions.mdl-card--border
-          a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/s/tasks/' + task.id, onclick="return ajax(this)") открыть
-  #sent-tasks.mdl-tabs__panel
+
+
+  #first-tab.mdl-tabs__panel.is-active
+    if lists.tasks.length
+      for task in lists.tasks
+        +Card(taskCardSettings)
+          .mdl-card__title(style='padding-bottom: 8px;')
+            h2.mdl-card__title-text(style='font-size: 19px;') #{task.name}
+          .mdl-card__supporting-text(style='padding-top: 0px; color: black; padding-bottom: 0px;')
+            h2.mdl-card__title-text
+              small #{task.subject.shortname}
+          
+          .mdl-card__supporting-text
+            if task.isRemote
+              span.mdl-chip.mdl-spacing
+                span.mdl-chip__text Удалённая сдача
+            if task.hasDueDate
+              - var dueDateSoonResult = task.isDueDateSoon();
+              span.mdl-chip.mdl-spacing(class={'mdl-chip--red': dueDateSoonResult.isSoon})
+                span.mdl-chip__text(id='remote-badge-task-' + task.id) До #{ task.getDisplayDueDate() }
+                .mdl-tooltip(for='remote-badge-task-' + task.id)
+                  - var NCS1 = function(a) { return (a >= 5 && a <= 20) ? 'Осталось' : ((a % 10 == 1) ? 'Остался' : ((a % 10 > 1 && a % 10 < 5) ? 'Осталось' : 'Осталось')) };
+                  - var NCS2 = function(a) { return (a >= 5 && a <= 20) ? 'дней' : ((a % 10 == 1) ? 'день' : ((a % 10 > 1 && a % 10 < 5) ? 'дня' : 'дней')) };
+                  if dueDateSoonResult.daysLeft >= 0 
+                    | #{NCS1(dueDateSoonResult.daysLeft) + ' ' + dueDateSoonResult.daysLeft + ' ' + NCS2(dueDateSoonResult.daysLeft)}
+                  else
+                    | Просрочено на #{-dueDateSoonResult.daysLeft + ' ' + NCS2(-dueDateSoonResult.daysLeft)}
+          .mdl-card__actions.mdl-card--border
+            a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/' + (user.type == 'teacher' ? 't' : 's') + '/tasks/' + task.id, onclick="return ajax(this)") открыть
+    else
+      .loading-text(style='position: absolute; z-index: 5; top: calc(30% - 14px);')
+        h5 Все задания выполнены.
+        h5 Так держать!
+  #second-tab.mdl-tabs__panel
     | keker

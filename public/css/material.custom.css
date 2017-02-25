@@ -1,10 +1,29 @@
-/* mdl-card */
 
 /*@media (min-width: 840px) {
     .mdl-card {
         max-width: 320px;
     }
 }*/
+
+/* mdl-chip */
+
+.mdl-chip__text {
+    outline: 0px;
+}
+
+.mdl-chip {
+    cursor: default;
+}
+
+.mdl-chip--red {
+    background-color: #ffaeae;
+}
+
+.mdl-chip--red:active{
+    background-color: #ffa3a3
+}
+
+/* mdl-card */
 
 .mdl-card {
     min-height: 0px;
@@ -102,6 +121,10 @@
     object-fit: cover;
     border-radius: 50%;
     float: left;
+}
+
+.mdl-spacing {
+    margin-right: 5px;
 }
 
 .mdl-user-box {

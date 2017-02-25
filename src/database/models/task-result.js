@@ -5,12 +5,15 @@ const helper = require('./model-helper');
 const moment = require('moment');
 
 function Init(sequelize) {
-    let Entity = sequelize.define('task_comment', {
-        text: Sequelize.TEXT,
+    let Entity = sequelize.define('task_result', {
         hasMark: Sequelize.BOOLEAN,
-        resultMark: {
+        mark: {
             type: Sequelize.ENUM('A', 'B', 'C', 'D'),
             allowNull: true
+        },
+        state: {
+            type: Sequelize.ENUM('todo', 'sent', 'done'),
+            allowNull: false
         }
     });
 
@@ -19,7 +22,7 @@ function Init(sequelize) {
         onDelete: 'CASCADE'
     });
 
-    //Entity.belongsToMany(sequelize.models['attachment'], { through: 'task_comments_attachments' });    
+    Entity.hasMany(sequelize.models['task_comment'], { as: 'comments' })
 }
 
 module.exports.Init = Init;

@@ -34,13 +34,16 @@ router.get('/t/timetable_editor', teacherController.getLessonsEditor);
 router.post('/t/timetable', teacherController.saveLessons);
 helper.createContollerRoutes('t', router, teacherController.NewsController);
 helper.createContollerRoutes('t', router, teacherController.TasksController);
+router.get('/t/tasks/review', commonController.getTaskListPage);
+router.get('/t/tasks/review/:id', commonController.getTaskPage);
 
 /* student */
 router.get('/s', (req, res) => res.redirect('/s/dashboard'));
 router.get('/s/dashboard', studentController.getDashboardPage);
 router.get('/s/timetable', studentController.getTimetablePage);
-router.get('/s/tasks', studentController.getTaskListPage);
-router.get('/s/tasks/:id', studentController.getTaskPage);
+router.get('/s/tasks', commonController.getTaskListPage);
+router.get('/s/tasks/:id', commonController.getTaskPage);
+router.post('/s/tasks/:id', studentController.saveTaskSolution);
 
 /* common */
 router.get('/settings', commonController.getSettingsPage);

@@ -31,6 +31,7 @@ require('./models/timing').Init(sequelize);
 require('./models/lesson').Init(sequelize);
 require('./models/new').Init(sequelize);
 require('./models/task-comment').Init(sequelize);
+require('./models/task-result').Init(sequelize);
 require('./models/task').Init(sequelize);
 
 function getConnection() {

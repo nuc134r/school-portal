@@ -36,9 +36,11 @@ function ajax(link, closeDrawer) {
     link.href = link.href || link.attributes["href"].value
 
     $.ajax({ url: link.href, data: { 'ajax': 1 } })
-        .done(function (response) {
+        .done(function (response, textStatus, jqXHR) {
 
-            // TODO: Validate 'response'
+            if (!response.title && !response.html) {
+                window.location.reload();
+            }
 
             $loading_spinner.css('visibility', 'collapse');
             $content.html(response.html);
@@ -62,6 +64,10 @@ function ajax(link, closeDrawer) {
         })
         .error(function (error) {
             $loading_spinner.css('visibility', 'collapse');
+            $title.html('Ошибка');
+            History.pushState({}, 'Ошибка | Студенческий портал', link.href);
+            $content.html('<div style="position: absolute; z-index: 5; top: calc(30% - 14px);" class="loading-text"><h5>Произошла ошибка.</h5><h5>Тут ничего нет.</h5></div>');
+            
             showMessage('AJAX navigation error: ' + error.status);
             console.error(error);
         });
