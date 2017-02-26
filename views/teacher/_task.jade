@@ -1,0 +1,38 @@
+include ../parts/mixins
+
+
+- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 6, o: 3 } }
+
+.mdl-grid
+
+  +TaskListEntry(task, taskCardSettings, { showOpenButton: false })
+    +GroupsWithCounter(task)
+    //.mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/t/tasks/" + task.id + '/edit', onclick="return ajax(this);") Изменить формулировку
+
+  if task.isRemote
+    +Card(taskCardSettings)
+      .mdl-card__title(style='padding-bottom: 8px;')
+        h2.mdl-card__title-text Работы студентов
+      .mdl-card__supporting-text.mdl-card__supporting-text-heightfix-no-actions(style='padding-top: 0px; width: 100%; padding-right: 0px; padding-left: 0px; ')
+        .mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
+          .mdl-tabs__tab-bar(style='background: rgba(255, 255, 255, 0.84);')
+            a.mdl-tabs__tab(class={ 'is-active' : false }, href='#first-tab') Не сдавшие
+            a.mdl-tabs__tab(class={ 'is-active' : true }, href='#second-tab') На проверку
+            a.mdl-tabs__tab(class={ 'is-active' : false }, href='#third-tab') Проверенные
+
+          #first-tab.mdl-tabs__panel(class={ 'is-active' : false })
+            | kek
+                        
+          #second-tab.mdl-tabs__panel(class={ 'is-active' : true })
+            div(style='padding-left: 8px; padding-right: 8px; padding-top: 16px;')
+              for result in task.results
+                div(style='padding-bottom: 16px;')
+                  a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/t/tasks/review/" + task.id + '_' + result.id, onclick="return ajax(this);", style='float: right;') Проверить
+                  img.mdl-user-avatar(src=result.user.asViewModel().getImageUrls().small)
+                  h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px;') #{ result.user.firstname + ' ' + result.user.lastname }
+                  h2.mdl-card__title-text(style='font-size: 13px; padding-left: 10px; padding-top: 7px; font-weight: 400;') #{ result.createdAtDisplay }
+
+          #third-tab.mdl-tabs__panel(class={ 'is-active' : false })
+            | kek
+          

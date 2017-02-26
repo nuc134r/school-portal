@@ -1,0 +1,43 @@
+include ../parts/mixins
+
+
+- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 6, o: 3 } }
+
++TaskWithDetails(task, taskCardSettings)
+  if task.isRemote
+    #send-button-wrapper(style='width: 100%;')
+      .mdl-card__actions.mdl-card--border
+        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="$('#sendtaskform').css('display', 'block'); $('#send-button-wrapper').css('display', 'none'); setTimeout(10, window.scrollTo(0,document.body.scrollHeight));") Отправить решение
+    
+.mdl-grid
+
+if !task.isRemote
+  +Text(taskCardSettings)
+    h5(style='text-align: center; opacity: 0.3;') Это задание нельзя сдать удалённо
+
++Comments(task.comments, taskCardSettings)
+
+.mdl-grid
+
+form(action=('/s/tasks/' + task.id), method='POST', id='sendtaskform', style='display: none;')
+  +Card(taskCardSettings)
+    .mdl-card__title(style='padding-bottom: 8px;')
+      h2.mdl-card__title-text Решение
+    .mdl-card__supporting-text(style='height:100%;')
+      h5(style='margin-top:0px;') Вложения
+      a(href='#') Добавить вложение
+      h5 Пояснения
+      #editor(style='min-height: 200px')
+      input#delta-data(name='text', style='display:none;')
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="post_form()") Отправить
+
+script.
+  var quill = new Quill('#editor', {
+    theme: 'snow'
+  }); 
+
+  function post_form() {
+    document.getElementById('delta-data').value = JSON.stringify(quill.getContents());
+    document.getElementById('sendtaskform').submit();
+  }

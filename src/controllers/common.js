@@ -22,13 +22,22 @@ module.exports.getTaskPage = (req, res) => {
         .then(task => {
 
             task.textHtml = QuillRenderer(JSON.parse(task.text).ops);
-            task.comments.forEach(_ => {
-                _.textHtml = QuillRenderer(JSON.parse(_.text).ops)
-                _.createdAtDisplay = moment(_.createdAt).format('LLL')
-            });
+            if (task.comments) {
+                task.comments.forEach(_ => {
+                    _.textHtml = QuillRenderer(JSON.parse(_.text).ops)
+                    _.createdAtDisplay = moment(_.createdAt).format('LLL')
+                });
+            }
+            if (task.results) {
+                task.results.forEach(_ => {
+                    _.createdAtDisplay = moment(_.createdAt).format('LLL')
+                });
+            }
+
+            let usertype = req.school_context.user.type;
 
             let renderOptions = {
-                view: 'common/task',
+                view: usertype + '/task',
                 title: 'Задание',
             };
 
@@ -44,8 +53,10 @@ module.exports.getTaskPage = (req, res) => {
 module.exports.getTaskListPage = (req, res) => {
     let promises = {};
 
-    if (req.school_context.user.type == 'student') {
-        promises.tasks = () => TasksRepository.getTasksForGroup(req.school_context.user.student.groupId)
+    let usertype = req.school_context.user.type;
+
+    if (usertype == 'student') {
+        promises.tasks = () => TasksRepository.getTasksForGroup(req.school_context.user.id, req.school_context.user.student.groupId)
     } else {
         promises.tasks = () => TasksRepository.getTasksForTeacher(req.school_context.user.teacher.id)
     }
@@ -53,14 +64,23 @@ module.exports.getTaskListPage = (req, res) => {
     getHelper(req).processPromises(promises, [])
         .then(lists => {
 
-            // split tasks into categories to display in list
+            let list1 = [],
+                list2 = [];
+
+            if (usertype == 'student') {
+                list1 = lists.tasks.filter(task => !task.results[0] || task.results[0].state == 'todo');
+                list2 = lists.tasks.filter(task => task.results[0] && task.results[0].state != 'todo');
+            } else {
+                list1 = lists.tasks;
+                list2 = lists.tasks.filter(task => task.results && task.results.some((_ => _.state == 'sent')));
+            }
 
             let renderOptions = {
-                view: 'common/tasks',
+                view: usertype + '/tasks' + (usertype == 'teacher' ? '_review' : ''),
                 title: 'Задания',
             };
 
-            getHelper(req).render(req, res, { lists }, renderOptions);
+            getHelper(req).render(req, res, { list1, list2 }, renderOptions);
         })
         .catch(error => {
             console.log(error);

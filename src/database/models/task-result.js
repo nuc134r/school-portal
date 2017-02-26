@@ -7,6 +7,7 @@ const moment = require('moment');
 function Init(sequelize) {
     let Entity = sequelize.define('task_result', {
         hasMark: Sequelize.BOOLEAN,
+        needsRevision: Sequelize.BOOLEAN,
         mark: {
             type: Sequelize.ENUM('A', 'B', 'C', 'D'),
             allowNull: true
@@ -18,6 +19,11 @@ function Init(sequelize) {
     });
 
     Entity.belongsTo(sequelize.models['user'], {
+        foreignKey: { allowNull: false },
+        onDelete: 'CASCADE'
+    });
+
+    Entity.belongsTo(sequelize.models['group'], {
         foreignKey: { allowNull: false },
         onDelete: 'CASCADE'
     });

@@ -88,6 +88,10 @@
     opacity: 1
 }
 
+h2 > small {
+    padding-bottom: 1px;
+}
+
 .mdl-button-custom--text {
     opacity: .5;
     margin-bottom: 0px;

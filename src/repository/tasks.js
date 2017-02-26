@@ -19,18 +19,32 @@ module.exports.create = (options) => {
 module.exports.browse = (user) => helper.browseWith(['group', 'subject'], { userId: user.teacher.id })();
 
 module.exports.get = (options, user) => {
-    return connection
-        .models['task']
-        .find({
-            where: { id: options.id },
-            include: [
-                connection.models['group'],
-                connection.models['subject'],
-                connection.models['user']
-            ]
-        })
-        .then(task => {
-            if (user) {
+    if (!user) {
+
+        return connection
+            .models['task']
+            .find({
+                where: { id: options.id },
+                include: [
+                    connection.models['group'],
+                    connection.models['subject'],
+                    connection.models['user']
+                ]
+            });
+    }
+    if (user.type == 'student') {
+
+        return connection
+            .models['task']
+            .find({
+                where: { id: options.id },
+                include: [
+                    connection.models['group'],
+                    connection.models['subject'],
+                    connection.models['user']
+                ]
+            })
+            .then(task => {
                 return task.getResults({ where: { userId: user.id } })
                     .then(results => {
                         if (results.length) {
@@ -43,15 +57,27 @@ module.exports.get = (options, user) => {
                     .then(comments => {
                         task.comments = comments;
                         return task;
-                    })
-            } else {
-                return task;
-            }
-        });
+                    });
+            });
+    }
+
+    if (user.type == 'teacher') {
+        return connection
+            .models['task']
+            .find({
+                where: { id: options.id },
+                include: [
+                    connection.models['group'],
+                    connection.models['subject'],
+                    connection.models['user'],
+                    { model: connection.models['task_result'], as: 'results', include: [ connection.models['user'] ] }
+                ]
+            })
+    }
 };
 
-module.exports.getTasksForGroup = (groupId) => {
-    return helper.browseWith(['group', 'subject'], {}, [{ model: connection.models['task_result'], as: 'results' }])()
+module.exports.getTasksForGroup = (userId, groupId) => {
+    return helper.browseWith(['group', 'subject'], {}, [{ model: connection.models['task_result'], as: 'results', where: { userId }, required: false }])()
         .then((tasks) => {
             let result = [];
 
@@ -68,13 +94,18 @@ module.exports.getTasksForGroup = (groupId) => {
 };
 
 module.exports.getTasksForTeacher = (userId) => {
-    return helper.browseWith(['group', 'subject'], { userId }, [{ model: connection.models['task_result'], as: 'results' }])();
+    return helper.browseWith(
+        ['group', 'subject'],
+        { userId },
+        [
+            { model: connection.models['task_result'], as: 'results' }
+        ])();
 };
 
-module.exports.saveTaskSolution = (taskId, userId, options) => {
+module.exports.saveTaskSolution = (taskId, userId, groupId, options) => {
     return connection
         .models['task_result']
-        .findOrCreate({ where: { taskId, userId }, defaults: { taskId, userId, state: 'sent', hasMark: false } })
+        .findOrCreate({ where: { taskId, userId }, defaults: { taskId, userId, groupId, state: 'sent', hasMark: false, needsResvision: false } })
         .then(result => {
             let taskResult = result[0];
             let created = result[1];

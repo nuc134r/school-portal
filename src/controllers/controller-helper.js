@@ -5,6 +5,7 @@ const path = require('path');
 const url = require('url');
 
 const async = require('async');
+const moment = require('moment');
 
 const utils = require('../utils');
 
@@ -44,7 +45,9 @@ function create(user_mode, urlPrefix) {
 
             user: req.school_context.user,
 
-            query_params: req.query
+            query_params: req.query,
+            
+            moment
         };
 
         let params = Object.assign(mandatory_params, custom_params);

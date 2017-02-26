@@ -8,7 +8,7 @@ include ../parts/mixins
         i.material-icons.mdl-card-icon &#xE916;
         | Занятия
       h2.mdl-card__title-text.mdl-card__title-subtext
-        small #{ {mon: 'понедельник', tue: 'вторник', wed: 'среда', thu: 'четверг',  fri: 'пятница', sat: 'суббота'}[today] }
+        small #{ {mon: 'понедельник', tue: 'вторник', wed: 'среда', thu: 'четверг',  fri: 'пятница', sat: 'суббота', 'sun': 'воскресенье'}[today] }
     .mdl-card__supporting-text.mdl-card__supporting-text-strip-borders.mdl-card__supporting-text-heightfix
       +LessonList(lists.lessons.sort((a, b) => a.begins > b.begins))
     .mdl-card__actions.mdl-card--border

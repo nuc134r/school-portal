@@ -13,7 +13,7 @@ const connection = database.getConnection();
 let konnova, skachkova, yablonskaya, glusker;
 let programming_subjects = [];
 let yablonskaya_subjects = [];
-let P_403;
+let P_403, P_404;
 
 database.Init().then(() => {
     const UsersRepository = require('../src/repository/users');
@@ -140,7 +140,7 @@ database.Init().then(() => {
                 .then(() => GroupsRepository.create({ name: 'КС-401', specialtyId: 1 }))
                 .then(() => GroupsRepository.create({ name: 'КС-402к', specialtyId: 1 }))
                 .then(() => GroupsRepository.create({ name: 'П-403', specialtyId: 2 }).then(_ => P_403 = _))
-                .then(() => GroupsRepository.create({ name: 'П-404', specialtyId: 2 }))
+                .then(() => GroupsRepository.create({ name: 'П-404', specialtyId: 2 }).then(_ => P_404 = _))
                 .then(() => GroupsRepository.create({ name: 'И-405к', specialtyId: 3 }))
                 .then(() => GroupsRepository.create({ name: 'З-406к', specialtyId: 4 }))
         })
@@ -155,8 +155,9 @@ database.Init().then(() => {
                 .then(() => UsersRepository.create({ lastname: 'Скачкова', firstname: 'Светлана', middlename: 'Ивановна', type: 'teacher', login: 'svetlana.skachkova', password: 'portal' }).then(_ => skachkova = _))
                 .then(() => UsersRepository.create({ lastname: 'Сорокин', firstname: 'Юрий', middlename: 'Сергеевич', type: 'teacher', login: 'yury.sorokin', password: 'portal', image_id: 'sorokin' }))
                 .then(() => UsersRepository.create({ lastname: 'Павлов', firstname: 'Алексей', middlename: 'Владимирович', type: 'teacher', login: 'alexey.pavlov', password: 'portal' }))
-                .then(() => UsersRepository.create({ lastname: 'Яблонская', firstname: 'Юлия', middlename: 'Викторовна', type: 'teacher', login: 'rozovay_blondinka', password: 'portal', image_id: 'blondinko' }).then(_ => yablonskaya = _))
+                .then(() => UsersRepository.create({ lastname: 'Яблонская', firstname: 'Юлия', middlename: 'Викторовна', type: 'teacher', login: 'y', password: 'portal', image_id: 'blondinko' }).then(_ => yablonskaya = _))
                 .then(() => UsersRepository.create({ lastname: 'Тихонов', firstname: 'Сергей', middlename: 'Сергеевич', type: 'student', login: 'sergey.tikhonov', password: 'portal', groupId: 25, image_id: 'tixon' }))
+                .then(() => UsersRepository.create({ lastname: 'Батанина', firstname: 'Анастасия', middlename: 'Валерьевна', type: 'student', login: 'anastasiya.batanina', password: 'portal', groupId: 25, image_id: 'batanina' }))
         })
         .then(() => {
             return Promise.resolve()
@@ -211,7 +212,10 @@ database.Init().then(() => {
                         .then(task => {
                             return connection
                                 .models['tasks_groups']
-                                .create({ taskId: task.id, groupId: P_403.id });
+                                .create({ taskId: task.id, groupId: P_403.id })
+                                .then(() => connection
+                                    .models['tasks_groups']
+                                    .create({ taskId: task.id, groupId: P_404.id }));
                         })
                 })
                 .then(() => {
@@ -229,7 +233,10 @@ database.Init().then(() => {
                         .then(task => {
                             return connection
                                 .models['tasks_groups']
-                                .create({ taskId: task.id, groupId: P_403.id });
+                                .create({ taskId: task.id, groupId: P_403.id })
+                                .then(() => connection
+                                    .models['tasks_groups']
+                                    .create({ taskId: task.id, groupId: P_404.id }));
                         })
                 })
                 .then(() => {
