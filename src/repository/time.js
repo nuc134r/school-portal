@@ -57,7 +57,7 @@ module.exports.getWeekDays = (options) => {
 
     for (let i = 0; i < WeekDays.length; i++) {
         let day = moment().day(WeekDays[i].displayName);
-        let displayDate = day.format('DD MMMM');
+        let displayDate = day.format('DD ') + day.format('MMMM').substr(0, 3);
 
         //if (humanize) {
             if (day.isoWeekday() == now.isoWeekday()) {

@@ -202,3 +202,86 @@ mixin ListSelector(options)
     div(style='padding-left: 18px; margin-left: -18px; columns: ' + (options.columnWidth || 400) + 'px;')
       each entry in options.list
         +Checkbox((options.name + '_' + entry.id), options.getter(entry), '', options.isItemSelected(entry))
+
+
+mixin TaskWithDetails(task, cardSettings, options)
+  - options = options || { showGroups: false }
+  +Card(taskCardSettings)
+    .mdl-card__title(style='padding-bottom: 8px;')
+      h2.mdl-card__title-text(style='font-size: 19px;') #{task.name}
+    .mdl-card__supporting-text(style='padding-top: 0px;')
+      h2.mdl-card__title-text
+        small #{task.subject.shortname}
+    
+    if options.showGroups
+      .mdl-card__supporting-text(style='padding-top: 0px;')
+        h5(style='font-weight: 400; margin-top: 0px; color: black;') Группы
+        +GroupsWithCounter(task, { showCounter: false })
+
+    if task.getDisplayDueDate()
+      .mdl-card__supporting-text(style='padding-top: 0px;')
+        h5(style='font-weight: 400; margin-top: 0px; color: black;') Срок сдачи
+        | #{ task.getDisplayDueDate() }
+    .mdl-card__supporting-text(style='padding-top: 0px;')
+      h5(style='font-weight: 400; margin-top: 0px; color: black;') Задание
+      | !{task.textHtml}
+      h5(style='font-weight: 400; margin-top: 0px; color: black;') Вложения
+      | Вложений нет
+    block
+
+mixin GroupsWithCounter(task, options)
+  - options = options || { showCounter: true }
+  for group in task.groups.sort((a, b) => a.name > b.name)
+    - var sent_results = task.results.filter(_ => _.state == 'sent' && _.groupId == group.id).length;
+    if sent_results && options.showCounter
+      span.mdl-chip.mdl-spacing.mdl-badge.mdl-badge--overlap(data-badge=sent_results)
+        span.mdl-chip__text #{ group.name }
+    else
+      span.mdl-chip.mdl-spacing
+        span.mdl-chip__text #{ group.name }
+
+mixin Comments(comments, cardSettings)
+  each comment in comments.sort(_ => +_.createdAt)
+    +Card(cardSettings)
+      .mdl-card__supporting-text
+        img.mdl-user-avatar(src=comment.user.asViewModel().getImageUrls().small)
+        h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px;') #{ comment.user.firstname + ' ' + comment.user.lastname }
+        h2.mdl-card__title-text(style='font-size: 13px; padding-left: 10px; padding-top: 7px; font-weight: 400;') #{ comment.createdAtDisplay }
+      .mdl-card__supporting-text(style='padding-top: 0px;')
+        h5(style='font-weight: 400; margin-top: 0px; color: black;') Вложения
+        | Вложений нет
+        h5(style='font-weight: 400; color: black;') Пояснения
+        | !{comment.textHtml}
+
+mixin TaskListEntry(task, cardSettings, options)
+  - options = options || { showOpenButton: true }
+  +Card(cardSettings)
+    .mdl-card__title(style='padding-bottom: 8px;')
+      h2.mdl-card__title-text(style='font-size: 19px;') #{task.name}
+    .mdl-card__supporting-text(style='padding-top: 0px; color: black; padding-bottom: 0px;')
+      h2.mdl-card__title-text
+        small #{task.subject.shortname}
+    
+    .mdl-card__supporting-text
+      block
+    
+    if options.showOpenButton
+      .mdl-card__actions.mdl-card--border
+        if user.type == 'student'
+          a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/s/tasks/' + task.id, onclick="return ajax(this)") открыть
+        if user.type == 'teacher'
+          a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/t/tasks/review/' + task.id, onclick="return ajax(this)") открыть
+
+mixin MarkChip(mark)
+  if mark == 'A'
+    span.mdl-chip.mdl-spacing.mdl-color--green.mdl-color-text--white
+      span.mdl-chip__text Отлично
+  if mark == 'B'
+    span.mdl-chip.mdl-spacing.mdl-color--light-green.mdl-color-text--white
+      span.mdl-chip__text Хорошо
+  if mark == 'C'
+    span.mdl-chip.mdl-spacing.mdl-color--lime.mdl-color-text--white
+      span.mdl-chip__text Удовлетворительно
+  if mark == 'D'
+    span.mdl-chip.mdl-spacing.mdl-color--deep-orange.mdl-color-text--white
+      span.mdl-chip__text Неудовлетворительно

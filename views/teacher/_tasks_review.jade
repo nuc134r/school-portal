@@ -1,0 +1,26 @@
+include ../parts/mixins
+
+- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 6, o: 3 } }
+
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
+  .mdl-tabs__tab-bar(style='background: rgba(255, 255, 255, 0.84);')
+    a.mdl-tabs__tab(class={ 'is-active' : !list2.length }, href='#first-tab') Все
+    a.mdl-tabs__tab(class={ 'is-active' : list2.length }, href='#second-tab') На проверку
+
+  #first-tab.mdl-tabs__panel(class={ 'is-active' : !list2.length })
+    if list1.length
+      for task in list1
+        +TaskListEntry(task, taskCardSettings)
+          +GroupsWithCounter(task)
+    else
+      .loading-text(style='position: absolute; z-index: 5; top: calc(30% - 14px);')
+        h5 Заданий нет
+                
+  #second-tab.mdl-tabs__panel(class={ 'is-active' : list2.length })
+    if list2.length
+      for task in list2
+        +TaskListEntry(task, taskCardSettings)
+          +GroupsWithCounter(task)
+    else
+      .loading-text(style='position: absolute; z-index: 5; top: calc(30% - 14px);')
+        h5 Заданий нет

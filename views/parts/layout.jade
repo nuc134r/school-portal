@@ -72,7 +72,7 @@ html
             +MenuItem({label: 'Сегодня',       link: '/s/dashboard', icon: '&#xE8DF;' })
             +MenuItem({label: 'Расписание',    link: '/s/timetable', icon: '&#xE916;' })
             +MenuItem({label: 'Задания',       link: '/s/tasks',     icon: '&#xE877;' })
-            +MenuItem({label: 'Сообщения',     link: '/s/messages',  icon: '&#xE0C9;', counter: 3})
+            +MenuItem({label: 'Сообщения',     link: '/s/messages',  icon: '&#xE0C9;'/*, counter: 3*/})
             +MenuItem({label: 'Группа',        link: '/s/students',  icon: '&#xE7FB;' })
             +MenuItem({label: 'Материалы',     link: '/s/materials', icon: '&#xE86E;' })
             +MenuItem({label: 'Клубы',         link: '/s/clubs',     icon: '&#xE420;' })
@@ -80,7 +80,7 @@ html
         if layout == 'teacher'   
           .mdl-navigation
             +MenuItem({label: 'Сегодня',          link: '/t/dashboard',   icon: '&#xE8DF;' })
-            +MenuItem({label: 'Задания',          link: '/t/tasks/review',  icon: '&#xE877;', counter: 5 })
+            +MenuItem({label: 'Задания',          link: '/t/tasks/review',  icon: '&#xE877;'/*, counter: 5 */})
             +MenuItem({label: 'Редактор заданий', link: '/t/tasks',       icon: '&#xE877;' })
             if user.teacher.canEditTimetable
               +MenuItem({label: 'Редактор расписания',       link: '/t/timetable', icon: '&#xE916;' })

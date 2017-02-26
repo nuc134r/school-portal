@@ -110,7 +110,7 @@ module.exports.saveTaskSolution = (req, res) => {
     let formData = req.body;
 
     TasksRepository
-        .saveTaskSolution(req.params.id, req.school_context.user.id, req.body)
+        .saveTaskSolution(req.params.id, req.school_context.user.id, req.school_context.user.student.groupId, req.body)
         .then(() => res.redirect(req.originalUrl))
         .catch((err) => {
             res.send(err);
