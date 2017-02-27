@@ -170,3 +170,13 @@ module.exports.saveLessons = (req, res) => {
             });
     });
 }
+
+module.exports.saveTaskResult = (req, res) => {
+    TasksRepository
+        .saveTaskResult(req.params.id, req.school_context.user, req.body)
+        .then(taskResultId => res.redirect(`/t/tasks/review/${taskResultId}`))
+        .catch((err) => {
+            res.send(err);
+            console.error(err);
+        });
+}

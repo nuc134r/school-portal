@@ -36,6 +36,8 @@ helper.createContollerRoutes('t', router, teacherController.NewsController);
 helper.createContollerRoutes('t', router, teacherController.TasksController);
 router.get('/t/tasks/review', commonController.getTaskListPage);
 router.get('/t/tasks/review/:id', commonController.getTaskPage);
+router.get('/t/tasks/result/:id', commonController.getTaskResultPage);
+router.post('/t/tasks/result/:id', teacherController.saveTaskResult);
 
 /* student */
 router.get('/s', (req, res) => res.redirect('/s/dashboard'));

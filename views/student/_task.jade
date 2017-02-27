@@ -1,9 +1,11 @@
 include ../parts/mixins
 
 
-- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 6, o: 3 } }
+- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 8, o: 2 } }
 
 +TaskWithDetails(task, taskCardSettings)
+  //.mdl-card__actions.mdl-card--border
+    a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/t/tasks/" + task.id + '/edit', onclick="return ajax(this);") Изменить формулировку
   if task.isRemote
     #send-button-wrapper(style='width: 100%;')
       .mdl-card__actions.mdl-card--border

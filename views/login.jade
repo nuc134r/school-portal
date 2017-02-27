@@ -9,22 +9,22 @@ block content
     - var cardSettings = { shadow: 2, phone: { s: 4 }, tablet : { s: 4, o: 2 }, desktop: { s: 4, o: 4 } };
 
     if error_code == 'invalid_credentials'
-      +MessageCard(cardSettings, 'Ошибка входа', 'Проверьте верность введённых данных', null, 'max-width: 320px;')
+      +MessageCard(cardSettings, 'Ошибка входа', 'Проверьте верность введённых данных', null)
 
     if error_code == 'session_expired'
-      +MessageCard(cardSettings, 'Ошибка', 'Пожалуйста, войдите в систему', null, 'max-width: 320px;')
+      +MessageCard(cardSettings, 'Ошибка', 'Пожалуйста, войдите в систему', null)
     
-    +Card(cardSettings, 'max-width: 320px;')
+    +Card(cardSettings, style='max-width: 320px;')
       .mdl-card__supporting-text.mdl-card__supporting-text-strip-borders
         
         h4(style='font-weight: 100; text-align: center;') Авторизация
 
         form(action='/authorize', method='POST', style='padding: 0px 8px;', id='loginform')
-          .mdl-textfield.mdl-js-textfield(style='left: 50%; transform: translateX(-50%);')
+          .mdl-textfield.mdl-js-textfield(style='width:100%;')
             input#loginfield.mdl-textfield__input(type='text', autofocus=!login, name='login', value=login)  
             label.mdl-textfield__label(for='loginfield') Логин
 
-          .mdl-textfield.mdl-js-textfield(style='left: 50%; transform: translateX(-50%); margin-bottom: 8px;')
+          .mdl-textfield.mdl-js-textfield(style='width:100%;')
             input#passwordfield.mdl-textfield__input(type='password', name='pass', autofocus=login)
             label.mdl-textfield__label(for='passwordfield') Пароль
                 

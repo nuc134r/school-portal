@@ -1,7 +1,7 @@
 include ../parts/mixins
 
 
-- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 6, o: 3 } }
+- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 8, o: 2 } }
 
 .mdl-grid
 
@@ -25,13 +25,17 @@ include ../parts/mixins
             | kek
                         
           #second-tab.mdl-tabs__panel(class={ 'is-active' : true })
-            div(style='padding-left: 8px; padding-right: 8px; padding-top: 16px;')
-              for result in task.results
-                div(style='padding-bottom: 16px;')
-                  a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/t/tasks/review/" + task.id + '_' + result.id, onclick="return ajax(this);", style='float: right;') Проверить
-                  img.mdl-user-avatar(src=result.user.asViewModel().getImageUrls().small)
-                  h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px;') #{ result.user.firstname + ' ' + result.user.lastname }
-                  h2.mdl-card__title-text(style='font-size: 13px; padding-left: 10px; padding-top: 7px; font-weight: 400;') #{ result.createdAtDisplay }
+            div(style='padding-left: 8px; padding-right: 8px;')
+              for group in task.groups.sort((a, b) => a.name > b.name)
+                - var groupResults = task.results.filter(_ => _.groupId == group.id)
+                if groupResults.length
+                  h5(style='margin: 16px 0px;') #{group.name}
+                  for result in groupResults
+                    div(style='height: 48px; padding-bottom: 8px;')
+                      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/t/tasks/result/" + result.id, onclick="return ajax(this);", style='float: right; margin-top: 6px;') Проверить
+                      img.mdl-user-avatar(src=result.user.asViewModel().getImageUrls().small)
+                      h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px;') #{ result.user.firstname + ' ' + result.user.lastname }
+                      h2.mdl-card__title-text(style='font-size: 13px; padding-left: 10px; padding-top: 7px; font-weight: 400;') #{ result.createdAtDisplay }
 
           #third-tab.mdl-tabs__panel(class={ 'is-active' : false })
             | kek
