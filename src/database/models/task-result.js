@@ -7,13 +7,12 @@ const moment = require('moment');
 function Init(sequelize) {
     let Entity = sequelize.define('task_result', {
         hasMark: Sequelize.BOOLEAN,
-        needsRevision: Sequelize.BOOLEAN,
         mark: {
             type: Sequelize.ENUM('A', 'B', 'C', 'D'),
             allowNull: true
         },
         state: {
-            type: Sequelize.ENUM('todo', 'sent', 'done'),
+            type: Sequelize.ENUM('todo', 'sent', 'needsRevision', 'done'),
             allowNull: false
         }
     });

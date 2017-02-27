@@ -1,0 +1,52 @@
+include ../parts/mixins
+
+
+- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 8, o: 2 } }
+
++TaskWithDetails(taskResult.task, taskCardSettings)
+  .mdl-card__actions.mdl-card--border
+    a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/t/tasks/" + taskResult.task.id + '/edit', onclick="return ajax(this);") Изменить формулировку
+    
+.mdl-grid
+
++Comments(taskResult.comments, taskCardSettings)
+
+.mdl-grid
+
+form(action=('/t/tasks/result/' + taskResult.id), method='POST', id='sendtaskreviewresultform')
+  +Card(taskCardSettings)
+    .mdl-card__title(style='padding-bottom: 0px;')
+      h2.mdl-card__title-text Оценка работы
+    .mdl-card__supporting-text(style='height: 100%;')
+      | Вы можете выставить студенту оценку или отправить работу на доработку.
+      br
+      br
+      +RadioButton('Отправить на доработку', 'state', 'needsRevision')
+      br
+      br
+      +RadioButton('Выставить оценку', 'state', 'done', true)
+      +ComboBox('Оценка', 'mark', [{text: 'Отлично', value: 'A'}, {text: 'Хорошо', value: 'B'}, {text: 'Удовлетворительно', value: 'C'}, {text: 'Неудовлетворительно', value: 'D'}], true)
+      h5(style='padding-top: 0px;') Пояснения
+      #editor(style='min-height: 200px')
+      input#delta-data(name='text', style='display:none;')
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="post_form()") Отправить
+
+script.
+  var quill = new Quill('#editor', {
+    theme: 'snow'
+  }); 
+
+  function post_form() {
+    document.getElementById('delta-data').value = JSON.stringify(quill.getContents());
+    document.getElementById('sendtaskreviewresultform').submit();
+  }
+
+  function onStateChange() {
+    if (!document.getElementById('done_radio').checked) {
+      document.getElementById("markfield").selectedIndex = 0;
+    }
+  }
+
+  document.getElementById('done_radio').onchange = onStateChange;
+  document.getElementById('needsRevision_radio').onchange = onStateChange;

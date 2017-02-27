@@ -225,8 +225,8 @@ mixin TaskWithDetails(task, cardSettings, options)
     .mdl-card__supporting-text(style='padding-top: 0px;')
       h5(style='font-weight: 400; margin-top: 0px; color: black;') Задание
       | !{task.textHtml}
-      h5(style='font-weight: 400; margin-top: 0px; color: black;') Вложения
-      | Вложений нет
+      //h5(style='font-weight: 400; margin-top: 0px; color: black;') Вложения
+      //| Вложений нет
     block
 
 mixin GroupsWithCounter(task, options)
@@ -247,11 +247,15 @@ mixin Comments(comments, cardSettings)
         img.mdl-user-avatar(src=comment.user.asViewModel().getImageUrls().small)
         h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px;') #{ comment.user.firstname + ' ' + comment.user.lastname }
         h2.mdl-card__title-text(style='font-size: 13px; padding-left: 10px; padding-top: 7px; font-weight: 400;') #{ comment.createdAtDisplay }
-      .mdl-card__supporting-text(style='padding-top: 0px;')
-        h5(style='font-weight: 400; margin-top: 0px; color: black;') Вложения
-        | Вложений нет
-        h5(style='font-weight: 400; color: black;') Пояснения
+      .mdl-card__supporting-text(style='padding-top: 0px; padding-bottom: 0px;')
+        //h5(style='font-weight: 400; margin-top: 0px; color: black;') Вложения
+        //| Вложений нет
+        //h5(style='font-weight: 400; color: black; margin-top: 0px;') Пояснения
         | !{comment.textHtml}
+      if comment.hasMark
+        .mdl-card__supporting-text(style='padding-top: 0px;')
+          +MarkChip(comment.resultMark)
+
 
 mixin TaskListEntry(task, cardSettings, options)
   - options = options || { showOpenButton: true }

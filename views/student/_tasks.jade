@@ -1,6 +1,6 @@
 include ../parts/mixins
 
-- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 6, o: 3 } }
+- var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 8, o: 2 } }
 
 .mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
   .mdl-tabs__tab-bar(style='background: rgba(255, 255, 255, 0.84);')
@@ -42,10 +42,7 @@ include ../parts/mixins
             span.mdl-chip.mdl-spacing
               span.mdl-chip__text Ожидает проверки
           if task.results[0].state == 'done'
-            +MarkChip('A')
-            +MarkChip('B')
-            +MarkChip('C')
-            +MarkChip('D')
+            +MarkChip(task.results[0].mark)
     else
       .loading-text(style='position: absolute; z-index: 5; top: calc(30% - 14px);')
         h5 Заданий нет

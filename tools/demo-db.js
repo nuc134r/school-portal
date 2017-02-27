@@ -158,6 +158,7 @@ database.Init().then(() => {
                 .then(() => UsersRepository.create({ lastname: 'Яблонская', firstname: 'Юлия', middlename: 'Викторовна', type: 'teacher', login: 'y', password: 'portal', image_id: 'blondinko' }).then(_ => yablonskaya = _))
                 .then(() => UsersRepository.create({ lastname: 'Тихонов', firstname: 'Сергей', middlename: 'Сергеевич', type: 'student', login: 'sergey.tikhonov', password: 'portal', groupId: 25, image_id: 'tixon' }))
                 .then(() => UsersRepository.create({ lastname: 'Батанина', firstname: 'Анастасия', middlename: 'Валерьевна', type: 'student', login: 'anastasiya.batanina', password: 'portal', groupId: 25, image_id: 'batanina' }))
+                .then(() => UsersRepository.create({ lastname: 'Романов', firstname: 'Павел', middlename: '', type: 'student', login: 'pacel.romanov', password: 'portal', groupId: 26 }))
         })
         .then(() => {
             return Promise.resolve()

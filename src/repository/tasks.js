@@ -61,7 +61,7 @@ module.exports.get = (options, user) => {
             });
     }
 
-    if (user.type == 'teacher') {
+    if (user.type == 'teacher' && options.id) {
         return connection
             .models['task']
             .find({
@@ -70,8 +70,44 @@ module.exports.get = (options, user) => {
                     connection.models['group'],
                     connection.models['subject'],
                     connection.models['user'],
-                    { model: connection.models['task_result'], as: 'results', include: [ connection.models['user'] ] }
+                    { model: connection.models['task_result'], as: 'results', include: [connection.models['user']] }
                 ]
+            })
+    }
+
+    if (user.type == 'teacher' && options.resultId) {
+        let result = null;
+        return connection
+            .models['task_result']
+            .find({
+                where: { id: options.resultId },
+                include: [
+                    {
+                        model: connection.models['task_comment'],
+                        include: [
+                            connection.models['user']
+                        ],
+                        as: 'comments'
+                    }
+                ]
+            })
+            .then(taskResult => {
+                result = taskResult;
+
+                return connection
+                    .models['task']
+                    .find({
+                        where: { id: taskResult.taskId },
+                        include: [
+                            connection.models['subject'],
+                            connection.models['user']
+                        ]
+                    })
+            })
+            .then(task => {
+                result.task = task;
+
+                return result;
             })
     }
 };
@@ -101,6 +137,18 @@ module.exports.getTasksForTeacher = (userId) => {
             { model: connection.models['task_result'], as: 'results' }
         ])();
 };
+
+module.exports.saveTaskResult = (taskResultId, user, options) => {
+    return connection
+        .models['task_result']
+        .update({ state: options.state, mark: options.mark, hasMark: !!options.mark }, { where: { id: taskResultId }, returning: true })
+        .then(taskResult => {
+            return connection
+                .models['task_comment']
+                .create({ text: options.text, resultMark: options.mark, hasMark: !!options.mark, userId: user.id, taskResultId: taskResultId })
+                .then(() => taskResultId);
+        });
+}
 
 module.exports.saveTaskSolution = (taskId, userId, groupId, options) => {
     return connection

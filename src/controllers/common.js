@@ -16,6 +16,33 @@ function getHelper(req) {
     return require('./controller-helper')(req.school_context.user.type);
 }
 
+module.exports.getTaskResultPage = (req, res) => {
+    TasksRepository.get({ resultId: req.params['id'] }, req.school_context.user)
+        .then(taskResult => {
+
+            taskResult.task.textHtml = QuillRenderer(JSON.parse(taskResult.task.text).ops);
+
+            if (taskResult.comments) {
+                taskResult.comments.forEach(_ => {
+                    _.textHtml = QuillRenderer(JSON.parse(_.text).ops)
+                    _.createdAtDisplay = moment(_.createdAt).format('LLL')
+                });
+            }
+
+            let renderOptions = {
+                view: 'teacher/task_result',
+                title: 'Задание',
+            };
+
+            getHelper(req).render(req, res, { taskResult }, renderOptions);
+        })
+        .catch(error => {
+            console.log(error);
+            res.send(error.toString());
+            res.end();
+        });
+}
+
 module.exports.getTaskPage = (req, res) => {
 
     TasksRepository.get({ id: req.params['id'] }, req.school_context.user)
