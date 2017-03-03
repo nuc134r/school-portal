@@ -241,7 +241,7 @@ mixin GroupsWithCounter(task, options)
         span.mdl-chip__text #{ group.name }
 
 mixin Comments(comments, cardSettings)
-  each comment in comments.sort(_ => +_.createdAt)
+  each comment in comments.sort((a, b) => a.id > b.id)
     +Card(cardSettings)
       .mdl-card__supporting-text
         img.mdl-user-avatar(src=comment.user.asViewModel().getImageUrls().small)
@@ -276,16 +276,16 @@ mixin TaskListEntry(task, cardSettings, options)
         if user.type == 'teacher'
           a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/t/tasks/review/' + task.id, onclick="return ajax(this)") открыть
 
-mixin MarkChip(mark)
+mixin MarkChip(mark, style)
   if mark == 'A'
-    span.mdl-chip.mdl-spacing.mdl-color--green.mdl-color-text--white
+    span.mdl-chip.mdl-spacing.mdl-color--green.mdl-color-text--white(style=style)
       span.mdl-chip__text Отлично
   if mark == 'B'
-    span.mdl-chip.mdl-spacing.mdl-color--light-green.mdl-color-text--white
+    span.mdl-chip.mdl-spacing.mdl-color--light-green.mdl-color-text--white(style=style)
       span.mdl-chip__text Хорошо
   if mark == 'C'
-    span.mdl-chip.mdl-spacing.mdl-color--lime.mdl-color-text--white
+    span.mdl-chip.mdl-spacing.mdl-color--lime.mdl-color-text--white(style=style)
       span.mdl-chip__text Удовлетворительно
   if mark == 'D'
-    span.mdl-chip.mdl-spacing.mdl-color--deep-orange.mdl-color-text--white
+    span.mdl-chip.mdl-spacing.mdl-color--deep-orange.mdl-color-text--white(style=style)
       span.mdl-chip__text Неудовлетворительно
