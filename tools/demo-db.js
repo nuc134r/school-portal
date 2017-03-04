@@ -164,7 +164,7 @@ database.Init().then(() => {
                     password: 'portal',
                     image_id: 'glu'
                 })
-                .then(_ => glusker = _))
+                    .then(_ => glusker = _))
                 .then(user => user.update({ canCreateNews: true, canEditTimetable: true }))
                 .then(() => UsersRepository.create({
                     lastname: 'Коннова',
@@ -175,7 +175,7 @@ database.Init().then(() => {
                     password: 'portal',
                     image_id: 'konnova'
                 })
-                .then(_ => konnova = _))
+                    .then(_ => konnova = _))
                 .then(() => UsersRepository.create({
                     lastname: 'Ларионова',
                     firstname: 'Елена',
@@ -202,7 +202,7 @@ database.Init().then(() => {
                     login: 'svetlana.skachkova',
                     password: 'portal'
                 })
-                .then(_ => skachkova = _))
+                    .then(_ => skachkova = _))
                 .then(() => UsersRepository.create({
                     lastname: 'Сорокин',
                     firstname: 'Юрий',
@@ -228,7 +228,7 @@ database.Init().then(() => {
                     password: 'portal',
                     image_id: 'blondinko'
                 })
-                .then(_ => yablonskaya = _))
+                    .then(_ => yablonskaya = _))
                 .then(() => UsersRepository.create({
                     lastname: 'Тихонов',
                     firstname: 'Сергей',
@@ -256,7 +256,8 @@ database.Init().then(() => {
                     type: 'student',
                     login: 'nikita.shatsky',
                     password: 'portal',
-                    groupId: 25
+                    groupId: 25,
+                    image_id: 'nick'
                 }))
                 .then(() => UsersRepository.create({
                     lastname: 'Виниченко',
@@ -274,7 +275,8 @@ database.Init().then(() => {
                     type: 'student',
                     login: 'vlad.bruns',
                     password: 'portal',
-                    groupId: 25
+                    groupId: 25,
+                    image_id: 'bruns'
                 }))
                 .then(() => UsersRepository.create({
                     lastname: 'Степанов',
@@ -283,7 +285,8 @@ database.Init().then(() => {
                     type: 'student',
                     login: 'alexey.stepanov',
                     password: 'portal',
-                    groupId: 25
+                    groupId: 25,
+                    image_id: 'lexa'
                 }))
                 .then(() => UsersRepository.create({
                     lastname: 'Романов',
