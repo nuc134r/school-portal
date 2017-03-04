@@ -62,4 +62,5 @@ mixin TaskResults(results, groups, emptyText)
 
           #third-tab.mdl-tabs__panel(class={ 'is-active' : !list2.length })
             +TaskResults(list3, task.groups, 'Нет проверенных работ.')
-          
+  else
+    | TODO: Это задание студенты не могут присылать
