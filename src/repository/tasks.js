@@ -67,10 +67,26 @@ module.exports.get = (options, user) => {
             .find({
                 where: { id: options.id },
                 include: [
-                    connection.models['group'],
+                    {
+                        model: connection.models['group'],
+                        include: [
+                            {
+                                model: connection.models['student'],
+                                include: [
+                                    connection.models['user']
+                                ]
+                            }
+                        ]
+                    },
                     connection.models['subject'],
                     connection.models['user'],
-                    { model: connection.models['task_result'], as: 'results', include: [connection.models['user']] }
+                    {
+                        model: connection.models['task_result'],
+                        as: 'results',
+                        include: [
+                            connection.models['user']
+                        ]
+                    }
                 ]
             })
     }
@@ -141,11 +157,22 @@ module.exports.getTasksForTeacher = (userId) => {
 module.exports.saveTaskResult = (taskResultId, user, options) => {
     return connection
         .models['task_result']
-        .update({ state: options.state, mark: options.mark, hasMark: !!options.mark }, { where: { id: taskResultId }, returning: true })
+        .update({ 
+            state: options.state, 
+            mark: options.mark || null, 
+            hasMark: !!options.mark 
+        }, { where: { id: taskResultId }, returning: true })
         .then(taskResult => {
             return connection
                 .models['task_comment']
-                .create({ text: options.text, resultMark: options.mark, hasMark: !!options.mark, userId: user.id, taskResultId: taskResultId })
+                .create({ 
+                    newState: options.state || null, 
+                    text: options.text, 
+                    resultMark: options.mark || null, 
+                    hasMark: !!options.mark, 
+                    userId: user.id, 
+                    taskResultId: taskResultId 
+                })
                 .then(() => taskResultId);
         });
 }

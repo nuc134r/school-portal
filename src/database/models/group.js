@@ -14,6 +14,11 @@ function Init(sequelize) {
                 }
             }
         });
+    
+    Group.hasMany(sequelize.models['student'], {
+        foreignKey: { allowNull: false },
+        onDelete: 'RESTRICT'
+    });
 
     Group.belongsTo(sequelize.models.specialty, { 
         foreignKey: { allowNull: true }, 

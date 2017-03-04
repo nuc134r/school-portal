@@ -3,12 +3,45 @@ include ../parts/mixins
 
 - var taskCardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 8, o: 2 } }
 
+mixin TaskResults(results, groups, emptyText)
+  div(style='padding-left: 8px; padding-right: 8px;')
+    if results.length
+      for group in groups.sort((a, b) => a.name > b.name)
+        - var groupResults = results.filter(_ => _.groupId == group.id)
+        if groupResults.length
+          h5(style='margin: 16px 0px;') #{group.name}
+          for result in groupResults.sort((a, b) => a.user.lastname > b.user.lastname)
+            div(style='height: 60px; padding-bottom: 8px;')
+              if result.state
+                a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/t/tasks/result/" + result.id, onclick="return ajax(this);", style='float: right; margin-top: 6px;') Открыть
+              img.mdl-user-avatar(src=result.user.asViewModel().getImageUrls().small)
+              h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px;') #{ result.user.firstname + ' ' + result.user.lastname }
+              if result.state
+                if result.state == 'sent'
+                  h2.mdl-card__title-text(style='font-size: 13px; padding-left: 10px; padding-top: 7px; font-weight: 400;') #{ result.updatedAtDisplay }
+                if result.state == 'done'
+                  +MarkChip(result.mark, 'margin-left: 10px; margin-top: 5px;')
+                if result.state == 'needsRevision'
+                  span.mdl-chip.mdl-spacing.mdl-color--blue.mdl-color-text--white(style='margin-left: 10px; margin-top: 5px;')
+                    span.mdl-chip__text Доработать
+    else
+      div(style='text-align: center; padding-top: 30px; padding-bottom: 9px;') #{emptyText}
+
 .mdl-grid
 
   +TaskListEntry(task, taskCardSettings, { showOpenButton: false })
     +GroupsWithCounter(task)
     //.mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/t/tasks/" + task.id + '/edit', onclick="return ajax(this);") Изменить формулировку
+
+  - var users = [];
+  - for(var i = 0; i < task.groups.length; i++) users = users.concat(task.groups[i].students);
+  - var list1 = users.filter(student => !task.results.some(_ => _.user.id == student.user.id))
+
+  - var list2 = task.results.filter(_ => _.state == 'sent')
+
+  - var list3 = task.results.filter(_ => _.state == 'done' || _.state == 'needsRevision')
+
 
   if task.isRemote
     +Card(taskCardSettings)
@@ -18,25 +51,16 @@ include ../parts/mixins
         .mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
           .mdl-tabs__tab-bar(style='background: rgba(255, 255, 255, 0.84);')
             a.mdl-tabs__tab(class={ 'is-active' : false }, href='#first-tab') Не сдавшие
-            a.mdl-tabs__tab(class={ 'is-active' : true }, href='#second-tab') На проверку
-            a.mdl-tabs__tab(class={ 'is-active' : false }, href='#third-tab') Проверенные
+            a.mdl-tabs__tab(class={ 'is-active' : list2.length }, href='#second-tab') На проверку
+            a.mdl-tabs__tab(class={ 'is-active' : !list2.length }, href='#third-tab') Проверенные
 
           #first-tab.mdl-tabs__panel(class={ 'is-active' : false })
-            | kek
+            +TaskResults(list1, task.groups, 'Список недоступен.')
                         
-          #second-tab.mdl-tabs__panel(class={ 'is-active' : true })
-            div(style='padding-left: 8px; padding-right: 8px;')
-              for group in task.groups.sort((a, b) => a.name > b.name)
-                - var groupResults = task.results.filter(_ => _.groupId == group.id)
-                if groupResults.length
-                  h5(style='margin: 16px 0px;') #{group.name}
-                  for result in groupResults
-                    div(style='height: 48px; padding-bottom: 8px;')
-                      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/t/tasks/result/" + result.id, onclick="return ajax(this);", style='float: right; margin-top: 6px;') Проверить
-                      img.mdl-user-avatar(src=result.user.asViewModel().getImageUrls().small)
-                      h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px;') #{ result.user.firstname + ' ' + result.user.lastname }
-                      h2.mdl-card__title-text(style='font-size: 13px; padding-left: 10px; padding-top: 7px; font-weight: 400;') #{ result.createdAtDisplay }
+          #second-tab.mdl-tabs__panel(class={ 'is-active' : list2.length })
+            +TaskResults(list2, task.groups, 'Все работы проверены.')
 
-          #third-tab.mdl-tabs__panel(class={ 'is-active' : false })
-            | kek
-          
+          #third-tab.mdl-tabs__panel(class={ 'is-active' : !list2.length })
+            +TaskResults(list3, task.groups, 'Нет проверенных работ.')
+  else
+    | TODO: Это задание студенты не могут присылать

@@ -58,6 +58,7 @@ module.exports.getTaskPage = (req, res) => {
             if (task.results) {
                 task.results.forEach(_ => {
                     _.createdAtDisplay = moment(_.createdAt).format('LLL')
+                    _.updatedAtDisplay = moment(_.createdAt).format('LLL')
                 });
             }
 
@@ -95,8 +96,8 @@ module.exports.getTaskListPage = (req, res) => {
                 list2 = [];
 
             if (usertype == 'student') {
-                list1 = lists.tasks.filter(task => !task.results[0] || task.results[0].state == 'todo');
-                list2 = lists.tasks.filter(task => task.results[0] && task.results[0].state != 'todo');
+                list1 = lists.tasks.filter(task => !task.results[0] || task.results[0].state == 'todo' || task.results[0].state == 'needsRevision');
+                list2 = lists.tasks.filter(task => task.results[0] && (task.results[0].state == 'done' || task.results[0].state == 'sent'));
             } else {
                 list1 = lists.tasks;
                 list2 = lists.tasks.filter(task => task.results && task.results.some((_ => _.state == 'sent')));
