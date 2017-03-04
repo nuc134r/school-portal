@@ -146,19 +146,154 @@ database.Init().then(() => {
         })
         .then(() => {
             return Promise.resolve()
-                .then(() => UsersRepository.create({ lastname: 'Кириллов', firstname: 'Алексей', middlename: 'Иванович', type: 'teacher', login: 'alexey.kirillov', password: 'portal', image_id: 'kirillov' }))
-                .then(() => UsersRepository.create({ lastname: 'Глускер', firstname: 'Александр', middlename: 'Игоревич', type: 'teacher', login: 'alexander.glusker', password: 'portal', image_id: 'glu' }).then(_ => glusker = _))
+                .then(() => UsersRepository.create({
+                    lastname: 'Кириллов',
+                    firstname: 'Алексей',
+                    middlename: 'Иванович',
+                    type: 'teacher',
+                    login: 'alexey.kirillov',
+                    password: 'portal',
+                    image_id: 'kirillov'
+                }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Глускер',
+                    firstname: 'Александр',
+                    middlename: 'Игоревич',
+                    type: 'teacher',
+                    login: 'alexander.glusker',
+                    password: 'portal',
+                    image_id: 'glu'
+                })
+                .then(_ => glusker = _))
                 .then(user => user.update({ canCreateNews: true, canEditTimetable: true }))
-                .then(() => UsersRepository.create({ lastname: 'Коннова', firstname: 'Ирина', middlename: 'Геннадьевна', type: 'teacher', login: 'irina.konnova', password: 'portal', image_id: 'konnova' }).then(_ => konnova = _))
-                .then(() => UsersRepository.create({ lastname: 'Ларионова', firstname: 'Елена', middlename: 'Анатольевна', type: 'teacher', login: 'elena.larionova', password: 'portal', image_id: 'konnova' }))
-                .then(() => UsersRepository.create({ lastname: 'Миланова', firstname: 'Ирина', middlename: 'Анатольевна', type: 'teacher', login: 'irina.milanova', password: 'portal', image_id: 'milanova' }))
-                .then(() => UsersRepository.create({ lastname: 'Скачкова', firstname: 'Светлана', middlename: 'Ивановна', type: 'teacher', login: 'svetlana.skachkova', password: 'portal' }).then(_ => skachkova = _))
-                .then(() => UsersRepository.create({ lastname: 'Сорокин', firstname: 'Юрий', middlename: 'Сергеевич', type: 'teacher', login: 'yury.sorokin', password: 'portal', image_id: 'sorokin' }))
-                .then(() => UsersRepository.create({ lastname: 'Павлов', firstname: 'Алексей', middlename: 'Владимирович', type: 'teacher', login: 'alexey.pavlov', password: 'portal' }))
-                .then(() => UsersRepository.create({ lastname: 'Яблонская', firstname: 'Юлия', middlename: 'Викторовна', type: 'teacher', login: 'y', password: 'portal', image_id: 'blondinko' }).then(_ => yablonskaya = _))
-                .then(() => UsersRepository.create({ lastname: 'Тихонов', firstname: 'Сергей', middlename: 'Сергеевич', type: 'student', login: 'sergey.tikhonov', password: 'portal', groupId: 25, image_id: 'tixon' }))
-                .then(() => UsersRepository.create({ lastname: 'Батанина', firstname: 'Анастасия', middlename: 'Валерьевна', type: 'student', login: 'anastasiya.batanina', password: 'portal', groupId: 25, image_id: 'batanina' }))
-                .then(() => UsersRepository.create({ lastname: 'Романов', firstname: 'Павел', middlename: '', type: 'student', login: 'pacel.romanov', password: 'portal', groupId: 26 }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Коннова',
+                    firstname: 'Ирина',
+                    middlename: 'Геннадьевна',
+                    type: 'teacher',
+                    login: 'irina.konnova',
+                    password: 'portal',
+                    image_id: 'konnova'
+                })
+                .then(_ => konnova = _))
+                .then(() => UsersRepository.create({
+                    lastname: 'Ларионова',
+                    firstname: 'Елена',
+                    middlename: 'Анатольевна',
+                    type: 'teacher',
+                    login: 'elena.larionova',
+                    password: 'portal',
+                    image_id: 'konnova'
+                }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Миланова',
+                    firstname: 'Ирина',
+                    middlename: 'Анатольевна',
+                    type: 'teacher',
+                    login: 'irina.milanova',
+                    password: 'portal',
+                    image_id: 'milanova'
+                }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Скачкова',
+                    firstname: 'Светлана',
+                    middlename: 'Ивановна',
+                    type: 'teacher',
+                    login: 'svetlana.skachkova',
+                    password: 'portal'
+                })
+                .then(_ => skachkova = _))
+                .then(() => UsersRepository.create({
+                    lastname: 'Сорокин',
+                    firstname: 'Юрий',
+                    middlename: 'Сергеевич',
+                    type: 'teacher',
+                    login: 'yury.sorokin',
+                    password: 'portal',
+                    image_id: 'sorokin'
+                }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Павлов',
+                    firstname: 'Алексей',
+                    middlename: 'Владимирович',
+                    type: 'teacher',
+                    login: 'alexey.pavlov', password: 'portal'
+                }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Яблонская',
+                    firstname: 'Юлия',
+                    middlename: 'Викторовна',
+                    type: 'teacher',
+                    login: 'y',
+                    password: 'portal',
+                    image_id: 'blondinko'
+                })
+                .then(_ => yablonskaya = _))
+                .then(() => UsersRepository.create({
+                    lastname: 'Тихонов',
+                    firstname: 'Сергей',
+                    middlename: 'Сергеевич',
+                    type: 'student',
+                    login: 'sergey.tikhonov',
+                    password: 'portal',
+                    groupId: 25,
+                    image_id: 'tixon'
+                }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Батанина',
+                    firstname: 'Анастасия',
+                    middlename: 'Валерьевна',
+                    type: 'student',
+                    login: 'anastasiya.batanina',
+                    password: 'portal',
+                    groupId: 25,
+                    image_id: 'batanina'
+                }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Шатский',
+                    firstname: 'Никита',
+                    middlename: 'Александрович',
+                    type: 'student',
+                    login: 'nikita.shatsky',
+                    password: 'portal',
+                    groupId: 25
+                }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Виниченко',
+                    firstname: 'Владимир',
+                    middlename: 'Сергеевич',
+                    type: 'student',
+                    login: 'vladimir.vinichenko',
+                    password: 'portal',
+                    groupId: 25
+                }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Брунс',
+                    firstname: 'Владислав',
+                    middlename: 'Дмитриевич',
+                    type: 'student',
+                    login: 'vlad.bruns',
+                    password: 'portal',
+                    groupId: 25
+                }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Степанов',
+                    firstname: 'Алексей',
+                    middlename: 'Сергеевич',
+                    type: 'student',
+                    login: 'alexey.stepanov',
+                    password: 'portal',
+                    groupId: 25
+                }))
+                .then(() => UsersRepository.create({
+                    lastname: 'Романов',
+                    firstname: 'Павел',
+                    middlename: '',
+                    type: 'student',
+                    login: 'pavel.romanov',
+                    password: 'portal',
+                    groupId: 26
+                }))
         })
         .then(() => {
             return Promise.resolve()

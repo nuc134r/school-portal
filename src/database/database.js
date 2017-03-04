@@ -22,8 +22,14 @@ require('./models/user').Init(sequelize);
 require('./models/session').Init(sequelize);
 require('./models/specialty').Init(sequelize);
 require('./models/course').Init(sequelize);
+let Student = require('./models/student').Init(sequelize);
 require('./models/group').Init(sequelize);
-require('./models/student').Init(sequelize);
+
+Student.belongsTo(sequelize.models.group, {
+    foreignKey: { allowNull: false },
+    onDelete: 'RESTRICT'
+});
+
 require('./models/subject').Init(sequelize);
 require('./models/teacher').Init(sequelize);
 require('./models/auditory').Init(sequelize);

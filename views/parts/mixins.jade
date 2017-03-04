@@ -252,9 +252,13 @@ mixin Comments(comments, cardSettings)
         //| Вложений нет
         //h5(style='font-weight: 400; color: black; margin-top: 0px;') Пояснения
         | !{comment.textHtml}
-      if comment.hasMark
-        .mdl-card__supporting-text(style='padding-top: 0px;')
+      
+      .mdl-card__supporting-text(style='padding-top: 0px;')
+        if comment.hasMark
           +MarkChip(comment.resultMark)
+        if comment.newState == 'needsRevision'
+          span.mdl-chip.mdl-spacing.mdl-color--blue.mdl-color-text--white
+            span.mdl-chip__text Доработать
 
 
 mixin TaskListEntry(task, cardSettings, options)
