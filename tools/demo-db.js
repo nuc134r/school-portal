@@ -27,6 +27,17 @@ database.Init().then(() => {
 
     Promise.resolve()
         .then(() => {
+            for(let modelName in connection.models) {
+                let model = connection.models[modelName];
+                console.log(' ');
+                for (var attributeName in model.attributes) {
+                    if (attributeName == 'createdAt' || attributeName == 'updatedAt' || attributeName == 'id') continue;
+                    console.log(modelName + '.' + attributeName);
+                }
+            }
+            
+        })
+        .then(() => {
             return Promise.resolve()
                 .then(() => TimingsRepository.create({ beginHour: 8, beginMinute: 30, endHour: 10, endMinute: 0 }))
                 .then(() => TimingsRepository.create({ beginHour: 10, beginMinute: 10, endHour: 11, endMinute: 40 }))
