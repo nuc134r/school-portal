@@ -33,7 +33,7 @@ module.exports.TasksController = helper.generateContoller({
     },
     onProcessForm: (formData, req, isEdit) => {
         if (!isEdit) {
-            formData.userId = req.school_context.user.id;
+            formData.userId = req.school_context.user.teacher.id;
         }
         if (formData.hasDueDate) {
             formData.dueDate = new Date(formData.dueDate);
