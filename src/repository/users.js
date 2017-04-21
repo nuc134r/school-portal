@@ -17,7 +17,7 @@ module.exports.create = (options) => helper.create(options)
             case "student":
                 return connection.models.student.create({ userId: user.id, groupId: options.groupId });
             case "teacher":
-                return connection.models.teacher.create({ userId: user.id, canCreateNews: options.canCreateNews, canEditTimetable: options.canEditTimetable })
+                return connection.models.teacher.create({ userId: user.id, canCreateNews: options.canCreateNews, canEditTimetable: options.canEditTimetable, description: options.description })
                     .then(teacher => {
                         let subjectIds = utils.getArrayFromFormData(options, 'subject');
 

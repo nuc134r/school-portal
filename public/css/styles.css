@@ -8,6 +8,31 @@
     display: block;
 }
 
+.large-avatar-side-content {
+    margin-left: 128px;
+    padding-left: 16px;
+    min-height: 128px;
+}
+
+.profile-name {
+    font-size: 24px;
+    font-weight: 300;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    color: black;
+    padding-bottom: 16px;
+    line-height: initial;
+}
+
+.profile-avatar-image {
+    border-radius: 50%;
+    height: 128px;
+    width: 128px;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    top: 24px;
+}
+
 .loading-text {
     width: 100%;
     text-align: center;

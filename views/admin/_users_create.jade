@@ -48,7 +48,7 @@ include ../parts/mixins
       br
       h5 Описание
       h7 Тут можно написать об образовании, опыте и личных качествах преподавателя. Эти данные отразятся на странице его профиля.
-      +InputField('Описание', 'description')
+      +InputField('Описание', 'description', false, query_params.teacher ? query_params.teacher.description : '')
       br
       br
       h5(style='margin-top: 0px;') Дисциплины

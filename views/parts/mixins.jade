@@ -47,9 +47,9 @@ mixin ComboBox(placeholder, id, items, allowNull, style, preset_value)
           option(value=item.value, selected=(preset_value == item.value)) #{ item.text }
     label.mdl-selectfield__label(for=(id + 'field')) #{ placeholder }
 
-mixin InputField(placeholder, id, autofocus)
+mixin InputField(placeholder, id, autofocus, preset_value)
 
-  - var preset_value = query_params[id]; 
+  - preset_value = preset_value || query_params[id]; 
 
   .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: 100%;', id=(id + 'field_container'))
     input.mdl-textfield__input(type='text', name=id, id=(id + 'field'), value=preset_value, autofocus=autofocus)
@@ -129,6 +129,18 @@ mixin Card(options, style)
     block
 
 mixin Text(options)
+  - var classes = [];
+  - ['phone', 'desktop', 'tablet'].forEach((device) => {
+  -   var settings = options[device]; 
+  -   if (settings) {
+  -     if (settings.s) classes.push('mdl-cell--' + settings.s + '-col-' + device);
+  -     if (settings.o) classes.push('mdl-cell--' + settings.o + '-offset-' + device);
+  -   }
+  - });
+  div(class=classes)
+    block
+
+mixin Block(options)
   - var classes = [];
   - ['phone', 'desktop', 'tablet'].forEach((device) => {
   -   var settings = options[device]; 

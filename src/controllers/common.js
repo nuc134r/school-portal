@@ -117,6 +117,22 @@ module.exports.getTaskListPage = (req, res) => {
         });
 }
 
+
+module.exports.getProfilePage = (req, res) => {
+    const helper = getHelper(req);
+
+    let renderOptions = {
+        view: 'common/profile',
+        title: 'Профиль',
+    };
+
+    UsersRepository.get({ id: req.params.user_id })
+        .then(user => {
+            helper.render(req, res, { profile_user: user }, renderOptions)
+        })
+        .catch(error => helper.render(req, res, { error: { message: 'Такого пользователя не существует' } }, { view: 'error' }));
+}
+
 module.exports.getSettingsPage = (req, res) => {
     const helper = getHelper(req);
 
@@ -186,6 +202,7 @@ module.exports.saveProfileImage = (req, res) => {
 module.exports.getSmallProfileImage = (req, res) => {
     res.sendFile(path.join(__dirname, '..', '..', 'public', 'user-images', `${req.params.image_id}_48.jpg`));
 }
+
 
 module.exports.getLargeProfileImage = (req, res) => {
     res.sendFile(path.join(__dirname, '..', '..', 'public', 'user-images', `${req.params.image_id}_128.jpg`));
