@@ -26,7 +26,7 @@ database.Init().then(() => {
     const NewsRepository = require('../src/repository/news');
 
     Promise.resolve()
-        .then(() => {
+        /*.then(() => {
             for(let modelName in connection.models) {
                 let model = connection.models[modelName];
                 console.log(' ');
@@ -36,7 +36,7 @@ database.Init().then(() => {
                 }
             }
             
-        })
+        })*/
         .then(() => {
             return Promise.resolve()
                 .then(() => TimingsRepository.create({ beginHour: 8, beginMinute: 30, endHour: 10, endMinute: 0 }))
@@ -356,7 +356,7 @@ database.Init().then(() => {
                             isRemote: true,
                             hasDueDate: true,
                             dueDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 1),
-                            userId: glusker.id,
+                            userId: glusker.userId,
                             subjectId: programming_subjects[0].id
                         })
                         .then(task => {
@@ -377,7 +377,7 @@ database.Init().then(() => {
                             isRemote: true,
                             hasDueDate: true,
                             dueDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 10),
-                            userId: glusker.id,
+                            userId: glusker.userId,
                             subjectId: programming_subjects[0].id
                         })
                         .then(task => {
@@ -398,7 +398,7 @@ database.Init().then(() => {
                             isRemote: false,
                             hasDueDate: false,
                             dueDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate() + 2),
-                            userId: yablonskaya.id,
+                            userId: yablonskaya.userId,
                             subjectId: yablonskaya_subjects[2].id
                         })
                         .then(task => {

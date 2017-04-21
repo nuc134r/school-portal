@@ -86,7 +86,7 @@ module.exports.getTaskListPage = (req, res) => {
     if (usertype == 'student') {
         promises.tasks = () => TasksRepository.getTasksForGroup(req.school_context.user.id, req.school_context.user.student.groupId)
     } else {
-        promises.tasks = () => TasksRepository.getTasksForTeacher(req.school_context.user.teacher.id)
+        promises.tasks = () => TasksRepository.getTasksForTeacher(req.school_context.user.id)
     }
 
     getHelper(req).processPromises(promises, [])

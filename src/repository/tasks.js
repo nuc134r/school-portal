@@ -16,7 +16,7 @@ module.exports.create = (options) => {
                 .then(() => connection.models['tasks_groups'].bulkCreate(groupIds.map(function (id) { return { groupId: id, taskId: task.id } })))
         });
 };
-module.exports.browse = (user) => helper.browseWith(['group', 'subject'], { userId: user.teacher.id })();
+module.exports.browse = (user) => helper.browseWith(['group', 'subject'], { userId: user.id })();
 
 module.exports.get = (options, user) => {
     if (!user) {

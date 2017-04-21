@@ -15,9 +15,13 @@ module.exports.create = (options) => helper.create(options)
     .then(user => {
         switch (user.type) {
             case "student":
-                return connection.models.student.create({ userId: user.id, groupId: options.groupId });
+                let student_options = { userId: user.id };
+                Object.assign(student_options, options);
+                return connection.models.student.create(student_options);
             case "teacher":
-                return connection.models.teacher.create({ userId: user.id, canCreateNews: options.canCreateNews, canEditTimetable: options.canEditTimetable, description: options.description })
+                let teacher_options = { userId: user.id };
+                Object.assign(teacher_options, options);
+                return connection.models.teacher.create(teacher_options)
                     .then(teacher => {
                         let subjectIds = utils.getArrayFromFormData(options, 'subject');
 
@@ -72,7 +76,7 @@ module.exports.update = (id, options) => {
 
             if (user.type == 'teacher') {
                 return connection.models["teacher"]
-                    .update({ canCreateNews: options.canCreateNews, canEditTimetable: options.canEditTimetable, description: options.description }, { where: { userId: user.id }, returning: true })
+                    .update(options, { where: { userId: user.id }, returning: true })
                     .then(result => {
                         let teacher = result[1][0];
                         let subjectIds = utils.getArrayFromFormData(options, 'subject');

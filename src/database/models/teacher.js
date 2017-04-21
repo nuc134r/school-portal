@@ -7,8 +7,17 @@ function Init(sequelize) {
     let Entity = sequelize.define('teacher', {
         canCreateNews: Sequelize.BOOLEAN,
         canEditTimetable: Sequelize.BOOLEAN,
-        description: Sequelize.TEXT
-    });
+        description: Sequelize.TEXT,
+        position: Sequelize.TEXT,
+        started_being_teacher: { type: Sequelize.DATE, allowNull: true }
+    },
+        {
+            instanceMethods: {
+                getStartedBeingTeacher: function () {
+                    return this.started_being_teacher ? moment(this.started_being_teacher).format('YYYY-MM-DD') : '';
+                }
+            }
+        });
 
     Entity.belongsTo(sequelize.models.user, {
         foreignKey: { allowNull: false },

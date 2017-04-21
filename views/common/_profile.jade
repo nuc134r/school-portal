@@ -13,7 +13,7 @@ include ../parts/mixins
         | !{ profile_user.teacher.description.replace(/(?:\r\n|\r|\n)/g, '<br/>') }
       else
         .profile-name #{profile_user.name.first} #{profile_user.name.last}
-    img.profile-avatar-image(src=profile_user.getImageUrls().large)
+    img.large-avatar-image(src=profile_user.getImageUrls().large)
   .mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="post_form()", style='float: left;') Написать сообщение
 

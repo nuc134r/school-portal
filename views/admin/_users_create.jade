@@ -51,6 +51,19 @@ include ../parts/mixins
       +InputField('Описание', 'description', false, query_params.teacher ? query_params.teacher.description : '')
       br
       br
+      h5 Должность
+      h7 Если преподаватель занимает некоторую административную должность, то здесь её можно указать
+      +InputField('Должность', 'position', false, query_params.teacher ? query_params.teacher.position : '')
+      br
+      br
+      h5 Начал(а) преподавательскую деятельность
+      h7 От этой даты будет отсчитываться стаж преподавателя
+      input(type='date', 
+          name='started_being_teacher', 
+          style='display: block; margin-top: 8px;',
+          value=(query_params && query_params.started_being_teacher ? query_params.getDueDate() : ''))
+      br
+      br
       h5(style='margin-top: 0px;') Дисциплины
       h7 Эти предметы будут отображаться при выборе преподавателя для проведения занятия; по этим предметам преподаватель сможет создавать задания.
       - var selectedSubjects = query_params.teacher ? query_params.teacher.subjects.map(_ => _.id) : [];
