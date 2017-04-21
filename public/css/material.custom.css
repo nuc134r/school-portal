@@ -145,6 +145,12 @@ h2 > small {
     margin-bottom: 0px;
 }
 
+.mdl-user-name > a {
+    color: white;
+    text-decoration: none;
+    font-weight: 400;
+}
+
 .mdl-user-group {
     margin: 0px;
     opacity: .7;

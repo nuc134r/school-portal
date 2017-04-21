@@ -16,6 +16,7 @@ helper.whitelist('/t/*', (req) => req.school_context.user.type, 'teacher');
 helper.whitelist('/a/*', (req) => req.school_context.user.type, 'admin');
 helper.whitelist('/s/*', (req) => req.school_context.user.type, 'student');
 helper.blacklist('/settings', (req) => req.school_context.user.type, 'admin');
+helper.blacklist('/profile/*', (req) => req.school_context.user.type, 'admin');
 
 /* admin */
 router.get('/a', (req, res) => res.redirect('/a/users'));
@@ -50,6 +51,7 @@ router.post('/s/tasks/:id', studentController.saveTaskSolution);
 /* common */
 router.get('/settings', commonController.getSettingsPage);
 router.post('/saveProfileImage', commonController.saveProfileImage);
+router.get('/profile/:user_id', commonController.getProfilePage);
 
 router.get('/images/small/:image_id', commonController.getSmallProfileImage);
 router.get('/images/large/:image_id', commonController.getLargeProfileImage);

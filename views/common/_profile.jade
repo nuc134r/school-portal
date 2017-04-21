@@ -1,0 +1,27 @@
+include ../parts/mixins
+
+- cardSettings = { phone: { s: 4 }, tablet: { s: 8 }, desktop: { s: 6, o: 3 } }
+
+- profile_user = profile_user.asViewModel()
+
++Card(cardSettings)
+  .mdl-card__supporting-text
+    .large-avatar-side-content
+      if (profile_user.type == 'teacher')
+        .profile-name #{profile_user.name.first} #{profile_user.name.middle} #{profile_user.name.last}
+        span(style='display: block; padding-bottom: 8px; color: black;') Преподавательский стаж: 10 лет
+        | !{ profile_user.teacher.description.replace(/(?:\r\n|\r|\n)/g, '<br/>') }
+      else
+        .profile-name #{profile_user.name.first} #{profile_user.name.last}
+    img.profile-avatar-image(src=profile_user.getImageUrls().large)
+  .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="post_form()", style='float: left;') Написать сообщение
+
+if (profile_user.type == 'teacher')
+  +Card(cardSettings)
+    .mdl-card__title(style='padding-bottom: 8px;')
+      h2.mdl-card__title-text Дисциплины
+    .mdl-card__supporting-text
+      each subject in profile_user.teacher.subjects
+        span.mdl-chip.mdl-spacing
+          span.mdl-chip__text #{ subject.shortname }

@@ -57,7 +57,8 @@ html
       .mdl-layout__drawer.mdl-layout__drawer-custom
         .mdl-user-box(class=[('mdl-color--' + theme.primary + '-600')], style='position: relative;')
           img.mdl-user-avatar(src=user.getImageUrls().small)
-          h6.mdl-user-name #{user.name.first} #{user.name.last}
+          h6.mdl-user-name
+            a(href='/profile/' + user.id, onclick="ajax(this, true); return false;") #{user.name.first} #{user.name.last}
           if layout == 'student'
             h6.mdl-user-group #{(user.student && user.student.group)}
           button#hdrbtn.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(style='position: absolute; bottom: 10px; right: 5px;')
