@@ -58,7 +58,7 @@ mixin TaskResults(results, groups, emptyText)
             +TaskResults(list1, task.groups, 'Список недоступен.')
                         
           #second-tab.mdl-tabs__panel(class={ 'is-active' : list2.length })
-            +TaskResults(list2, task.groups, 'Все работы проверены.')
+            +TaskResults(list2, task.groups, 'Нет непроверенных работ.')
 
           #third-tab.mdl-tabs__panel(class={ 'is-active' : !list2.length })
             +TaskResults(list3, task.groups, 'Нет проверенных работ.')
