@@ -17,7 +17,10 @@ $(document).ready(function () {
     $loading_spinner = $('#loading-spinner');
 });
 
-function ajax(link, closeDrawer) {
+var expectNavigation = false;
+
+function ajax(link, closeDrawer, browserTriggered) {
+    expectNavigation = true;
 
     var $obfuscator = $('.mdl-layout__obfuscator');
 
@@ -59,8 +62,9 @@ function ajax(link, closeDrawer) {
             if (!(typeof (componentHandler) == 'undefined')) {
                 componentHandler.upgradeAllRegistered();
             }
-
-            History.pushState({}, response.title + ' | Студенческий портал', link.href);
+            if (!browserTriggered) {
+                History.pushState({}, response.title + ' | Студенческий портал', link.href);
+            }
         })
         .error(function (error) {
             $loading_spinner.css('visibility', 'collapse');
@@ -84,3 +88,10 @@ function showMessage(message) {
     );
 }
 
+window.onpopstate = function (e) {
+    if(expectNavigation) {
+        expectNavigation = false;
+    } else {
+        ajax(document.location, false, true);
+    }
+}
