@@ -10,9 +10,10 @@ const Sequelize = require('sequelize');
 const database = require('../src/database/database');
 const connection = database.getConnection();
 
-let konnova, skachkova, yablonskaya, glusker;
+let konnova, skachkova, yablonskaya, glusker, kirillov;
 let programming_subjects = [];
 let yablonskaya_subjects = [];
+let kirillov_subjects = [];
 let P_403, P_404;
 
 database.Init().then(() => {
@@ -89,11 +90,11 @@ database.Init().then(() => {
                 .then(() => SubjectsRepository.create({ name: 'Документационное обеспечение управления', shortname: 'Документационное обеспеч. упр.' }))
                 .then(() => SubjectsRepository.create({ name: 'Экономика организации', shortname: 'Экономика организации' }))
                 /* 4 курс П */
-                .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.01 Технология разработки программного обеспечения', shortname: 'Технология разработки ПО' }).then(_ => programming_subjects.push(_)))
-                .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.01 Компьютерная графика', shortname: 'Компьютерная графика' }).then(_ => yablonskaya_subjects.push(_)))
+                .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.1 Технология разработки программного обеспечения', shortname: 'Технология разработки ПО' }).then(_ => programming_subjects.push(_)))
+                .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.1 Компьютерная графика', shortname: 'Компьютерная графика' }).then(_ => yablonskaya_subjects.push(_)))
                 .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.02 Инструментальные средства разработки программного обеспечения', shortname: 'Инстр. средства разр-ки ПО' }).then(_ => programming_subjects.push(_)))
                 .then(() => SubjectsRepository.create({ name: 'ПМ.03:МДК.03.03 Документирование и сертификация', shortname: 'Документирование и сертификация' }))
-                .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.02 Системы автоматизированного проектирования', shortname: 'Системы авт. проектирования' }))
+                .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.02 Системы автоматизированного проектирования', shortname: 'Системы авт. проектирования' })).then(_ => kirillov_subjects.push(_))
                 .then(() => SubjectsRepository.create({ name: 'ПМ.05:МДК.05.03 Автоматизированные системы управления', shortname: 'Авт. системы управления' }).then(_ => programming_subjects.push(_)))
         })
         .then(() => {
@@ -164,8 +165,11 @@ database.Init().then(() => {
                     type: 'teacher',
                     login: 'alexey.kirillov',
                     password: 'portal',
-                    image_id: 'kirillov'
+                    image_id: 'kirillov',
+                    position: 'Заместитель директора по общим вопросам',
+                    started_being_teacher: new Date(1995, 09, 1)
                 }))
+                    .then(_ => kirillov = _)
                 .then(() => UsersRepository.create({
                     lastname: 'Глускер',
                     firstname: 'Александр',
@@ -174,7 +178,8 @@ database.Init().then(() => {
                     login: 'alexander.glusker',
                     password: 'portal',
                     image_id: 'glu',
-                    description: 'Образование: высшее (Московский государственный институт электроники и математики (ТУ) - МИЭМ)\nКвалификация: инженер-математик\nПрофессия: преподаватель + программист\nПрофессиональные интересы: математика, компьютеры (кроме устройства железа)\nДополнительные интересы: христианство, психология, некоторые разделы философии\nЛюблю читать: фантастика, серьёзная литература (некоторые произведения Достоевского, например)\nВероисповедание: христианство (ученичество, член Московской церкви Христа)\nЛюблю: прогулки по паркам/лесам и т. д. без ночёвок пешком или на велосипеде; решать интересные задачки'
+                    description: 'Образование: высшее (Московский государственный институт электроники и математики (ТУ) - МИЭМ)\nКвалификация: инженер-математик\nПрофессия: преподаватель + программист\nПрофессиональные интересы: математика, компьютеры (кроме устройства железа)\nДополнительные интересы: христианство, психология, некоторые разделы философии\nЛюблю читать: фантастика, серьёзная литература (некоторые произведения Достоевского, например)\nВероисповедание: христианство (ученичество, член Московской церкви Христа)\nЛюблю: прогулки по паркам/лесам и т. д. без ночёвок пешком или на велосипеде; решать интересные задачки',
+                    started_being_teacher: new Date(2010, 09, 1)
                 })
                     .then(_ => glusker = _))
                 .then(user => user.update({ canCreateNews: true, canEditTimetable: true }))
@@ -185,7 +190,9 @@ database.Init().then(() => {
                     type: 'teacher',
                     login: 'irina.konnova',
                     password: 'portal',
-                    image_id: 'konnova'
+                    image_id: 'konnova',
+                    started_being_teacher: new Date(2006, 09, 1),
+                    position: 'Заведующая отделением №2'
                 })
                     .then(_ => konnova = _))
                 .then(() => UsersRepository.create({
@@ -194,6 +201,7 @@ database.Init().then(() => {
                     middlename: 'Анатольевна',
                     type: 'teacher',
                     login: 'elena.larionova',
+                    started_being_teacher: new Date(1984, 09, 1),
                     password: 'portal'
                 }))
                 .then(() => UsersRepository.create({
@@ -203,7 +211,9 @@ database.Init().then(() => {
                     type: 'teacher',
                     login: 'irina.milanova',
                     password: 'portal',
-                    image_id: 'milanova'
+                    image_id: 'milanova',
+                    started_being_teacher: new Date(1987, 09, 1),
+                    position: 'Заведующая отделением №1'
                 }))
                 .then(() => UsersRepository.create({
                     lastname: 'Скачкова',
@@ -211,7 +221,8 @@ database.Init().then(() => {
                     middlename: 'Ивановна',
                     type: 'teacher',
                     login: 'svetlana.skachkova',
-                    password: 'portal'
+                    password: 'portal',
+                    started_being_teacher: new Date(2012, 09, 1)
                 })
                     .then(_ => skachkova = _))
                 .then(() => UsersRepository.create({
@@ -221,6 +232,7 @@ database.Init().then(() => {
                     type: 'teacher',
                     login: 'yury.sorokin',
                     password: 'portal',
+                    started_being_teacher: new Date(1990, 09, 1),
                     image_id: 'sorokin'
                 }))
                 .then(() => UsersRepository.create({
@@ -228,7 +240,8 @@ database.Init().then(() => {
                     firstname: 'Алексей',
                     middlename: 'Владимирович',
                     type: 'teacher',
-                    login: 'alexey.pavlov', password: 'portal'
+                    login: 'alexey.pavlov', password: 'portal',
+                    started_being_teacher: new Date(2012, 09, 1)
                 }))
                 .then(() => UsersRepository.create({
                     lastname: 'Яблонская',
@@ -237,7 +250,8 @@ database.Init().then(() => {
                     type: 'teacher',
                     login: 'y',
                     password: 'portal',
-                    image_id: 'blondinko'
+                    image_id: 'blondinko',
+                    started_being_teacher: new Date(2012, 09, 1)
                 })
                     .then(_ => yablonskaya = _))
                 .then(() => UsersRepository.create({
@@ -416,6 +430,16 @@ database.Init().then(() => {
                     return {
                         subjectId: subject.id,
                         teacherId: glusker.id
+                    }
+                }));
+        })
+        .then(() => {
+            return connection
+                .models['teachers_subjects']
+                .bulkCreate(kirillov_subjects.map(function (subject) {
+                    return {
+                        subjectId: subject.id,
+                        teacherId: kirillov.id
                     }
                 }));
         })

@@ -61,7 +61,7 @@ include ../parts/mixins
       input(type='date', 
           name='started_being_teacher', 
           style='display: block; margin-top: 8px;',
-          value=(query_params && query_params.started_being_teacher ? query_params.getDueDate() : ''))
+          value=(query_params.teacher && query_params.teacher.started_being_teacher ? query_params.teacher.getStartedBeingTeacher() : ''))
       br
       br
       h5(style='margin-top: 0px;') Дисциплины
