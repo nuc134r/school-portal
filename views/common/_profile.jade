@@ -6,9 +6,8 @@ include ../parts/mixins
 
 +Card(cardSettings)
   .mdl-card__supporting-text
-    .large-avatar-side-content
-      
-      if (profile_user.type == 'teacher')
+    if (profile_user.type == 'teacher')
+      .large-avatar-side-content
         .profile-name #{profile_user.name.first} #{profile_user.name.middle} #{profile_user.name.last}
         - var experienceString = profile_user.teacher.getExperienceString();
         if experienceString
@@ -23,11 +22,12 @@ include ../parts/mixins
             span(style='color: black;') #{' ' + profile_user.teacher.position}
             br
             br
-        if profile_user.teacher.description
-          .block
-            span(style='display: block; margin-top: 8px;') !{ profile_user.teacher.description.replace(/(?:\r\n|\r|\n)/g, '<br/>') }
+      if profile_user.teacher.description
+        .block
+          span(style='display: block; margin-top: 8px;') !{ profile_user.teacher.description.replace(/(?:\r\n|\r|\n)/g, '<br/>') }
       
-      if (profile_user.type == 'student')
+    if (profile_user.type == 'student')
+      .large-avatar-side-content
         .profile-name #{profile_user.name.first} #{profile_user.name.last}
         .block
           span(style='padding-bottom: 8px; color: black; opacity: .5;') Группа:
@@ -39,7 +39,7 @@ include ../parts/mixins
           span(style='color: black;') #{' ' + profile_user.student.groupObject.specialty.name}
           br
           br
-    
+      
     img.large-avatar-image(src=profile_user.getImageUrls().large)
   if profile_user.id != user.id
     .mdl-card__actions.mdl-card--border
