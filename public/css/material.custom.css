@@ -37,6 +37,10 @@
     padding-left: 5px;
 }
 
+.mdl-card__supporting-text {
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+}
+
 .mdl-card__supporting-text-heightfix {
     height: calc(100% - 123px);
 }

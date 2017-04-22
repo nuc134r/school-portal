@@ -14,6 +14,12 @@
     min-height: 128px;
 }
 
+.small-avatar-side-content {
+    margin-left: 48px;
+    padding-left: 8px;
+    min-height: 48px;
+}
+
 .profile-name {
     font-size: 24px;
     font-weight: 300;
@@ -23,7 +29,7 @@
     line-height: initial;
 }
 
-.profile-avatar-image {
+.large-avatar-image {
     border-radius: 50%;
     height: 128px;
     width: 128px;
@@ -31,6 +37,18 @@
     display: block;
     position: absolute;
     top: 24px;
+    object-fit: cover;
+}
+
+.small-avatar-image {
+    border-radius: 50%;
+    height: 48px;
+    width: 48px;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    top: 24px;
+    object-fit: cover;
 }
 
 .loading-text {

@@ -33,6 +33,11 @@ module.exports.UsersContoller = helper.generateContoller({
     onProcessForm: (formData, req) => {
         formData.type = formData.user_type;
         formData.password = formData.user_type == 'admin' ? config.default_admin_password : config.default_user_password;
+        if (formData.started_being_teacher) {
+            formData.started_being_teacher = new Date(formData.started_being_teacher);
+        } else {
+            formData.started_being_teacher = null;
+        }
         return formData;
     }
 });

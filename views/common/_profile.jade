@@ -1,23 +1,51 @@
 include ../parts/mixins
 
-- cardSettings = { phone: { s: 4 }, tablet: { s: 8 }, desktop: { s: 6, o: 3 } }
+- cardSettings = { phone: { s: 4 }, tablet: { s: 8 }, desktop: { s: 8, o: 2 } }
 
 - profile_user = profile_user.asViewModel()
 
 +Card(cardSettings)
   .mdl-card__supporting-text
     .large-avatar-side-content
+      
       if (profile_user.type == 'teacher')
         .profile-name #{profile_user.name.first} #{profile_user.name.middle} #{profile_user.name.last}
-        span(style='display: block; padding-bottom: 8px; color: black;') Преподавательский стаж: 10 лет
-        | !{ profile_user.teacher.description.replace(/(?:\r\n|\r|\n)/g, '<br/>') }
-      else
+        - var experienceString = profile_user.teacher.getExperienceString();
+        if experienceString
+          .block
+            span(style='padding-bottom: 8px; color: black; opacity: .5;') Преподавательский стаж:
+            span(style='color: black;') #{' ' + experienceString}
+            br
+            br
+        if profile_user.teacher.position
+          .block
+            span(style='padding-bottom: 8px; color: black; opacity: .5;') Должность:
+            span(style='color: black;') #{' ' + profile_user.teacher.position}
+            br
+            br
+        if profile_user.teacher.description
+          .block
+            span(style='display: block; margin-top: 8px;') !{ profile_user.teacher.description.replace(/(?:\r\n|\r|\n)/g, '<br/>') }
+      
+      if (profile_user.type == 'student')
         .profile-name #{profile_user.name.first} #{profile_user.name.last}
-    img.profile-avatar-image(src=profile_user.getImageUrls().large)
-  .mdl-card__actions.mdl-card--border
+        .block
+          span(style='padding-bottom: 8px; color: black; opacity: .5;') Группа:
+          span(style='color: black;') #{' ' + profile_user.student.groupObject.name}
+          br
+          br
+        .block
+          span(style='padding-bottom: 8px; color: black; opacity: .5;') Специальность:
+          span(style='color: black;') #{' ' + profile_user.student.groupObject.specialty.name}
+          br
+          br
+    
+    img.large-avatar-image(src=profile_user.getImageUrls().large)
+  if profile_user.id != user.id
+    .mdl-card__actions.mdl-card--border
       a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="post_form()", style='float: left;') Написать сообщение
 
-if (profile_user.type == 'teacher')
+if (profile_user.type == 'teacher' && profile_user.teacher.subjects.length)
   +Card(cardSettings)
     .mdl-card__title(style='padding-bottom: 8px;')
       h2.mdl-card__title-text Дисциплины
@@ -25,3 +53,17 @@ if (profile_user.type == 'teacher')
       each subject in profile_user.teacher.subjects
         span.mdl-chip.mdl-spacing
           span.mdl-chip__text #{ subject.shortname }
+
+if profile_user.type == 'student'
+  +Card(cardSettings)
+    .mdl-card__title(style='padding-bottom: 8px;')
+      h2.mdl-card__title-text Медальки
+      - var medals = ['Участник олимпиады "Утёнок"', 'Отличник (1 курс)', 'Хорошист (2 курс)'];
+      - var NCS = function(a) { return (a >= 5 && a <= 20) ? 'медалек' : ((a % 10 == 1) ? 'медалька' : ((a % 10 > 1 && a % 10 < 5) ? 'медальки' : 'медалек')) };
+      - var medalNumberString = medals.length + ' ' + NCS(medals.length);
+      h2.mdl-card__title-text.mdl-card__title-subtext
+        small #{medalNumberString}
+    .mdl-card__supporting-text
+      each medal in medals
+        span.mdl-chip.mdl-spacing
+          span.mdl-chip__text #{ medal }

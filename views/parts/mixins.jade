@@ -225,13 +225,21 @@ mixin TaskWithDetails(task, cardSettings, options)
       h2.mdl-card__title-text
         small #{task.subject.shortname}
     
+    .mdl-card__supporting-text(style='padding-top: 8px;')
+      h5(style='font-weight: 400; margin-top: 0px; margin-bottom: 8px; color: black;') Преподаватель
+      - var teacher = task.user.asViewModel()
+      a(href='/profile/' + teacher.id, onclick="ajax(this, true); return false;")
+        .small-avatar-side-content(style='position: absolute; margin-top: 8px')
+          h2.mdl-card__title-text(style='color: black; font-size: 19px;') #{teacher.name.first} #{teacher.name.middle} #{teacher.name.last}
+        img.small-avatar-image(src=teacher.getImageUrls().small, style='position: relative; top: 8px')
+
     if options.showGroups
-      .mdl-card__supporting-text(style='padding-top: 0px;')
+      .mdl-card__supporting-text(style='padding-top: 8px;')
         h5(style='font-weight: 400; margin-top: 0px; color: black;') Группы
         +GroupsWithCounter(task, { showCounter: false })
 
     if task.getDisplayDueDate()
-      .mdl-card__supporting-text(style='padding-top: 0px;')
+      .mdl-card__supporting-text(style='padding-top: 8px;')
         h5(style='font-weight: 400; margin-top: 0px; color: black;') Срок сдачи
         | #{ task.getDisplayDueDate() }
     .mdl-card__supporting-text(style='padding-top: 0px;')
@@ -255,10 +263,10 @@ mixin GroupsWithCounter(task, options)
 mixin Comments(comments, cardSettings)
   each comment in comments.sort((a, b) => a.id > b.id)
     +Card(cardSettings)
-      .mdl-card__supporting-text
+      a.mdl-card__supporting-text(href='/profile/' + comment.user.id, onclick="ajax(this, true); return false;", style='text-decoration: none;')
         img.mdl-user-avatar(src=comment.user.asViewModel().getImageUrls().small)
-        h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px;') #{ comment.user.firstname + ' ' + comment.user.lastname }
-        h2.mdl-card__title-text(style='font-size: 13px; padding-left: 10px; padding-top: 7px; font-weight: 400;') #{ comment.createdAtDisplay }
+        h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px;') #{ comment.user.firstname} #{comment.user.type == 'teacher' ? comment.user.middlename : ''} #{comment.user.lastname }
+        h2.mdl-card__title-text(style='font-size: 13px; color: black; padding-left: 10px; padding-top: 7px; font-weight: 400; opacity: .5;') #{ comment.createdAtDisplay }
       .mdl-card__supporting-text(style='padding-top: 0px; padding-bottom: 0px;')
         //h5(style='font-weight: 400; margin-top: 0px; color: black;') Вложения
         //| Вложений нет
