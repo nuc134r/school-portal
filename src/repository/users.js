@@ -39,13 +39,20 @@ module.exports.get = (options) => helper.get(options)
         if (user.type == 'student') {
             return connection.models["student"].find({
                 where: { userId: user.id },
-                include: connection.models.group
+                include: {
+                    model: connection.models['group'],
+                    include: [
+                        {
+                            model: connection.models['specialty']
+                        }
+                    ]
+                }
             })
                 .then(student => {
-                    user.student = {
-                        group: student.group.name,
-                        groupId: student.group.id
-                    };
+                    user.student = student;
+                    user.student.groupObject = student.group;
+                    user.student.group = student.group.name;
+                    user.student.groupId = student.group.id;
 
                     return user;
                 })

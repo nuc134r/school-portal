@@ -11,6 +11,8 @@ const UUID = require('node-uuid');
 
 const UsersRepository = require('../repository/users');
 const TasksRepository = require('../repository/tasks');
+const GroupsRepository = require('../repository/groups');
+const TeachersRepository = require('../repository/teachers');
 
 function getHelper(req) {
     return require('./controller-helper')(req.school_context.user.type);
@@ -116,7 +118,7 @@ module.exports.getTaskListPage = (req, res) => {
             res.end();
         });
 }
-
+    
 
 module.exports.getProfilePage = (req, res) => {
     const helper = getHelper(req);
@@ -131,6 +133,27 @@ module.exports.getProfilePage = (req, res) => {
             helper.render(req, res, { profile_user: user }, renderOptions)
         })
         .catch(error => helper.render(req, res, { error: { message: 'Такого пользователя не существует' } }, { view: 'error' }));
+}
+
+module.exports.getAllGroupsPage = (req, res) => {
+    const helper = getHelper(req);
+
+    let renderOptions = {
+        view: 'common/groups',
+        title: 'Группы',
+    };
+
+    let data = {};
+
+    GroupsRepository.browseWithStudents()
+        .then(groups => {
+            data.groups = groups;
+            return TeachersRepository.browse();
+        })
+        .then(teachers => {
+            data.teachers = teachers;
+            helper.render(req, res, data, renderOptions)
+        });
 }
 
 module.exports.getSettingsPage = (req, res) => {

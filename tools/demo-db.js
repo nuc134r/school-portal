@@ -211,7 +211,6 @@ database.Init().then(() => {
                     type: 'teacher',
                     login: 'irina.milanova',
                     password: 'portal',
-                    image_id: 'milanova',
                     started_being_teacher: new Date(1987, 09, 1),
                     position: 'Заведующая отделением №1'
                 }))

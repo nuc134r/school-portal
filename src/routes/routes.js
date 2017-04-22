@@ -52,6 +52,8 @@ router.post('/s/tasks/:id', studentController.saveTaskSolution);
 router.get('/settings', commonController.getSettingsPage);
 router.post('/saveProfileImage', commonController.saveProfileImage);
 router.get('/profile/:user_id', commonController.getProfilePage);
+router.get('/groups', commonController.getAllGroupsPage);
+//router.get('/groups/:id', commonController.getGroupPage);
 
 router.get('/images/small/:image_id', commonController.getSmallProfileImage);
 router.get('/images/large/:image_id', commonController.getLargeProfileImage);
