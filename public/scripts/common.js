@@ -38,7 +38,7 @@ function ajax(link, closeDrawer, browserTriggered) {
 
     var url = link.href || link.attributes["href"].value
 
-    $.ajax({ url: link.href, data: { 'ajax': 1 } })
+    $.ajax({ url: url, data: { 'ajax': 1 } })
         .done(function (response, textStatus, jqXHR) {
 
             if (!response.title && !response.html) {

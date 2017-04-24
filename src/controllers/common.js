@@ -179,8 +179,8 @@ module.exports.savePassword = (req, res) => {
 
     UsersRepository
         .updatePassword(req.school_context.user.id, req.body['password'])
-        .then(res.redirect('/settings?message=pwd_ok'))
-        .catch(res.redirect('/settings?error=pwd_not_secure'));
+        .then(() => res.redirect('/settings?message=pwd_ok'))
+        .catch(() => res.redirect('/settings?error=pwd_not_secure'));
 }
 
 module.exports.saveProfileImage = (req, res) => {

@@ -103,6 +103,6 @@ module.exports.delete = (options) => {
     }
 }
 
-module.exports.updatePassword = (userId, newPassword) => {
-    
+module.exports.updatePassword = (userId, password) => {
+    return helper.update(userId, { password, salt: '' });
 }

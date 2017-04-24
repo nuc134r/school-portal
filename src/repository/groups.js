@@ -15,14 +15,19 @@ module.exports.browseWithStudents = function () {
     return connection
         .models['group']
         .findAll({
-            include: {
-                model: connection.models['student'],
-                include: [
-                    {
-                        model: connection.models['user']
-                    }
-                ]
-            },
+            include: [
+                {
+                    model: connection.models['student'],
+                    include: [
+                        {
+                            model: connection.models['user']
+                        }
+                    ]
+                },
+                {
+                    model: connection.models['specialty']
+                }
+            ],
             order: 'name'
         });
 }
