@@ -7,13 +7,15 @@ mixin Group(group)
     .mdl-user-avatar(style='background: gray; color: white;')
       i.material-icons(style='font-size: 33px; padding: 8px;') group
     h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px; padding-top: 2px;') #{ group.name }
-    span(style='color: black; opacity: .5; padding-left: 10px;') #{ group.specialty.name }
+    div(style='margin-left: 48px; padding-left: 10px;')
+      span(style='color: black; opacity: .5;') #{ group.specialty.name }
 
 mixin Teacher(teacher)
   a(href='/profile/' + teacher.user.id, onclick="ajax(this, true); return false;", style='text-decoration: none;')
     img.mdl-user-avatar(src=teacher.user.asViewModel().getImageUrls().small)
     h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px; padding-top: 2px;') #{ teacher.user.firstname + ' ' + teacher.user.lastname }
-    span(style='color: black; opacity: .5; padding-left: 10px;') #{ teacher.position }
+    div(style='margin-left: 48px; padding-left: 10px;')
+      span(style='color: black; opacity: .5;') #{ teacher.position }
 
 .mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
   .mdl-tabs__tab-bar(style='background: rgba(255, 255, 255, 0.84);')
@@ -35,7 +37,7 @@ mixin Teacher(teacher)
             +Group(group)
       +Text(cardSettings)
         - var NCS = function(a) { return (a >= 5 && a <= 20) ? 'групп' : ((a % 10 == 1) ? 'группа' : ((a % 10 > 1 && a % 10 < 5) ? 'группы' : 'групп')) };
-        h5(style='color: rgba(0,0,0,.3); text-align: center;') #{groups.length + ' ' + NCS(groups.length)}
+        h5(style='color: rgba(0,0,0,.3); text-align: center; margin-top: 8px;') #{groups.length + ' ' + NCS(groups.length)}
 
   #second-tab.mdl-tabs__panel
     .mdl-grid(style='padding: 16px;')
@@ -45,7 +47,7 @@ mixin Teacher(teacher)
             +Teacher(teacher)
       +Text(cardSettings)
         - var NCS = function(a) { return (a >= 5 && a <= 20) ? 'преподавателей' : ((a % 10 == 1) ? 'преподавателя' : ((a % 10 > 1 && a % 10 < 5) ? 'преподавателя' : 'преподавателей')) };
-        h5(style='color: rgba(0,0,0,.3); text-align: center;') #{teachers.length + ' ' + NCS(teachers.length)}
+        h5(style='color: rgba(0,0,0,.3); text-align: center; margin-top: 8px;') #{teachers.length + ' ' + NCS(teachers.length)}
 
 
 //.mdl-grid(style='padding: 16px;')
