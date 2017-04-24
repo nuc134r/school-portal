@@ -102,3 +102,7 @@ module.exports.delete = (options) => {
         return helper.delete(options);
     }
 }
+
+module.exports.updatePassword = (userId, newPassword) => {
+    
+}

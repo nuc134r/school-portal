@@ -169,6 +169,20 @@ module.exports.getSettingsPage = (req, res) => {
     helper.render(req, res, { settings }, renderOptions);
 }
 
+module.exports.savePassword = (req, res) => {
+    const helper = getHelper(req);
+
+    if (req.body['password'] != req.body['confirmation']) {
+        res.redirect('/settings?error=pwd_wrong_confirmation');
+        return;
+    }
+
+    UsersRepository
+        .updatePassword(req.school_context.user.id, req.body['password'])
+        .then(res.redirect('/settings?message=pwd_ok'))
+        .catch(res.redirect('/settings?error=pwd_not_secure'));
+}
+
 module.exports.saveProfileImage = (req, res) => {
     req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
 
