@@ -2,12 +2,23 @@
 
 const Sequelize = require('sequelize');
 const helper = require('./model-helper');
+const SecurityManager = require('./../../security-manager');
+
+function hashPassword(user) {
+    if (user.password) {
+        let passwordData = SecurityManager.hashPassword(user.password);
+
+        user.password = passwordData.passwordHash;
+        user.salt = passwordData.salt;
+    }
+}
 
 function Init(sequelize) {
     let User = sequelize.define('user', {
 
         login: helper.nonEmptyUniqueString(32, "Логин"),
-        password: helper.nonEmptyString(32, "Пароль"),
+        password: { type: Sequelize.STRING(128), allowNull: false },
+        salt: { type: Sequelize.STRING(16), allowNull: false },
 
         firstname: helper.nonEmptyString(64, "Имя"),
         middlename: Sequelize.STRING(64),
@@ -21,7 +32,8 @@ function Init(sequelize) {
             hooks: {
                 afterUpdate: function (user) {
                     require('../../session/sessions').invalidate(user);
-                }
+                },
+                beforeValidate: hashPassword
             },
             instanceMethods: {
                 getDisplayName: function () {

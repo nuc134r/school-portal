@@ -36,9 +36,9 @@ function ajax(link, closeDrawer, browserTriggered) {
     $searchwrapper.css('visibility', 'collapse');
     $searchwrapper.removeClass('is-focused, is-dirty');
 
-    link.href = link.href || link.attributes["href"].value
+    var url = link.href || link.attributes["href"].value
 
-    $.ajax({ url: link.href, data: { 'ajax': 1 } })
+    $.ajax({ url: url, data: { 'ajax': 1 } })
         .done(function (response, textStatus, jqXHR) {
 
             if (!response.title && !response.html) {
@@ -92,6 +92,6 @@ window.onpopstate = function (e) {
     if(expectNavigation) {
         expectNavigation = false;
     } else {
-        ajax(document.location, false, true);
+        ajax(document.location, false, false);
     }
 }

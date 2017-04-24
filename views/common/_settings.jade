@@ -2,16 +2,41 @@ include ../parts/mixins
 
 - cardSettings = { phone: { s: 4 }, tablet: { s: 4, o: 2 }, desktop: { s: 4, o: 4 } }
 
+if (query_params.error == 'pwd_wrong_confirmation')
+  +MessageCard(cardSettings, 'Ошибка', 'Пароль и подтверждение не совпадают')
+
+if (query_params.error == 'pwd_not_secure')
+  +MessageCard(cardSettings, 'Ошибка', 'Слишком простой пароль')
+
+if (query_params.message == 'pwd_ok')
+  +MessageCard(cardSettings, 'Пароль изменён', null, 'done')
+
 form(action='/saveProfileImage', enctype="multipart/form-data", method='POST', id='profileimageform')
   +Card(cardSettings)
     .mdl-card__title
-      h2.mdl-card__title-text
-        | Фотография
+      h2.mdl-card__title-text Фотография
     .mdl-card__supporting-text
       img.settings-avatar-image(src=user.getImageUrls().large)
     .mdl-card__actions.mdl-card--border
-      a#upload-image-button.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='#', style='') Изменить
+      a#upload-image-button.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect Изменить
       input(type="file", name="profile-image" style="display: none;")
+
+form(action='/savePassword', method='POST', id='changepasswordform')
+  +Card(cardSettings)
+    .mdl-card__title
+      h2.mdl-card__title-text Пароль
+    .mdl-card__supporting-text
+      .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: 100%;')
+        input.mdl-textfield__input(id='pwdfield', type='password', name='password')  
+        label.mdl-textfield__label(for='pwdfield') Новый пароль
+      br
+      .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: 100%;')
+        input.mdl-textfield__input(id='confirmationfield', type='password', name='confirmation')  
+        label.mdl-textfield__label(for='confirmationfield') Подтверждение
+      br
+      br
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="document.getElementById('changepasswordform').submit();") Сохранить
 
 script.
   var file_input =  $('input[type=file]');
