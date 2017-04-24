@@ -5,7 +5,7 @@ include ../parts/mixins
 mixin Group(group)
   a(href='/group/' + group.id, onclick="ajax(this, true); return false;", style='text-decoration: none;')
     .mdl-user-avatar(style='background: gray; color: white;')
-      i.material-icons(style='font-size: 40px; padding: 4px;') group
+      i.material-icons(style='font-size: 33px; padding: 8px;') group
     h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px; padding-top: 2px;') #{ group.name }
     span(style='color: black; opacity: .5; padding-left: 10px;') #{ group.specialty.name }
 
