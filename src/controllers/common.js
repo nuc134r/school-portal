@@ -135,6 +135,21 @@ module.exports.getProfilePage = (req, res) => {
         .catch(error => helper.render(req, res, { error: { message: 'Такого пользователя не существует' } }, { view: 'error' }));
 }
 
+module.exports.getGroupPage = (req, res) => {
+    const helper = getHelper(req);
+
+    let renderOptions = {
+        view: 'common/group',
+        title: 'Группа',
+    };
+
+    GroupsRepository.getWithStudents({ id: req.params.group_id })
+        .then(group => {
+            helper.render(req, res, { group }, renderOptions);
+        })
+        .catch(error => helper.render(req, res, { error: { message: 'Такой группы не существует' } }, { view: 'error' }));
+}
+
 module.exports.getAllGroupsPage = (req, res) => {
     const helper = getHelper(req);
 

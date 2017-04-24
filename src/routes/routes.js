@@ -54,7 +54,7 @@ router.post('/saveProfileImage', commonController.saveProfileImage);
 router.post('/savePassword', commonController.savePassword);
 router.get('/profile/:user_id', commonController.getProfilePage);
 router.get('/groups', commonController.getAllGroupsPage);
-//router.get('/groups/:id', commonController.getGroupPage);
+router.get('/group/:group_id', commonController.getGroupPage);
 
 router.get('/images/small/:image_id', commonController.getSmallProfileImage);
 router.get('/images/large/:image_id', commonController.getLargeProfileImage);
