@@ -31,3 +31,25 @@ module.exports.browseWithStudents = function () {
             order: 'name'
         });
 }
+
+module.exports.getWithStudents = function (options) {
+    
+    return connection
+        .models['group']
+        .find({
+            where: { id: options.id },
+            include: [
+                {
+                    model: connection.models['student'],
+                    include: [
+                        {
+                            model: connection.models['user']
+                        }
+                    ]
+                },
+                {
+                    model: connection.models['specialty']
+                }
+            ]
+        });
+}

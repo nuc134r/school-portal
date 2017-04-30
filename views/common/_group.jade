@@ -1,0 +1,26 @@
+include ../parts/mixins
+
+- cardSettings = { phone: { s: 4 }, tablet: { s: 8 }, desktop: { s: 6, o: 3 } }
+
++Card(cardSettings)
+  .mdl-card__title(style='padding-bottom: 8px; width: 90%;')
+    h2.mdl-card__title-text 
+      | #{ group.name }
+  .mdl-card__supporting-text
+    .block
+      span(style='padding-bottom: 8px; color: black; opacity: .5;') Специальность:
+      span(style='color: black;') #{ ' ' + group.specialty.name }
+
++Card(cardSettings)
+  .mdl-card__title(style='padding-bottom: 8px; width: 90%;')
+    h2.mdl-card__title-text 
+      i.material-icons.mdl-card-icon &#xE7FB;
+      | Студенты
+  .mdl-card__supporting-text
+    each student in group.students.sort((a, b) => a.user.lastname > b.user.lastname)
+      div(style='height: 60px; padding-bottom: 8px;')
+        +Student(student)
+    +Text(cardSettings)
+      - var NCS = function(a) { return (a >= 5 && a <= 20) ? 'студентов' : ((a % 10 == 1) ? 'студента' : ((a % 10 > 1 && a % 10 < 5) ? 'студента' : 'студентов')) };
+      h5(style='color: rgba(0,0,0,.3); text-align: center; margin-top: 8px;') #{group.students.length + ' ' + NCS(group.students.length)}
+

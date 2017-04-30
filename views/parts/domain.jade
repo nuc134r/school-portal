@@ -1,0 +1,26 @@
+mixin Group(group)
+  a(href='/group/' + group.id, onclick="ajax(this, true); return false;", style='text-decoration: none;')
+    .mdl-user-avatar(style='background: gray; color: white;')
+      i.material-icons(style='font-size: 33px; padding: 8px;') group
+    h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px; padding-top: 2px;') #{ group.name }
+    div(style='margin-left: 48px; padding-left: 10px;')
+      span(style='color: black; opacity: .5;') #{ group.specialty.name }
+
+mixin Teacher(teacher)
+  a(href='/profile/' + teacher.user.id, onclick="ajax(this, true); return false;", style='text-decoration: none;')
+    img.mdl-user-avatar(src=teacher.user.asViewModel().getImageUrls().small)
+    h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px; padding-top: 2px;') #{ teacher.user.firstname + ' ' + teacher.user.lastname }
+    div(style='margin-left: 48px; padding-left: 10px;')
+      span(style='color: black; opacity: .5;') #{ teacher.position }
+
+mixin Student(student)
+  a(href='/profile/' + student.user.id, onclick="ajax(this, true); return false;", style='text-decoration: none;')
+    img.mdl-user-avatar(src=student.user.asViewModel().getImageUrls().small)
+    h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px; padding-top: 10px;') #{ student.user.firstname + ' ' + student.user.lastname }
+
+//.mdl-grid(style='padding: 16px;')
+//  +Block(cardSettings)
+//    each student in ownGroup.students.sort((a, b) => a.user.lastname > b.user.lastname)
+//      
+//  +Text(cardSettings)
+//    h5(style='color: rgba(0,0,0,.3); text-align: center;') #{ownGroup.students.length} студентов

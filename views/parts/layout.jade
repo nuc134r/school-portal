@@ -88,6 +88,7 @@ html
           .mdl-navigation
             +MenuItem({label: 'Сегодня',          link: '/t/dashboard',   icon: '&#xE8DF;' })
             +MenuItem({label: 'Задания',          link: '/t/tasks/review',  icon: '&#xE877;'/*, counter: 5 */})
+            +MenuItem({label: 'Группы',        link: '/groups',      icon: '&#xE7FB;' })
             +MenuItem({label: 'Редактор заданий', link: '/t/tasks',       icon: '&#xE877;' })
             if user.teacher.canEditTimetable
               +MenuItem({label: 'Редактор расписания',       link: '/t/timetable', icon: '&#xE916;' })
