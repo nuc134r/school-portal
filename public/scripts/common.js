@@ -1,3 +1,5 @@
+var socket = io();
+
 var $content,
     $title,
     $fab_link,
@@ -95,3 +97,4 @@ window.onpopstate = function (e) {
         ajax(document.location, false, false);
     }
 }
+
