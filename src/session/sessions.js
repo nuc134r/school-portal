@@ -4,6 +4,8 @@ const UUID = require('node-uuid');
 const database = require('../database/database');
 const connection = database.getConnection();
 
+const useragent = require('useragent');
+
 const config = require('../../config.json');
 
 let cache = {};
@@ -47,23 +49,23 @@ function get(token) {
                     where: { userId: session.user.id },
                     include: connection.models.group
                 })
-                .then(student => {
-                    session.user.student = {
-                        group: student.group.name,
-                        groupId: student.group.id
-                    };
+                    .then(student => {
+                        session.user.student = {
+                            group: student.group.name,
+                            groupId: student.group.id
+                        };
 
-                    return session;
-                })
+                        return session;
+                    })
             } else if (session.user.type == 'teacher') {
                 return connection.models["teacher"].find({
                     where: { userId: session.user.id }
                 })
-                .then(teacher => {
-                    session.user.teacher = teacher;
+                    .then(teacher => {
+                        session.user.teacher = teacher;
 
-                    return session;
-                })
+                        return session;
+                    })
             } else {
                 return session;
             }
@@ -92,6 +94,24 @@ function invalidate(user) {
     }
 }
 
+function registerSocket(token, socket) {
+    let session = cache[token];
+
+    session.sockets = session.sockets || {};
+    session.sockets[socket.id] = socket;
+
+    socket.agent = useragent.parse(socket.handshake.headers['user-agent']);
+
+    console.log(`User ${session.user.login} connected (${socket.id}) (${socket.agent.toString()})`);
+
+    socket.on('disconnect', () => {
+        session.sockets[socket.id] = undefined;
+
+        console.log(`User ${session.user.login} disconnected (${socket.id}) (${socket.agent.toString()})`);
+    })
+}
+
+module.exports.registerSocket = registerSocket;
 module.exports.invalidate = invalidate;
 module.exports.create = create;
 module.exports.get = get;

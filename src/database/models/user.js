@@ -48,6 +48,7 @@ function Init(sequelize) {
                         image_id: this.image_id,
                         type: this.type,
                         roles: [],
+                        login: this.login,
                         name: {
                             first: this.firstname,
                             last: this.lastname,
