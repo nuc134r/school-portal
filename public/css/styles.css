@@ -1,3 +1,7 @@
+body {
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+}
+
 .settings-avatar-image {
     border-radius: 50%;
     height: 128px;
@@ -12,6 +16,17 @@
     margin-left: 128px;
     padding-left: 16px;
     min-height: 128px;
+}
+
+.messages_wrapper {
+    overflow-y: scroll;
+    position: absolute;
+    padding-bottom: 25px;
+    bottom: 58px;
+    top: 51px;
+    right: 8px;
+    left: 8px;
+    overflow-x: hidden;
 }
 
 .small-avatar-side-content {

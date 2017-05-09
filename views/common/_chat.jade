@@ -1,0 +1,60 @@
+include ../parts/mixins
+
+- cardSettings = { phone: { s: 4 }, tablet: { s: 8 }, desktop: { s: 6, o: 3 } }
+
+mixin Message(user, message, hide_avatar)
+  - var temp_user = user.asViewModel ? user.asViewModel() : user;
+  if (!hide_avatar)
+    div.message-wrap(style='width: 100%; min-height: 35px; margin-top: 16px;', ts=(+message.createdAt), user_id=temp_user.id)
+      a(href='/profile/' + temp_user.id, onclick="ajax(this, true); return false;")
+        img.mdl-user-avatar(src=temp_user.getImageUrls().small, style='height: 35px; width: 35px; position: relative;')
+      div(style='margin-left: 40px;')
+        a(href='/profile/' + temp_user.id, onclick="ajax(this, true); return false;", style='text-decoration: none; color: black; font-weight: 400;') #{ temp_user.name.first}
+        span(style='opacity: .5; font-size: 12px; padding-left: 5px;') #{ message.createdAtDisplay }
+      div(style='margin-left: 41px; font-size: 14px; width: 100%;')
+        | !{message.text}
+  else
+    div.message-wrap(style='margin-left: 41px; font-size: 14px; width: 100%; margin-top: 8px;', ts=(+message.createdAt), user_id=temp_user.id)
+      | !{message.text}
+
++Card(cardSettings, 'height: calc(100vh - (8px * 14));')
+  #header(style='text-align: center; width: 100%; padding-top: 8px; padding-bottom: 13px; border-bottom: rgba(0, 0, 0, 0.06) solid 1px; height: 21px;')
+    a(href='/profile/' + to_user.id, onclick="ajax(this, true); return false;", style='text-decoration: none; color: black; font-weight: 400; width: 100%;') #{ to_user.firstname + ' ' + to_user.lastname }
+  .messages_wrapper#messages_wrap
+    - var last_message = null;
+    each message in messages
+      - hide_avatar = last_message && last_message.fromId == message.fromId && (Math.floor(+message.createdAt / 1000) - Math.floor(+last_message.createdAt / 1000)) < 30;
+      if (message.fromId == to_user.id)
+        +Message(to_user, message, hide_avatar)
+      else
+        +Message(user, message, hide_avatar)
+
+      - last_message = message;
+  #messages_input(style='position: absolute; bottom: 0px; left: 19px; right: 68px;')
+    .mdl-textfield.mdl-js-textfield(style='width: 100%;')
+      input.mdl-textfield__input(type='text', id='message_field')
+      label.mdl-textfield__label(for='message_field') Сообщение
+  button.mdl-button.mdl-js-button.mdl-button--fab.mdl-button--mini-fab.mdl-button--colored.mdl-js-ripple-effect(style='position: absolute; bottom: 8px; right: 8px;', onclick='sendmessage()')
+    i.material-icons send
+
+
+script.
+  setTimeout(function () {
+      document.getElementById("messages_wrap").scrollTop = messages_wrap.scrollHeight;
+  }, 0);
+
+  function sendmessage() {
+      var message = $('#message_field').val();
+      if (message) {
+          $('#message_field').val('');
+          $('.mdl-textfield').removeClass('is-focused, is-dirty');
+          socket.emit('message', { to: #{to_user.id}, message: message });
+      }
+  }
+
+  document
+    .getElementById("message_field")
+    .addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode == 13) { sendmessage(); }
+    });

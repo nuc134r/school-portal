@@ -33,7 +33,9 @@
     "quill-render": "^1.0.5",
     "sequelize": "3.24.8",
     "serve-favicon": "~2.2.1",
+    "socket.io": "^1.7.3",
     "sql-template-strings": "2.2.2",
+    "useragent": "^2.1.13",
     "validate.js": "^0.11.1"
   }
 }

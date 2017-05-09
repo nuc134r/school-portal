@@ -43,7 +43,7 @@ include ../parts/mixins
     img.large-avatar-image(src=profile_user.getImageUrls().large)
   if profile_user.id != user.id
     .mdl-card__actions.mdl-card--border
-      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="post_form()", style='float: left;') Написать сообщение
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/chat/" + profile_user.id, onclick="ajax(this); return false;" style='float: left;') Написать сообщение
 
 if (profile_user.type == 'teacher' && profile_user.teacher.subjects.length)
   +Card(cardSettings)

@@ -17,6 +17,7 @@ helper.whitelist('/a/*', (req) => req.school_context.user.type, 'admin');
 helper.whitelist('/s/*', (req) => req.school_context.user.type, 'student');
 helper.blacklist('/settings', (req) => req.school_context.user.type, 'admin');
 helper.blacklist('/profile/*', (req) => req.school_context.user.type, 'admin');
+helper.blacklist('/chat*', (req) => req.school_context.user.type, 'admin');
 
 /* admin */
 router.get('/a', (req, res) => res.redirect('/a/users'));
@@ -55,6 +56,9 @@ router.post('/savePassword', commonController.savePassword);
 router.get('/profile/:user_id', commonController.getProfilePage);
 router.get('/groups', commonController.getAllGroupsPage);
 router.get('/group/:group_id', commonController.getGroupPage);
+
+//router.get('/chats', commonController.getGroupPage);
+router.get('/chat/:user_id', commonController.getChatPage);
 
 router.get('/images/small/:image_id', commonController.getSmallProfileImage);
 router.get('/images/large/:image_id', commonController.getLargeProfileImage);

@@ -15,7 +15,7 @@ mixin TaskResults(results, groups, emptyText)
               if result.state
                 a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/t/tasks/result/" + result.id, onclick="return ajax(this);", style='float: right; margin-top: 6px;') Открыть
               else
-                a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/im/" + result.user.id, onclick="return ajax(this);", style='float: right; margin-top: 6px;') Сообщение
+                a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href="/chat/" + result.user.id, onclick="return ajax(this);", style='float: right; margin-top: 6px;') Сообщение
               a(href='/profile/' + result.user.id, onclick="ajax(this, true); return false;", style='text-decoration: none;')
                 img.mdl-user-avatar(src=result.user.asViewModel().getImageUrls().small)
                 h2.mdl-card__title-text(style='font-size: 19px; color: black; padding-left: 10px;') #{ result.user.firstname + ' ' + result.user.lastname }

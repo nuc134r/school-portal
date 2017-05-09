@@ -26,7 +26,10 @@ html
 
     script(src='/vendor/jquery.min.js')
     script(src='/vendor/jquery.history.js')
+    script(src='/socket.io.js')
+    
     script(src='/common.js')
+
     
     title #{title} | Студенческий портал
 
@@ -63,7 +66,8 @@ html
             else
               span #{user.name.first} #{user.name.last}
           if layout == 'student'
-            h6.mdl-user-group #{(user.student && user.student.group)}
+            h6.mdl-user-group 
+              a(href='/group/' + user.student.groupId, onclick="ajax(this, true); return false;") #{user.student.group}
           button#hdrbtn.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(style='position: absolute; bottom: 10px; right: 5px;')
             i.material-icons more_vert
           ul.mdl-menu.mdl-js-menu.mdl-js-ripple-effect.mdl-menu--bottom-right(for='hdrbtn')
@@ -76,7 +80,7 @@ html
             +MenuItem({label: 'Сегодня',       link: '/s/dashboard', icon: '&#xE8DF;' })
             +MenuItem({label: 'Расписание',    link: '/s/timetable', icon: '&#xE916;' })
             +MenuItem({label: 'Задания',       link: '/s/tasks',     icon: '&#xE877;' })
-            +MenuItem({label: 'Сообщения',     link: '/s/messages',  icon: '&#xE0C9;'/*, counter: 3*/})
+            +MenuItem({label: 'Сообщения',     link: '/s/chats',  icon: '&#xE0C9;'/*, counter: 3*/})
             +MenuItem({label: 'Группы',        link: '/groups',      icon: '&#xE7FB;' })
             +MenuItem({label: 'Материалы',     link: '/s/materials', icon: '&#xE86E;' })
             +MenuItem({label: 'Клубы',         link: '/s/clubs',     icon: '&#xE420;' })
@@ -105,8 +109,14 @@ html
       main.mdl-layout__content.mdl-color--grey-100
         .spinner-wrapper#loading-spinner(style='position: absolute; z-index: 5; left: calc(50% - 14px); top: calc(50% - 14px); visibility: collapse;')
           .mdl-spinner.mdl-spinner--single-color.mdl-js-spinner.is-active
-        #content
+        #content(style='height: calc(100vh - 64px - 8px);')
           block content
       
       script.
         $('#search').keyup(function() { list.search($(this).val()) });
+
+        var school_context = {
+          user: !{JSON.stringify(user)}
+        };
+
+        school_context.user.images = !{JSON.stringify(user.getImageUrls())};
