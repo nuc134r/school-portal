@@ -109,9 +109,31 @@ function registerSocket(token, socket) {
 
         console.log(`User ${session.user.login} disconnected (${socket.id}) (${socket.agent.toString()})`);
     })
+
+    return session.user;
 }
 
-module.exports.registerSocket = registerSocket;
+function sendSocket(userId, name, payload) {
+    let sockets = null;
+
+    for (var key in cache) {
+        var session = cache[key];
+        if (session.user.id == userId) {
+            sockets = session.sockets;
+        }
+    }
+
+    if (sockets) {
+        for (var key in sockets) {
+            if (sockets[key]) {
+                sockets[key].emit(name, payload);
+            }
+        }
+    }
+}
+
+module.exports.sendSocket = sendSocket;
+module.exports.registerSocketAndGetUserByToken = registerSocket;
 module.exports.invalidate = invalidate;
 module.exports.create = create;
 module.exports.get = get;

@@ -13,6 +13,7 @@ const UsersRepository = require('../repository/users');
 const TasksRepository = require('../repository/tasks');
 const GroupsRepository = require('../repository/groups');
 const TeachersRepository = require('../repository/teachers');
+const MessagesRepository = require('../repository/messages');
 
 function getHelper(req) {
     return require('./controller-helper')(req.school_context.user.type);
@@ -118,7 +119,7 @@ module.exports.getTaskListPage = (req, res) => {
             res.end();
         });
 }
-    
+
 
 module.exports.getProfilePage = (req, res) => {
     const helper = getHelper(req);
@@ -167,6 +168,30 @@ module.exports.getAllGroupsPage = (req, res) => {
         })
         .then(teachers => {
             data.teachers = teachers;
+            helper.render(req, res, data, renderOptions)
+        });
+}
+
+module.exports.getChatPage = (req, res) => {
+    const helper = getHelper(req);
+
+    let renderOptions = {
+        view: 'common/chat',
+        title: 'Диалог',
+    };
+
+    let fromId = req.school_context.user.id;
+    let toId = req.params.user_id;
+
+    let data = {};
+
+    MessagesRepository.getHistory(fromId, toId)
+        .then(messages => {
+            data.messages = messages;
+            return UsersRepository.get({ id: toId })
+        })
+        .then(to_user => {
+            data.to_user = to_user;
             helper.render(req, res, data, renderOptions)
         });
 }

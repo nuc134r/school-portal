@@ -142,7 +142,7 @@ mixin Text(options)
   div(class=classes)
     block
 
-mixin Block(options)
+mixin Block(options, style)
   - var classes = [];
   - ['phone', 'desktop', 'tablet'].forEach((device) => {
   -   var settings = options[device]; 
@@ -151,7 +151,7 @@ mixin Block(options)
   -     if (settings.o) classes.push('mdl-cell--' + settings.o + '-offset-' + device);
   -   }
   - });
-  div(class=classes)
+  div(class=classes, style=style)
     block
 
 mixin Form(cardSettings, id, url, style, cardStyle)
