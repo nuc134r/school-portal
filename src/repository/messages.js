@@ -3,6 +3,7 @@
 const moment = require('moment');
 
 const database = require('../database/database');
+const rawQueries = require('../database/raw-queries');
 const connection = database.getConnection();
 
 const helper = require('./repository-helper')(connection, 'message');
@@ -14,23 +15,39 @@ module.exports.send = (fromId, toId, text) => {
     });
 }
 
+module.exports.getChats = (userId) => {
+
+    return connection.query(rawQueries.getAllChats, {
+        replacements: { userId },
+        type: connection.QueryTypes.SELECT
+    })
+        .then((chats) => {
+
+            for (let i = 0; i < chats.length; i++) {
+                let chat = chats[i];
+                chat.user = connection.models["user"].build(chat);
+                chat.createdAtDisplay = moment(chat.messageCreatedAt).format('LLL');
+            }
+
+            return chats;
+        });
+}
+
 module.exports.getHistory = (fromId, toId) => {
     return connection
         .models['message']
         .findAll({
             where: {
-                fromId: {
-                    $or: [
-                        fromId,
-                        toId
-                    ]
-                },
-                toId: {
-                    $or: [
-                        fromId,
-                        toId
-                    ]
-                }
+                $or: [
+                    {
+                        fromId: fromId,
+                        toId: toId
+                    },
+                    {
+                        fromId: toId,
+                        toId: fromId
+                    }
+                ]
             }
         }).then(messages => {
             return messages.map(message => {

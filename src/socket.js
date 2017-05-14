@@ -21,7 +21,12 @@ module.exports.createHandlers = function (socket) {
             // sender gets his own message via socket
             .then(() => session.sendSocket(user.id, 'message', message))
             // reciever gets message
-            .then(() => session.sendSocket(data.to, 'message', Object.assign(message, { inbox: true })));
+            .then(() => {
+                if (user.id != data.to)
+                {
+                    session.sendSocket(data.to, 'message', Object.assign(message, { inbox: true }));
+                }
+            });
     });
 }
 

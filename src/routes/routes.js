@@ -57,7 +57,7 @@ router.get('/profile/:user_id', commonController.getProfilePage);
 router.get('/groups', commonController.getAllGroupsPage);
 router.get('/group/:group_id', commonController.getGroupPage);
 
-//router.get('/chats', commonController.getGroupPage);
+router.get('/chats', commonController.getChatListPage);
 router.get('/chat/:user_id', commonController.getChatPage);
 
 router.get('/images/small/:image_id', commonController.getSmallProfileImage);

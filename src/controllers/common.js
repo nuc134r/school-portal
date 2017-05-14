@@ -196,6 +196,21 @@ module.exports.getChatPage = (req, res) => {
         });
 }
 
+module.exports.getChatListPage = (req, res) => {
+    const helper = getHelper(req);
+
+    let renderOptions = {
+        view: 'common/chats',
+        title: 'Диалоги',
+    };
+
+    MessagesRepository
+        .getChats(req.school_context.user.id)
+        .then(chats => {
+            helper.render(req, res, { chats }, renderOptions);
+        });
+}
+
 module.exports.getSettingsPage = (req, res) => {
     const helper = getHelper(req);
 
