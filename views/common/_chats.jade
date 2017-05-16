@@ -16,6 +16,14 @@ mixin Chat(user, chat)
       span(style='color: black; opacity: .3; font-size: 12px; float: right; position: relative; bottom: 26px; right: 26px;') #{ chat.createdAtDisplay }
 
 +Card(cardSettings, 'height: calc(100vh - (8px * 14)); padding: 0px;')
-  .mdl-card__supporting-text(style='padding: 0px; width: 100%;')
-    each chat in chats
-      +Chat(chat.user, chat)
+  if chats.length
+    .mdl-card__supporting-text(style='padding: 0px; width: 100%;')
+      each chat in chats
+        +Chat(chat.user, chat)
+  else
+    span(style='opacity: .5; margin: auto; text-align: center;') 
+      Диалогов пока нет
+      br
+      br
+      a(href='/groups', onclick="ajax(this, true); return false;") Напишите
+      |  кому-нибудь первое сообщение!
