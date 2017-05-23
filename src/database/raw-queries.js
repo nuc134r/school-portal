@@ -8,8 +8,8 @@ FROM
 (
 	SELECT 
 		CASE
-			WHEN "fromId" = 11 THEN "toId"
-			WHEN "toId" = 11 THEN "fromId"
+			WHEN "fromId" = :userId THEN "toId"
+			WHEN "toId" = :userId THEN "fromId"
 		END AS "chatWithUserId",
 		"fromId" AS "lastMessagefromId",
 		"text",
@@ -25,9 +25,9 @@ FROM
 		FROM 
 		    public.messages
 		WHERE
-		    "fromId" = 11 
+		    "fromId" = :userId 
 		    OR 
-		    "toId" = 11
+		    "toId" = :userId
 		GROUP BY "ChatId"
 	    ) AS "chats"
 
