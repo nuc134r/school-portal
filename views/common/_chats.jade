@@ -21,9 +21,12 @@ mixin Chat(user, chat)
       each chat in chats
         +Chat(chat.user, chat)
   else
-    span(style='opacity: .5; margin: auto; text-align: center;') 
-      Диалогов пока нет
+    div(style='opacity: .5; margin: auto; text-align: center;') 
+      img(src='/speech-bubble.png')
       br
       br
-      a(href='/groups', onclick="ajax(this, true); return false;") Напишите
-      |  кому-нибудь первое сообщение!
+      span Диалогов пока нет
+      br
+      br
+      a(href='/groups', style=' font-weight: 400;', onclick="ajax(this, true); return false;") Напишите
+      span  кому-нибудь сообщение!

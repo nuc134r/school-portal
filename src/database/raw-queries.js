@@ -19,8 +19,8 @@ FROM
 		SELECT 
 		    MAX(id) as "lastMessageId",
 		    CASE
-			WHEN "fromId" <= "toId" THEN ("fromId"::text || '.' || "toId"::text)
-			WHEN "fromId" > "toId" THEN ("toId"::text || '.' || "fromId"::text)
+				WHEN "fromId" <= "toId" THEN ("fromId"::text || '.' || "toId"::text)
+				WHEN "fromId" > "toId" THEN ("toId"::text || '.' || "fromId"::text)
 		    END AS "ChatId"
 		FROM 
 		    public.messages

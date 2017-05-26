@@ -8,6 +8,7 @@ const SubjectsRepository = require('../repository/subjects');
 const AuditoriesRepository = require('../repository/auditories');
 const TimingsRepository = require('../repository/timings');
 const TeachersRepository = require('../repository/teachers');
+const TestsRepository = require('../repository/tests');
 const TimeRepository = require('../repository/time');
 const NewsRepository = require('../repository/news');
 const TasksRepository = require('../repository/tasks');
@@ -63,6 +64,20 @@ module.exports.NewsController = helper.generateContoller({
             formData.userId = req.school_context.user.id;
         }
         return formData;
+    }
+});
+
+module.exports.TestsController = helper.generateContoller({
+    entityName: 'test',
+    entityNamePlural: 'tests',
+    displayName: 'тест',
+    displayNamePlural: 'тесты',
+    displayNameGenetive: 'теста',
+    displayNameAccusative: 'тест',
+    displayNameIsMasculine: true,
+    repository: TestsRepository,
+    lists: {
+        groups: GroupsRepository.browse
     }
 });
 

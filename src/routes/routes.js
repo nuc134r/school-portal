@@ -40,6 +40,7 @@ router.get('/t/tasks/review', commonController.getTaskListPage);
 router.get('/t/tasks/review/:id', commonController.getTaskPage);
 router.get('/t/tasks/result/:id', commonController.getTaskResultPage);
 router.post('/t/tasks/result/:id', teacherController.saveTaskResult);
+helper.createContollerRoutes('t', router, teacherController.TestsController);
 
 /* student */
 router.get('/s', (req, res) => res.redirect('/s/dashboard'));
