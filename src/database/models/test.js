@@ -21,6 +21,8 @@ function Init(sequelize) {
 
     Entity.belongsTo(sequelize.models["subject"]);
 
+    Entity.belongsTo(sequelize.models["user"]);
+
     Entity.hasMany(sequelize.models['test_result'], {
         foreignKey: { allowNull: false },
         onDelete: 'CASCADE'

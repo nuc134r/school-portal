@@ -7,11 +7,12 @@ include ../parts/mixins
 - title = { title: 'Название',  field: 'name' }
 - groups = { title: 'Группы', valueGetter: _ => _.groups.map(_ => _.name).join(', ') }
 - subject = { title: 'Предмет', valueGetter: _ => _.subject.name }
+- results = { title: 'Результаты', type: 'button', buttonIcon: 'group', buttonLinkGetter: _ => '/t/tests/' + _.id + '/results' }
 - createdAt = { title: 'Дата создания',  field: 'createdAt' }
 
 - tableDefinition = {}
 - tableDefinition.items = list_page_items
-- tableDefinition.columns = [title, subject, groups, createdAt]
+- tableDefinition.columns = [title, subject, groups, createdAt, results]
 
 
 .mdl-grid

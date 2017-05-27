@@ -83,6 +83,12 @@ module.exports.TestsController = helper.generateContoller({
                 return { text: _.name, value: _.id }
             }))
         }
+    },
+    onProcessForm: (formData, req, isEdit) => {
+        if (!isEdit) {
+            formData.userId = req.school_context.user.id;
+        }
+        return formData;
     }
 });
 
@@ -159,6 +165,19 @@ module.exports.getDashboardPage = (req, res) => {
     };
 
     helper.render(req, res, {}, renderOptions);
+}
+
+module.exports.getTestResultsPage = (req, res) => {
+    TestsRepository
+        .getResults(req.params['id'])
+        .then(test => {
+            let renderOptions = {
+                view: 'teacher/test_results',
+                title: 'Тест'
+            };
+
+            helper.render(req, res, { test }, renderOptions);
+        });
 }
 
 module.exports.saveLessons = (req, res) => {

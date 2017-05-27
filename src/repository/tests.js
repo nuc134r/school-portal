@@ -17,7 +17,7 @@ module.exports.create = (options) => {
 };
 
 module.exports.browse = helper.browseWith(['group', 'subject']);
-module.exports.get = helper.getWith(['subject']);
+module.exports.get = helper.getWith(['subject', 'test_result', 'group']);
 module.exports.delete = helper.delete;
 module.exports.update = helper.update;
 
@@ -41,6 +41,57 @@ module.exports.browseForGroup = (userId, groupId) => {
         });
 }
 
+module.exports.browseForTeacher = (userId) => {
+    return connection
+        .models['test']
+        .findAll({
+            include: [
+                {
+                    model: connection.models['group']
+                },
+                {
+                    model: connection.models['subject']
+                },
+                {
+                    model: connection.models['user'],
+                    where: { id: userId }
+                }
+            ]
+        });
+}
+
+module.exports.getResults = (id) => {
+    return connection
+        .models['test']
+        .findOne({
+            where: { id },
+            include: [
+                {
+                    model: connection.models['subject']
+                },
+                {
+                    model: connection.models['group'],
+                    include: [
+                        {
+                            model: connection.models['student'],
+                            include: [
+                                {
+                                    model: connection.models['user'],
+                                    include: [
+                                        {
+                                            model: connection.models['test_result'],
+                                            where: { testId: id },
+                                            required: false
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+}
 
 module.exports.saveTestResult = (id, userId, body) => {
     return connection
