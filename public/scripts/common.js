@@ -100,6 +100,7 @@ function ajax(link, closeDrawer, browserTriggered) {
 
             if (!response.title && !response.html) {
                 window.location.reload();
+                return;
             }
 
             $loading_spinner.css('visibility', 'collapse');

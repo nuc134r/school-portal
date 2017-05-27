@@ -49,6 +49,9 @@ router.get('/s/timetable', studentController.getTimetablePage);
 router.get('/s/tasks', commonController.getTaskListPage);
 router.get('/s/tasks/:id', commonController.getTaskPage);
 router.post('/s/tasks/:id', studentController.saveTaskSolution);
+router.get('/s/tests', studentController.getTestListPage);
+router.get('/s/tests/:id', studentController.getTestPage);
+router.post('/s/tests/:id', studentController.saveTestResult);
 
 /* common */
 router.get('/settings', commonController.getSettingsPage);

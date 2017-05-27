@@ -11,6 +11,7 @@ const UUID = require('node-uuid');
 
 const UsersRepository = require('../repository/users');
 const TasksRepository = require('../repository/tasks');
+const TestsRepository = require('../repository/tests');
 const GroupsRepository = require('../repository/groups');
 const TeachersRepository = require('../repository/teachers');
 const MessagesRepository = require('../repository/messages');
@@ -119,7 +120,6 @@ module.exports.getTaskListPage = (req, res) => {
             res.end();
         });
 }
-
 
 module.exports.getProfilePage = (req, res) => {
     const helper = getHelper(req);

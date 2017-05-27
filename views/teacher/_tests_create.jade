@@ -17,8 +17,13 @@ mixin InputFieldShort(placeholder, id, autofocus, preset_value)
     .mdl-card__supporting-text.mdl-card__supporting-text-strip-borders
       form#question-create-form(action=post_url, method='POST', style='padding: 5px 25px')
         +InputField('Имя', 'name', true)
-        
+
+        +ComboBox('Предмет', 'subjectId', lists.subjects)
+
         h5(style='margin-top: 16px;') Вопросы
+
+        span Варианты ответов будут перемешаны случайным образом
+
         #questions
           div(v-for='(question, questionIndex) in questions')
             .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: calc(85% - 16px);')

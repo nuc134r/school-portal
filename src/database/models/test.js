@@ -19,6 +19,13 @@ function Init(sequelize) {
             }
         });
 
+    Entity.belongsTo(sequelize.models["subject"]);
+
+    Entity.hasMany(sequelize.models['test_result'], {
+        foreignKey: { allowNull: false },
+        onDelete: 'CASCADE'
+    });
+
     Entity.belongsToMany(sequelize.models["group"], { through: 'tests_groups' });
 }
 

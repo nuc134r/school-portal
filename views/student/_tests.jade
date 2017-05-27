@@ -1,0 +1,56 @@
+include ../parts/mixins
+
+mixin TestListEntry(test, cardSettings, result)
+  +Card(cardSettings)
+    .mdl-card__title(style='padding-bottom: 8px;')
+      h2.mdl-card__title-text(style='font-size: 19px;') #{test.name}
+    .mdl-card__supporting-text(style='padding-top: 0px; color: black; padding-bottom: 0px;')
+      h2.mdl-card__title-text
+        small #{test.subject.shortname}
+    if (result)
+      - var totalScore = JSON.parse(test.questions).reduce(function(prev, curr) { return (+curr.score) + (+prev); }, 0)
+      .mdl-card__supporting-text
+        if result.score >= test.a_score
+          span.mdl-chip.mdl-spacing.mdl-color--green.mdl-color-text--white(style=style)
+            span.mdl-chip__text #{'Отлично (' + result.score + ' из ' + totalScore + ')'}
+        else
+          if result.score >= test.b_score
+            span.mdl-chip.mdl-spacing.mdl-color--light-green.mdl-color-text--white(style=style)
+              span.mdl-chip__text #{'Хорошо (' + result.score + ' из ' + totalScore + ')'}
+          else
+            if result.score >= test.c_score
+              span.mdl-chip.mdl-spacing.mdl-color--lime.mdl-color-text--white(style=style)
+                span.mdl-chip__text #{'Удовлетворительно (' + result.score + ' из ' + totalScore + ')'}
+            else
+              span.mdl-chip.mdl-spacing.mdl-color--deep-orange.mdl-color-text--white(style=style)
+                span.mdl-chip__text #{'Неудовлетворительно (' + result.score + ' из ' + totalScore + ')'}
+    if (!result)
+      .mdl-card__actions.mdl-card--border(style='margin-top: 8px;')
+        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(href='/s/tests/' + test.id, onclick="return ajax(this)") пройти
+    
+- var cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 6, o: 3 } }
+
+- new_tests = tests.filter(test => !test.test_results.filter(_ => _.userId == user.id).length);
+- finished_tests = tests.filter(test => test.test_results.filter(_ => _.userId == user.id).length);
+
+.mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
+  .mdl-tabs__tab-bar(style='background: rgba(255, 255, 255, 0.84);')
+    a.mdl-tabs__tab.is-active(href='#first-tab') Новые
+    a.mdl-tabs__tab(href='#second-tab') Пройденные
+
+  #first-tab.mdl-tabs__panel.is-active
+    if new_tests.length
+      for test in new_tests
+        +TestListEntry(test, cardSettings)
+    else
+      .loading-text(style='position: absolute; z-index: 5; top: calc(30% - 14px);')
+        h5 Все тесты пройдены.
+        h5 Так держать!
+        
+  #second-tab.mdl-tabs__panel
+    if finished_tests.length
+      for test in finished_tests
+        +TestListEntry(test, cardSettings, test.test_results.filter(_ => _.userId == user.id)[0])
+    else
+      .loading-text(style='position: absolute; z-index: 5; top: calc(30% - 14px);')
+        h5 Пройденных тестов нет

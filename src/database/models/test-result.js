@@ -8,12 +8,7 @@ function Init(sequelize) {
         score: Sequelize.INTEGER
     });
 
-    Entity.belongsTo(sequelize.models['test'], {
-        foreignKey: { allowNull: false },
-        onDelete: 'CASCADE'
-    });
-
-    Entity.belongsTo(sequelize.models['student']);
+    Entity.belongsTo(sequelize.models['user']);
 }
 
 module.exports.Init = Init;

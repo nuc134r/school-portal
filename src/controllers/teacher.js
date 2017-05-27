@@ -77,7 +77,12 @@ module.exports.TestsController = helper.generateContoller({
     displayNameIsMasculine: true,
     repository: TestsRepository,
     lists: {
-        groups: GroupsRepository.browse
+        groups: GroupsRepository.browse,
+        subjects: (req, res) => {
+            return SubjectsRepository.browseMySubjects(req.school_context.user.teacher.id).then(result => result.map(_ => {
+                return { text: _.name, value: _.id }
+            }))
+        }
     }
 });
 

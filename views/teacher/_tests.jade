@@ -5,12 +5,13 @@ include ../parts/mixins
   +MvcMessages('Тест создан', 'Тест удалён', 'Тест сохранён')
 
 - title = { title: 'Название',  field: 'name' }
-- groups = { title: 'Группы',  field: 'groups', valueGetter: _ => _.groups.map(_ => _.name).join(', ') }
+- groups = { title: 'Группы', valueGetter: _ => _.groups.map(_ => _.name).join(', ') }
+- subject = { title: 'Предмет', valueGetter: _ => _.subject.name }
 - createdAt = { title: 'Дата создания',  field: 'createdAt' }
 
 - tableDefinition = {}
 - tableDefinition.items = list_page_items
-- tableDefinition.columns = [title, groups, createdAt]
+- tableDefinition.columns = [title, subject, groups, createdAt]
 
 
 .mdl-grid

@@ -40,8 +40,8 @@ require('./models/task-comment').Init(sequelize);
 require('./models/task-result').Init(sequelize);
 require('./models/task').Init(sequelize);
 require('./models/message').Init(sequelize);
-require('./models/test').Init(sequelize);
 require('./models/test-result').Init(sequelize);
+require('./models/test').Init(sequelize);
 
 function getConnection() {
     return sequelize;
