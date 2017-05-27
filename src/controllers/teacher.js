@@ -8,6 +8,7 @@ const SubjectsRepository = require('../repository/subjects');
 const AuditoriesRepository = require('../repository/auditories');
 const TimingsRepository = require('../repository/timings');
 const TeachersRepository = require('../repository/teachers');
+const TestsRepository = require('../repository/tests');
 const TimeRepository = require('../repository/time');
 const NewsRepository = require('../repository/news');
 const TasksRepository = require('../repository/tasks');
@@ -57,6 +58,31 @@ module.exports.NewsController = helper.generateContoller({
     lists: {
         groups: GroupsRepository.browse,
         teachers: TeachersRepository.browse
+    },
+    onProcessForm: (formData, req, isEdit) => {
+        if (!isEdit) {
+            formData.userId = req.school_context.user.id;
+        }
+        return formData;
+    }
+});
+
+module.exports.TestsController = helper.generateContoller({
+    entityName: 'test',
+    entityNamePlural: 'tests',
+    displayName: 'тест',
+    displayNamePlural: 'тесты',
+    displayNameGenetive: 'теста',
+    displayNameAccusative: 'тест',
+    displayNameIsMasculine: true,
+    repository: TestsRepository,
+    lists: {
+        groups: GroupsRepository.browse,
+        subjects: (req, res) => {
+            return SubjectsRepository.browseMySubjects(req.school_context.user.teacher.id).then(result => result.map(_ => {
+                return { text: _.name, value: _.id }
+            }))
+        }
     },
     onProcessForm: (formData, req, isEdit) => {
         if (!isEdit) {
@@ -139,6 +165,19 @@ module.exports.getDashboardPage = (req, res) => {
     };
 
     helper.render(req, res, {}, renderOptions);
+}
+
+module.exports.getTestResultsPage = (req, res) => {
+    TestsRepository
+        .getResults(req.params['id'])
+        .then(test => {
+            let renderOptions = {
+                view: 'teacher/test_results',
+                title: 'Тест'
+            };
+
+            helper.render(req, res, { test }, renderOptions);
+        });
 }
 
 module.exports.saveLessons = (req, res) => {

@@ -13,6 +13,7 @@ html
     link(rel="stylesheet" href='/vendor/mdl-selectfield.' + theme.primary + '-' + theme.secondary + '.min.css')
     script(defer src="/vendor/material.min.js")
     script(src="/vendor/list.min.js")
+    script(src="/vendor/vue.min.js")
     link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css")
 
     link(rel="stylesheet" href="/material.custom.css")
@@ -79,23 +80,26 @@ html
           .mdl-navigation
             +MenuItem({label: 'Сегодня',       link: '/s/dashboard', icon: '&#xE8DF;' })
             +MenuItem({label: 'Расписание',    link: '/s/timetable', icon: '&#xE916;' })
-            +MenuItem({label: 'Задания',       link: '/s/tasks',     icon: '&#xE877;' })
-            +MenuItem({label: 'Сообщения',     link: '/chats',  icon: '&#xE0C9;'/*, counter: 3*/})
+            +MenuItem({label: 'Задания',       link: '/s/tasks',     icon: '&#xE86E;' })
+            +MenuItem({label: 'Тесты',         link: '/s/tests',       icon: '&#xE065;' })
+            +MenuItem({label: 'Сообщения',     link: '/chats',       icon: '&#xE0C9;'/*, counter: 3*/})
             +MenuItem({label: 'Группы',        link: '/groups',      icon: '&#xE7FB;' })
-            +MenuItem({label: 'Материалы',     link: '/s/materials', icon: '&#xE86E;' })
-            +MenuItem({label: 'Клубы',         link: '/s/clubs',     icon: '&#xE420;' })
+            //+MenuItem({label: 'Материалы',     link: '/s/materials', icon: '&#xE86E;' })
+            //+MenuItem({label: 'Клубы',         link: '/s/clubs',     icon: '&#xE420;' })
            
         if layout == 'teacher'   
           .mdl-navigation
-            +MenuItem({label: 'Сегодня',          link: '/t/dashboard',   icon: '&#xE8DF;' })
-            +MenuItem({label: 'Сообщения',     link: '/chats',  icon: '&#xE0C9;'/*, counter: 3*/})
-            +MenuItem({label: 'Задания',          link: '/t/tasks/review',  icon: '&#xE877;'/*, counter: 5 */})
-            +MenuItem({label: 'Группы',        link: '/groups',      icon: '&#xE7FB;' })
-            +MenuItem({label: 'Редактор заданий', link: '/t/tasks',       icon: '&#xE877;' })
+            +MenuItem({label: 'Сегодня',       link: '/t/dashboard',     icon: '&#xE8DF;' })
+            +MenuItem({label: 'Сообщения',     link: '/chats',           icon: '&#xE0C9;'/*, counter: 3*/})
+            +MenuItem({label: 'Задания',       link: '/t/tasks/review',  icon: '&#xE877;'/*, counter: 5 */})
+            +MenuItem({label: 'Группы',        link: '/groups',          icon: '&#xE7FB;' })
+            .menu-splitter
+            +MenuItem({label: 'Редактор заданий', link: '/t/tasks',     icon: '&#xE877;' })
+            +MenuItem({label: 'Редактор тестов',  link: '/t/tests',     icon: '&#xE065;' })
             if user.teacher.canEditTimetable
-              +MenuItem({label: 'Редактор расписания',       link: '/t/timetable', icon: '&#xE916;' })
+              +MenuItem({label: 'Редактор расписания', link: '/t/timetable', icon: '&#xE916;' })
             if user.teacher.canCreateNews
-              +MenuItem({label: 'Редактор новостей', link: '/t/news',      icon: '&#xE0E5;' })
+              +MenuItem({label: 'Редактор новостей', link: '/t/news', icon: '&#xE0E5;' })
 
         if layout == 'admin'
           .mdl-navigation

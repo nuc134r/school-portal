@@ -40,6 +40,10 @@ function Create(connection, modelName) {
             where: options
         }).then(formatAuditFields),
         get: (options) => connection.models[modelName].findOne({ where: options }),
+        getWith: (includes) => (options) => connection.models[modelName].findOne({ 
+            include: (includes.map(model => connection.models[model]) || []),
+            where: options
+        }),
         delete: (options) => connection.models[modelName].destroy({ where: options }),
         update: (entityId, options) => connection.models[modelName].update(options, { where: { id: entityId }, returning: true, individualHooks: true }),
     }

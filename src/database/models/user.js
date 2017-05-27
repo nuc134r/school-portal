@@ -77,6 +77,8 @@ function Init(sequelize) {
                 }
             }
         });
+
+        return User;
 }
 
 module.exports.Init = Init;

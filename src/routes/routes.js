@@ -40,6 +40,8 @@ router.get('/t/tasks/review', commonController.getTaskListPage);
 router.get('/t/tasks/review/:id', commonController.getTaskPage);
 router.get('/t/tasks/result/:id', commonController.getTaskResultPage);
 router.post('/t/tasks/result/:id', teacherController.saveTaskResult);
+helper.createContollerRoutes('t', router, teacherController.TestsController);
+router.get('/t/tests/:id/results', teacherController.getTestResultsPage);
 
 /* student */
 router.get('/s', (req, res) => res.redirect('/s/dashboard'));
@@ -48,6 +50,9 @@ router.get('/s/timetable', studentController.getTimetablePage);
 router.get('/s/tasks', commonController.getTaskListPage);
 router.get('/s/tasks/:id', commonController.getTaskPage);
 router.post('/s/tasks/:id', studentController.saveTaskSolution);
+router.get('/s/tests', studentController.getTestListPage);
+router.get('/s/tests/:id', studentController.getTestPage);
+router.post('/s/tests/:id', studentController.saveTestResult);
 
 /* common */
 router.get('/settings', commonController.getSettingsPage);

@@ -169,7 +169,7 @@ database.Init().then(() => {
                     position: 'Заместитель директора по общим вопросам',
                     started_being_teacher: new Date(1995, 09, 1)
                 }))
-                    .then(_ => kirillov = _)
+                .then(_ => kirillov = _)
                 .then(() => UsersRepository.create({
                     lastname: 'Глускер',
                     firstname: 'Александр',
@@ -503,6 +503,55 @@ database.Init().then(() => {
             }
 
             return thePromise.then(() => connection.models['lesson'].bulkCreate(timetable));
+        })
+        .then(() => {
+            return connection.models['test'].create({
+                name: 'Проверка знаний по ООП',
+                questions: JSON.stringify([
+                    {
+                        text: 'К основным понятиям ООП не относится',
+                        score: 5,
+                        options: [
+                            'Статичность',
+                            'Инкапсуляция',
+                            'Наследование',
+                            'Полиморфизм'
+                        ]
+                    },
+                    {
+                        text: 'Инкапсуляция',
+                        score: 2,
+                        options: [
+                            'Функция, получая в качестве обязательного параметра указатель на объект.',
+                            'Структура, хранящая указатели this, parrent, supper',
+                            'Структурная переменная, содержащая всю информацию о некотором физическом предмете',
+                            'Определенный программистом абстрактный тип данных'
+                        ]
+                    },
+                    {
+                        text: 'Полиморфизм',
+                        score: 3,
+                        options: [
+                            'Функция, получая в качестве обязательного параметра указатель на объект.',
+                            'Структура, хранящая указатели this, parrent, supper',
+                            'Структурная переменная, содержащая всю информацию о некотором физическом предмете',
+                            'Определенный программистом абстрактный тип данных'
+                        ]
+                    },
+                ]),
+                a_score: 8,
+                b_score: 7,
+                c_score: 5,
+                subjectId: programming_subjects[0].id,
+                userId: glusker.id
+            });
+        })
+        .then(() => {
+            return connection.models['tests_groups']
+                .create({
+                    testId: 1,
+                    groupId: P_403.id
+                });
         })
         .then(() => {
             return new Promise((resolve, reject) => {

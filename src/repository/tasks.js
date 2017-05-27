@@ -16,6 +16,7 @@ module.exports.create = (options) => {
                 .then(() => connection.models['tasks_groups'].bulkCreate(groupIds.map(function (id) { return { groupId: id, taskId: task.id } })))
         });
 };
+
 module.exports.browse = (user) => helper.browseWith(['group', 'subject'], { userId: user.id })();
 
 module.exports.get = (options, user) => {
@@ -157,21 +158,21 @@ module.exports.getTasksForTeacher = (userId) => {
 module.exports.saveTaskResult = (taskResultId, user, options) => {
     return connection
         .models['task_result']
-        .update({ 
-            state: options.state, 
-            mark: options.mark || null, 
-            hasMark: !!options.mark 
+        .update({
+            state: options.state,
+            mark: options.mark || null,
+            hasMark: !!options.mark
         }, { where: { id: taskResultId }, returning: true })
         .then(taskResult => {
             return connection
                 .models['task_comment']
-                .create({ 
-                    newState: options.state || null, 
-                    text: options.text, 
-                    resultMark: options.mark || null, 
-                    hasMark: !!options.mark, 
-                    userId: user.id, 
-                    taskResultId: taskResultId 
+                .create({
+                    newState: options.state || null,
+                    text: options.text,
+                    resultMark: options.mark || null,
+                    hasMark: !!options.mark,
+                    userId: user.id,
+                    taskResultId: taskResultId
                 })
                 .then(() => taskResultId);
         });

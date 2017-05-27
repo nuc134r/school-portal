@@ -18,7 +18,7 @@ const sequelize = new Sequelize(
         logging: false
     });
 
-require('./models/user').Init(sequelize);
+let User = require('./models/user').Init(sequelize);
 require('./models/session').Init(sequelize);
 require('./models/specialty').Init(sequelize);
 require('./models/course').Init(sequelize);
@@ -40,6 +40,10 @@ require('./models/task-comment').Init(sequelize);
 require('./models/task-result').Init(sequelize);
 require('./models/task').Init(sequelize);
 require('./models/message').Init(sequelize);
+require('./models/test-result').Init(sequelize);
+require('./models/test').Init(sequelize);
+
+User.hasMany(sequelize.models['test_result']);
 
 function getConnection() {
     return sequelize;

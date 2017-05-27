@@ -2,6 +2,11 @@ body {
     font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
 
+.menu-splitter {
+    margin: 0px 8px;
+    border-bottom: rgba(0, 0, 0, 0.1) solid 1px;
+}
+
 .settings-avatar-image {
     border-radius: 50%;
     height: 128px;

@@ -1,0 +1,131 @@
+include ../parts/mixins
+
+mixin InputFieldShort(placeholder, id, autofocus, preset_value)
+  - preset_value = preset_value || query_params[id]; 
+  .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(id=(id + 'field_container'), style='display: block;')
+    input.mdl-textfield__input(type='text', name=id, id=(id + 'field'), value=preset_value, autofocus=autofocus)
+    label.mdl-textfield__label(for=(id + 'field')) #{ placeholder }
+
+.mdl-grid
+  - cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 10, o: 1 } }
+  
+  if query_params.error
+    +MessageCard(cardSettings, 'Ошибка при создании теста', query_params.error)
+  
+  - var post_url = '/t/' + options.entityNamePlural + (edit_mode ? ('/' + query_params.id + '/edit') : '/create')
+  +Card(cardSettings, '')
+    .mdl-card__supporting-text.mdl-card__supporting-text-strip-borders
+      form#question-create-form(action=post_url, method='POST', style='padding: 5px 25px')
+        +InputField('Имя', 'name', true)
+
+        +ComboBox('Предмет', 'subjectId', lists.subjects)
+
+        h5(style='margin-top: 16px;') Вопросы
+
+        span Варианты ответов будут перемешаны случайным образом
+
+        #questions
+          div(v-for='(question, questionIndex) in questions')
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: calc(85% - 16px);')
+              input.mdl-textfield__input(type='text', v-bind:id="'q' + questionIndex", v-model='question.text')
+              label.mdl-textfield__label(v-bind:for="'q' + questionIndex") {{ 'Вопрос ' + (+questionIndex + 1) }}
+
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='width: calc(15% - 16px - 32px); margin-left: 16px;')
+              input.mdl-textfield__input(type='number', v-bind:id="'qs' + questionIndex", v-model='question.score')
+              label.mdl-textfield__label(v-bind:for="'qs' + questionIndex") Баллы
+
+            button.mdl-button.mdl-js-button.mdl-button--icon(v-bind:disabled='!(questions.length > 1)', type='button', style='margin-left: 8px;', v-on:click="questions.splice(questionIndex, 1)")
+              i.material-icons delete
+
+            div(v-for='(option, optionIndex) in question.options', style='margin-left: 24px;')
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input.mdl-textfield__input(type='text', v-bind:id="'q' + questionIndex + 'o' + optionIndex", v-model='question.options[optionIndex]')
+                label.mdl-textfield__label(v-bind:for="'q' + questionIndex + 'o' + optionIndex") {{ optionIndex == 0 ? 'Верный ответ' : 'Ответ ' + (+optionIndex + 1) }}
+
+              button.mdl-button.mdl-js-button.mdl-button--icon(v-bind:disabled='!(question.options.length > 2)', type='button', style='margin-left: 8px;', v-on:click="question.options.splice(optionIndex, 1)")
+                i.material-icons delete
+              
+              br 
+
+            button.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect(style='margin-left: 24px; margin-bottom: 16px;', type='button', v-on:click="question.options.push('')") Добавить вариант ответа
+            
+          br
+          button.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect(style='margin-bottom: 16px;', type='button', v-on:click="questions.push({ text: '', score: 1, options: [ '', '', '', '' ]})") Добавить вопрос
+
+        #scores
+          h5(style='margin-top: 16px;') Баллы
+
+          span {{ 'Всего баллов в тесте: ' + totalScore }}
+
+          br
+          br
+
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='display: block;')
+            input.mdl-textfield__input(type='number', id='a_score', name='a_score', v-model='a_score', v-bind:max='totalScore', v-bind:min='b_score')
+            label.mdl-textfield__label(v-bind:for='a_score') Баллов на 5
+
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='display: block;')
+            input.mdl-textfield__input(type='number', id='b_score', name='b_score', v-model='b_score', v-bind:max='a_score', v-bind:min='c_score')
+            label.mdl-textfield__label(v-bind:for='b_score') Баллов на 4
+
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style='display: block;')
+            input.mdl-textfield__input(type='number', id='c_score', name='c_score', v-model='c_score', v-bind:max='b_score', v-bind:min='0')
+            label.mdl-textfield__label(v-bind:for='c_score') Баллов на 3
+
+        input#question-data(name='questions', style='display:none;')
+
+        - var selectedGroups = query_params.groups ? query_params.groups.map(_ => _.id) : [];
+        +ListSelector({
+          name: 'group', 
+          header: 'Группы', 
+          list: lists.groups,
+          isItemSelected: (item) => selectedGroups.indexOf(item.id) != -1,
+          getter: _ => _.name,
+          columnWidth: 200
+          })
+
+
+
+    .mdl-card__actions.mdl-card--border
+      a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(onclick="post_form()") сохранить
+
+
+script.
+  function post_form() {
+    document.getElementById('question-data').value = JSON.stringify(questionsViewModel.questions);
+    document.getElementById('question-create-form').submit();
+  }
+
+  function getTotalScoreOnQuestions() {
+    return questionsViewModel.questions.reduce(function(prev, curr) { return (+curr.score) + (+prev); }, 0);
+  }
+
+  var questionsViewModel = new Vue({
+    el: '#questions',
+    updated: function () {
+      if (!(typeof (componentHandler) == 'undefined')) {
+        componentHandler.upgradeAllRegistered();
+      }
+      scoresViewModel.totalScore = getTotalScoreOnQuestions();
+    },
+    data: {
+      questions: 
+      [
+        { 
+          text: '',
+          score: 1,
+          options: [ '', '', '', '' ]
+        }
+      ]
+    }
+  });
+
+  var scoresViewModel = new Vue({
+    el: '#scores',
+    data: {
+      totalScore: getTotalScoreOnQuestions(),
+      a_score: 0,
+      b_score: 0,
+      c_score: 0
+    }
+  });

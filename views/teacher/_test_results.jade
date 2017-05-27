@@ -1,0 +1,29 @@
+include ../parts/mixins
+
+- var students = [];
+
+- test.groups.forEach((group) => { group.students.forEach((student) => { students.push({ user: student.user, group: group, result: student.user.test_results[0] })})});
+
+- name = { title: 'Название', field: 'name', valueGetter: _ => _.user.getDisplayName() }
+- group = { title: 'Группа', field: 'group', valueGetter: _ => _.group.name }
+- score = { title: 'Баллы', field: 'score', valueGetter: _ => _.result && _.result.score, numeric: true }
+- mark = { title: 'Оценка', field: 'mark', valueGetter: _ => _.result && (_.result.score >= test.a_score ? 'Отлично' : (_.result.score >= test.b_score ? 'Хорошо' : (_.result.score >= test.c_score ? 'Удовлетворительно' : 'Неудовлетворительно'))) }
+- createdAt = { title: 'Дата прохождения', field: 'date',  valueGetter: _ => _.result && moment(_.result.createdAt).format('LLL') }
+
+- tableDefinition = { isNotEntity: true }
+- tableDefinition.items = students
+- tableDefinition.columns = [name, group, score, mark, createdAt]
+
+- cardSettings = { desktop: { s: 10, o: 1 }, tablet: { s: 8 }, phone: { s: 4 } }
+
+.mdl-grid
+  +Card(cardSettings)
+    .mdl-card__title(style='padding-bottom: 8px;')
+      h2.mdl-card__title-text(style='font-size: 19px;') #{test.name}
+    .mdl-card__supporting-text(style='padding-top: 0px; color: black;')
+      h2.mdl-card__title-text
+        small #{test.subject.shortname}
+    .mdl-card__supporting-text(style='padding-top: 0px; color: black;')
+      span Всего баллов: #{ JSON.parse(test.questions).reduce(function(prev, curr) { return (+curr.score) + (+prev); }, 0) }
+
+  +Table(cardSettings, tableDefinition)   

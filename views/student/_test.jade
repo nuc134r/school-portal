@@ -1,0 +1,41 @@
+include ../parts/mixins
+
+
+- var cardSettings = { phone: { s: 4 }, tablet: { s: 8, o: 0 }, desktop: { s: 8, o: 2 } }
+
+- function shuffle(a) {
+-     var j, x, i;
+-     for (i = a.length; i; i--) {
+-         j = Math.floor(Math.random() * i);
+-         x = a[i - 1];
+-         a[i - 1] = a[j];
+-         a[j] = x;
+-     }
+- }
+
++Card(cardSettings)
+  .mdl-card__title(style='padding-bottom: 8px;')
+    h2.mdl-card__title-text(style='font-size: 19px;') #{test.name}
+  .mdl-card__supporting-text(style='padding-top: 0px; color: black;')
+    h2.mdl-card__title-text
+      small #{test.subject.shortname}
+
+form#question-create-form(action='/s/tests/' + test.id, method='POST')
+  +Card(cardSettings)
+    .mdl-card__supporting-text
+      - questions = JSON.parse(test.questions)
+      - var questionIndex = 0;
+      - var first = true;
+      each question in questions
+        div(style=(first ? 'font-size: 20px; margin-bottom: 16px; display: block;' : 'font-size: 20px; margin-top: 24px; margin-bottom: 16px; display: block;')) 
+          span(style='color: rgba(0, 0, 0, 0.64);') #{question.text}
+          - var NCS = function(a) { return (a >= 5 && a <= 20) ? 'баллов' : ((a % 10 == 1) ? 'балл' : ((a % 10 > 1 && a % 10 < 5) ? 'балла' : 'баллов')) };
+          span(style='font-size: 13px; margin-left: 5px;') #{ question.score + ' ' + NCS(question.score) }
+        - first = false;
+        - options = question.options.map((item, i) => { return { text: item, index: i } });
+        - shuffle(options);
+        each option in options
+          +RadioButton(option.text, ('q' + questionIndex), ('q' + questionIndex + 'o' + option.index), false, 'display: block; margin: 8px 0px;')
+        - questionIndex++;
+    .mdl-card__actions.mdl-card--border(style='margin-top: 8px;')
+      button.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect отправить

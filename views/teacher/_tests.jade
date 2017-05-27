@@ -1,0 +1,21 @@
+include ../parts/mixins
+
+- cardSettings = { desktop: { s: 10, o: 1 }, tablet: { s: 8 }, phone: { s: 4 } }
+.mdl-grid
+  +MvcMessages('Тест создан', 'Тест удалён', 'Тест сохранён')
+
+- title = { title: 'Название',  field: 'name' }
+- groups = { title: 'Группы', valueGetter: _ => _.groups.map(_ => _.name).join(', ') }
+- subject = { title: 'Предмет', valueGetter: _ => _.subject.name }
+- results = { title: 'Результаты', type: 'button', buttonIcon: 'group', buttonLinkGetter: _ => '/t/tests/' + _.id + '/results' }
+- createdAt = { title: 'Дата создания',  field: 'createdAt' }
+
+- tableDefinition = {}
+- tableDefinition.items = list_page_items
+- tableDefinition.columns = [title, subject, groups, createdAt, results]
+
+
+.mdl-grid
+  +Table(cardSettings, tableDefinition)
+
+    
