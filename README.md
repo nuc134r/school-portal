@@ -1,6 +1,6 @@
 Diploma project written in full stack JavaScript.
 
-# PEWN software stack
+# PEVN software stack
 
 - **P**ostgreSQL
 - **E**xpress.js
