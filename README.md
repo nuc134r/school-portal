@@ -1,12 +1,31 @@
-# Diploma project written in full stack JavaScript
+Diploma project written in full stack JavaScript.
 
-[Material Design Lite](https://getmdl.io) components used on the front end. MDL provides good appearance and responsive design support out of the box. 
+# PEWN software stack
 
-[Pug](https://pugjs.org/api/getting-started.html) as HTML template engine. It is used almost everywhere to generate HTML on server and send it to the client providing AJAX navigation. Only few pieces use [Vue](https://vuejs.org/) to generate DOM on the client.
+- **P**ostgreSQL
+- **E**xpress.js
+- **V**ue.js (but most of the HTML is server rendered with Pug)
+- **N**ode.js
+
+All of the technologies are open source.
+
+# Front end
+
+[Material Design Lite](https://getmdl.io) components. MDL provides good appearance and responsive design support out of the box. Some custom components are used.
+
+[List.js](http://listjs.com/) for client grid sorting and search.
+
+[Vue](https://vuejs.org/) to generate DOM on the client. After trying Angular for this role decision was made to minimize client rendering and it was accomplished.
+
+[Quill](https://quilljs.com/) rich text editor.
+
+# Back end
 
 PostgreSQL along with [Sequelize](http://docs.sequelizejs.com/) ORM library.
 
-Check `package.json` for more details about used libraries.
+[Pug](https://pugjs.org/api/getting-started.html) as HTML template engine. It is used almost everywhere to generate HTML on server. 
+
+Check `package.json` for more details about used back end libraries.
 
 # Features
 - Responsive design
