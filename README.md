@@ -9,7 +9,7 @@ Diploma project written in full stack JavaScript.
 
 All of the technologies are open source.
 
-# Front end
+# Frontend
 
 [Material Design Lite](https://getmdl.io) components. MDL provides good appearance and responsive design support out of the box. Some custom components were used.
 
@@ -19,13 +19,13 @@ All of the technologies are open source.
 
 [Quill](https://quilljs.com/) rich text editor.
 
-# Back end
+# Backend
 
 PostgreSQL along with [Sequelize](http://docs.sequelizejs.com/) ORM library.
 
 [Pug](https://pugjs.org/api/getting-started.html) as HTML template engine. It is used almost everywhere to generate HTML on server. 
 
-Check `package.json` for more details about used back end libraries.
+Check `package.json` for more details about used backend libraries.
 
 # Features
 - Responsive design
