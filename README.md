@@ -11,11 +11,11 @@ All of the technologies are open source.
 
 # Front end
 
-[Material Design Lite](https://getmdl.io) components. MDL provides good appearance and responsive design support out of the box. Some custom components are used.
+[Material Design Lite](https://getmdl.io) components. MDL provides good appearance and responsive design support out of the box. Some custom components were used.
 
 [List.js](http://listjs.com/) for client grid sorting and search.
 
-[Vue](https://vuejs.org/) to generate DOM on the client. After trying Angular for this role decision was made to minimize client rendering and it was accomplished.
+[Vue](https://vuejs.org/) to generate DOM on the client. After trying Angular for this role decision was made to minimize client rendering and it was accomplished. Vue is used only on a couple of pages.
 
 [Quill](https://quilljs.com/) rich text editor.
 
