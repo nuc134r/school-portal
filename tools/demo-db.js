@@ -167,7 +167,7 @@ database.Init().then(() => {
                     password: 'portal',
                     image_id: 'kirillov',
                     position: 'Заместитель директора по общим вопросам',
-                    started_being_teacher: new Date(1995, 09, 1)
+                    started_being_teacher: new Date(1995, 9, 1)
                 }))
                 .then(_ => kirillov = _)
                 .then(() => UsersRepository.create({
@@ -179,7 +179,7 @@ database.Init().then(() => {
                     password: 'portal',
                     image_id: 'glu',
                     description: 'Образование: высшее (Московский государственный институт электроники и математики (ТУ) - МИЭМ)\nКвалификация: инженер-математик\nПрофессия: преподаватель + программист\nПрофессиональные интересы: математика, компьютеры (кроме устройства железа)\nДополнительные интересы: христианство, психология, некоторые разделы философии\nЛюблю читать: фантастика, серьёзная литература (некоторые произведения Достоевского, например)\nВероисповедание: христианство (ученичество, член Московской церкви Христа)\nЛюблю: прогулки по паркам/лесам и т. д. без ночёвок пешком или на велосипеде; решать интересные задачки',
-                    started_being_teacher: new Date(2010, 09, 1)
+                    started_being_teacher: new Date(2010, 9, 1)
                 })
                     .then(_ => glusker = _))
                 .then(user => user.update({ canCreateNews: true, canEditTimetable: true }))
@@ -191,7 +191,7 @@ database.Init().then(() => {
                     login: 'irina.konnova',
                     password: 'portal',
                     image_id: 'konnova',
-                    started_being_teacher: new Date(2006, 09, 1),
+                    started_being_teacher: new Date(2006, 9, 1),
                     position: 'Заведующая отделением №2'
                 })
                     .then(_ => konnova = _))
@@ -201,7 +201,7 @@ database.Init().then(() => {
                     middlename: 'Анатольевна',
                     type: 'teacher',
                     login: 'elena.larionova',
-                    started_being_teacher: new Date(1984, 09, 1),
+                    started_being_teacher: new Date(1984, 9, 1),
                     password: 'portal'
                 }))
                 .then(() => UsersRepository.create({
@@ -211,7 +211,7 @@ database.Init().then(() => {
                     type: 'teacher',
                     login: 'irina.milanova',
                     password: 'portal',
-                    started_being_teacher: new Date(1987, 09, 1),
+                    started_being_teacher: new Date(1987, 9, 1),
                     position: 'Заведующая отделением №1'
                 }))
                 .then(() => UsersRepository.create({
@@ -221,7 +221,7 @@ database.Init().then(() => {
                     type: 'teacher',
                     login: 'svetlana.skachkova',
                     password: 'portal',
-                    started_being_teacher: new Date(2012, 09, 1)
+                    started_being_teacher: new Date(2012, 9, 1)
                 })
                     .then(_ => skachkova = _))
                 .then(() => UsersRepository.create({
@@ -231,7 +231,7 @@ database.Init().then(() => {
                     type: 'teacher',
                     login: 'yury.sorokin',
                     password: 'portal',
-                    started_being_teacher: new Date(1990, 09, 1),
+                    started_being_teacher: new Date(1990, 9, 1),
                     image_id: 'sorokin'
                 }))
                 .then(() => UsersRepository.create({
@@ -240,7 +240,7 @@ database.Init().then(() => {
                     middlename: 'Владимирович',
                     type: 'teacher',
                     login: 'alexey.pavlov', password: 'portal',
-                    started_being_teacher: new Date(2012, 09, 1)
+                    started_being_teacher: new Date(2012, 9, 1)
                 }))
                 .then(() => UsersRepository.create({
                     lastname: 'Яблонская',
@@ -250,7 +250,7 @@ database.Init().then(() => {
                     login: 'y',
                     password: 'portal',
                     image_id: 'blondinko',
-                    started_being_teacher: new Date(2012, 09, 1)
+                    started_being_teacher: new Date(2012, 9, 1)
                 })
                     .then(_ => yablonskaya = _))
                 .then(() => UsersRepository.create({
